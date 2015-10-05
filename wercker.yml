@@ -10,7 +10,10 @@ build:
         code: export COMPOSER_CACHE_DIR="$WERCKER_CACHE_DIR/composer" && mkdir -p $COMPOSER_CACHE_DIR
     - script:
         name: install dependencies
-        code: composer install --no-interaction --prefer-source
+        code: composer install --no-interaction --prefer-dist
+    - script:
+        name: copy vendor to cache
+        code: cp -Rf vendor $COMPOSER_CACHE_DIR
     - script:
         name: PHPUnit Unit tests
         code: ./vendor/bin/phpunit tests/app
