@@ -36,7 +36,7 @@ class AdminUserTest extends AidStreamUserSmokeTestCase
     {
         $adminPaths = [
             ['activity', 200],
-            ['admin/list-users', 205],
+            ['admin/list-users', 200],
             ['admin/register-user', 200],
             ['not-existing', 404],
         ];
