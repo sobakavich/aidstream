@@ -6,6 +6,12 @@ build:
     - install-packages:
         packages: gawk git wget
     - script:
+        name: php version
+        code: php --version
+    - script:
+        name: checking xdebug
+        code: php -i | grep xdebug
+    - script:
         name: cache composer dependencies
         code: export COMPOSER_CACHE_DIR="$WERCKER_CACHE_DIR/composer" && mkdir -p $COMPOSER_CACHE_DIR
     - script:
