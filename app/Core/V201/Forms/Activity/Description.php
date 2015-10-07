@@ -13,12 +13,12 @@ class Description extends Form
      */
     public function buildForm()
     {
-        $descriptionCodeList  = file_get_contents(
+        $descriptionCodeList = file_get_contents(
             app_path("Core/V201/Codelist/" . config('app.locale') . "/Activity/DescriptionType.json")
         );
-        $descriptionTypes = json_decode($descriptionCodeList, true);
-        $descriptionType  = $descriptionTypes['DescriptionType'];
-        $descriptionCode  = [];
+        $descriptionTypes    = json_decode($descriptionCodeList, true);
+        $descriptionType     = $descriptionTypes['DescriptionType'];
+        $descriptionCode     = [];
 
         foreach ($descriptionType as $description) {
             $descriptionCode[$description['code']] = $description['code'] . ' - ' . $description['name'];
@@ -55,6 +55,15 @@ class Description extends Form
                     'attr' => [
                         'class'           => 'add_to_collection',
                         'data-collection' => 'narrative'
+                    ]
+                ]
+            )
+            ->add(
+                'Remove this',
+                'button',
+                [
+                    'attr' => [
+                        'class' => 'remove_from_collection',
                     ]
                 ]
             );
