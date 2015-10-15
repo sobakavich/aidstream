@@ -4,7 +4,7 @@ box: wercker/php
 build:
   steps:
     - install-packages:
-        packages: gawk git wget
+        packages: git wget
     - script:
         name: cache composer dependencies
         code: export COMPOSER_CACHE_DIR="$WERCKER_CACHE_DIR/composer" && mkdir -p $COMPOSER_CACHE_DIR
@@ -30,3 +30,34 @@ build:
         code: |
             wget https://gist.githubusercontent.com/geshan/129993c475decb2c1f5a/raw/29e2360e83169d0919958ccd568448cdba3d3bfa/hipchat-notifier-wercker.py
             python hipchat-notifier-wercker.py --project $WERCKER_GIT_REPOSITORY --room 1267700 --token $HIPCHAT_TOKEN
+deploy:
+   steps:
+    - script:
+        name: install needed packages
+        code: |
+            sudo apt-get update -y
+            sudo apt-get install git zlib1g-dev libreadline-dev libqtwebkit-dev curl -y
+            sudo apt-get remove ruby1.9.1
+            gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+            curl -sSL https://get.rvm.io | bash -s stable
+            echo "bundler -v~>1.9.0" > $HOME/.rvm/gemsets/global.gems
+            source $HOME/.rvm/scripts/rvm
+            rvm install 2.1.5
+            rvm --default use 2.1.5
+            echo "gem: --no-rdoc --no-ri" >> $HOME/.gemrc
+            ruby --version
+            gem install capistrano -v 3.4.0
+            gem install hipchat -v 1.5
+            gem install newrelic_rpm -v 3.11.1.284
+    - add-to-known_hosts:
+        hostname: newstage.aidstream.org
+    - add-ssh-key:
+        keyname: SSH_KEY
+    - install-packages:
+        packages: git wget
+    - script:
+        name: write ssh keys and cap version
+        code: mkdir -p ~/.ssh && echo $SSH_KEY_PRIVATE > ~/.ssh/id_rsa && echo $SSH_KEY_PUBLIC > ~/.ssh/id_rsa.pub && cap --version
+    - script:
+        name: deploy this branch with capistrano
+        code: cap staging deploy user=aidstream branch=$WERCKER_GIT_BRANCH
