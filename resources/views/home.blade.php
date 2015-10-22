@@ -8,7 +8,7 @@
 				<div class="panel-heading">@lang('trans.home')</div>
 
 				<div class="panel-body">
-					You are logged in!
+					You are logged in! - test
 				</div>
 			</div>
 		</div>
