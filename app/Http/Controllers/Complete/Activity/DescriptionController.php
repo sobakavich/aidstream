@@ -32,7 +32,7 @@ class DescriptionController extends Controller
      * @param DescriptionManager $descriptionManager
      * @param ActivityManager    $activityManager
      */
-    function __construct(
+    public function __construct(
         DescriptionForm $description,
         DescriptionManager $descriptionManager,
         ActivityManager $activityManager

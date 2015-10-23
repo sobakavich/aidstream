@@ -1,8 +1,8 @@
 <?php namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
-use App\Services\Activity\ActivityScopeManager;
 use App\Services\Activity\ActivityManager;
+use App\Services\Activity\ActivityScopeManager;
 use App\Services\FormCreator\Activity\ActivityScope as ActivityScopeForm;
 use App\Services\RequestManager\Activity\ActivityScope as ActivityScopeRequestManager;
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ class ActivityScopeController extends Controller
      * @param ActivityScopeForm    $activityScopeForm
      * @param ActivityManager      $activityManager
      */
-    function __construct(
+    public function __construct(
         ActivityScopeManager $activityScopeManager,
         ActivityScopeForm $activityScopeForm,
         ActivityManager $activityManager
@@ -49,7 +49,7 @@ class ActivityScopeController extends Controller
      */
     public function index($id)
     {
-        $activityScope = $this->activityScopeManager->getActivityScopeData($id);
+        $activityScope  = $this->activityScopeManager->getActivityScopeData($id);
         $activityData   = $this->activityManager->getActivityData($id);
         $form           = $this->activityScopeForm->editForm($activityScope, $id);
 

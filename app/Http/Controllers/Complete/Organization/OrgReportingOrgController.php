@@ -1,21 +1,20 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Http\Requests\CreateOrgReportingOrgRequestManager;
+use App\Services\FormCreator\Organization\OrgReportingOrgForm;
 use App\Services\Organization\OrganizationManager;
+use App\Services\Organization\OrgNameManager;
 use App\Services\Organization\OrgReportingOrgManager;
-use Session;
-use URL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use App\Services\FormCreator\Organization\OrgReportingOrgForm;
-use App\Services\Organization\OrgNameManager;
+use Session;
+use URL;
 
 class OrgReportingOrgController extends Controller
 {
-
     protected $formBuilder;
     protected $organizationManager;
     protected $orgReportingOrgManager;
@@ -27,7 +26,7 @@ class OrgReportingOrgController extends Controller
      * @param OrgReportingOrgManager $orgReportingOrgManager
      * @param OrgNameManager         $nameManager
      */
-    function __construct(
+    public function __construct(
         OrgReportingOrgForm $orgReportingOrgFormCreator,
         OrganizationManager $organizationManager,
         OrgReportingOrgManager $orgReportingOrgManager,
@@ -38,7 +37,6 @@ class OrgReportingOrgController extends Controller
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgManager     = $orgReportingOrgManager;
         $this->nameManager                = $nameManager;
-
     }
 
     /**
@@ -70,4 +68,3 @@ class OrgReportingOrgController extends Controller
         return redirect()->route("organization.show", $organizationId)->withMessage('Reporting Organization Updated !');
     }
 }
-

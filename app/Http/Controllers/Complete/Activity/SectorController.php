@@ -31,7 +31,7 @@ class SectorController extends Controller
      * @param SectorForm      $sectorForm
      * @param ActivityManager $activityManager
      */
-    function __construct(SectorManager $sectorManager, SectorForm $sectorForm, ActivityManager $activityManager)
+    public function __construct(SectorManager $sectorManager, SectorForm $sectorForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
         $this->activityManager = $activityManager;

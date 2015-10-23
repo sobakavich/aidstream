@@ -39,7 +39,7 @@ class IatiIdentifierController extends Controller
      * @param OrganizationManager   $organizationManager
      * @param SessionManager        $sessionManager
      */
-    function __construct(
+    public function __construct(
         Activity $activity,
         IatiIdentifierManager $iatiIdentifierManager,
         Identifier $identifier,
@@ -60,7 +60,7 @@ class IatiIdentifierController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    function index($id)
+    public function index($id)
     {
         $iatiIdentifier        = $this->iatiIdentifierManager->getIatiIdentifierData($id);
         $organization          = $this->organizationManager->getOrganization($this->organization_id);
@@ -83,7 +83,6 @@ class IatiIdentifierController extends Controller
         $iatiIdentifierData = $this->iatiIdentifierManager->getActivityData($activityId);
 
         if ($this->iatiIdentifierManager->update($input, $iatiIdentifierData)) {
-
             return redirect()->to(sprintf('/activity/%s', $activityId))->withMessage(
                 'Activity Iati Identifier Updated !'
             );

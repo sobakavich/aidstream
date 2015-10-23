@@ -1,21 +1,19 @@
 <?php namespace App\Http\Controllers\Complete;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Services\RequestManager\Organization\SettingsRequestManager;
 use App;
-use App\Services\SettingsManager;
+use App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Services\Organization\OrganizationManager;
-
+use App\Services\RequestManager\Organization\SettingsRequestManager;
+use App\Services\SettingsManager;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm;
 
 class SettingsController extends Controller
 {
-
     protected $organization;
     protected $orgReportingOrgInfoForm;
     protected $orgPublishingTypeForm;
@@ -29,7 +27,7 @@ class SettingsController extends Controller
      * @param OrganizationManager           $organizationManager
      * @param ReportingOrganizationInfoForm $orgReportingOrgInfoForm
      */
-    function __construct(
+    public function __construct(
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
         ReportingOrganizationInfoForm $orgReportingOrgInfoForm
@@ -110,4 +108,3 @@ class SettingsController extends Controller
         return Redirect::to('/');
     }
 }
-

@@ -1,22 +1,19 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Services\Organization\OrganizationManager;
-use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Services\FormCreator\Organization\DocumentLinkForm as FormBuilder;
 use App\Services\Organization\DocumentLinkManager;
-use Session;
-use URL;
+use App\Services\Organization\OrganizationManager;
+use App\Services\RequestManager\Organization\DocumentLinkRequestManager;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use App\Services\RequestManager\Organization\DocumentLinkRequestManager;
-use App\Services\FormCreator\Organization\DocumentLinkForm as FormBuilder;
-
+use Session;
+use URL;
 
 class DocumentLinkController extends Controller
 {
-
     protected $formBuilder;
     protected $documentLinkManager;
     protected $documentLinkForm;

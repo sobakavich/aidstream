@@ -1,8 +1,8 @@
 <?php namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
-use App\Services\Activity\ActivityStatus as ActivityStatusManager;
 use App\Services\Activity\ActivityManager;
+use App\Services\Activity\ActivityStatus as ActivityStatusManager;
 use App\Services\FormCreator\Activity\ActivityStatus as ActivityStatusForm;
 use App\Services\RequestManager\Activity\ActivityStatus as ActivityStatusRequestManager;
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ class ActivityStatusController extends Controller
      * @param ActivityStatusForm    $activityStatusForm
      * @param ActivityManager       $activityManager
      */
-    function __construct(
+    public function __construct(
         ActivityStatusManager $activityStatusManager,
         ActivityStatusForm $activityStatusForm,
         ActivityManager $activityManager

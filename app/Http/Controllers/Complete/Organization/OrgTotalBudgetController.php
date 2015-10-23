@@ -7,17 +7,17 @@
  */
 namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
 use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgTotalBudgetManager;
-use Session;
-use URL;
+use App\Services\RequestManager\Organization\TotalBudgetRequestManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use App\Services\RequestManager\Organization\TotalBudgetRequestManager;
-use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
+use Session;
+use URL;
 
 /**
  * Class OrgTotalBudgetController
@@ -25,7 +25,6 @@ use App\Services\FormCreator\Organization\TotalBudgetForm as FormBuilder;
  */
 class OrgTotalBudgetController extends Controller
 {
-
     protected $formBuilder;
     protected $totalBudgetManager;
     protected $totalBudgetForm;
@@ -37,8 +36,8 @@ class OrgTotalBudgetController extends Controller
         OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
-        $this->totalBudgetForm    = $formBuilder;
-        $this->totalBudgetManager = $totalBudgetManager;
+        $this->totalBudgetForm     = $formBuilder;
+        $this->totalBudgetManager  = $totalBudgetManager;
         $this->organizationManager = $organizationManager;
     }
 

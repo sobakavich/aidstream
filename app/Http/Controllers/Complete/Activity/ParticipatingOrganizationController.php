@@ -31,7 +31,7 @@ class ParticipatingOrganizationController extends Controller
      * @param ParticipatingOrganizationForm    $participatingOrganizationForm
      * @param ActivityManager                  $activityManager
      */
-    function __construct(
+    public function __construct(
         ParticipatingOrganizationManager $participatingOrganizationManager,
         ParticipatingOrganizationForm $participatingOrganizationForm,
         ActivityManager $activityManager

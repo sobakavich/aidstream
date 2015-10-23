@@ -31,7 +31,7 @@ class ContactInfoController extends Controller
      * @param ContactInfoForm    $contactInfoForm
      * @param ActivityManager    $activityManager
      */
-    function __construct(
+    public function __construct(
         ContactInfoManager $contactInfoManager,
         ContactInfoForm $contactInfoForm,
         ActivityManager $activityManager
@@ -49,7 +49,7 @@ class ContactInfoController extends Controller
      */
     public function index($id)
     {
-        $ContactInfo = $this->contactInfoManager->getContactInfoData($id);
+        $ContactInfo         = $this->contactInfoManager->getContactInfoData($id);
         $activityData        = $this->activityManager->getActivityData($id);
         $form                = $this->contactInfoForm->editForm($ContactInfo, $id);
 

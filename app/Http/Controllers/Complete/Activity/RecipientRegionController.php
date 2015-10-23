@@ -27,7 +27,7 @@ class RecipientRegionController extends Controller
      * @param RecipientRegionForm    $recipientRegionForm
      * @param ActivityManager        $activityManager
      */
-    function __construct(
+    public function __construct(
         RecipientRegionManager $recipientRegionManager,
         RecipientRegionForm $recipientRegionForm,
         ActivityManager $activityManager

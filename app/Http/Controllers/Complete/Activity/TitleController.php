@@ -27,7 +27,7 @@ class TitleController extends Controller
      * @param TitleManager $titleManager
      * @param Title        $title
      */
-    function __construct(TitleManager $titleManager, Title $title)
+    public function __construct(TitleManager $titleManager, Title $title)
     {
         $this->middleware('auth');
         $this->title        = $title;

@@ -28,7 +28,7 @@ class ActivityDateController extends Controller
      * @param ActivityDateForm    $activityDateForm
      * @param ActivityManager     $activityManager
      */
-    function __construct(
+    public function __construct(
         ActivityDateManager $activityDateManager,
         ActivityDateForm $activityDateForm,
         ActivityManager $activityManager
