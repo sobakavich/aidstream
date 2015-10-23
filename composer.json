@@ -44,7 +44,10 @@
 		"post-create-project-cmd": [
 			"php -r \"copy('.env.example', '.env');\"",
 			"php artisan key:generate"
-		]
+		],
+	  	"fix-cs": [
+			"git diff --name-only --cached | grep .php|xargs -t -I {} php-cs-fixer fix {} --level=psr2 --fixers=align_double_arrow,align_equals,concat_with_spaces,multiline_spaces_before_semicolon,ordered_use,short_array_syntax,strict"
+	  	]
 	},
 	"config": {
 		"preferred-install": "dist"
