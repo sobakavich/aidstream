@@ -1,4 +1,6 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ParticipatingOrganizationManager;
@@ -8,8 +10,7 @@ use App\Services\RequestManager\Activity\ParticipatingOrganization as Participat
 use Illuminate\Http\Request;
 
 /**
- * Class ParticipatingOrganizationController
- * @package app\Http\Controllers\Complete\Activity
+ * Class ParticipatingOrganizationController.
  */
 class ParticipatingOrganizationController extends Controller
 {
@@ -31,7 +32,7 @@ class ParticipatingOrganizationController extends Controller
      * @param ParticipatingOrganizationForm    $participatingOrganizationForm
      * @param ActivityManager                  $activityManager
      */
-    function __construct(
+    public function __construct(
         ParticipatingOrganizationManager $participatingOrganizationManager,
         ParticipatingOrganizationForm $participatingOrganizationForm,
         ActivityManager $activityManager
@@ -43,8 +44,10 @@ class ParticipatingOrganizationController extends Controller
     }
 
     /**
-     * returns the activity contact info edit form
+     * returns the activity contact info edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -60,10 +63,12 @@ class ParticipatingOrganizationController extends Controller
     }
 
     /**
-     * updates activity participating organization
+     * updates activity participating organization.
+     *
      * @param                                         $id
      * @param Request                                 $request
      * @param ParticipatingOrganizationRequestManager $participatingOrganizationRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(

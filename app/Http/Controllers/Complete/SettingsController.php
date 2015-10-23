@@ -1,21 +1,20 @@
-<?php namespace App\Http\Controllers\Complete;
+<?php
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Services\RequestManager\Organization\SettingsRequestManager;
+namespace App\Http\Controllers\Complete;
+
 use App;
-use App\Services\SettingsManager;
+use App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm;
+use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
-
+use App\Services\RequestManager\Organization\SettingsRequestManager;
+use App\Services\SettingsManager;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Core\V201\Forms\Organization\ReportingOrganizationInfoForm;
 
 class SettingsController extends Controller
 {
-
     protected $organization;
     protected $orgReportingOrgInfoForm;
     protected $orgPublishingTypeForm;
@@ -29,7 +28,7 @@ class SettingsController extends Controller
      * @param OrganizationManager           $organizationManager
      * @param ReportingOrganizationInfoForm $orgReportingOrgInfoForm
      */
-    function __construct(
+    public function __construct(
         SettingsManager $settingsManager,
         OrganizationManager $organizationManager,
         ReportingOrganizationInfoForm $orgReportingOrgInfoForm
@@ -47,6 +46,7 @@ class SettingsController extends Controller
      * Display a listing of the resource.
      *
      * @param FormBuilder $formBuilder
+     *
      * @return Response
      */
     public function index(FormBuilder $formBuilder)
@@ -69,7 +69,7 @@ class SettingsController extends Controller
         $method      = isset($this->settings) ? 'PUT' : 'POST';
         $formOptions = [
             'method' => $method,
-            'url'    => route($url)
+            'url'    => route($url),
         ];
         if (!empty($model)) {
             $formOptions['model'] = $model;
@@ -83,6 +83,7 @@ class SettingsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param SettingsRequestManager $request
+     *
      * @return Response
      */
     public function store(SettingsRequestManager $request)
@@ -97,8 +98,9 @@ class SettingsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int                   $id
+     * @param int                    $id
      * @param SettingsRequestManager $request
+     *
      * @return Response
      */
     public function update($id, SettingsRequestManager $request)
@@ -110,4 +112,3 @@ class SettingsController extends Controller
         return Redirect::to('/');
     }
 }
-

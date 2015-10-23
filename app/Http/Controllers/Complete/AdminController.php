@@ -1,15 +1,16 @@
-<?php namespace App\Http\Controllers\Complete;
+<?php
+
+namespace App\Http\Controllers\Complete;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\UserActivity;
 use App\User;
-use Input;
 use Illuminate\Session\SessionManager as Session;
+use Input;
 
 /**
- * Class AdminController
- * @package App\Http\Controllers\Complete
+ * Class AdminController.
  */
 class AdminController extends Controller
 {
@@ -27,7 +28,7 @@ class AdminController extends Controller
      * @param Session $session
      * @param User    $user
      */
-    function __construct(Session $session, User $user)
+    public function __construct(Session $session, User $user)
     {
         $this->middleware('auth');
         $this->session = $session;
@@ -50,14 +51,14 @@ class AdminController extends Controller
      */
     public function create()
     {
-
         return view('admin.registerUser');
     }
 
-
     /**
-     * store user into database
+     * store user into database.
+     *
      * @param UserRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(UserRequest $request)
@@ -79,7 +80,8 @@ class AdminController extends Controller
     }
 
     /**
-     * List all users
+     * List all users.
+     *
      * @return \Illuminate\View\View
      */
     public function listUsers()
@@ -87,12 +89,13 @@ class AdminController extends Controller
         $users = $this->user->getUserByOrgIdAndRoleId();
 
         return view('admin.listUsers', compact('users'));
-
     }
 
     /**
-     * show users profile
+     * show users profile.
+     *
      * @param $userId
+     *
      * @return \Illuminate\View\View
      */
     public function viewUserProfile($userId)
@@ -104,6 +107,7 @@ class AdminController extends Controller
 
     /**
      * @param $userId
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function deleteUser($userId)
@@ -116,6 +120,7 @@ class AdminController extends Controller
 
     /**
      * @param $userID
+     *
      * @return \Illuminate\View\View
      */
     public function resetUserPassword($userID)
@@ -126,8 +131,10 @@ class AdminController extends Controller
     }
 
     /**
-     * reset password
+     * reset password.
+     *
      * @param $userId
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function updateUserPassword($userId)
@@ -142,6 +149,7 @@ class AdminController extends Controller
 
     /**
      * @param $userId
+     *
      * @return \Illuminate\View\View
      */
     public function editUserPermission($userId)
@@ -152,8 +160,10 @@ class AdminController extends Controller
     }
 
     /**
-     * update user permission
+     * update user permission.
+     *
      * @param $userId
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function updateUserPermission($userId)
@@ -164,8 +174,5 @@ class AdminController extends Controller
         $user->save();
 
         return redirect('admin/list-users');
-
     }
-
 }
-

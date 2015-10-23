@@ -1,4 +1,6 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityDateManager;
@@ -8,8 +10,7 @@ use App\Services\RequestManager\Activity\ActivityDate as ActivityDateRequestMana
 use Illuminate\Http\Request;
 
 /**
- * Class ActivityDateController
- * @package app\Http\Controllers\Complete\Activity
+ * Class ActivityDateController.
  */
 class ActivityDateController extends Controller
 {
@@ -28,7 +29,7 @@ class ActivityDateController extends Controller
      * @param ActivityDateForm    $activityDateForm
      * @param ActivityManager     $activityManager
      */
-    function __construct(
+    public function __construct(
         ActivityDateManager $activityDateManager,
         ActivityDateForm $activityDateForm,
         ActivityManager $activityManager
@@ -40,8 +41,10 @@ class ActivityDateController extends Controller
     }
 
     /**
-     * returns the activity date edit form
+     * returns the activity date edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -57,10 +60,12 @@ class ActivityDateController extends Controller
     }
 
     /**
-     * updates activity description
+     * updates activity description.
+     *
      * @param                            $id
      * @param Request                    $request
      * @param ActivityDateRequestManager $activityDateRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, ActivityDateRequestManager $activityDateRequestManager)

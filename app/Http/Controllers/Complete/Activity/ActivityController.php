@@ -1,17 +1,18 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\Controllers\Controller;
+use App\Services\Activity\ActivityManager;
+use App\Services\FormCreator\Activity\Identifier;
 use App\Services\Organization\OrganizationManager;
 use App\Services\SettingsManager;
 use Illuminate\Session\SessionManager;
-use App\Services\Activity\ActivityManager;
-use App\Services\FormCreator\Activity\Identifier;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
- * Class ActivityController
- * @package app\Http\Controllers\Complete\Activity
+ * Class ActivityController.
  */
 class ActivityController extends Controller
 {
@@ -38,7 +39,7 @@ class ActivityController extends Controller
      * @param Identifier          $identifierForm
      * @param ActivityManager     $activityManager
      */
-    function __construct(
+    public function __construct(
         SettingsManager $settingsManager,
         SessionManager $sessionManager,
         OrganizationManager $organizationManager,
@@ -54,9 +55,9 @@ class ActivityController extends Controller
         $this->organization_id     = $this->sessionManager->get('org_id');
     }
 
-
     /**
-     * write brief description
+     * write brief description.
+     *
      * @return \Illuminate\View\View
      */
     public function index()
@@ -93,8 +94,10 @@ class ActivityController extends Controller
     }
 
     /**
-     * write brief description
+     * write brief description.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function show($id)
@@ -105,8 +108,9 @@ class ActivityController extends Controller
     /**
      * Throw an unauthorized exception based on gate results.
      *
-     * @param  string $ability
-     * @param  array  $arguments
+     * @param string $ability
+     * @param array  $arguments
+     *
      * @return \Symfony\Component\HttpKernel\Exception\HttpException
      */
     protected function createGateUnauthorizedException($ability, $arguments)
@@ -114,4 +118,3 @@ class ActivityController extends Controller
         return new HttpException(403, 'This action is unauthorized.');
     }
 }
-

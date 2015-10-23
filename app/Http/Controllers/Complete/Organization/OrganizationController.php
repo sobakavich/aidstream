@@ -1,16 +1,16 @@
-<?php namespace app\Http\Controllers\Complete\Organization;
+<?php
 
-use App\Http\Requests;
+namespace app\Http\Controllers\Complete\Organization;
+
 use App\Http\Controllers\Controller;
-use App\Services\SettingsManager;
-use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
-use Illuminate\Http\Request;
+use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgNameManager;
+use App\Services\SettingsManager;
+use Illuminate\Http\Request;
 
 /**
- * Class OrganizationController
- * @package App\Http\Controllers\Complete\Organization
+ * Class OrganizationController.
  */
 class OrganizationController extends Controller
 {
@@ -49,7 +49,8 @@ class OrganizationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return Response
      */
     public function show($id)
@@ -100,12 +101,12 @@ class OrganizationController extends Controller
                 'status'
             )
         );
-
     }
 
     /**
      * @param         $id
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function updateStatus($id, Request $request)
@@ -115,12 +116,12 @@ class OrganizationController extends Controller
         $organizationData = $this->organizationManager->getOrganizationData($id);
         $settings         = $this->settingsManager->getSettings($id);
         $status           = $input['status'];
-        if ($status == 1) {
+        if ($status === 1) {
             if (!isset($organization->reporting_org) || !isset($organizationData->name)) {
                 return redirect()->back()->withMessage('Organization data is not Complete.');
             }
         } else {
-            if ($status == 3) {
+            if ($status === 3) {
                 $orgElem     = $this->organizationManager->getOrganizationElement();
                 $generateXml = $orgElem->getGenerateXml();
                 $generateXml->generate($organization, $organizationData, $settings, $orgElem);
@@ -132,8 +133,10 @@ class OrganizationController extends Controller
     }
 
     /**
-     * write brief description
+     * write brief description.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function showIdentifier($id)
@@ -148,11 +151,12 @@ class OrganizationController extends Controller
     /**
      * @param string $action
      * @param string $id
+     *
      * @return \Illuminate\View\View
      */
     public function listPublishedFiles($action = '', $id = '')
     {
-        if ($action == 'delete') {
+        if ($action === 'delete') {
             $result  = $this->organizationManager->deletePublishedFile($id);
             $message = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
 
@@ -164,4 +168,3 @@ class OrganizationController extends Controller
         return view('published-files', compact('list'));
     }
 }
-

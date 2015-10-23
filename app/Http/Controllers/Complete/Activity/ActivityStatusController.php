@@ -1,15 +1,16 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
-use App\Services\Activity\ActivityStatus as ActivityStatusManager;
 use App\Services\Activity\ActivityManager;
+use App\Services\Activity\ActivityStatus as ActivityStatusManager;
 use App\Services\FormCreator\Activity\ActivityStatus as ActivityStatusForm;
 use App\Services\RequestManager\Activity\ActivityStatus as ActivityStatusRequestManager;
 use Illuminate\Http\Request;
 
 /**
- * Class ActivityStatusController
- * @package app\Http\Controllers\Complete\Activity
+ * Class ActivityStatusController.
  */
 class ActivityStatusController extends Controller
 {
@@ -31,7 +32,7 @@ class ActivityStatusController extends Controller
      * @param ActivityStatusForm    $activityStatusForm
      * @param ActivityManager       $activityManager
      */
-    function __construct(
+    public function __construct(
         ActivityStatusManager $activityStatusManager,
         ActivityStatusForm $activityStatusForm,
         ActivityManager $activityManager
@@ -43,8 +44,10 @@ class ActivityStatusController extends Controller
     }
 
     /**
-     * returns the activity status edit form
+     * returns the activity status edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -60,10 +63,12 @@ class ActivityStatusController extends Controller
     }
 
     /**
-     * updates activity status
+     * updates activity status.
+     *
      * @param                              $id
      * @param Request                      $request
      * @param ActivityStatusRequestManager $activityStatusRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, ActivityStatusRequestManager $activityStatusRequestManager)

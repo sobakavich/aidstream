@@ -1,15 +1,16 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
-use App\Services\Activity\ActivityScopeManager;
 use App\Services\Activity\ActivityManager;
+use App\Services\Activity\ActivityScopeManager;
 use App\Services\FormCreator\Activity\ActivityScope as ActivityScopeForm;
 use App\Services\RequestManager\Activity\ActivityScope as ActivityScopeRequestManager;
 use Illuminate\Http\Request;
 
 /**
- * Class ActivityScopeController
- * @package app\Http\Controllers\Complete\Activity
+ * Class ActivityScopeController.
  */
 class ActivityScopeController extends Controller
 {
@@ -31,7 +32,7 @@ class ActivityScopeController extends Controller
      * @param ActivityScopeForm    $activityScopeForm
      * @param ActivityManager      $activityManager
      */
-    function __construct(
+    public function __construct(
         ActivityScopeManager $activityScopeManager,
         ActivityScopeForm $activityScopeForm,
         ActivityManager $activityManager
@@ -43,15 +44,17 @@ class ActivityScopeController extends Controller
     }
 
     /**
-     * returns the activity scope edit form
+     * returns the activity scope edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
     {
         $activityScope = $this->activityScopeManager->getActivityScopeData($id);
-        $activityData   = $this->activityManager->getActivityData($id);
-        $form           = $this->activityScopeForm->editForm($activityScope, $id);
+        $activityData  = $this->activityManager->getActivityData($id);
+        $form          = $this->activityScopeForm->editForm($activityScope, $id);
 
         return view(
             'Activity.activityScope.edit',
@@ -60,10 +63,12 @@ class ActivityScopeController extends Controller
     }
 
     /**
-     * updates activity scope
+     * updates activity scope.
+     *
      * @param                             $id
      * @param Request                     $request
      * @param ActivityScopeRequestManager $activityScopeRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, ActivityScopeRequestManager $activityScopeRequestManager)

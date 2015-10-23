@@ -1,4 +1,6 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ContactInfoManager;
@@ -8,8 +10,7 @@ use App\Services\RequestManager\Activity\ContactInfo as ContactInfoRequestManage
 use Illuminate\Http\Request;
 
 /**
- * Class ContactInfoController
- * @package app\Http\Controllers\Complete\Activity
+ * Class ContactInfoController.
  */
 class ContactInfoController extends Controller
 {
@@ -31,7 +32,7 @@ class ContactInfoController extends Controller
      * @param ContactInfoForm    $contactInfoForm
      * @param ActivityManager    $activityManager
      */
-    function __construct(
+    public function __construct(
         ContactInfoManager $contactInfoManager,
         ContactInfoForm $contactInfoForm,
         ActivityManager $activityManager
@@ -43,15 +44,17 @@ class ContactInfoController extends Controller
     }
 
     /**
-     * returns the activity contact info edit form
+     * returns the activity contact info edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
     {
-        $ContactInfo = $this->contactInfoManager->getContactInfoData($id);
-        $activityData        = $this->activityManager->getActivityData($id);
-        $form                = $this->contactInfoForm->editForm($ContactInfo, $id);
+        $ContactInfo  = $this->contactInfoManager->getContactInfoData($id);
+        $activityData = $this->activityManager->getActivityData($id);
+        $form         = $this->contactInfoForm->editForm($ContactInfo, $id);
 
         return view(
             'Activity.contactInfo.edit',
@@ -60,9 +63,11 @@ class ContactInfoController extends Controller
     }
 
     /**
-     * updates activity contact info
-     * @param                           $id
-     * @param Request                   $request
+     * updates activity contact info.
+     *
+     * @param         $id
+     * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, ContactInfoRequestManager $contactInfoRequestManager)

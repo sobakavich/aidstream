@@ -1,4 +1,6 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
@@ -9,8 +11,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class DescriptionController
- * allow user to add and update Activity Description
- * @package app\Http\Controllers\Complete\Activity
+ * allow user to add and update Activity Description.
  */
 class DescriptionController extends Controller
 {
@@ -32,7 +33,7 @@ class DescriptionController extends Controller
      * @param DescriptionManager $descriptionManager
      * @param ActivityManager    $activityManager
      */
-    function __construct(
+    public function __construct(
         DescriptionForm $description,
         DescriptionManager $descriptionManager,
         ActivityManager $activityManager
@@ -44,8 +45,10 @@ class DescriptionController extends Controller
     }
 
     /**
-     * returns the activity description edit form
+     * returns the activity description edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -61,10 +64,12 @@ class DescriptionController extends Controller
     }
 
     /**
-     * updates activity description
+     * updates activity description.
+     *
      * @param                           $id
      * @param Request                   $request
      * @param DescriptionRequestManager $descriptionRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, DescriptionRequestManager $descriptionRequestManager)

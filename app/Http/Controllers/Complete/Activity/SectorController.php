@@ -1,4 +1,6 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
@@ -8,8 +10,7 @@ use App\Services\RequestManager\Activity\Sector  as SectorRequestManager;
 use Illuminate\Http\Request;
 
 /**
- * Class SectorController
- * @package app\Http\Controllers\Complete\Activity
+ * Class SectorController.
  */
 class SectorController extends Controller
 {
@@ -31,7 +32,7 @@ class SectorController extends Controller
      * @param SectorForm      $sectorForm
      * @param ActivityManager $activityManager
      */
-    function __construct(SectorManager $sectorManager, SectorForm $sectorForm, ActivityManager $activityManager)
+    public function __construct(SectorManager $sectorManager, SectorForm $sectorForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
         $this->activityManager = $activityManager;
@@ -40,8 +41,10 @@ class SectorController extends Controller
     }
 
     /**
-     * returns the activity sector edit form
+     * returns the activity sector edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -57,10 +60,12 @@ class SectorController extends Controller
     }
 
     /**
-     * updates activity sector
+     * updates activity sector.
+     *
      * @param                      $id
      * @param Request              $request
      * @param SectorRequestManager $sectorRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, SectorRequestManager $sectorRequestManager)

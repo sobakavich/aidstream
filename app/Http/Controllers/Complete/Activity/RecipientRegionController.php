@@ -1,4 +1,6 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
@@ -27,7 +29,7 @@ class RecipientRegionController extends Controller
      * @param RecipientRegionForm    $recipientRegionForm
      * @param ActivityManager        $activityManager
      */
-    function __construct(
+    public function __construct(
         RecipientRegionManager $recipientRegionManager,
         RecipientRegionForm $recipientRegionForm,
         ActivityManager $activityManager
@@ -39,8 +41,10 @@ class RecipientRegionController extends Controller
     }
 
     /**
-     * returns the activity recipient region edit form
+     * returns the activity recipient region edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -56,10 +60,12 @@ class RecipientRegionController extends Controller
     }
 
     /**
-     * updates activity recipient region
+     * updates activity recipient region.
+     *
      * @param                               $id
      * @param Request                       $request
      * @param RecipientRegionRequestManager $recipientRegionRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, RecipientRegionRequestManager $recipientRegionRequestManager)

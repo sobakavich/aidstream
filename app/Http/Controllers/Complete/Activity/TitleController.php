@@ -1,4 +1,6 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\TitleManager;
@@ -8,8 +10,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class TitleController
- * Contains functions which allow user to add and update Activity Title
- * @package app\Http\Controllers\Complete\Activity
+ * Contains functions which allow user to add and update Activity Title.
  */
 class TitleController extends Controller
 {
@@ -22,12 +23,11 @@ class TitleController extends Controller
      */
     protected $titleManager;
 
-
     /**
      * @param TitleManager $titleManager
      * @param Title        $title
      */
-    function __construct(TitleManager $titleManager, Title $title)
+    public function __construct(TitleManager $titleManager, Title $title)
     {
         $this->middleware('auth');
         $this->title        = $title;
@@ -35,8 +35,10 @@ class TitleController extends Controller
     }
 
     /**
-     * returns the activity title edit form
+     * returns the activity title edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -51,10 +53,12 @@ class TitleController extends Controller
     }
 
     /**
-     * updates activity title
+     * updates activity title.
+     *
      * @param                     $id
      * @param Request             $request
      * @param TitleRequestManager $titleRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, TitleRequestManager $titleRequestManager)

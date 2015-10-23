@@ -1,4 +1,6 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
+
+namespace app\Http\Controllers\Complete\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Services\Activity\OtherIdentifierManager;
@@ -7,8 +9,7 @@ use App\Services\RequestManager\Activity\OtherIdentifierRequestManager;
 use Illuminate\Http\Request;
 
 /**
- * Class OtherIdentifierController
- * @package app\Http\Controllers\Complete\Activity
+ * Class OtherIdentifierController.
  */
 class OtherIdentifierController extends Controller
 {
@@ -33,8 +34,10 @@ class OtherIdentifierController extends Controller
     }
 
     /**
-     * view other identifier add or edit page
+     * view other identifier add or edit page.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -49,10 +52,12 @@ class OtherIdentifierController extends Controller
     }
 
     /**
-     * update activity Other Identifier
+     * update activity Other Identifier.
+     *
      * @param OtherIdentifierRequestManager $otherIdentifierRequestManager
      * @param Request                       $request
      * @param                               $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(OtherIdentifierRequestManager $otherIdentifierRequestManager, Request $request, $id)

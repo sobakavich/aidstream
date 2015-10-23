@@ -1,15 +1,16 @@
-<?php namespace app\Http\Controllers\Complete\Activity;
+<?php
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Services\Activity\ActivityManager;
-use App\Services\FormCreator\Activity\RecipientCountry as RecipientCountryForm;
-use App\Services\Activity\RecipientCountryManager;
+namespace app\Http\Controllers\Complete\Activity;
+
 use App\Core\V201\Requests\Activity\RecipientCountry as RecipientCountryRequestManager;
+use App\Http\Controllers\Controller;
+use App\Services\Activity\ActivityManager;
+use App\Services\Activity\RecipientCountryManager;
+use App\Services\FormCreator\Activity\RecipientCountry as RecipientCountryForm;
+use Illuminate\Http\Request;
 
 /**
- * Class RecipientCountryController
- * @package app\Http\Controllers\Complete\Activity
+ * Class RecipientCountryController.
  */
 class RecipientCountryController extends Controller
 {
@@ -42,8 +43,10 @@ class RecipientCountryController extends Controller
     }
 
     /**
-     * returns recipient country edit form
+     * returns recipient country edit form.
+     *
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function index($id)
@@ -55,10 +58,12 @@ class RecipientCountryController extends Controller
     }
 
     /**
-     * updates recipient country
+     * updates recipient country.
+     *
      * @param                                $id
      * @param Request                        $request
      * @param RecipientCountryRequestManager $recipientCountryRequestManager
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request, RecipientCountryRequestManager $recipientCountryRequestManager)
