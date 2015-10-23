@@ -107,3 +107,4 @@ you. If it does not open in the first push try doing a commit amend and force pu
 and do a second push.
 
 Gitomate will also run a code climate analysis for the branch on each push on [code climate](https://codeclimate.com/repos/55f540606956805fc2010677/branches).
+

@@ -10,8 +10,6 @@ use Monolog\Logger as Monolog;
 class ConfigureLogging extends BaseConfigureLogging
 {
 
-
-
     /**
      * Register the logger instance in the container.
      *
@@ -38,10 +36,11 @@ class ConfigureLogging extends BaseConfigureLogging
      */
     public function configureCustomHandler(Application $app, AsWriter $log)
     {
-        $handler = new LogEntriesHandler(getenv('LOGENTRY_TOKEN'));
-        $log->getMonolog()->pushHandler($handler);
+        if (getenv('APP_ENV') !== 'local') {
+            $handler = new LogEntriesHandler(getenv('LOGENTRY_TOKEN'));
+            $log->getMonolog()->pushHandler($handler);
+        }
 
-// Also Log to Daily files too.
         $log->useDailyFiles($app->storagePath() . '/logs/laravel.log', 5);
     }
 }

@@ -1,0 +1,22 @@
+front:
+  build: .
+  ports:
+    - "80:80"
+  volumes:
+    - .:/var/www
+    - docker/nginx/sites-enabled:/etc/nginx/sites-enabled
+  links:
+    - pgsql:pgsql
+  environment:
+    DB_HOST: pgsql
+    DB_DATABASE: aidstream
+    DB_USERNAME: aidstream
+    DB_PASSWORD: aidstream123
+
+pgsql:
+  build: ./docker/db
+  ports:
+    - "5432:5432"
+  volumes:
+    - docker/db/data:/srv/postgresql
+    - docker/db/default-users-db:/usr/share/postgresql/default/users
