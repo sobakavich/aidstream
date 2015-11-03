@@ -1,6 +1,7 @@
 <?php namespace App\Core\V201\Forms\Activity;
 
 use App\Core\Form\BaseForm;
+use App\Core\Traits\LanguageCodeList;
 
 /**
  * Class Narrative
@@ -8,6 +9,8 @@ use App\Core\Form\BaseForm;
  */
 class Narrative extends BaseForm
 {
+    use LanguageCodeList;
+
     protected $showFieldErrors = true;
 
     /**
@@ -21,10 +24,11 @@ class Narrative extends BaseForm
                 'language',
                 'select',
                 [
-                    'choices' => $this->addCodeList('Language', 'Activity'),
+                    'choices' => $this->getLanguageCodeList('Language', 'Activity'),
                     'label'   => 'Language'
                 ]
             )
             ->addRemoveThisButton('remove_from_collection');
+
     }
 }
