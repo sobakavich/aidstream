@@ -110,7 +110,7 @@ class AuthController extends Controller
         $login = $request->input('login');
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        $request->merge([$field => $login]);
+        $request->merge(array($field => $login));
 
         $credentials = $request->only($field, 'password');
 
@@ -121,7 +121,7 @@ class AuthController extends Controller
             $settings       = Settings::where('organization_id', $user->org_id)->first();
             $settings_check = isset($settings);
             $version        = ($settings_check) ? $settings->version : config('app.default_version');
-            $version        = 'V' . str_replace('.', '', $version);
+            $version        = sprintf('V%s', str_replace('.', '', $version));
             Session::put('version', $version);
 
             return Session::get('role_id') == 1 ? redirect()->intended($this->redirectPath()) : redirect('admin/dashboard');

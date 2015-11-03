@@ -191,6 +191,5 @@ return [
         'FormBuilder' => 'Kris\LaravelFormBuilder\Facades\FormBuilder',
         'Gate'        => Illuminate\Support\Facades\Gate::class,
 
-
     ],
 ];

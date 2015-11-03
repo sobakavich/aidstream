@@ -17,7 +17,7 @@ class SettingsRepository implements SettingsRepositoryInterface
     /**
      * @var LoggerInterface
      */
-    protected $loggerInterface;
+    protected $logger;
     /**
      * @var OrganizationData
      */
@@ -36,15 +36,15 @@ class SettingsRepository implements SettingsRepositoryInterface
      * @param OrganizationData $organizationData
      * @param SessionManager   $sessionManager
      * @param DatabaseManager  $databaseManager
-     * @param LoggerInterface  $loggerInterface
+     * @param LoggerInterface  $logger
      */
-    function __construct(Settings $settings, OrganizationData $organizationData, SessionManager $sessionManager, DatabaseManager $databaseManager, LoggerInterface $loggerInterface)
+    function __construct(Settings $settings, OrganizationData $organizationData, SessionManager $sessionManager, DatabaseManager $databaseManager, LoggerInterface $logger)
     {
         $this->databaseManager  = $databaseManager;
-        $this->loggerInterface  = $loggerInterface;
         $this->organizationData = $organizationData;
         $this->sessionManager   = $sessionManager;
         $this->settings         = $settings;
+        $this->logger           = $logger;
     }
 
     /**
@@ -68,7 +68,7 @@ class SettingsRepository implements SettingsRepositoryInterface
             $organization->save();
 
             $version = $input['version_form'][0]['version'];
-            $this->sessionManager->put('version', 'V' . str_replace('.', '', $version));
+            $this->sessionManager->put('version', sprintf('V%s', str_replace('.', '', $version)));
 
             Settings::create(
                 [
@@ -86,11 +86,11 @@ class SettingsRepository implements SettingsRepositoryInterface
                 ]
             );
             $this->databaseManager->commit();
-            $this->loggerInterface->info('Organization Settings Inserted');
+            $this->logger->info('Organization Settings Inserted');
         } catch (Exception $exception) {
             $this->databaseManager->rollback();
 
-            $this->loggerInterface->error(
+            $this->logger->error(
                 sprintf('Settings could no be updated due to %s', $exception->getMessage()),
                 [
                     'settings' => $input,
@@ -114,7 +114,7 @@ class SettingsRepository implements SettingsRepositoryInterface
             $organization->save();
 
             $version = $input['version_form'][0]['version'];
-            $this->sessionManager->put('version', 'V' . str_replace('.', '', $version));
+            $this->sessionManager->put('version', sprintf('V%s', str_replace('.', '', $version)));
 
             $settings->publishing_type      = $input['publishing_type'][0]['publishing'];
             $settings->registry_info        = $input['registry_info'];
@@ -125,11 +125,11 @@ class SettingsRepository implements SettingsRepositoryInterface
             $settings->save();
             $this->organizationData->firstOrCreate(['organization_id' => $organization->id,]);
             $this->databaseManager->commit();
-            $this->loggerInterface->info('Organization Settings Updated');
+            $this->logger->info('Organization Settings Updated');
         } catch (Exception $exception) {
             $this->databaseManager->rollback();
 
-            $this->loggerInterface->error(
+            $this->logger->error(
                 sprintf('Settings could no be updated due to %s', $exception->getMessage()),
                 [
                     'settings' => $input,
@@ -138,5 +138,4 @@ class SettingsRepository implements SettingsRepositoryInterface
             );
         }
     }
-
 }
