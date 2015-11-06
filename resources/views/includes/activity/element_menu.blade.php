@@ -59,7 +59,7 @@
     <div class="panel-heading">Financial</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Budget</a></li>
+            <li><a href="{{ route('activity.budget.index', $id) }}">Budget</a></li>
             <li><a href="#">Planned Disbursement</a></li>
             <li><a href="#">Capital Send</a></li>
             <li><a href="#">Transaction</a></li>

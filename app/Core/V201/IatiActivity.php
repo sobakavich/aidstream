@@ -154,4 +154,14 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\CountryBudgetItem');
     }
+
+    public function getBudget()
+    {
+        return app('App\Core\V201\Element\Activity\Budget');
+    }
+
+    public function getBudgetRequest()
+    {
+        return app('App\Core\V201\Requests\Activity\Budget');
+    }
 }
