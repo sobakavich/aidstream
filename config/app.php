@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -140,7 +141,7 @@ return [
         'App\Providers\AuthServiceProvider',
         'Kris\LaravelFormBuilder\FormBuilderServiceProvider',
         'App\Providers\DevelopmentServiceProvider',
-        'App\Providers\RepositoryServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
     ],
     /*
     |--------------------------------------------------------------------------
@@ -190,7 +191,8 @@ return [
         'Form'        => 'Illuminate\Html\FormFacade',
         'FormBuilder' => 'Kris\LaravelFormBuilder\Facades\FormBuilder',
         'Gate'        => Illuminate\Support\Facades\Gate::class,
-
+        'Excel'       => 'Maatwebsite\Excel\Facades\Excel',
 
     ],
+
 ];
