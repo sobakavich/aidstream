@@ -70,7 +70,7 @@
     <div class="panel-heading">Related Documents</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Document Link</a></li>
+            <li><a href="{{ route('activity.document-link.index', $id) }}">Document Link</a></li>
         </ul>
     </div>
 </div>
