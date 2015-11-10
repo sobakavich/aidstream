@@ -78,7 +78,7 @@
     <div class="panel-heading">Relations</div>
     <div class="panel-body">
         <ul class="nav">
-            <li><a href="#">Related Activity</a></li>
+            <li><a href="{{ route('activity.related-activity.index', $id) }}">Related Activity</a></li>
         </ul>
     </div>
 </div>
