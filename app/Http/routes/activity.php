@@ -35,5 +35,6 @@ $router->group(
         $router->post('activity/{id}/update-status', 'ActivityController@updateStatus');
         $router->resource('activity.legacy-data', 'LegacyDataController');
         $router->resource('activity.condition', 'ConditionController');
+        $router->resource('activity.result', 'ResultController');
     }
 );
