@@ -140,6 +140,15 @@ class BaseForm extends Form
         );
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function addTitleCollection($name = 'title')
+    {
+        return $this->addCollection($name, 'Activity\Title');
+    }
+
     public function addSaveButton()
     {
         return $this->add(
