@@ -1,10 +1,12 @@
 <?php namespace App\Core\V201\Element\Activity;
 
+use App\Core\Elements\BaseElement;
+
 /**
  * Class OtherIdentifier
  * @package app\Core\V201\Element\Activity
  */
-class OtherIdentifier
+class OtherIdentifier extends BaseElement
 {
     /**
      * @return string
@@ -20,5 +22,31 @@ class OtherIdentifier
     public function getRepository()
     {
         return App('App\Core\V201\Repositories\Activity\OtherIdentifierRepository');
+    }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData     = [];
+        $otherIdentifiers = (array) $activity->other_identifier;
+        foreach ($otherIdentifiers as $otherIdentifier) {
+            $activityData [] = [
+                '@attributes' => [
+                    'ref'  => $otherIdentifier['reference'],
+                    'type' => $otherIdentifier['type']
+                ],
+                'owner-org'   => [
+                    '@attributes' => [
+                        'ref' => $otherIdentifier['owner_org'][0]['reference']
+                    ],
+                    'narrative'   => $this->buildNarrative($otherIdentifier['owner_org'][0]['narrative'])
+                ]
+            ];
+        }
+
+        return $activityData;
     }
 }

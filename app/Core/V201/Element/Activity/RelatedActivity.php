@@ -21,4 +21,24 @@ class RelatedActivity
     {
         return App('App\Core\V201\Repositories\Activity\RelatedActivity');
     }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData      = [];
+        $relatedActivities = (array) $activity->related_activity;
+        foreach ($relatedActivities as $relatedActivity) {
+            $activityData[] = [
+                '@attributes' => [
+                    'ref'  => $relatedActivity['activity_identifier'],
+                    'type' => $relatedActivity['relationship_type']
+                ]
+            ];
+        }
+
+        return $activityData;
+    }
 }

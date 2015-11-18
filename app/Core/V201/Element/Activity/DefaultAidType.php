@@ -21,4 +21,19 @@ class DefaultAidType
     {
         return App('App\Core\V201\Repositories\Activity\DefaultAidType');
     }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData = [
+            '@attributes' => [
+                'code' => $activity['default_aid_type']
+            ]
+        ];
+
+        return $activityData;
+    }
 }
