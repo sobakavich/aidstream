@@ -34,5 +34,6 @@ $router->group(
         $router->resource('activity.transaction', 'TransactionController');
         $router->resource('activity.transaction-upload', 'TransactionUploadController');
         $router->resource('activity.legacy-data', 'LegacyDataController');
+        $router->post('activity/{id}/update-status', 'ActivityController@updateStatus');
     }
 );

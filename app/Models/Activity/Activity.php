@@ -116,4 +116,17 @@ class Activity extends Model
 
         return $transactions;
     }
+    /**
+     * @return array
+     */
+    public function getActivityDataListAttribute()
+    {
+        $activities = $this->toArray();
+        foreach ($activities as $activityIndex => $activity) {
+            !(null === $activities[$activityIndex]) ?: $activities[$activityIndex] = [];
+        }
+
+        return $activities;
+
+    }
 }

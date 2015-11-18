@@ -1,11 +1,13 @@
 <?php namespace App\Core\V201\Element\Activity;
 
+use App\Core\Elements\BaseElement;
+
 /**
  * Class Title
  * contains the function that returns the title form and title repository
  * @package app\Core\V201\Element\Activity
  */
-class Title
+class Title extends BaseElement
 {
     /**
      * @return title form
@@ -21,5 +23,22 @@ class Title
     public function getRepository()
     {
         return App('App\Core\V201\Repositories\Activity\Title');
+    }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData = [];
+        $titles       = (array) $activity->sector;
+        foreach ($titles as $title) {
+            $activityData[] = [
+                'narrative' => $this->buildNarrative($title)
+            ];
+        }
+
+        return $activityData;
     }
 }

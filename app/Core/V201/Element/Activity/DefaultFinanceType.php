@@ -21,4 +21,19 @@ class DefaultFinanceType
     {
         return App('App\Core\V201\Repositories\Activity\DefaultFinanceType');
     }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData = [
+            '@attributes' => [
+                'code' => $activity['default_finance_type']
+            ]
+        ];
+
+        return $activityData;
+    }
 }
