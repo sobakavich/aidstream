@@ -71,9 +71,9 @@ class ActivityScopeController extends Controller
         $activityStatus = $request->all();
         $activityData   = $this->activityManager->getActivityData($id);
         if ($this->activityScopeManager->update($activityStatus, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Scope Updated!'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Scope Updated!');
         }
 
         return redirect()->back();

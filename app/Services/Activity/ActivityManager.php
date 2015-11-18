@@ -1,6 +1,7 @@
 <?php namespace App\Services\Activity;
 
 use App\Core\Version;
+use App\Models\Activity\Activity;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
 
@@ -90,5 +91,23 @@ class ActivityManager
     public function getActivityData($activityId)
     {
         return $this->activityRepo->getActivityData($activityId);
+    }
+
+    /**
+     * @param array    $input
+     * @param Activity $activityData
+     */
+    public function updateStatus(array $input, Activity $activityData)
+    {
+        return $this->activityRepo->updateStatus($input, $activityData);
+    }
+
+    /**
+     * @param $activity_id
+     * @return mixed
+     */
+    public function resetActivityWorkflow($activity_id)
+    {
+        return $this->activityRepo->resetActivityWorkflow($activity_id);
     }
 }

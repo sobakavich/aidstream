@@ -65,6 +65,8 @@ class DefaultTiedStatusController extends Controller
         $defaultTiedStatus = $request->all();
         $activityData      = $this->activityManager->getActivityData($id);
         if ($this->defaultTiedStatusManager->update($defaultTiedStatus, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
+
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Default Tied Status updated!');
         }
 

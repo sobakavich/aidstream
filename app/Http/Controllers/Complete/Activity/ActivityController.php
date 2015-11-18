@@ -4,6 +4,7 @@ use App\Core\V201\Requests\Activity\IatiIdentifierRequest;
 use App\Http\Controllers\Controller;
 use App\Services\Organization\OrganizationManager;
 use App\Services\SettingsManager;
+use Illuminate\Http\Request;
 use Illuminate\Session\SessionManager;
 use App\Services\Activity\ActivityManager;
 use App\Services\FormCreator\Activity\Identifier;
@@ -107,7 +108,74 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        return view('Activity.show', compact('id'));
+        $activityData               = $this->activityManager->getActivityData($id);
+        $identifier                 = (array) $activityData->identifier;
+        $other_identifier           = (array) $activityData->other_identifier;
+        $title                      = (array) $activityData->title;
+        $description                = (array) $activityData->description;
+        $activity_status            = (array) $activityData->activity_status;
+        $activity_date              = (array) $activityData->activity_date;
+        $contact_info               = (array) $activityData->contact_info;
+        $activity_scope             = (array) $activityData->activity_scope;
+        $participating_organization = (array) $activityData->participating_organization;
+        $recipient_country          = (array) $activityData->recipient_country;
+        $recipient_region           = (array) $activityData->recipient_region;
+        $location                   = (array) $activityData->location;
+        $sector                     = (array) $activityData->sector;
+        $country_budget_items       = (array) $activityData->country_budget_items;
+        $policy_maker               = (array) $activityData->policy_maker;
+        $collaboration_type         = (array) $activityData->collaboration_type;
+        $default_flow_type          = (array) $activityData->default_flow_type;
+        $default_finance_type       = (array) $activityData->default_finance_type;
+        $default_aid_type           = (array) $activityData->default_aid_type;
+        $default_tied_status        = (array) $activityData->default_tied_status;
+        $budget                     = (array) $activityData->budget;
+        $planned_disbursement       = (array) $activityData->planned_disbursement;
+        $capital_spend              = (array) $activityData->capital_spend;
+        $document_link              = (array) $activityData->document_link;
+        $related_activity           = (array) $activityData->related_activity;
+        $legacy_data                = (array) $activityData->legacy_data;
+        $conditions                 = (array) $activityData->conditions;
+        $result                     = (array) $activityData->result;
+        $activity_workflow          = $activityData->activity_workflow;
+        $organization_id            = $activityData->organization_id;
+
+        return view(
+            'Activity.show',
+            compact(
+                'id',
+                'identifier',
+                'other_identifier',
+                'title',
+                'description',
+                'activity_status',
+                'activity_date',
+                'contact_info',
+                'activity_scope',
+                'participating_organization',
+                'recipient_country',
+                'recipient_region',
+                'location',
+                'sector',
+                'country_budget_items',
+                'policy_maker',
+                'collaboration_type',
+                'default_flow_type',
+                'default_finance_type',
+                'default_aid_type',
+                'default_tied_status',
+                'budget',
+                'planned_disbursement',
+                'capital_spend',
+                'document_link',
+                'related_activity',
+                'legacy_data',
+                'conditions',
+                'result',
+                'activity_workflow',
+                'organization_id'
+            )
+        );
     }
 
     /**
@@ -120,5 +188,20 @@ class ActivityController extends Controller
     protected function createGateUnauthorizedException($ability, $arguments)
     {
         return new HttpException(403, 'This action is unauthorized.');
+    }
+
+    /**
+     * @param         $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateStatus($id, Request $request)
+    {
+        $input        = $request->all();
+        $activityData = $this->activityManager->getActivityData($id);
+
+        $this->activityManager->updateStatus($input, $activityData);
+
+        return redirect()->back();
     }
 }

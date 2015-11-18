@@ -68,9 +68,9 @@ class ActivityDateController extends Controller
         $activityDate = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->activityDateManager->update($activityDate, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Date Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Date Updated !');
         }
 
         return redirect()->back();

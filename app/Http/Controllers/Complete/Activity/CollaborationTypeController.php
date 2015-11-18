@@ -65,6 +65,8 @@ class CollaborationTypeController extends Controller
         $collaborationType = $request->all();
         $activityData      = $this->activityManager->getActivityData($id);
         if ($this->collaborationTypeManager->update($collaborationType, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
+
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity collaboration type updated!');
         }
 

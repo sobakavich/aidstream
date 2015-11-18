@@ -67,9 +67,9 @@ class RecipientRegionController extends Controller
         $recipientRegion = $request->all();
         $activityData    = $this->activityManager->getActivityData($id);
         if ($this->recipientRegionManager->update($recipientRegion, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Recipient Region Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Recipient Region Updated !');
         }
 
         return redirect()->back();

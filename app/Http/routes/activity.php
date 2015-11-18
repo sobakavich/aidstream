@@ -32,5 +32,6 @@ $router->group(
         $router->resource('activity.related-activity', 'RelatedActivityController');
         $router->resource('activity.transaction', 'TransactionController');
         $router->resource('activity.transaction-upload', 'TransactionUploadController');
+        $router->post('activity/{id}/update-status', 'ActivityController@updateStatus');
     }
 );

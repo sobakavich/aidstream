@@ -65,9 +65,9 @@ class LocationController extends Controller
         $location     = $request->all();
         $activityData = $this->activityManager->getActivityData($id);
         if ($this->locationManager->update($location, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Location Updated!'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Location Updated!');
         }
 
         return redirect()->back();

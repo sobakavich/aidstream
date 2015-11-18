@@ -65,6 +65,8 @@ class DefaultAidTypeController extends Controller
         $defaultAidType = $request->all();
         $activityData   = $this->activityManager->getActivityData($id);
         if ($this->defaultAidTypeManager->update($defaultAidType, $activityData)) {
+            $this->activityManager->resetActivityWorkflow($id);
+
             return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Default Aid Type updated!');
         }
 

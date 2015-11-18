@@ -71,9 +71,9 @@ class ActivityStatusController extends Controller
         $activityStatus = $request->all();
         $activityData   = $this->activityManager->getActivityData($id);
         if ($this->activityStatusManager->update($activityStatus, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Status Updated!'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Status Updated!');
         }
 
         return redirect()->back();

@@ -72,9 +72,9 @@ class DescriptionController extends Controller
         $activityDescription = $request->all();
         $activityData        = $this->activityManager->getActivityData($id);
         if ($this->descriptionManager->update($activityDescription, $activityData)) {
-            return redirect()->to(sprintf('/activity/%s', $id))->withMessage(
-                'Activity Description Updated !'
-            );
+            $this->activityManager->resetActivityWorkflow($id);
+
+            return redirect()->to(sprintf('/activity/%s', $id))->withMessage('Activity Description Updated !');
         }
 
         return redirect()->back();
