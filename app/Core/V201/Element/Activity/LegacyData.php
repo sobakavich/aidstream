@@ -21,4 +21,25 @@ class LegacyData
     {
         return App('App\Core\V201\Repositories\Activity\LegacyData');
     }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData = [];
+        $legacyDatas  = (array) $activity->legacy_data;
+        foreach ($legacyDatas as $legacyData) {
+            $activityData[] = [
+                '@attributes' => [
+                    'name'            => $legacyData['name'],
+                    'value'           => $legacyData['value'],
+                    'iati-equivalent' => $legacyData['iati_equivalent']
+                ]
+            ];
+        }
+
+        return $activityData;
+    }
 }

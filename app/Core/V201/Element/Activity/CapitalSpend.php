@@ -21,4 +21,19 @@ class CapitalSpend
     {
         return App('App\Core\V201\Repositories\Activity\CapitalSpend');
     }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData = [
+            '@attributes' => [
+                'percentage' => $activity['capital_spend']
+            ]
+        ];
+
+        return $activityData;
+    }
 }
