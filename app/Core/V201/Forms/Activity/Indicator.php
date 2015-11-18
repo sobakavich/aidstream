@@ -2,7 +2,7 @@
 
 use App\Core\Form\BaseForm;
 use App\Core\V201\Traits\Forms\Result\Indicator as IndicatorTrait;
-use App\Core\V201\Traits\Forms\Result\Title;
+use App\Core\V201\Traits\Forms\Result\Title as TitleTrait;
 use App\Core\V201\Traits\Forms\Result\Description;
 use App\Core\V201\Traits\Forms\Result\Baseline;
 use App\Core\V201\Traits\Forms\Result\Period;
@@ -14,7 +14,7 @@ use App\Core\V201\Traits\Forms\Result\Period;
  */
 class Indicator extends BaseForm
 {
-    use IndicatorTrait, Title, Description, Baseline, Period;
+    use IndicatorTrait, TitleTrait, Description, Baseline, Period;
 
     /**
      * builds the activity indicator form

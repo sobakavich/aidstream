@@ -314,4 +314,9 @@ class IatiActivity extends WizardIatiActivity
     {
         return app('App\Core\V201\Requests\Activity\Result');
     }
+
+    public function getActivityXmlService()
+    {
+        return app('App\Core\V201\Element\Activity\XmlService');
+    }
 }

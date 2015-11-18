@@ -17,4 +17,21 @@ class Identifier
     {
         return App('App\Core\V201\Repositories\Activity\IatiIdentifierRepository');
     }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData = [];
+        $identifiers  = (array) $activity->identifier;
+        foreach ($identifiers as $identifier) {
+            $activityData[] = [
+                '@value' => $identifier['iati_identifier_text']
+            ];
+        }
+
+        return $activityData;
+    }
 }

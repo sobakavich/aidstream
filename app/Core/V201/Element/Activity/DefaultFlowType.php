@@ -21,4 +21,19 @@ class DefaultFlowType
     {
         return App('App\Core\V201\Repositories\Activity\DefaultFlowType');
     }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData = [
+            '@attributes' => [
+                'code' => $activity['default_flow_type']
+            ]
+        ];
+
+        return $activityData;
+    }
 }

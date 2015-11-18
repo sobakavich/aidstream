@@ -21,4 +21,19 @@ class ActivityScope
     {
         return App('App\Core\V201\Repositories\Activity\ActivityScope');
     }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData = [
+            '@attributes' => [
+                'code' => $activity['activity_scope']
+            ]
+        ];
+
+        return $activityData;
+    }
 }

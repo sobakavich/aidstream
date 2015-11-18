@@ -1,10 +1,12 @@
 <?php namespace App\Core\V201\Element\Activity;
 
+use App\Core\Elements\BaseElement;
+
 /**
  * Class CountryBudgetItem
  * @package app\Core\V201\Element\Activity
  */
-class CountryBudgetItem
+class CountryBudgetItem extends BaseElement
 {
     /**
      * @return  country Budget Item form
@@ -20,5 +22,33 @@ class CountryBudgetItem
     public function getRepository()
     {
         return App('App\Core\V201\Repositories\Activity\CountryBudgetItem');
+    }
+
+    /**
+     * @param $activity
+     * @return array
+     */
+    public function getXmlData($activity)
+    {
+        $activityData      = [];
+        $countryBudgetItem = (array) $activity->country_budget_items;
+        foreach ($countryBudgetItem as $CountryBudgetItem) {
+            $activityData[] = [
+                '@attributes' => [
+                    'vocabulary' => $CountryBudgetItem['vocabulary']
+                ],
+                'budget-item' => [
+                    '@attributes' => [
+                        'code'       => $CountryBudgetItem['budget_item'][0]['code'],
+                        'percentage' => $CountryBudgetItem['budget_item'][0]['percentage']
+                    ],
+                    'description' => [
+                        'narrative' => $this->buildNarrative($CountryBudgetItem['description'][0]['narrative'])
+                    ]
+                ]
+            ];
+        }
+
+        return $activityData;
     }
 }
