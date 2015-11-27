@@ -79,9 +79,11 @@ $(document).ready(function () {
     $('.checkAll').click(function () {
         $('.field1').not('[readonly="readonly"]').prop('checked', this.checked);
     });
-    $('input[type="checkbox"][readonly="readonly"]').change(function(e){
-        $(this).prop('checked', !this.checked);
+
+    $('input[readonly="readonly"]').click(function(e){
+        e.preventDefault();
     });
+    $('select[readonly=readonly] option:not(:selected)').prop('disabled', true);
 
     /*
      * Confirmation for form submission
