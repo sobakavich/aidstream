@@ -52,7 +52,9 @@ $(document).ready(function () {
 
     /* Removes form on click to Remove This button */
     $('form').delegate('.remove_from_collection', 'click', function () {
+        var collectionForm = $(this).parents('.collection_form').eq(0);
         $(this).parent('.form-group').remove();
+        if ($('> .form-group', collectionForm).length === 0) collectionForm.next('.add_to_collection').trigger('click');
     });
 
     var language = $.cookie('language');
@@ -75,7 +77,10 @@ $(document).ready(function () {
     }
 
     $('.checkAll').click(function () {
-        $('.field1').prop('checked', this.checked);
+        $('.field1').not('[readonly="readonly"]').prop('checked', this.checked);
+    });
+    $('input[type="checkbox"][readonly="readonly"]').change(function(e){
+        $(this).prop('checked', !this.checked);
     });
 
     /*
