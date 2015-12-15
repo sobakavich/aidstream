@@ -156,6 +156,10 @@ class SettingsController extends Controller
         return redirect()->to('/')->withResponse($response);
     }
 
+    /**
+     * @param $newPublishingType
+     * @param $activities
+     */
     public function generateNewFiles($newPublishingType, $activities)
     {
         $activityElement = $this->activityManager->getActivityElement();

@@ -241,6 +241,12 @@ class XmlGenerator
         }
     }
 
+    /**
+     * @param $filename
+     * @param $organizationId
+     * @param $publishedActivity
+     * @return array
+     */
     public function savePublishedFiles($filename, $organizationId, $publishedActivity)
     {
         $published = $this->activityPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organizationId]);
