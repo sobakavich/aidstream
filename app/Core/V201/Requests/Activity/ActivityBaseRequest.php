@@ -1,6 +1,7 @@
 <?php namespace App\Core\V201\Requests\Activity;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -16,19 +17,24 @@ class ActivityBaseRequest extends Request
             'unique_lang',
             function ($attribute, $value, $parameters, $validator) {
                 $languages = [];
-                $messages  = [];
-                $check     = true;
-                foreach ($value as $narrativeIndex => $narrative) {
-                    $language                                                         = $narrative['language'];
-                    $messages[sprintf('%s.%s.language', $attribute, $narrativeIndex)] = 'Languages should be unique.';
+                foreach ($value as $narrative) {
+                    $language = $narrative['language'];
                     if (in_array($language, $languages)) {
-                        $check = false;
+                        return false;
                     }
                     $languages[] = $language;
                 }
-                $check ?: $validator->messages()->merge($messages);
 
                 return true;
+            }
+        );
+
+        Validator::extendImplicit(
+            'required_with_language',
+            function ($attribute, $value, $parameters, $validator) {
+                $language = preg_replace('/([^~]+).narrative/', '$1.language', $attribute);
+
+                return !(Input::get($language) && !Input::get($attribute));
             }
         );
     }
@@ -39,12 +45,16 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getRulesForNarrative($formFields, $formBase)
+    public function getRulesForNarrative($formFields, $formBase, $required = false)
     {
         $rules                                     = [];
         $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
+        $narrativeRules                            = [];
+        !$required ?: $narrativeRules[] = 'required';
+        $narrativeRules[] = 'required_with_language';
+        $narrativeRules   = implode('|', $narrativeRules);
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = 'required';
+            $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)] = $narrativeRules;
         }
 
         return $rules;
@@ -56,11 +66,12 @@ class ActivityBaseRequest extends Request
      * @param $formBase
      * @return array
      */
-    public function getMessagesForNarrative($formFields, $formBase)
+    public function getMessagesForNarrative($formFields, $formBase, $required = false)
     {
-        $messages = [];
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'Languages should be unique.';
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[sprintf('%s.narrative.%s.narrative.required', $formBase, $narrativeIndex)] = 'Narrative text is required';
+            !$required ?: $messages[sprintf('%s.narrative.%s.narrative.required', $formBase, $narrativeIndex)] = 'Narrative is required.';
+            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'Narrative is required with language.';
         }
 
         return $messages;
