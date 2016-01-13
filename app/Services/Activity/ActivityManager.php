@@ -4,6 +4,7 @@ use App\Core\Version;
 use App\Models\Activity\Activity;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as Logger;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ActivityManager
@@ -82,7 +83,7 @@ class ActivityManager
 
     /**
      * @param $organizationId
-     * @return modal
+     * @return Model
      */
     public function getActivities($organizationId)
     {
@@ -91,7 +92,7 @@ class ActivityManager
 
     /**
      * @param $activityId
-     * @return modal
+     * @return modal //
      */
     public function getActivityData($activityId)
     {

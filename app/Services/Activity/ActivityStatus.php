@@ -5,6 +5,10 @@ use App\Models\Activity\Activity;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log;
 
+/**
+ * Class ActivityStatus
+ * @package App\Services\Activity
+ */
 class ActivityStatus
 {
 
@@ -20,6 +24,10 @@ class ActivityStatus
      * @var Version
      */
     protected $version;
+
+    /**
+     * @var
+     */
     protected $activityStatusRepo;
 
     /**
@@ -58,7 +66,7 @@ class ActivityStatus
             );
 
             return true;
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->log->error(
                 sprintf('Activity Status could not be updated due to %s', $exception->getMessage()),
                 [

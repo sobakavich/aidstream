@@ -25,13 +25,33 @@ class OrganizationController extends Controller
     protected $settingsManager;
 
     /**
+     * @var OrgReportingOrgForm
+     */
+    protected $orgReportingOrgFormCreator;
+
+    /**
+     * @var OrgNameManager
+     */
+    protected $nameManager;
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var ActivityManager
+     */
+    protected $activityManager;
+
+    /**
      * Create a new controller instance.
      *
      * @param SettingsManager     $settingsManager
      * @param OrganizationManager $organizationManager
      * @param OrgReportingOrgForm $orgReportingOrgFormCreator
      * @param OrgNameManager      $nameManager
-     * @param Request             $request
+//     * @param Request             $request
      * @param ActivityManager     $activityManager
      */
     public function __construct(
@@ -39,14 +59,13 @@ class OrganizationController extends Controller
         OrganizationManager $organizationManager,
         OrgReportingOrgForm $orgReportingOrgFormCreator,
         OrgNameManager $nameManager,
-        Request $request,
         ActivityManager $activityManager
     ) {
         $this->settingsManager            = $settingsManager;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
         $this->nameManager                = $nameManager;
-        $this->request                    = $request;
+//        $this->request                    = $request;
         $this->activityManager            = $activityManager;
         $this->middleware('auth');
     }
@@ -66,6 +85,7 @@ class OrganizationController extends Controller
 
             return redirect('/settings')->withResponse($response);
         }
+
         $organizationData              = $this->nameManager->getOrganizationData($id);
         $reporting_org                 = (array) $organization->reporting_org[0];
         $org_name                      = (array) $organizationData->name;
@@ -73,8 +93,12 @@ class OrganizationController extends Controller
         $recipient_organization_budget = (array) $organizationData->recipient_organization_budget;
         $recipient_country_budget      = (array) $organizationData->recipient_country_budget;
         $document_link                 = (array) $organizationData->document_link;
+        $status                        = $organizationData->status;
 
-        $status = $organizationData->status;
+        $status_label     = ['draft', 'completed', 'verified', 'published'];
+        $btn_status_label = ['Complete', 'Verify', 'Publish'];
+        $btn_text         = $status > 2 ? "" : $btn_status_label[$status];
+        $extra            = ['status_label' => $status_label, 'btn_text' => $btn_text];
 
         return view(
             'Organization/show',
@@ -86,7 +110,8 @@ class OrganizationController extends Controller
                 'recipient_organization_budget',
                 'recipient_country_budget',
                 'document_link',
-                'status'
+                'status',
+                'extra'
             )
         );
     }
@@ -143,11 +168,13 @@ class OrganizationController extends Controller
     }
 
     /**
-     * @param string $action
-     * @param string $id
+     * List published files for an
+     * @param Request $request
+     * @param string  $action
+     * @param string  $id
      * @return \Illuminate\View\View
      */
-    public function listPublishedFiles($action = '', $id = '')
+    public function listPublishedFiles(Request $request, $action = '', $id = '')
     {
         if ($action == 'delete') {
             $result   = $this->organizationManager->deletePublishedFile($id);
@@ -157,7 +184,8 @@ class OrganizationController extends Controller
 
             return redirect()->back()->withResponse($response);
         }
-        $org_id        = $this->request->session()->get('org_id');
+
+        $org_id        = $request->session()->get('org_id');
         $list          = $this->organizationManager->getPublishedFiles($org_id);
         $activity_list = $this->activityManager->getActivityPublishedFiles($org_id);
 

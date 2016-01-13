@@ -5,7 +5,13 @@ $router->group(
     function ($router) {
         $router->get('organization/{id}/identifier', 'OrganizationController@showIdentifier');
         $router->resource('organization', 'OrganizationController');
-        $router->post('organization/{id}/update-status', 'OrganizationController@updateStatus');
+        $router->post(
+            'organization/{id}/update-status',
+            [
+                'as'   => 'organization.updateStatus',
+                'uses' => 'OrganizationController@updateStatus'
+            ]
+        );
         $router->resource('organization.reportingOrg', 'OrgReportingOrgController');
         $router->resource('organization.name', 'NameController');
         $router->resource('organization.total-budget', 'OrgTotalBudgetController');
@@ -15,6 +21,7 @@ $router->group(
         $router->resource('organization.total-expenditure', 'TotalExpenditureController');
         $router->resource('organization.document-link', 'DocumentLinkController');
 
+//
         $router->get(
             'list-published-files/{action?}/{id?}',
             [

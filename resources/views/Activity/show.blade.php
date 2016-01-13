@@ -42,6 +42,8 @@
                <a href="{{route('change-activity-default', $id)}}" class="pull-right"><span class="glyphicon glyphicon-triangle-left"></span>Override Activity Default</a>
                <div class="panel panel-default panel-element-detail">
                    <div class="panel-body">
+                       {{----}}
+
                        {{--*/
                        $identifier = $activityDataList['identifier'];
                        $otherIdentifiers = $activityDataList['other_identifier'];
@@ -72,6 +74,8 @@
                        $results = $activityDataList['results'];
                        $transactions = $activityDataList['transaction'];
                        /*--}}
+
+                       {{----}}
                         
                         @if(!empty($identifier))
                             <div class="panel panel-default">

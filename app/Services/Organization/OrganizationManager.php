@@ -5,6 +5,7 @@ use App;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
+use Illuminate\Database\Eloquent\Model;
 
 class OrganizationManager
 {
@@ -48,7 +49,7 @@ class OrganizationManager
 
     /**
      * @param $id
-     * @return model
+     * @return Organization
      */
     public function getOrganization($id)
     {

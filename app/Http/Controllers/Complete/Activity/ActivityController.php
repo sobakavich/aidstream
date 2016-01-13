@@ -117,13 +117,14 @@ class ActivityController extends Controller
         $organization = $this->organizationManager->getOrganization(Session::get('org_id'));
         $form         = $this->identifierForm->create();
         $settings     = $this->settingsManager->getSettings($this->organization_id);
+
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
 
             return redirect('/settings')->withResponse($response);
         }
+
         $defaultFieldValues    = $settings->default_field_values;
-        $organization          = $this->organizationManager->getOrganization($this->organization_id);
         $reportingOrganization = $organization->reporting_org;
 
         return view('Activity.create', compact('form', 'organization', 'reportingOrganization', 'defaultFieldValues'));
@@ -312,6 +313,7 @@ class ActivityController extends Controller
 
             return true;
         } catch (\Exception $e) {
+
             $this->loggerInterface->error(sprintf('Registry Info could not be registered due to %s', $e->getMessage()));
 
             return false;

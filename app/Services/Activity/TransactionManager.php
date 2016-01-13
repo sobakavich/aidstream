@@ -30,6 +30,10 @@ class TransactionManager
      * @var Version
      */
     protected $version;
+
+    /**
+     * @var
+     */
     protected $transactionRepo;
 
     /**

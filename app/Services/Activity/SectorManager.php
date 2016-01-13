@@ -44,6 +44,7 @@ class SectorManager
      */
     public function update(array $activityDetails, Activity $activity)
     {
+// activity model
         try {
             $this->sectorRepo->update($activityDetails, $activity);
             $this->logger->info(

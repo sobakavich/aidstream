@@ -17,11 +17,29 @@ use App\Services\FormCreator\Organization\RecipientCountryBudgetForm as FormBuil
 class RecipientCountryBudgetController extends Controller
 {
 
+    /**
+     * @var
+     */
     protected $formBuilder;
+    /**
+     * @var RecipientCountryBudgetManager
+     */
     protected $recipientCountryBudgetManager;
+    /**
+     * @var FormBuilder
+     */
     protected $recipientCountryBudgetForm;
+    /**
+     * @var OrganizationManager
+     */
     protected $organizationManager;
 
+    /**
+     * RecipientCountryBudgetController constructor.
+     * @param FormBuilder                   $formBuilder
+     * @param RecipientCountryBudgetManager $recipientCountryBudgetManager
+     * @param OrganizationManager           $organizationManager
+     */
     public function __construct(FormBuilder $formBuilder, RecipientCountryBudgetManager $recipientCountryBudgetManager, OrganizationManager $organizationManager)
     {
         $this->middleware('auth');

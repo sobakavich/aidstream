@@ -4,6 +4,7 @@ use App\Core\Version;
 use App\Models\Activity\ActivityResult;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Logging\Log as DbLogger;
+use Illuminate\Database\Eloquent\Collection;
 use Psr\Log\LoggerInterface as Logger;
 use Illuminate\Database\DatabaseManager;
 
@@ -73,7 +74,7 @@ class ResultManager
             );
 
             return true;
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->database->rollback();
             $this->logger->error(
                 sprintf('Activity Result could not be updated due to %s', $exception->getMessage()),
@@ -89,7 +90,7 @@ class ResultManager
 
     /**
      * @param $activityId
-     * @return collection
+     * @return Collection
      */
     public function getResults($activityId)
     {
@@ -98,6 +99,7 @@ class ResultManager
 
     /**
      * @param $id
+     * @param $activityId
      * @return model
      */
     public function getResult($id, $activityId)
