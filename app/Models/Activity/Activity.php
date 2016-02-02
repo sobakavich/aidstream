@@ -50,7 +50,8 @@ class Activity extends Model
         'default_field_values',
         'humanitarian_scope',
         'published_to_registry',
-        'activity_workflow'
+        'activity_workflow',
+        'id'
     ];
 
     /**
