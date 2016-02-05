@@ -344,4 +344,16 @@ $(document).ready(function () {
           container.hide();
       }
   });
+
+
+  $(".clickable-row").click(function() {
+      window.document.location = $(this).data("href");
+  });
+
+  $(".clickable-row > td > :checkbox").click(function(e){
+    e.stopPropagation();
+    $(this).parents('.clickable-row').toggleClass('clickable-row-bg');
+  });
+
+
 });
