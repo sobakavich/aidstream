@@ -23,15 +23,19 @@ class Document
     }
 
     /**
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $orgIds  = ['2', '100', '9']; // get organizationIds //
         $docData = [];
 
-        foreach ($orgIds as $id) {
-            $docData[] = $this->document->docDataFetch($id);
+        foreach ($accountIds as $accountId) {
+            $organization = getOrganizationFor($accountId);
+
+            if ($organization) {
+                $docData[]    = $this->document->docDataFetch($organization->id, $accountId);
+            }
         }
 
         return $docData;

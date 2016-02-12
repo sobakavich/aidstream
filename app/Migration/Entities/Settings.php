@@ -24,15 +24,19 @@ class Settings
     }
 
     /**
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $orgIds       = ['2', '100', '9']; // fetch OrgIds.
         $SettingsData = [];
 
-        foreach ($orgIds as $id) {
-            $SettingsData[] = $this->settings->SettingsDataFetch($id);
+        foreach ($accountIds as $accountId) {
+            $organization = getOrganizationFor($accountId);
+
+            if ($organization) {
+                $SettingsData[] = $this->settings->SettingsDataFetch($organization->id, $accountId);
+            }
         }
 
         return $SettingsData;

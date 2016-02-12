@@ -30,14 +30,17 @@ class User
 
     /**
      * Gets Users data from old database.
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $userId = ['96', '256', '255', '254']; // fetch all User Ids/Users.
+        foreach ($accountIds as $accountId) {
+            $users = $this->migrateUser->getUsersFor($accountId);
 
-        foreach ($userId as $id) {
-            $this->data[] = $this->migrateUser->userDataFetch($id);
+            foreach ($users as $user) {
+                $this->data[] = $this->migrateUser->userDataFetch($user);
+            }
         }
 
         return $this->data;

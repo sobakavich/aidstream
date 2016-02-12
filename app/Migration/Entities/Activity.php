@@ -30,14 +30,17 @@ class Activity
 
     /**
      * Gets Activities data from old database.
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $orgId = ['2', '100', '9']; // get Organization Ids.
+        foreach ($accountIds as $accountId) {
+            $organization = getOrganizationFor($accountId);
 
-        foreach ($orgId as $id) {
-            $this->data[] = $this->activityData->fetchActivityData($id);
+            if ($organization) {
+                $this->data[] = $this->activityData->fetchActivityData($organization->id, $accountId);
+            }
         }
 
         return $this->data;

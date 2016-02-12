@@ -30,14 +30,17 @@ class OrganizationData
 
     /**
      * Gets OrganizationData data from old database.
+     * @param $accountIds
      * @return array
      */
-    public function getData()
+    public function getData($accountIds)
     {
-        $orgIds = ['2', '9', '100'];
+        foreach ($accountIds as $accountId) {
+            $organization = getOrganizationFor($accountId);
 
-        foreach ($orgIds as $id) {
-            $this->data[] = $this->organizationData->OrganizationDataFetch($id);
+            if ($organization) {
+                $this->data[] = $this->organizationData->OrganizationDataFetch($organization->id, $accountId);
+            }
         }
 
         return $this->data;

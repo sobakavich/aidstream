@@ -39,15 +39,17 @@ class OrganizationMigrator implements MigratorContract
     /**
      * {@inheritdoc}
      */
-    public function migrate()
+    public function migrate(array $accountIds)
     {
-        $organizationDetail = $this->organization->getData();
+        $organizationDetail = $this->organization->getData($accountIds);
 
         foreach ($organizationDetail as $detail) {
-            $organization = $this->organizationModel->newInstance($detail);
+            if ($detail) {
+                $organization = $this->organizationModel->newInstance($detail);
 
-            if (!$organization->save()) {
-                return 'Error during Organization table migration.';
+                if (!$organization->save()) {
+                    return 'Error during Organization table migration.';
+                }
             }
         }
 

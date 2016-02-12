@@ -31,7 +31,8 @@
     "files": [
       "app/Helpers/HelperLanguage.php",
       "app/Helpers/TimeZone.php",
-      "app/Helpers/linkHelpers.php"
+      "app/Helpers/linkHelpers.php",
+      "app/Migration/helper.php"
     ],
     "classmap": [
       "database"
