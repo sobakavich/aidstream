@@ -33,7 +33,9 @@
       "app/Helpers/TimeZone.php",
       "app/Helpers/linkHelpers.php",
       "app/Helpers/helper.php",
-      "app/Helpers/HideEmptyArray.php"
+      "app/Helpers/HideEmptyArray.php",
+      "app/Migration/Helpers/helper.php",
+      "app/Migration/Helpers/readTemplateHeaders.php"
     ],
     "classmap": [
       "database"
