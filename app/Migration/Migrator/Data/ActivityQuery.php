@@ -2,8 +2,10 @@
 
 use App\Migration\ActivityData;
 use App\Migration\Elements\ActivityDate;
+use App\Migration\Elements\ContactInfo;
 use App\Migration\Elements\Description;
 use App\Migration\Elements\Identifier;
+use App\Migration\Elements\Location;
 use App\Migration\Elements\OtherIdentifier;
 use App\Migration\Elements\ParticipatingOrganization;
 use App\Migration\Elements\RecipientCountry;
@@ -287,7 +289,6 @@ class ActivityQuery extends Query
         $dataDescription = null;
 
         foreach ($descriptions as $description) {
-            $language = "";
             $typeCode = "";
             $descType = $this->connection->table('iati_description')
                                          ->select('@type as type')
@@ -306,18 +307,8 @@ class ActivityQuery extends Query
                                                       ->select('*', '@xml_lang as xml_lang_id')
                                                       ->where('description_id', '=', $description->id)
                                                       ->get();
-            $dataNarrative         = [];
 
-            foreach ($descriptionNarratives as $eachNarrative) {
-                $narrative_text = $eachNarrative->text;
-
-                if ($eachNarrative->xml_lang_id != "") {
-                    $language = getLanguageCodeFor($eachNarrative->xml_lang_id);
-                }
-                $dataNarrative[] = ['narrative' => $narrative_text, 'language' => $language];
-            }
-
-            $dataDescription[] = $this->description->format(['code' => $typeCode, 'narrative' => $dataNarrative]);
+            $dataDescription[] = $this->description->format($descriptionNarratives, $typeCode);
         }
 
         if (!is_null($descriptions)) {
@@ -601,10 +592,11 @@ class ActivityQuery extends Query
 
     public function fetchContactInfo($activityId)
     {
-        $typeCode             = $contactInfoDepartmentNarrative = $contactOrgNarrative = $contactInfoPersonName = $contactInfoPersonNarrative = $contactInfoJobTitle = null;
+        $typeCode             = $contactInfoDepartmentNarrative = $contactOrgNarrative = $contactInfoPersonName = $contactInfoPersonNarrative = $contactInfoJobNarrative = $contactInfoJobTitle = null;
         $contactInfoData      = null;
         $select               = ['id', '@type as type'];
         $contactInfoInstances = getBuilderFor($select, 'iati_contact_info', 'activity_id', $activityId)->get();
+
         foreach ($contactInfoInstances as $eachcontactInfo) {
             $typeCode = fetchCode($eachcontactInfo->type, 'ContactType', '');
             //Organisation
@@ -670,19 +662,23 @@ class ActivityQuery extends Query
                 $narratives            = fetchAnyNarratives($narrativeBlockContent);
                 $mailingAddress[]      = ['narrative' => $narratives];
             }
-            //dd(json_encode($mailingAddress));
-            $contactInfoData[] = [
-                'type'            => $typeCode,
-                'organization'    => [['narrative' => isset($contactOrgNarrative) ? $contactOrgNarrative : []]],
-                'department'      => [['narrative' => isset($contactInfoDepartmentNarrative) ? $contactInfoDepartmentNarrative : []]],
-                'person_name'     => [['narrative' => isset($contactInfoPersonNarrative) ? $contactInfoPersonNarrative : []]],
-                'job_title'       => [['narrative' => isset($contactInfoJobNarrative) ? $contactInfoJobNarrative : []]],
-                'telephone'       => $telephone ? $telephone : [],
-                'email'           => $email ? $email : [],
-                'website'         => $website ? $website : [],
-                'mailing_address' => $mailingAddress ? $mailingAddress : []
-            ];
+
+            $contactInfo = new ContactInfo();
+
+            $contactInfoData[] = $contactInfo->format(
+                $typeCode,
+                $contactOrgNarrative,
+                $contactInfoDepartmentNarrative,
+                $contactInfoPersonNarrative,
+                $contactInfoJobNarrative,
+                $telephone,
+                $email,
+                $website,
+                $mailingAddress
+            );
+
         }    // end of ContactInfoInstances
+
         if (!is_null($contactInfoInstances)) {
             $this->data[$activityId]['contact_info'] = $contactInfoData;
         }
@@ -694,11 +690,13 @@ class ActivityQuery extends Query
     {
         $activityScope     = getBuilderFor('@code as code', 'iati_activity_scope', 'activity_id', $activityId)->first();
         $activityScopeData = null;
+
         if ($activityScope) {
             $activityScopeId   = $activityScope->code;
             $activityScopeCode = getBuilderFor('Code', 'ActivityScope', 'id', $activityScopeId)->first();
             $activityScopeData = $activityScopeCode->Code;
         }
+
         $this->data[$activityId]['activity_scope'] = $activityScopeData;
 
         return $this;
@@ -709,6 +707,19 @@ class ActivityQuery extends Query
         $locationData = null;
         $select   = ['id', '@ref as ref'];
         $locationInstance = getBuilderFor($select, 'iati_location', 'activity_id', $activityId)->get();
+
+        $ref                        = null;
+        $locationReach              = null;
+        $locationId                 = null;
+        $fetchNameNarratives        = null;
+        $fetchDescriptionNarratives = null;
+        $fetchActivityNarratives    = null;
+        $administrativeData         = null;
+        $srsName                    = null;
+        $exactnessCode              = null;
+        $locationClassCode          = null;
+        $featureDesignationCode     = null;
+        $positionData               = null;
 
         foreach($locationInstance as $location) {
             $ref = $location->ref;
@@ -796,21 +807,21 @@ class ActivityQuery extends Query
                 $featureDesignationCode = fetchCode($featureDesignation->code,'LocationType','');
             }
 
-            $locationData[] = [
-                'reference' => isset($ref) ? $ref : "",
-                'location_reach'=> [["code"=>isset($locationReach) ? $locationReach : []]],
-                'location_id'=> isset($locationID) ? $locationID : [['vocabulary'=>"",'code'=>""]],
-               //'location_id'=>[["vocabulary"=>isset($)]]
-                'name'=> [['narrative'=> isset($fetchNameNarratives) ? $fetchNameNarratives: [] ]],
-                'location_description'=> [['narrative'=>isset($fetchDescriptionNarratives) ? $fetchDescriptionNarratives: []]],
-                'activity_description'=> [['narrative'=>isset($fetchActivityNarratives) ? $fetchActivityNarratives :[]]],
-                'administrative'=> isset($administrativeData) ? $administrativeData : ['vocabulary' => "", 'code' => "", 'level' => ""],
-                'point'=> [['srs_name'=>isset($srsName) ? $srsName: "",'position'=>[isset($positionData) ? $positionData : ""] ]],
-                'exactness'=> [["code"=>isset($exactnessCode) ? $exactnessCode : ""]],
-                'location_class'=> [["code"=>isset($locationClassCode) ? $locationClassCode : ""]],
-                'feature_designation'=> [["code"=>isset($featureDesignationCode) ? $featureDesignationCode :""]],
-            ];
-
+            $locationFormatter = new Location();
+            $locationData[]    = $locationFormatter->format(
+                $ref,
+                $locationReach,
+                $locationId,
+                $fetchNameNarratives,
+                $fetchDescriptionNarratives,
+                $fetchActivityNarratives,
+                $administrativeData,
+                $srsName,
+                $exactnessCode,
+                $locationClassCode,
+                $featureDesignationCode,
+                $positionData
+            );
         } // end of locationInstances
 
         if (!is_null($locationInstance)) {
