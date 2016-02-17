@@ -99,6 +99,10 @@ function fetchCode($id, $table, $act = null)
                          ->first()) ? $code->Code : '';
 }
 
+/**
+ * @param $anyNarratives
+ * @return array
+ */
 function fetchAnyNarratives($anyNarratives)
 {
     $language  = "";
