@@ -64,6 +64,12 @@ class MigrateAidStream extends Command
     protected $description = 'Migrate Aidstream';
 
     /**
+     * Signature for the command.
+     * @var string
+     */
+    protected $signature = 'migrate-aidstream {table} {--country=country} {--trace}';
+
+    /**
      * @var DatabaseManager
      */
     protected $databaseManager;
@@ -107,10 +113,11 @@ class MigrateAidStream extends Command
      */
     public function fire()
     {
-        try {
-            $argument = $this->argument('table');
-            $country  = $this->option('country');
+        $argument = $this->argument('table');
+        $country  = $this->option('country');
+        $trace    = $this->option('trace');
 
+        try {
             $this->info('Running the migrations');
 
             $this->databaseManager->beginTransaction();
@@ -118,7 +125,7 @@ class MigrateAidStream extends Command
 
             $this->databaseManager->commit();
         } catch (Exception $exception) {
-            $this->rollback($exception);
+            $this->rollback($exception, $trace);
         }
     }
 
@@ -207,7 +214,8 @@ class MigrateAidStream extends Command
     protected function getOptions()
     {
         return [
-            ['country', null, InputOption::VALUE_OPTIONAL, 'Run the migration for an Organization of a specific country.', null]
+            ['country', null, InputOption::VALUE_OPTIONAL, 'Run the migration for an Organization of a specific country.', null],
+            ['trace', null, InputOption::VALUE_OPTIONAL, 'Get the trace in case of errors during the migration process.', null]
         ];
     }
 
@@ -218,7 +226,7 @@ class MigrateAidStream extends Command
     protected function getArguments()
     {
         return [
-            ['table', InputArgument::REQUIRED, "The table you want to migrate. 'all' if all tables are to be migrated."],
+            ['table', InputArgument::REQUIRED, "The table you want to migrate. 'all' if all tables are to be migrated."]
         ];
     }
 
@@ -255,13 +263,19 @@ class MigrateAidStream extends Command
 
     /**
      * Roll the migrations back.
-     * @param $exception
+     * @param      $exception
+     * @param null $trace
      */
-    protected function rollback($exception)
+    protected function rollback($exception, $trace = null)
     {
         $this->databaseManager->rollback();
         $this->warn('Rolling the migrations back.');
-        $this->error($exception->getMessage());
+
+        if ($trace) {
+            $this->error($exception->getTraceAsString());
+        } else {
+            $this->error($exception->getMessage());
+        }
     }
 
     /**

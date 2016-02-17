@@ -7,10 +7,14 @@ trait DescriptionDataProvider
 
     protected function getTestDescriptionData()
     {
-        $type      = $this->createTestObjectWith(['Code' => 1]);
-        $typeCode  = $type->Code;
-        $narrative = $this->getTestNarratives(['testNarrative1', 'testNarrative2'], ['testLanguage1', 'testLanguage2']);
+        return [$this->createTestObjectWith(['id' => '1', '@xml_lang' => '12', 'text' => 'test', 'description_id' => '1', 'xml_lang_id' => '12'])];
+    }
 
-        return ['code' => $typeCode, 'narrative' => $narrative];
+    protected function getTestDescriptionDataWithMultipleNarratives()
+    {
+        return [
+            $this->createTestObjectWith(['id' => '1', '@xml_lang' => '12', 'text' => 'test', 'description_id' => '1', 'xml_lang_id' => '12']),
+            $this->createTestObjectWith(['id' => '2', '@xml_lang' => '12', 'text' => 'test', 'description_id' => '1', 'xml_lang_id' => '12']),
+        ];
     }
 }
