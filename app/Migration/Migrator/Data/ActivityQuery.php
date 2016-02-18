@@ -156,7 +156,12 @@ class ActivityQuery extends Query
                  ->fetchContactInfo($activityId)
                  ->fetchActivityScope($activityId)
                  ->fetchLocation($activityId)
-                 ->fetchPolicyMarker($activityId);
+                 ->fetchPolicyMarker($activityId)
+                 ->fetchCollaborationType($activityId)
+                 ->fetchDefaultFlowType($activityId)
+                 ->fetchDefaultFinanceType($activityId)
+                 ->fetchDefaultAidType($activityId)
+                 ->fetchDefaultTiedStatus($activityId);
         }
 
         return $this->data;
@@ -704,8 +709,8 @@ class ActivityQuery extends Query
 
     public function fetchLocation($activityId)
     {
-        $locationData = null;
-        $select   = ['id', '@ref as ref'];
+        $locationData     = null;
+        $select           = ['id', '@ref as ref'];
         $locationInstance = getBuilderFor($select, 'iati_location', 'activity_id', $activityId)->get();
 
         $ref                        = null;
@@ -725,17 +730,17 @@ class ActivityQuery extends Query
             $ref = $location->ref;
 
             //location Reach
-            $locationReachId = getBuilderFor('@code as code', 'iati_location/location_reach', 'location_id',$location->id)->first();
-            if(($locationReachId)) {
+            $locationReachId = getBuilderFor('@code as code', 'iati_location/location_reach', 'location_id', $location->id)->first();
+            if (($locationReachId)) {
                 $locationReachInstance = getBuilderFor('Code', 'GeographicLocationReach', 'id', $locationReachId->code)->first();
                 $locationReach         = $locationReachInstance->Code;
             }
             //location Id
-            $select = ['@code as code','@vocabulary as vocabulary'];
-            $locationIdInstance = getBuilderFor($select,'iati_location/location_id','location_id',$location->id)->get();
+            $select             = ['@code as code', '@vocabulary as vocabulary'];
+            $locationIdInstance = getBuilderFor($select, 'iati_location/location_id', 'location_id', $location->id)->get();
 
-            if($locationIdInstance) {
-                foreach($locationIdInstance as $eachLocationId) {
+            if ($locationIdInstance) {
+                foreach ($locationIdInstance as $eachLocationId) {
                     $locationIdVocab = getBuilderFor('Code', 'GeographicVocabulary', 'id', $eachLocationId->vocabulary)->first();
 
                     if ($locationIdVocab) {
@@ -743,36 +748,36 @@ class ActivityQuery extends Query
                     }
 
                     $locationIdCode = $eachLocationId->code;
-                    $locationID[] = ['vocabulary'=>$locationIdVocabulary,'code'=>$locationIdCode];
+                    $locationID[]   = ['vocabulary' => $locationIdVocabulary, 'code' => $locationIdCode];
                 }
 
             }
             // name
-            $locationNameId = getBuilderFor('id','iati_location/name','location_id',$location->id)->first();
-            if($locationNameId) {
-                $locationNameInstance = fetchNarratives($locationNameId->id ,'iati_location/name/narrative','name_id');
-                $fetchNameNarratives = fetchAnyNarratives($locationNameInstance);
+            $locationNameId = getBuilderFor('id', 'iati_location/name', 'location_id', $location->id)->first();
+            if ($locationNameId) {
+                $locationNameInstance = fetchNarratives($locationNameId->id, 'iati_location/name/narrative', 'name_id');
+                $fetchNameNarratives  = fetchAnyNarratives($locationNameInstance);
             }
 
             //description
-            $locationDescriptionId = getBuilderFor('id','iati_location/description','location_id',$location->id)->first();
+            $locationDescriptionId = getBuilderFor('id', 'iati_location/description', 'location_id', $location->id)->first();
 
-            if($locationDescriptionId) {
-                $locationDescriptionInstance = fetchNarratives($locationDescriptionId->id ,'iati_location/description/narrative','description_id');
-                $fetchDescriptionNarratives = fetchAnyNarratives($locationDescriptionInstance);
+            if ($locationDescriptionId) {
+                $locationDescriptionInstance = fetchNarratives($locationDescriptionId->id, 'iati_location/description/narrative', 'description_id');
+                $fetchDescriptionNarratives  = fetchAnyNarratives($locationDescriptionInstance);
             }
 
             //activity description
-            $activityDescriptionId = getBuilderFor('id','iati_location/activity_description','location_id',$location->id)->first();
+            $activityDescriptionId = getBuilderFor('id', 'iati_location/activity_description', 'location_id', $location->id)->first();
 
-            if($activityDescriptionId) {
-                $activityDescriptionInstance = fetchNarratives($activityDescriptionId->id ,'iati_location/activity_description/narrative','activity_description_id');
-                $fetchActivityNarratives = fetchAnyNarratives($activityDescriptionInstance);
+            if ($activityDescriptionId) {
+                $activityDescriptionInstance = fetchNarratives($activityDescriptionId->id, 'iati_location/activity_description/narrative', 'activity_description_id');
+                $fetchActivityNarratives     = fetchAnyNarratives($activityDescriptionInstance);
             }
 
-            $select = ['@code as code','@level as level','@vocabulary as vocabulary'];
-            $administrativeInfo = getBuilderFor($select,'iati_location/administrative','location_id',$location->id)->get();
-            if($administrativeInfo) {
+            $select             = ['@code as code', '@level as level', '@vocabulary as vocabulary'];
+            $administrativeInfo = getBuilderFor($select, 'iati_location/administrative', 'location_id', $location->id)->get();
+            if ($administrativeInfo) {
                 foreach ($administrativeInfo as $administrative) {
                     $vocabularyCode       = fetchCode($administrative->vocabulary, 'GeographicVocabulary', '');
                     $administrativeData[] = ['vocabulary' => $vocabularyCode, 'code' => $administrative->code, 'level' => $administrative->level];
@@ -780,31 +785,31 @@ class ActivityQuery extends Query
             }
 
             //point
-            $select = ['@srsName as srsName','id','location_id'];
-            $pointInfo = getBuilderFor($select,'iati_location/point','location_id',$location->id)->first();
+            $select    = ['@srsName as srsName', 'id', 'location_id'];
+            $pointInfo = getBuilderFor($select, 'iati_location/point', 'location_id', $location->id)->first();
 
-            if($pointInfo) {
-                $srsName = $pointInfo->srsName;
-                $select = ['@latitude as latitude','@longitude as longitude'];
-                $positionInfo = getBuilderFor($select,'iati_location/point/pos','point_id',$pointInfo->id)->first();
+            if ($pointInfo) {
+                $srsName      = $pointInfo->srsName;
+                $select       = ['@latitude as latitude', '@longitude as longitude'];
+                $positionInfo = getBuilderFor($select, 'iati_location/point/pos', 'point_id', $pointInfo->id)->first();
 
-                $positionData = ['latitude'=>($positionInfo) ? $positionInfo->latitude : "",'longitude'=> ($positionInfo) ? $positionInfo->longitude : ""];
-                $pointData = ['srs_name'=> $srsName,'position'=>[$positionData]];
+                $positionData = ['latitude' => ($positionInfo) ? $positionInfo->latitude : "", 'longitude' => ($positionInfo) ? $positionInfo->longitude : ""];
+                $pointData    = ['srs_name' => $srsName, 'position' => [$positionData]];
             }
-            $exactnessInfo = getBuilderFor('@code as code','iati_location/exactness','location_id',$location->id)->first();
+            $exactnessInfo = getBuilderFor('@code as code', 'iati_location/exactness', 'location_id', $location->id)->first();
 
-            if($exactnessInfo) {
-                $exactnessCode = fetchCode($exactnessInfo->code,'GeographicExactness','');
-            }
-
-            $locationClass = getBuilderFor('@code as code','iati_location/location_class','location_id',$location->id)->first();
-            if($locationClass) {
-                $locationClassCode = fetchCode($locationClass->code,'GeographicLocationClass','');
+            if ($exactnessInfo) {
+                $exactnessCode = fetchCode($exactnessInfo->code, 'GeographicExactness', '');
             }
 
-            $featureDesignation = getBuilderFor('@code as code','iati_location/feature_designation','location_id',$location->id)->first();
-            if($featureDesignation) {
-                $featureDesignationCode = fetchCode($featureDesignation->code,'LocationType','');
+            $locationClass = getBuilderFor('@code as code', 'iati_location/location_class', 'location_id', $location->id)->first();
+            if ($locationClass) {
+                $locationClassCode = fetchCode($locationClass->code, 'GeographicLocationClass', '');
+            }
+
+            $featureDesignation = getBuilderFor('@code as code', 'iati_location/feature_designation', 'location_id', $location->id)->first();
+            if ($featureDesignation) {
+                $featureDesignationCode = fetchCode($featureDesignation->code, 'LocationType', '');
             }
 
             $locationFormatter = new Location();
@@ -867,5 +872,90 @@ class ActivityQuery extends Query
         $policyMarkerNarrative = fetchNarratives($policyMarker->id, 'iati_policy_marker/narrative', 'policy_marker_id');
 
         return fetchAnyNarratives($policyMarkerNarrative);
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    protected function fetchCollaborationType($activityId)
+    {
+        $collaborationType      = getBuilderFor('@code as code', 'iati_collaboration_type', 'activity_id', $activityId)->first();
+        $collaborationTypeValue = null;
+
+        if ($collaborationType) {
+            $collaborationTypeValue = fetchCode($collaborationType->code, 'CollaborationType');
+        }
+        $this->data[$activityId]['collaboration_type'] = $collaborationTypeValue;
+
+        return $this;
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    protected function fetchDefaultFlowType($activityId)
+    {
+        $defaultFlowType      = getBuilderFor('@code as code', 'iati_default_flow_type', 'activity_id', $activityId)->first();
+        $defaultFlowTypeValue = null;
+
+        if ($defaultFlowType) {
+            $defaultFlowTypeValue = fetchCode($defaultFlowType->code, 'FlowType');
+        }
+        $this->data[$activityId]['default_flow_type'] = $defaultFlowTypeValue;
+
+        return $this;
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    protected function fetchDefaultFinanceType($activityId)
+    {
+        $defaultFinanceType      = getBuilderFor('@code as code', 'iati_default_finance_type', 'activity_id', $activityId)->first();
+        $defaultFinanceTypeValue = null;
+
+        if ($defaultFinanceType) {
+            $defaultFinanceTypeValue = fetchCode($defaultFinanceType->code, 'FinanceType');
+        }
+        $this->data[$activityId]['default_finance_type'] = $defaultFinanceTypeValue;
+
+        return $this;
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    protected function fetchDefaultAidType($activityId)
+    {
+        $defaultAidType      = getBuilderFor('@code as code', 'iati_default_aid_type', 'activity_id', $activityId)->first();
+        $defaultAidTypeValue = null;
+
+        if ($defaultAidType) {
+            $defaultAidTypeValue = fetchCode($defaultAidType->code, 'AidType');
+        }
+        $this->data[$activityId]['default_aid_type'] = $defaultAidTypeValue;
+
+        return $this;
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    protected function fetchDefaultTiedStatus($activityId)
+    {
+        $defaultTiedStatus      = getBuilderFor('@code as code', 'iati_default_tied_status', 'activity_id', $activityId)->first();
+        $defaultTiedStatusValue = null;
+
+        if ($defaultTiedStatus) {
+            $defaultTiedStatusValue = fetchCode($defaultTiedStatus->code, 'TiedStatus');
+        }
+        $this->data[$activityId]['default_tied_status'] = $defaultTiedStatusValue;
+
+        return $this;
     }
 }
