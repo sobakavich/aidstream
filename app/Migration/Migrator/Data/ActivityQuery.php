@@ -161,7 +161,8 @@ class ActivityQuery extends Query
                  ->fetchDefaultFlowType($activityId)
                  ->fetchDefaultFinanceType($activityId)
                  ->fetchDefaultAidType($activityId)
-                 ->fetchDefaultTiedStatus($activityId);
+                 ->fetchDefaultTiedStatus($activityId)
+                 ->fetchCountryBudgetItems($activityId);
         }
 
         return $this->data;
@@ -726,7 +727,7 @@ class ActivityQuery extends Query
         $featureDesignationCode     = null;
         $positionData               = null;
 
-        foreach($locationInstance as $location) {
+        foreach ($locationInstance as $location) {
             $ref = $location->ref;
 
             //location Reach
@@ -956,6 +957,45 @@ class ActivityQuery extends Query
         }
         $this->data[$activityId]['default_tied_status'] = $defaultTiedStatusValue;
 
+        return $this;
+    }
+
+    public function fetchCountryBudgetItems($activityId)
+    {
+        $countryBudgetItemsData = null;
+        $select                 = ['id', '@vocabulary as vocabulary'];
+        $budgetItemInstance     = getBuilderFor($select, 'iati_country_budget_items', 'activity_id', $activityId)->first();
+
+        if ($budgetItemInstance) {
+            $vocabularyCode = fetchCode($budgetItemInstance->vocabulary, 'BudgetIdentifierVocabulary', '');
+
+            $select           = ['@code as code', '@percentage as percentage', 'id'];
+            $budgetItemsBlock = getBuilderFor($select, 'iati_country_budget_items/budget_item', 'country_budget_items_id', $budgetItemInstance->id)->get();
+
+            foreach ($budgetItemsBlock as $budgetItems) {
+                $budgetCodeId     = $budgetItems->code;
+                $budgetCode       = fetchCode($budgetItems->code, 'BudgetIdentifier');
+                $budgetPercentage = $budgetItems->percentage;
+
+                //Description
+                $DescriptionInstance = getbuilderFor('id', 'iati_country_budget_items/budget_item/description', 'budget_item_id', $budgetItems->id)->get();
+
+                foreach ($DescriptionInstance as $eachDescription) {
+                    $fetchDescriptionNarratives = fetchNarratives($eachDescription->id, 'iati_country_budget_items/budget_item/description/narrative', 'description_id');
+                    $descriptionNarratives      = fetchAnyNarratives($fetchDescriptionNarratives);
+
+                    $description[] = ['narrative' => $descriptionNarratives];
+                }
+                $budgetItemsArray[] = ['code' => $budgetCode, 'percentage' => $budgetPercentage, 'description' => $description];
+            }
+            $countryBudgetItemsData[] = [
+                'vocabulary'  => isset($vocabularyCode) ? $vocabularyCode : "",
+                'budget_item' => isset($budgetItemsArray) ? $budgetItemsArray : ""
+            ];
+        }
+        if (!is_null($budgetItemInstance)) {
+            $this->data[$activityId]['country_budget_items'] = $countryBudgetItemsData;
+        }
         return $this;
     }
 }
