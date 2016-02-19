@@ -162,7 +162,9 @@ class ActivityQuery extends Query
                  ->fetchDefaultFinanceType($activityId)
                  ->fetchDefaultAidType($activityId)
                  ->fetchDefaultTiedStatus($activityId)
-                 ->fetchCountryBudgetItems($activityId);
+                 ->fetchCountryBudgetItems($activityId)
+                 ->fetchCapitalSpend($activityId)
+                 ->fetchPlannedDisbursement($activityId);
         }
 
         return $this->data;
@@ -833,6 +835,7 @@ class ActivityQuery extends Query
         if (!is_null($locationInstance)) {
             $this->data[$activityId]['location'] = $locationData;
         }
+
         return $this;
     }
 
@@ -996,6 +999,51 @@ class ActivityQuery extends Query
         if (!is_null($budgetItemInstance)) {
             $this->data[$activityId]['country_budget_items'] = $countryBudgetItemsData;
         }
+
+        return $this;
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    protected function fetchCapitalSpend($activityId)
+    {
+        $capitalSpend      = getBuilderFor('@percentage as percentage', 'iati_capital_spend', 'activity_id', $activityId)->first();
+        $capitalSpendValue = null;
+
+        if ($capitalSpend) {
+            $capitalSpendValue = $capitalSpend->percentage;
+        }
+        $this->data[$activityId]['capital_spend'] = $capitalSpendValue;
+
+        return $this;
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    protected function fetchPlannedDisbursement($activityId)
+    {
+        $select                  = ['id', '@type as type'];
+        $plannedDisbursements    = getBuilderFor($select, 'iati_planned_disbursement', 'activity_id', $activityId)->get();
+        $plannedDisbursementData = null;
+
+        foreach ($plannedDisbursements as $plannedDisbursement) {
+            $plannedDisbursementPeriodStart = fetchPeriodStart('iati_planned_disbursement', 'planned_disbursement_id', $plannedDisbursement->id);
+            $plannedDisbursementPeriodEnd   = fetchPeriodEnd('iati_planned_disbursement', 'planned_disbursement_id', $plannedDisbursement->id);
+            $plannedDisbursementValue       = fetchValue('iati_planned_disbursement', 'planned_disbursement_id', $plannedDisbursement->id);
+
+            $plannedDisbursementData[] = [
+                'planned_disbursement_type' => $plannedDisbursement->type,
+                'period_start'              => $plannedDisbursementPeriodStart,
+                'period_end'                => $plannedDisbursementPeriodEnd,
+                'value'                     => $plannedDisbursementValue
+            ];
+        }
+        $this->data[$activityId]['planned_disbursement'] = $plannedDisbursementData;
+
         return $this;
     }
 }
