@@ -158,3 +158,92 @@ function fetchDataWithCodeFrom($table, $toCheckId, $id)
                 ->get();
 
 }
+
+/**
+ * @param $parentTable
+ * @param $column
+ * @param $parentId
+ * @return array
+ */
+function fetchPeriodStart($parentTable, $column, $parentId)
+{
+    $periodStart = getBuilderFor('@iso_date as date', $parentTable . '/period_start', $column, $parentId)->first();
+    $periodStart = [["date" => $periodStart->date]];
+
+    return $periodStart;
+}
+
+/**
+ * @param $parentTable
+ * @param $column
+ * @param $parentId
+ * @return array
+ */
+function fetchPeriodEnd($parentTable, $column, $parentId)
+{
+    $periodEnd = getBuilderFor('@iso_date as date', $parentTable . '/period_end', $column, $parentId)->first();
+    $periodEnd = [["date" => $periodEnd->date]];
+
+    return $periodEnd;
+}
+
+/**
+ * @param $parentTable
+ * @param $column
+ * @param $totalBudgetId
+ * @return array
+ */
+function fetchBudgetLine($parentTable, $column, $totalBudgetId)
+{
+    $table          = $parentTable . '/budget_line';
+    $budgetLineData = [];
+    $budgetLines    = getBuilderFor(['id', '@ref as ref'], $table, $column, $totalBudgetId)->get();
+    foreach ($budgetLines as $budgetLine) {
+        $budgetLineId     = $budgetLine->id;
+        $value            = $this->fetchValue($table, 'budget_line_id', $budgetLineId);
+        $narrative        = $this->fetchNarrative($table, 'budget_line_id', $budgetLineId);
+        $budgetLineData[] = [
+            "reference" => $budgetLine->ref,
+            "value"     => $value,
+            "narrative" => $narrative
+        ];
+    }
+
+    return $budgetLineData;
+}
+
+/**
+ * @param $parentTable
+ * @param $column
+ * @param $parentId
+ * @return array
+ */
+function fetchValue($parentTable, $column, $parentId)
+{
+    $fields   = ['@currency as currency', '@value_date as value_date', 'text'];
+    $value    = getBuilderFor($fields, $parentTable . '/value', $column, $parentId)->first();
+    $currency = fetchCode($value->currency, 'Currency');
+    $value    = [["amount" => $value->text, "currency" => $currency, "value_date" => $value->value_date]];
+
+    return $value;
+}
+
+/**
+ * @param      $parentTable
+ * @param      $column
+ * @param      $parentId
+ * @param null $customTable
+ * @return array
+ */
+function fetchNarrative($parentTable, $column, $parentId, $customTable = null)
+{
+    $narratives    = getBuilderFor(['text', '@xml_lang as xml_lang'], $parentTable . ($customTable ? $customTable : '/narrative'), $column, $parentId)->get();
+    $narrativeData = [];
+    foreach ($narratives as $narrative) {
+        $language        = getLanguageCodeFor($narrative->xml_lang);
+        $narrativeData[] = ['narrative' => $narrative->text, 'language' => $language];
+    }
+    $narrativeData ?: $narrativeData = [['narrative' => "", 'language' => ""]];
+
+    return $narrativeData;
+}
