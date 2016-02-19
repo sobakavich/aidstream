@@ -67,7 +67,7 @@ class MigrateAidStream extends Command
      * Signature for the command.
      * @var string
      */
-    protected $signature = 'migrate-aidstream {table} {--country=country} {--trace}';
+    protected $signature = 'migrate-aidstream {table} {--country=} {--trace}';
 
     /**
      * @var DatabaseManager
