@@ -200,8 +200,8 @@ function fetchBudgetLine($parentTable, $column, $totalBudgetId)
     $budgetLines    = getBuilderFor(['id', '@ref as ref'], $table, $column, $totalBudgetId)->get();
     foreach ($budgetLines as $budgetLine) {
         $budgetLineId     = $budgetLine->id;
-        $value            = $this->fetchValue($table, 'budget_line_id', $budgetLineId);
-        $narrative        = $this->fetchNarrative($table, 'budget_line_id', $budgetLineId);
+        $value            = fetchValue($table, 'budget_line_id', $budgetLineId);
+        $narrative        = fetchNarrative($table, 'budget_line_id', $budgetLineId);
         $budgetLineData[] = [
             "reference" => $budgetLine->ref,
             "value"     => $value,
