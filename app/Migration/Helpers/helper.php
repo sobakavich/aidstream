@@ -167,10 +167,13 @@ function fetchDataWithCodeFrom($table, $toCheckId, $id)
  */
 function fetchPeriodStart($parentTable, $column, $parentId)
 {
-    $periodStart = getBuilderFor('@iso_date as date', $parentTable . '/period_start', $column, $parentId)->first();
-    $periodStart = [["date" => $periodStart->date]];
+    $periodStartData = [["date" => '']];
+    $periodStart     = getBuilderFor('@iso_date as date', $parentTable . '/period_start', $column, $parentId)->first();
+    if ($periodStart) {
+        $periodStartData = [["date" => $periodStart->date]];
+    }
 
-    return $periodStart;
+    return $periodStartData;
 }
 
 /**
@@ -181,10 +184,13 @@ function fetchPeriodStart($parentTable, $column, $parentId)
  */
 function fetchPeriodEnd($parentTable, $column, $parentId)
 {
-    $periodEnd = getBuilderFor('@iso_date as date', $parentTable . '/period_end', $column, $parentId)->first();
-    $periodEnd = [["date" => $periodEnd->date]];
+    $periodEndData = [["date" => '']];
+    $periodEnd     = getBuilderFor('@iso_date as date', $parentTable . '/period_end', $column, $parentId)->first();
+    if ($periodEnd) {
+        $periodEndData = [["date" => $periodEnd->date]];
+    }
 
-    return $periodEnd;
+    return $periodEndData;
 }
 
 /**
@@ -220,12 +226,15 @@ function fetchBudgetLine($parentTable, $column, $totalBudgetId)
  */
 function fetchValue($parentTable, $column, $parentId)
 {
-    $fields   = ['@currency as currency', '@value_date as value_date', 'text'];
-    $value    = getBuilderFor($fields, $parentTable . '/value', $column, $parentId)->first();
-    $currency = fetchCode($value->currency, 'Currency');
-    $value    = [["amount" => $value->text, "currency" => $currency, "value_date" => $value->value_date]];
+    $valueData = [];
+    $fields    = ['@currency as currency', '@value_date as value_date', 'text'];
+    $value     = getBuilderFor($fields, $parentTable . '/value', $column, $parentId)->first();
+    if ($value) {
+        $currency  = fetchCode($value->currency, 'Currency');
+        $valueData = [["amount" => $value->text, "currency" => $currency, "value_date" => $value->value_date]];
+    }
 
-    return $value;
+    return $valueData;
 }
 
 /**
