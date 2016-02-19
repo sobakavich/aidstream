@@ -6,6 +6,7 @@ use App\Migration\Migrator\DocumentMigrator;
 use App\Migration\Migrator\OrganizationDataMigrator;
 use App\Migration\Migrator\OrganizationMigrator;
 use App\Migration\Migrator\SettingsMigrator;
+use App\Migration\Migrator\TransactionMigrator;
 use App\Migration\Migrator\UserMigrator;
 use Exception;
 use Illuminate\Console\Command;
@@ -80,6 +81,11 @@ class MigrateAidStream extends Command
     protected $organizationDataMigrator;
 
     /**
+     * @var TransactionMigrator
+     */
+    protected $transactionMigrator;
+
+    /**
      * MigrateAidStream constructor.
      * @param ActivityMigrator         $activityMigrator
      * @param UserMigrator             $userMigrator
@@ -87,6 +93,7 @@ class MigrateAidStream extends Command
      * @param DocumentMigrator         $documentMigrator
      * @param SettingsMigrator         $settingsMigrator
      * @param OrganizationDataMigrator $organizationDataMigrator
+     * @param TransactionMigrator      $transactionMigrator
      * @param DatabaseManager          $databaseManager
      */
     public function __construct(
@@ -96,6 +103,7 @@ class MigrateAidStream extends Command
         DocumentMigrator $documentMigrator,
         SettingsMigrator $settingsMigrator,
         OrganizationDataMigrator $organizationDataMigrator,
+        TransactionMigrator $transactionMigrator,
         DatabaseManager $databaseManager
     ) {
         parent::__construct();
@@ -106,6 +114,7 @@ class MigrateAidStream extends Command
         $this->settingsMigrator         = $settingsMigrator;
         $this->databaseManager          = $databaseManager;
         $this->organizationDataMigrator = $organizationDataMigrator;
+        $this->transactionMigrator      = $transactionMigrator;
     }
 
     /**
@@ -143,6 +152,7 @@ class MigrateAidStream extends Command
         $response[] = $this->settingsMigrator->migrate($accountIds);
         $response[] = $this->activityMigrator->migrate($accountIds);
         $response[] = $this->organizationDataMigrator->migrate($accountIds);
+        $response[] = $this->transactionMigrator->migrate($accountIds);
 
         return implode("\n", $response);
     }
@@ -205,6 +215,16 @@ class MigrateAidStream extends Command
     protected function migrateOrganizationData(array $accountIds)
     {
         return $this->organizationDataMigrator->migrate($accountIds);
+    }
+
+    /**
+     * Migrate activity transctions table
+     * @param array $accountIds
+     * @return string
+     */
+    protected function migrateTransaction(array $accountIds)
+    {
+        return $this->transactionMigrator->migrate($accountIds);
     }
 
     /**

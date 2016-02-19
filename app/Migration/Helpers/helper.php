@@ -256,3 +256,19 @@ function fetchNarrative($parentTable, $column, $parentId, $customTable = null)
 
     return $narrativeData;
 }
+
+function getActivitiesFor($accountId)
+{
+    $builder = app()->make(DatabaseManager::class)
+                    ->connection('mysql');
+
+    return ($activity = $builder->table('iati_activities')
+                                ->select('id')
+                                ->where('account_id', '=', $accountId)
+                                ->first())
+        ? $builder->table('iati_activity')
+                  ->select('id')
+                  ->where('activities_id', '=', $activity->id)
+                  ->get()
+        : null;
+}
