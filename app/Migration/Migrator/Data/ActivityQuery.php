@@ -1048,7 +1048,7 @@ class ActivityQuery extends Query
     {
         $select                  = ['id', '@type as type'];
         $plannedDisbursements    = getBuilderFor($select, 'iati_planned_disbursement', 'activity_id', $activityId)->get();
-        $plannedDisbursementData = null;
+        $plannedDisbursementData = [];
 
         foreach ($plannedDisbursements as $plannedDisbursement) {
             $plannedDisbursementPeriodStart = fetchPeriodStart('iati_planned_disbursement', 'planned_disbursement_id', $plannedDisbursement->id);
