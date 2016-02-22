@@ -83,7 +83,7 @@ class SettingsQuery extends Query
 
         $newSettingsDataFormat = array(
             'publishing_type'      => $publishing_type,
-            'registry_info'        => $registryInfoData,
+            'registry_info'        => [$registryInfoData],
             'default_field_values' => $formatDefaultFieldValues,
             'default_field_groups' => $formattedDefaultFieldGroups,
             'organization_id'      => $accountId
