@@ -165,7 +165,8 @@ class ActivityQuery extends Query
                  ->fetchCountryBudgetItems($activityId)
                  ->fetchCapitalSpend($activityId)
                  ->fetchPlannedDisbursement($activityId)
-                 ->fetchLegacyData($activityId);
+                 ->fetchLegacyData($activityId)
+                 ->fetchRelatedActivity($activityId);
         }
 
         return $this->data;
@@ -1000,6 +1001,7 @@ class ActivityQuery extends Query
         if (!is_null($budgetItemInstance)) {
             $this->data[$activityId]['country_budget_items'] = $countryBudgetItemsData;
         }
+
         return $this;
     }
 
@@ -1063,6 +1065,29 @@ class ActivityQuery extends Query
             ];
         }
         $this->data[$activityId]['planned_disbursement'] = $plannedDisbursementData;
+
+        return $this;
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    protected function fetchRelatedActivity($activityId)
+    {
+        $select              = ['@type as type', 'text'];
+        $relatedActivities   = getBuilderFor($select, 'iati_related_activity', 'activity_id', $activityId)->get();
+        $relatedActivityData = [];
+
+        foreach ($relatedActivities as $relatedActivity) {
+            $relatedActivityType = fetchCode($relatedActivity->type, 'RelatedActivityType');
+
+            $relatedActivityData[] = [
+                'relationship_type'   => $relatedActivityType,
+                'activity_identifier' => $relatedActivity->text
+            ];
+        }
+        $this->data[$activityId]['related_activity'] = $relatedActivityData;
 
         return $this;
     }
