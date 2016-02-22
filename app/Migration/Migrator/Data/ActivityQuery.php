@@ -164,7 +164,8 @@ class ActivityQuery extends Query
                  ->fetchDefaultTiedStatus($activityId)
                  ->fetchCountryBudgetItems($activityId)
                  ->fetchCapitalSpend($activityId)
-                 ->fetchPlannedDisbursement($activityId);
+                 ->fetchPlannedDisbursement($activityId)
+                 ->fetchLegacyData($activityId);
         }
 
         return $this->data;
@@ -998,6 +999,25 @@ class ActivityQuery extends Query
         }
         if (!is_null($budgetItemInstance)) {
             $this->data[$activityId]['country_budget_items'] = $countryBudgetItemsData;
+        }
+        return $this;
+    }
+
+    /**
+     * @param $activityId
+     * @return $this
+     */
+    public function fetchLegacyData($activityId)
+    {
+        $select             = ['@name as name', '@value as value', '@iati_equivalent as iati_equivalent'];
+        $legacyDataInstance = getBuilderFor($select, 'iati_legacy_data', 'activity_id', $activityId)->get();
+        $legacyData         = null;
+        foreach ($legacyDataInstance as $eachLegacyData) {
+            $legacyData[] = ['name' => $eachLegacyData->name, 'value' => $eachLegacyData->value, 'iati_equivalent' => $eachLegacyData->iati_equivalent];
+        }
+
+        if (!is_null($legacyDataInstance)) {
+            $this->data[$activityId]['legacy_data'] = $legacyData;
         }
 
         return $this;
