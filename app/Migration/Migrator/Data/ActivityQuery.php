@@ -166,7 +166,8 @@ class ActivityQuery extends Query
                  ->fetchCapitalSpend($activityId)
                  ->fetchPlannedDisbursement($activityId)
                  ->fetchLegacyData($activityId)
-                 ->fetchRelatedActivity($activityId);
+                 ->fetchRelatedActivity($activityId)
+                 ->fetchBudgetData($activityId);
         }
 
         return $this->data;
@@ -1088,6 +1089,25 @@ class ActivityQuery extends Query
             ];
         }
         $this->data[$activityId]['related_activity'] = $relatedActivityData;
+
+        return $this;
+    }
+
+    protected function fetchBudgetData($activityId)
+    {
+        $select     = ['id', '@type as type'];
+        $budgets    = getBuilderFor($select, 'iati_budget', 'activity_id', $activityId)->get();
+        $budgetData = [];
+
+        foreach ($budgets as $budget) {
+            $budgetData[] = [
+                'budget_type'  => $budget->type,
+                'period_start' => fetchPeriodStart('iati_budget', 'budget_id', $budget->id),
+                'period_end'   => fetchPeriodEnd('iati_budget', 'budget_id', $budget->id),
+                'value'        => fetchValue('iati_budget', 'budget_id', $budget->id)
+            ];
+        }
+        $this->data[$activityId]['budget'] = $budgetData;
 
         return $this;
     }
