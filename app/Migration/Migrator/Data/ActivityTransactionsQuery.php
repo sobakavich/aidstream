@@ -1,6 +1,7 @@
 <?php namespace App\Migration\Migrator\Data;
 
 use App\Migration\ActivityData;
+use Carbon\Carbon;
 
 class ActivityTransactionsQuery extends Query
 {
@@ -103,7 +104,9 @@ class ActivityTransactionsQuery extends Query
         ];
 
         $this->data['activity_id'] = $activityId;
-        $this->data['transaction'] = $transactionData;
+        $this->data['transaction'] = json_encode($transactionData);
+        $this->data['created_at']  = Carbon::now();
+        $this->data['updated_at']  = Carbon::now();
 
         return $this;
     }
