@@ -168,7 +168,8 @@ class ActivityQuery extends Query
                  ->fetchLegacyData($activityId)
                  ->fetchRelatedActivity($activityId)
                  ->fetchBudgetData($activityId)
-                 ->fetchConditions($activityId);
+                 ->fetchConditions($activityId)
+                 ->fetchDocumentLink($activityId);
         }
 
         return $this->data;
@@ -969,7 +970,10 @@ class ActivityQuery extends Query
 
     public function fetchCountryBudgetItems($activityId)
     {
-        $countryBudgetItemsData = null;
+        $countryBudgetItemsData = [];
+        $description            = [];
+        $budgetItemsArray       = [];
+        $vocabularyCode         = '';
         $select                 = ['id', '@vocabulary as vocabulary'];
         $budgetItemInstance     = getBuilderFor($select, 'iati_country_budget_items', 'activity_id', $activityId)->first();
 
@@ -980,7 +984,6 @@ class ActivityQuery extends Query
             $budgetItemsBlock = getBuilderFor($select, 'iati_country_budget_items/budget_item', 'country_budget_items_id', $budgetItemInstance->id)->get();
 
             foreach ($budgetItemsBlock as $budgetItems) {
-                $budgetCodeId     = $budgetItems->code;
                 $budgetCode       = fetchCode($budgetItems->code, 'BudgetIdentifier');
                 $budgetPercentage = $budgetItems->percentage;
 
@@ -1090,6 +1093,28 @@ class ActivityQuery extends Query
             ];
         }
         $this->data[$activityId]['related_activity'] = $relatedActivityData;
+    }
+
+    protected function fetchDocumentLink($activityId)
+    {
+        $select           = ['*', '@url as url', '@format as format'];
+        $documentLinks    = getBuilderFor($select, 'iati_document_link', 'activity_id', $activityId)->get();
+        $documentLinkData = [];
+
+        foreach ($documentLinks as $documentLink) {
+            $fileFormat         = ($documentLink->format) ? (fetchCode($documentLink->format, 'FileFormat')) : '';
+            $title              = $this->fetchDocumentLinkTitle($documentLink);
+            $category           = $this->fetchDocumentLinkCategory($documentLink);
+            $language           = $this->fetchDocumentLinkLanguage($documentLink);
+            $documentLinkData[] = [
+                'url'      => ($documentLink->url) ? ($documentLink->url) : '',
+                'format'   => $fileFormat,
+                'title'    => $title,
+                'category' => $category,
+                'language' => $language
+            ];
+        }
+        $this->data[$activityId]['document_link'] = $documentLinkData;
 
         return $this;
     }
@@ -1113,34 +1138,98 @@ class ActivityQuery extends Query
         return $this;
     }
 
-    public function fetchConditions($activityId) {
-        $conditionInfo = null;
-        $select = ['@attached as attached','id'];
-        $iatiConditions = getBuilderFor($select,'iati_conditions','activity_id',$activityId)->first();
+    public function fetchConditions($activityId)
+    {
+        $conditionInfo  = null;
+        $select         = ['@attached as attached', 'id'];
+        $iatiConditions = getBuilderFor($select, 'iati_conditions', 'activity_id', $activityId)->first();
 
-        if($iatiConditions) {
-                $attached = $iatiConditions->attached;
-                $select = ['id','@type as type','conditions_id'];
-                $conditionInstance = getBuilderFor($select,'iati_conditions/condition','conditions_id',$iatiConditions->id)->get();
+        if ($iatiConditions) {
+            $attached          = $iatiConditions->attached;
+            $select            = ['id', '@type as type', 'conditions_id'];
+            $conditionInstance = getBuilderFor($select, 'iati_conditions/condition', 'conditions_id', $iatiConditions->id)->get();
 
-                foreach($conditionInstance as $eachCondition) {
-                    $typeCode = fetchCode($eachCondition->type,'ConditionType');
+            foreach ($conditionInstance as $eachCondition) {
+                $typeCode = fetchCode($eachCondition->type, 'ConditionType');
 
-                    $fetchNarratives = fetchNarratives($eachCondition->id,'iati_conditions/condition/narrative','condition_id');
-                    $narratives = fetchAnyNarratives($fetchNarratives);
-                    $condition[] = ['condition_type'=>$typeCode,'narrative'=>$narratives];
-                }
+                $fetchNarratives = fetchNarratives($eachCondition->id, 'iati_conditions/condition/narrative', 'condition_id');
+                $narratives      = fetchAnyNarratives($fetchNarratives);
+                $condition[]     = ['condition_type' => $typeCode, 'narrative' => $narratives];
+            }
 
-                $conditionInfo = [ 'condition_attached'=>$attached,
-                                    'condition'=>isset($condition) ? $condition : ""
-                                 ];
-
+            $conditionInfo = [
+                'condition_attached' => $attached,
+                'condition'          => isset($condition) ? $condition : ""
+            ];
 
 
         }
-        if(!is_null($iatiConditions)) {
+        if (!is_null($iatiConditions)) {
             $this->data[$activityId]['conditions'] = $conditionInfo;
         }
+
         return $this;
+    }
+
+    /**
+     * @param $documentLink
+     * @return array
+     */
+    protected function fetchDocumentLinkTitle($documentLink)
+    {
+        $documentLinkTitle = getBuilderFor('*', 'iati_document_link/title', 'document_link_id', $documentLink->id)->first();
+        $narrative         = '';
+        if ($documentLinkTitle) {
+            $narrativeData = fetchNarratives($documentLinkTitle->id, 'iati_document_link/title/narrative', 'title_id');
+            $narrative     = fetchAnyNarratives($narrativeData);
+        }
+
+        $documentLinkTitleData = [
+            'narrative' => $narrative
+        ];
+
+        return $documentLinkTitleData;
+    }
+
+    /**
+     * @param $documentLink
+     * @return array
+     */
+    protected function fetchDocumentLinkCategory($documentLink)
+    {
+        $select                 = ['@code as code'];
+        $documentLinkCategories = getBuilderFor($select, 'iati_document_link/category', 'document_link_id', $documentLink->id)->get();
+        $categoryCode           = [];
+
+        foreach ($documentLinkCategories as $documentLinkCategory) {
+            $documentLinkCategoryCode = ($documentLinkCategory->code) ? (fetchCode($documentLinkCategory->code, 'DocumentCategory')) : '';
+
+            $categoryCode[] = [
+                'code' => $documentLinkCategoryCode
+            ];
+        }
+
+        return $categoryCode;
+    }
+
+    /**
+     * @param $documentLink
+     * @return array
+     */
+    protected function fetchDocumentLinkLanguage($documentLink)
+    {
+        $select                   = ['@code as code'];
+        $documentLinkLanguages    = getBuilderFor($select, 'iati_document_link/language', 'document_link_id', $documentLink->id)->get();
+        $documentLinkLanguageData = [];
+
+        foreach ($documentLinkLanguages as $documentLinkLanguage) {
+            $documentLinkLanguageCode = ($documentLinkLanguage->code) ? (getLanguageCodeFor($documentLinkLanguage->code)) : '';
+
+            $documentLinkLanguageData[] = [
+                'language' => $documentLinkLanguageCode
+            ];
+        }
+
+        return $documentLinkLanguageData;
     }
 }
