@@ -167,7 +167,8 @@ class ActivityQuery extends Query
                  ->fetchPlannedDisbursement($activityId)
                  ->fetchLegacyData($activityId)
                  ->fetchRelatedActivity($activityId)
-                 ->fetchBudgetData($activityId);
+                 ->fetchBudgetData($activityId)
+                 ->fetchConditions($activityId);
         }
 
         return $this->data;
@@ -1109,6 +1110,37 @@ class ActivityQuery extends Query
         }
         $this->data[$activityId]['budget'] = $budgetData;
 
+        return $this;
+    }
+
+    public function fetchConditions($activityId) {
+        $conditionInfo = null;
+        $select = ['@attached as attached','id'];
+        $iatiConditions = getBuilderFor($select,'iati_conditions','activity_id',$activityId)->first();
+
+        if($iatiConditions) {
+                $attached = $iatiConditions->attached;
+                $select = ['id','@type as type','conditions_id'];
+                $conditionInstance = getBuilderFor($select,'iati_conditions/condition','conditions_id',$iatiConditions->id)->get();
+
+                foreach($conditionInstance as $eachCondition) {
+                    $typeCode = fetchCode($eachCondition->type,'ConditionType');
+
+                    $fetchNarratives = fetchNarratives($eachCondition->id,'iati_conditions/condition/narrative','condition_id');
+                    $narratives = fetchAnyNarratives($fetchNarratives);
+                    $condition[] = ['condition_type'=>$typeCode,'narrative'=>$narratives];
+                }
+
+                $conditionInfo = [ 'condition_attached'=>$attached,
+                                    'condition'=>isset($condition) ? $condition : ""
+                                 ];
+
+
+
+        }
+        if(!is_null($iatiConditions)) {
+            $this->data[$activityId]['conditions'] = $conditionInfo;
+        }
         return $this;
     }
 }
