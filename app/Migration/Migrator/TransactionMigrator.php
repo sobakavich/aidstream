@@ -40,15 +40,9 @@ class TransactionMigrator implements MigratorContract
     {
         $activityDetails = $this->transaction->getData($accountIds);
 
-        foreach ($activityDetails as $activityDetail) {
-            foreach ($activityDetail as $detail) {
-                foreach ($detail as $transactionData) {
-                    $transaction = $this->transactionModel->newInstance($transactionData);
-
-                    if (!$transaction->save()) {
-                        return 'Error during Activity Transaction table migration.';
-                    }
-                }
+        foreach ($activityDetails as $details) {
+            foreach ($details as $detail) {
+                $this->transactionModel->query()->insert($detail);
             }
         }
 

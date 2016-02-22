@@ -147,7 +147,7 @@ class LocationTest extends AidStreamTestCase
         $template['name']                 = [['narrative' => isset($fetchNameNarratives) ? $fetchNameNarratives : []]];
         $template['location_description'] = [['narrative' => isset($fetchDescriptionNarratives) ? $fetchDescriptionNarratives : []]];
         $template['activity_description'] = [['narrative' => isset($fetchActivityNarratives) ? $fetchActivityNarratives : []]];
-        $template['administrative']       = isset($administrativeData) ? $administrativeData : ['vocabulary' => "", 'code' => "", 'level' => ""];
+        $template['administrative']       = isset($administrativeData) ? $administrativeData : [['vocabulary' => "", 'code' => "", 'level' => ""]];
         $template['point']                = [['srs_name' => isset($srsName) ? $srsName : "", 'position' => [isset($positionData) ? $positionData : ""]]];
         $template['exactness']            = [["code" => isset($exactnessCode) ? $exactnessCode : ""]];
         $template['location_class']       = [["code" => isset($locationClassCode) ? $locationClassCode : ""]];

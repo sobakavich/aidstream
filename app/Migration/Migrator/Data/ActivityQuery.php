@@ -2,14 +2,22 @@
 
 use App\Migration\ActivityData;
 use App\Migration\Elements\ActivityDate;
+use App\Migration\Elements\ActivityDocumentLink;
+use App\Migration\Elements\Budget;
+use App\Migration\Elements\Condition;
 use App\Migration\Elements\ContactInfo;
+use App\Migration\Elements\CountryBudgetItem;
 use App\Migration\Elements\Description;
 use App\Migration\Elements\Identifier;
+use App\Migration\Elements\LegacyData;
 use App\Migration\Elements\Location;
 use App\Migration\Elements\OtherIdentifier;
 use App\Migration\Elements\ParticipatingOrganization;
+use App\Migration\Elements\PlannedDisbursement;
+use App\Migration\Elements\PolicyMarker;
 use App\Migration\Elements\RecipientCountry;
 use App\Migration\Elements\RecipientRegion;
+use App\Migration\Elements\RelatedActivity;
 use App\Migration\Elements\Sector;
 use App\Migration\Elements\Title;
 
@@ -733,7 +741,7 @@ class ActivityQuery extends Query
         $exactnessCode              = null;
         $locationClassCode          = null;
         $featureDesignationCode     = null;
-        $positionData               = null;
+        $positionData               = ['latitude' => '', 'longitude' => ''];
 
         foreach ($locationInstance as $location) {
             $ref = $location->ref;
@@ -786,6 +794,7 @@ class ActivityQuery extends Query
 
             $select             = ['@code as code', '@level as level', '@vocabulary as vocabulary'];
             $administrativeInfo = getBuilderFor($select, 'iati_location/administrative', 'location_id', $location->id)->get();
+
             if ($administrativeInfo) {
                 foreach ($administrativeInfo as $administrative) {
                     $vocabularyCode       = fetchCode($administrative->vocabulary, 'GeographicVocabulary', '');
@@ -802,7 +811,7 @@ class ActivityQuery extends Query
                 $select       = ['@latitude as latitude', '@longitude as longitude'];
                 $positionInfo = getBuilderFor($select, 'iati_location/point/pos', 'point_id', $pointInfo->id)->first();
 
-                $positionData = ['latitude' => ($positionInfo) ? $positionInfo->latitude : "", 'longitude' => ($positionInfo) ? $positionInfo->longitude : ""];
+                $positionData = ['latitude' => ($positionInfo) ? $positionInfo->latitude : [], 'longitude' => ($positionInfo) ? $positionInfo->longitude : []];
                 $pointData    = ['srs_name' => $srsName, 'position' => [$positionData]];
             }
             $exactnessInfo = getBuilderFor('@code as code', 'iati_location/exactness', 'location_id', $location->id)->first();
@@ -856,16 +865,9 @@ class ActivityQuery extends Query
         $policyMarkerData = null;
 
         foreach ($policyMarkers as $policyMarker) {
-            $policyMarkerNarrative    = $this->fetchPolicyMarkerNarrative($policyMarker);
-            $policyMarkerVocabulary   = fetchCode($policyMarker->vocabulary, 'PolicyMarkerVocabulary');
-            $policyMarkerSignificance = fetchCode($policyMarker->significance, 'PolicySignificance');
-            $policyMarkerCode         = fetchCode($policyMarker->code, 'PolicyMarker');
-            $policyMarkerData[]       = [
-                'vocabulary'    => $policyMarkerVocabulary,
-                'significance'  => $policyMarkerSignificance,
-                'policy_marker' => $policyMarkerCode,
-                'narrative'     => $policyMarkerNarrative
-            ];
+            $policyMarkerNarrative = $this->fetchPolicyMarkerNarrative($policyMarker);
+            $policyMarkerFormatter = new PolicyMarker();
+            $policyMarkerData[]    = $policyMarkerFormatter->format($policyMarker, $policyMarkerNarrative);
         }
 
         $this->data[$activityId]['policy_marker'] = $policyMarkerData;
@@ -896,6 +898,7 @@ class ActivityQuery extends Query
         if ($collaborationType) {
             $collaborationTypeValue = fetchCode($collaborationType->code, 'CollaborationType');
         }
+
         $this->data[$activityId]['collaboration_type'] = $collaborationTypeValue;
 
         return $this;
@@ -977,6 +980,8 @@ class ActivityQuery extends Query
         $vocabularyCode         = '';
         $select                 = ['id', '@vocabulary as vocabulary'];
         $budgetItemInstance     = getBuilderFor($select, 'iati_country_budget_items', 'activity_id', $activityId)->first();
+        $budgetItemsArray       = [];
+        $description            = [];
 
         if ($budgetItemInstance) {
             $vocabularyCode = fetchCode($budgetItemInstance->vocabulary, 'BudgetIdentifierVocabulary', '');
@@ -999,11 +1004,11 @@ class ActivityQuery extends Query
                 }
                 $budgetItemsArray[] = ['code' => $budgetCode, 'percentage' => $budgetPercentage, 'description' => $description];
             }
-            $countryBudgetItemsData[] = [
-                'vocabulary'  => isset($vocabularyCode) ? $vocabularyCode : "",
-                'budget_item' => isset($budgetItemsArray) ? $budgetItemsArray : ""
-            ];
+
+            $countryBudgetItem        = new CountryBudgetItem();
+            $countryBudgetItemsData[] = $countryBudgetItem->format($vocabularyCode, $budgetItemsArray);
         }
+
         if (!is_null($budgetItemInstance)) {
             $this->data[$activityId]['country_budget_items'] = $countryBudgetItemsData;
         }
@@ -1020,8 +1025,10 @@ class ActivityQuery extends Query
         $select             = ['@name as name', '@value as value', '@iati_equivalent as iati_equivalent'];
         $legacyDataInstance = getBuilderFor($select, 'iati_legacy_data', 'activity_id', $activityId)->get();
         $legacyData         = null;
+
         foreach ($legacyDataInstance as $eachLegacyData) {
-            $legacyData[] = ['name' => $eachLegacyData->name, 'value' => $eachLegacyData->value, 'iati_equivalent' => $eachLegacyData->iati_equivalent];
+            $legacyDataFormatter = new LegacyData();
+            $legacyData[]        = $legacyDataFormatter->format($eachLegacyData);
         }
 
         if (!is_null($legacyDataInstance)) {
@@ -1059,17 +1066,10 @@ class ActivityQuery extends Query
         $plannedDisbursementData = [];
 
         foreach ($plannedDisbursements as $plannedDisbursement) {
-            $plannedDisbursementPeriodStart = fetchPeriodStart('iati_planned_disbursement', 'planned_disbursement_id', $plannedDisbursement->id);
-            $plannedDisbursementPeriodEnd   = fetchPeriodEnd('iati_planned_disbursement', 'planned_disbursement_id', $plannedDisbursement->id);
-            $plannedDisbursementValue       = fetchValue('iati_planned_disbursement', 'planned_disbursement_id', $plannedDisbursement->id);
-
-            $plannedDisbursementData[] = [
-                'planned_disbursement_type' => $plannedDisbursement->type,
-                'period_start'              => $plannedDisbursementPeriodStart,
-                'period_end'                => $plannedDisbursementPeriodEnd,
-                'value'                     => $plannedDisbursementValue
-            ];
+            $plannedDisbursementFormatter = new PlannedDisbursement();
+            $plannedDisbursementData[]    = $plannedDisbursementFormatter->format($plannedDisbursement);
         }
+
         $this->data[$activityId]['planned_disbursement'] = $plannedDisbursementData;
 
         return $this;
@@ -1086,12 +1086,8 @@ class ActivityQuery extends Query
         $relatedActivityData = [];
 
         foreach ($relatedActivities as $relatedActivity) {
-            $relatedActivityType = fetchCode($relatedActivity->type, 'RelatedActivityType');
-
-            $relatedActivityData[] = [
-                'relationship_type'   => $relatedActivityType,
-                'activity_identifier' => $relatedActivity->text
-            ];
+            $relatedActivityFormatter = new RelatedActivity();
+            $relatedActivityData[]    = $relatedActivityFormatter->format($relatedActivity);
         }
         $this->data[$activityId]['related_activity'] = $relatedActivityData;
 
@@ -1105,17 +1101,13 @@ class ActivityQuery extends Query
         $documentLinkData = [];
 
         foreach ($documentLinks as $documentLink) {
-            $fileFormat         = ($documentLink->format) ? (fetchCode($documentLink->format, 'FileFormat')) : '';
-            $title              = $this->fetchDocumentLinkTitle($documentLink);
-            $category           = $this->fetchDocumentLinkCategory($documentLink);
-            $language           = $this->fetchDocumentLinkLanguage($documentLink);
-            $documentLinkData[] = [
-                'url'      => ($documentLink->url) ? ($documentLink->url) : '',
-                'format'   => $fileFormat,
-                'title'    => $title,
-                'category' => $category,
-                'language' => $language
-            ];
+            $fileFormat = ($documentLink->format) ? (fetchCode($documentLink->format, 'FileFormat')) : '';
+            $title      = $this->fetchDocumentLinkTitle($documentLink);
+            $category   = $this->fetchDocumentLinkCategory($documentLink);
+            $language   = $this->fetchDocumentLinkLanguage($documentLink);
+
+            $documentLinkFormatter = new ActivityDocumentLink();
+            $documentLinkData[]    = $documentLinkFormatter->format($documentLink, $fileFormat, $title, $category, $language);
         }
         $this->data[$activityId]['document_link'] = $documentLinkData;
 
@@ -1129,12 +1121,8 @@ class ActivityQuery extends Query
         $budgetData = [];
 
         foreach ($budgets as $budget) {
-            $budgetData[] = [
-                'budget_type'  => $budget->type,
-                'period_start' => fetchPeriodStart('iati_budget', 'budget_id', $budget->id),
-                'period_end'   => fetchPeriodEnd('iati_budget', 'budget_id', $budget->id),
-                'value'        => fetchValue('iati_budget', 'budget_id', $budget->id)
-            ];
+            $budgetFormatter = new Budget();
+            $budgetData []   = $budgetFormatter->format($budget);
         }
         $this->data[$activityId]['budget'] = $budgetData;
 
@@ -1146,6 +1134,8 @@ class ActivityQuery extends Query
         $conditionInfo  = null;
         $select         = ['@attached as attached', 'id'];
         $iatiConditions = getBuilderFor($select, 'iati_conditions', 'activity_id', $activityId)->first();
+
+        $condition = [];
 
         if ($iatiConditions) {
             $attached          = $iatiConditions->attached;
@@ -1160,13 +1150,10 @@ class ActivityQuery extends Query
                 $condition[]     = ['condition_type' => $typeCode, 'narrative' => $narratives];
             }
 
-            $conditionInfo = [
-                'condition_attached' => $attached,
-                'condition'          => isset($condition) ? $condition : ""
-            ];
-
-
+            $conditionFormat = new Condition();
+            $conditionInfo   = $conditionFormat->format($attached, $condition);
         }
+
         if (!is_null($iatiConditions)) {
             $this->data[$activityId]['conditions'] = $conditionInfo;
         }

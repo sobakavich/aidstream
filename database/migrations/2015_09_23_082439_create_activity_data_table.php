@@ -32,11 +32,11 @@ class CreateActivityDataTable extends Migration
                 $table->json('country_budget_items')->nullable();
                 $table->json('humanitarian_scope')->nullable();
                 $table->json('policy_marker')->nullable();
-                $table->json('collaboration_type')->nullable();
-                $table->json('default_flow_type')->nullable();
-                $table->json('default_finance_type')->nullable();
-                $table->json('default_aid_type')->nullable();
-                $table->json('default_tied_status')->nullable();
+                $table->string('collaboration_type')->nullable();
+                $table->string('default_flow_type')->nullable();
+                $table->string('default_finance_type')->nullable();
+                $table->string('default_aid_type')->nullable();
+                $table->string('default_tied_status')->nullable();
                 $table->json('budget')->nullable();
                 $table->json('planned_disbursement')->nullable();
                 $table->json('capital_spend')->nullable();
