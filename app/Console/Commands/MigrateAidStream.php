@@ -9,6 +9,8 @@ use App\Migration\Migrator\SettingsMigrator;
 use App\Migration\Migrator\TransactionMigrator;
 use App\Migration\Migrator\ResultMigrator;
 use App\Migration\Migrator\UserMigrator;
+use App\Migration\Migrator\ActivityPublishedMigrator;
+use App\Migration\Migrator\OrganizationPublishedMigrator;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
@@ -45,6 +47,16 @@ class MigrateAidStream extends Command
      * @var SettingsMigrator
      */
     protected $settingsMigrator;
+
+    /**
+     * @var $ActivityPublishedMigrator
+     */
+    protected $activityPublishedMigrator;
+
+    /**
+     * @var $OrganizationPublishedMigrator
+     */
+    protected $organizationPublishedMigrator;
 
     /**
      * @var Activity
@@ -96,6 +108,8 @@ class MigrateAidStream extends Command
      * @param OrganizationDataMigrator $organizationDataMigrator
      * @param TransactionMigrator      $transactionMigrator
      * @param ResultMigrator           $resultMigrator
+     * @param ActivityPublishedMigrator $activityPublishedMigrator
+     * @param OrganizationPublishedMigrator $organizationPublishedMigrator
      * @param DatabaseManager          $databaseManager
      */
     public function __construct(
@@ -107,18 +121,22 @@ class MigrateAidStream extends Command
         OrganizationDataMigrator $organizationDataMigrator,
         TransactionMigrator $transactionMigrator,
         ResultMigrator $resultMigrator,
+        ActivityPublishedMigrator $activityPublishedMigrator,
+        OrganizationPublishedMigrator $organizationPublishedMigrator,
         DatabaseManager $databaseManager
     ) {
         parent::__construct();
-        $this->activityMigrator         = $activityMigrator;
-        $this->userMigrator             = $userMigrator;
-        $this->organizationMigrator     = $organizationMigrator;
-        $this->documentMigrator         = $documentMigrator;
-        $this->settingsMigrator         = $settingsMigrator;
-        $this->databaseManager          = $databaseManager;
-        $this->organizationDataMigrator = $organizationDataMigrator;
-        $this->transactionMigrator      = $transactionMigrator;
-        $this->resultMigrator           = $resultMigrator;
+        $this->activityMigrator              = $activityMigrator;
+        $this->userMigrator                  = $userMigrator;
+        $this->organizationMigrator          = $organizationMigrator;
+        $this->documentMigrator              = $documentMigrator;
+        $this->settingsMigrator              = $settingsMigrator;
+        $this->databaseManager               = $databaseManager;
+        $this->organizationDataMigrator      = $organizationDataMigrator;
+        $this->activityPublishedMigrator     = $activityPublishedMigrator;
+        $this->organizationPublishedMigrator = $organizationPublishedMigrator;
+        $this->transactionMigrator           = $transactionMigrator;
+        $this->resultMigrator                = $resultMigrator;
     }
 
     /**
@@ -158,6 +176,8 @@ class MigrateAidStream extends Command
         $response[] = $this->organizationDataMigrator->migrate($accountIds);
         $response[] = $this->transactionMigrator->migrate($accountIds);
         $response[] = $this->resultMigrator->migrate($accountIds);
+        $response[] = $this->activityPublishedMigrator->migrate($accountIds);
+        $response[] = $this->organizationPublishedMigrator->migrate($accountIds);
 
         return implode("\n", $response);
     }
@@ -241,6 +261,27 @@ class MigrateAidStream extends Command
     {
         return $this->resultMigrator->migrate($accountIds);
     }
+
+    /**
+     * Migrate activity published table
+     * @param array $accountIds
+     * @return string
+     */
+    protected function migrateActivityPublished(array $accountIds)
+    {
+        return $this->activityPublishedMigrator->migrate($accountIds);
+    }
+
+    /**
+     * Migrate activity published table
+     * @param array $accountIds
+     * @return string
+     */
+    protected function migrateOrganizationPublished(array $accountIds)
+    {
+        return $this->organizationPublishedMigrator->migrate($accountIds);
+    }
+
 
     /**
      * Get the command options
