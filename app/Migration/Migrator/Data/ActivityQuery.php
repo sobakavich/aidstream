@@ -1093,6 +1093,8 @@ class ActivityQuery extends Query
             ];
         }
         $this->data[$activityId]['related_activity'] = $relatedActivityData;
+
+        return $this;
     }
 
     protected function fetchDocumentLink($activityId)
