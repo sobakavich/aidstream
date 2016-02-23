@@ -7,6 +7,7 @@ use App\Migration\Migrator\OrganizationDataMigrator;
 use App\Migration\Migrator\OrganizationMigrator;
 use App\Migration\Migrator\SettingsMigrator;
 use App\Migration\Migrator\TransactionMigrator;
+use App\Migration\Migrator\ResultMigrator;
 use App\Migration\Migrator\UserMigrator;
 use Exception;
 use Illuminate\Console\Command;
@@ -94,6 +95,7 @@ class MigrateAidStream extends Command
      * @param SettingsMigrator         $settingsMigrator
      * @param OrganizationDataMigrator $organizationDataMigrator
      * @param TransactionMigrator      $transactionMigrator
+     * @param ResultMigrator           $resultMigrator
      * @param DatabaseManager          $databaseManager
      */
     public function __construct(
@@ -104,6 +106,7 @@ class MigrateAidStream extends Command
         SettingsMigrator $settingsMigrator,
         OrganizationDataMigrator $organizationDataMigrator,
         TransactionMigrator $transactionMigrator,
+        ResultMigrator $resultMigrator,
         DatabaseManager $databaseManager
     ) {
         parent::__construct();
@@ -115,6 +118,7 @@ class MigrateAidStream extends Command
         $this->databaseManager          = $databaseManager;
         $this->organizationDataMigrator = $organizationDataMigrator;
         $this->transactionMigrator      = $transactionMigrator;
+        $this->resultMigrator           = $resultMigrator;
     }
 
     /**
@@ -153,6 +157,7 @@ class MigrateAidStream extends Command
         $response[] = $this->activityMigrator->migrate($accountIds);
         $response[] = $this->organizationDataMigrator->migrate($accountIds);
         $response[] = $this->transactionMigrator->migrate($accountIds);
+        $response[] = $this->resultMigrator->migrate($accountIds);
 
         return implode("\n", $response);
     }
@@ -225,6 +230,16 @@ class MigrateAidStream extends Command
     protected function migrateTransaction(array $accountIds)
     {
         return $this->transactionMigrator->migrate($accountIds);
+    }
+
+    /**
+     * Migrate activity results table
+     * @param array $accountIds
+     * @return string
+     */
+    protected function migrateResult(array $accountIds)
+    {
+        return $this->resultMigrator->migrate($accountIds);
     }
 
     /**
