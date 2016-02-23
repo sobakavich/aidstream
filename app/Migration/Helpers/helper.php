@@ -160,15 +160,16 @@ function fetchDataWithCodeFrom($table, $toCheckId, $id)
 }
 
 /**
- * @param $parentTable
- * @param $column
- * @param $parentId
+ * @param      $parentTable
+ * @param      $column
+ * @param      $parentId
+ * @param null $customTable
  * @return array
  */
-function fetchPeriodStart($parentTable, $column, $parentId)
+function fetchPeriodStart($parentTable, $column, $parentId, $customTable = null)
 {
     $periodStartData = [["date" => '']];
-    $periodStart     = getBuilderFor('@iso_date as date', $parentTable . '/period_start', $column, $parentId)->first();
+    $periodStart     = getBuilderFor('@iso_date as date', $parentTable . ($customTable ? $customTable : '/period_start'), $column, $parentId)->first();
     if ($periodStart) {
         $periodStartData = [["date" => $periodStart->date]];
     }
@@ -177,15 +178,16 @@ function fetchPeriodStart($parentTable, $column, $parentId)
 }
 
 /**
- * @param $parentTable
- * @param $column
- * @param $parentId
+ * @param      $parentTable
+ * @param      $column
+ * @param      $parentId
+ * @param null $customTable
  * @return array
  */
-function fetchPeriodEnd($parentTable, $column, $parentId)
+function fetchPeriodEnd($parentTable, $column, $parentId, $customTable = null)
 {
     $periodEndData = [["date" => '']];
-    $periodEnd     = getBuilderFor('@iso_date as date', $parentTable . '/period_end', $column, $parentId)->first();
+    $periodEnd     = getBuilderFor('@iso_date as date', $parentTable . ($customTable ? $customTable : '/period_end'), $column, $parentId)->first();
     if ($periodEnd) {
         $periodEndData = [["date" => $periodEnd->date]];
     }
