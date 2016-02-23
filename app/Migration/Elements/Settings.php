@@ -138,7 +138,7 @@ class Settings
     {
         $defaultFieldValues = ['linked_data_uri' => ''];
         $migrateHelper      = new MigrateHelper();
-        $unrequiredKeys     = ['default_reporting_org_ref', 'default_reporting_org_type', 'default_reporting_org_lang'];
+        $unrequiredKeys     = ['default_reporting_org', 'default_reporting_org_ref', 'default_reporting_org_type', 'default_reporting_org_lang'];
 
         foreach (array_except($MetaDataDefaultFieldGroups, '__PHP_Incomplete_Class_Name') as $index => $data) {
             $key = sprintf('default_%s', substr($index, 3));
