@@ -79,7 +79,7 @@ class OrganizationDataQuery extends Query
      */
     protected function fetchName($organizationId, $accountId)
     {
-        $dataName           = null;
+        $dataName           = [];
         $fetchNameInstances = $this->connection->table('iati_organisation/name')
                                                ->select('*')
                                                ->where('organisation_id', '=', $organizationId)
@@ -92,7 +92,7 @@ class OrganizationDataQuery extends Query
             $dataName[] = $this->name->format($nameNarratives);
         }
 
-        $this->data[$organizationId]['name']            = $dataName;
+        $this->data[$organizationId]['name']            = json_encode($dataName);
         $this->data[$organizationId]['organization_id'] = (int) $accountId;
 
         return $this;
@@ -142,7 +142,7 @@ class OrganizationDataQuery extends Query
                 'budget_line'  => $budgetLine
             ];
         }
-        $this->data[$organizationId]['total_budget'] = $totalBudgetData;
+        $this->data[$organizationId]['total_budget'] = json_encode($totalBudgetData);
 
         return $this;
     }
@@ -172,7 +172,7 @@ class OrganizationDataQuery extends Query
             $documentLinkData[] = $this->documentLink->format($url, $format, $titleNarratives, $categories, $languages, $recipientCountries);
         }
 
-        $this->data[$organizationId]['document_link'] = $documentLinkData;
+        $this->data[$organizationId]['document_link'] = json_encode($documentLinkData);
 
         return $this;
     }
@@ -205,7 +205,7 @@ class OrganizationDataQuery extends Query
             ];
         }
 
-        $this->data[$organizationId]['recipient_organization_budget'] = $recipientOrgBudgetData;
+        $this->data[$organizationId]['recipient_organization_budget'] = json_encode($recipientOrgBudgetData);
 
         return $this;
     }
@@ -254,7 +254,7 @@ class OrganizationDataQuery extends Query
             ];
         }
 
-        $this->data[$organizationId]['recipient_country_budget'] = $recipientCountryBudgetData;
+        $this->data[$organizationId]['recipient_country_budget'] = json_encode($recipientCountryBudgetData);
 
         return $this;
     }

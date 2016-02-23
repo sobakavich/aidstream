@@ -4,6 +4,7 @@ use App\Migration\Entities\Activity;
 use App\Migration\Entities\ActivityTransactions;
 use App\Models\Activity\Transaction as TransactionModel;
 use App\Migration\Migrator\Contract\MigratorContract;
+use Illuminate\Database\DatabaseManager;
 
 
 /**
@@ -38,12 +39,30 @@ class TransactionMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
-        $activityDetails = $this->transaction->getData($accountIds);
+        $database = app()->make(DatabaseManager::class);
 
-        foreach ($activityDetails as $details) {
-            foreach ($details as $detail) {
-                $this->transactionModel->query()->insert($detail);
+        $activityDetails = $this->transaction->getData($accountIds);
+        $counter = 0;
+
+        try {
+            foreach ($activityDetails as $details) {
+                foreach ($details as $detail) {
+                    $this->transactionModel->query()->insert($detail);
+
+                    $counter++;
+
+                    if ($counter > 100) {
+                        $database->commit();
+                        $counter = 0;
+                    }
+                }
             }
+
+            $database->commit();
+        } catch (\Exception $e) {
+            $database->rollback();
+
+            throw $e;
         }
 
         return 'Activity Transaction table migrated.';

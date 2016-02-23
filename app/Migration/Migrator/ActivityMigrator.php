@@ -3,6 +3,8 @@
 use App\Migration\Entities\Activity;
 use App\Models\Activity\Activity as ActivityModel;
 use App\Migration\Migrator\Contract\MigratorContract;
+use Illuminate\Database\DatabaseManager;
+use Mockery\CountValidator\Exception;
 
 
 /**
@@ -37,16 +39,27 @@ class ActivityMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
+        $database = app()->make(DatabaseManager::class);
+
         $orgActivityDetails = $this->activity->getData($accountIds);
 
-        foreach ($orgActivityDetails as $activityDetail) {
-            foreach ($activityDetail as $detail) {
-                $activity = $this->activityModel->newInstance($detail);
+        try {
+            $database->beginTransaction();
 
-                if (!$activity->save()) {
-                    return 'Error during Activity table migration.';
+            foreach ($orgActivityDetails as $activityDetail) {
+                foreach ($activityDetail as $detail) {
+                    $activity = $this->activityModel->newInstance($detail);
+
+                    if (!$activity->save()) {
+                        return 'Error during Activity table migration.';
+                    }
                 }
             }
+            $database->commit();
+        } catch (Exception $e) {
+            $database->rollback();
+
+            throw $e;
         }
 
         return 'Activities table migrated.';

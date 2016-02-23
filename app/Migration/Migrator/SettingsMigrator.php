@@ -3,6 +3,7 @@
 use App\Migration\Entities\Settings;
 use App\Migration\Migrator\Contract\MigratorContract;
 use App\Models\Settings as SettingsModel;
+use Illuminate\Database\DatabaseManager;
 
 /**
  * Class SettingsMigrator
@@ -36,14 +37,24 @@ class SettingsMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
+        $database = app()->make(DatabaseManager::class);
+
         $settingsData = $this->settings->getData($accountIds);
 
-        foreach ($settingsData as $setting) {
-            $newSettings = $this->settingsModel->newInstance($setting);
+        try {
+            foreach ($settingsData as $setting) {
+                $newSettings = $this->settingsModel->newInstance($setting);
 
-            if (!$newSettings->save()) {
-                return 'Error during Settings table migration.';
+                if (!$newSettings->save()) {
+                    return 'Error during Settings table migration.';
+                }
             }
+
+            $database->commit();
+        } catch (\Exception $e) {
+            $database->rollback();
+
+            throw $e;
         }
 
         return 'Settings table migrated';

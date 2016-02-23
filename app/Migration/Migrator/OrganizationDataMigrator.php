@@ -3,6 +3,7 @@
 use App\Migration\Entities\OrganizationData;
 use App\Models\Organization\OrganizationData as OrganizationDataModel;
 use App\Migration\Migrator\Contract\MigratorContract;
+use Illuminate\Database\DatabaseManager;
 
 class OrganizationDataMigrator implements MigratorContract
 {
@@ -27,17 +28,29 @@ class OrganizationDataMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
+        $database = app()->make(DatabaseManager::class);
+
         $organizationDataDetails = $this->organization->getData($accountIds);
 
-        foreach ($organizationDataDetails as $organizationDetail) {
-            foreach ($organizationDetail as $detail) {
-                $newOrganizationData = $this->organizationDataModel->newInstance($detail);
-
-                if (!$newOrganizationData->save()) {
-                    return 'Error during OrganizationData table migration.';
-                }
+        try {
+            foreach ($organizationDataDetails as $organizationDetail) {
+                $this->organizationDataModel->query()->insert($organizationDetail);
+//                foreach ($organizationDetail as $detail) {
+//                    $newOrganizationData = $this->organizationDataModel->newInstance($detail);
+//
+//                    if (!$newOrganizationData->save()) {
+//                        return 'Error during OrganizationData table migration.';
+//                    }
+//                }
             }
+
+            $database->commit();
+        } catch (\Exception $e) {
+            $database->rollback();
+
+            throw $e;
         }
+
 
         return 'OrganizationData table migrated.';
     }

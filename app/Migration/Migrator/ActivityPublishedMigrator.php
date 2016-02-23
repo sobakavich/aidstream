@@ -2,6 +2,7 @@
 use App\Migration\Entities\ActivityPublished;
 use App\Models\ActivityPublished as ActivityPublishedModel;
 use App\Migration\Migrator\Contract\MigratorContract;
+use Illuminate\Database\DatabaseManager;
 
 class ActivityPublishedMigrator implements MigratorContract
 {
@@ -27,25 +28,34 @@ class ActivityPublishedMigrator implements MigratorContract
     }
 
     /**
-     * Migrate data from old system into the new one.
-     * @param $accountIds
-     * @return string
+     * {@inheritdoc}
      */
     public function migrate(array $accountIds)
     {
+        $database = app()->make(DatabaseManager::class);
+
         $organizationActivityPublished = $this->activityPublished->getData($accountIds);
 
-        foreach ($organizationActivityPublished as $activitiesPublished) {
-            foreach ($activitiesPublished as $activityPublished) {
-                if (!empty($activityPublished)) {
-                    $newActivityPublished = $this->activityPublishedModel->newInstance($activityPublished);
+        try {
+            foreach ($organizationActivityPublished as $activitiesPublished) {
+                foreach ($activitiesPublished as $activityPublished) {
+                    if (!empty($activityPublished)) {
+                        $newActivityPublished = $this->activityPublishedModel->newInstance($activityPublished);
 
-                    if (!$newActivityPublished->save()) {
-                        return 'Error during ActivityPublish table migration.';
+                        if (!$newActivityPublished->save()) {
+                            return 'Error during ActivityPublish table migration.';
+                        }
                     }
                 }
             }
+
+            $database->commit();
+        } catch (\Exception $e) {
+            $database->rollback();
+
+            throw $e;
         }
+
         return 'Activity Publish table migrated';
     }
 }
