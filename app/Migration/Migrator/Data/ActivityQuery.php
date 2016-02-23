@@ -169,7 +169,8 @@ class ActivityQuery extends Query
                  ->fetchRelatedActivity($activityId)
                  ->fetchBudgetData($activityId)
                  ->fetchConditions($activityId)
-                 ->fetchDocumentLink($activityId);
+                 ->fetchDocumentLink($activityId)
+                 ->fetchDefaultFieldValues($activity);
         }
 
         return $this->data;
@@ -1233,5 +1234,29 @@ class ActivityQuery extends Query
         }
 
         return $documentLinkLanguageData;
+    }
+
+    /**
+     * @param $activity
+     * @return $this
+     */
+    public function fetchDefaultFieldValues($activity)
+    {
+        $defaultFieldValues                                = [
+            [
+                "linked_data_uri"            => $activity->linked_data_uri,
+                "default_language"           => getLanguageCodeFor($activity->xml_lang),
+                "default_currency"           => fetchCode($activity->default_currency, 'Currency'),
+                "default_hierarchy"          => $activity->hierarchy,
+                "default_collaboration_type" => "",
+                "default_flow_type"          => "",
+                "default_finance_type"       => "",
+                "default_aid_type"           => "",
+                "default_tied_status"        => ""
+            ]
+        ];
+        $this->data[$activity->id]['default_field_values'] = $defaultFieldValues;
+
+        return $this;
     }
 }
