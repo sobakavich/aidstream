@@ -132,7 +132,15 @@ class ActivityData
         $IatiActivitiesId = ($IatiActivitiesId) ? $IatiActivitiesId->id : null;
 
         $IatiActivityCollection = $this->mysqlConn->table('iati_activity')
-                                                  ->select('*')
+                                                  ->select(
+                                                      [
+                                                          '*',
+                                                          '@xml_lang as xml_lang',
+                                                          '@default_currency as default_currency',
+                                                          '@hierarchy as hierarchy',
+                                                          '@linked_data_uri as linked_data_uri'
+                                                      ]
+                                                  )
                                                   ->where('activities_id', '=', $IatiActivitiesId)
                                                   ->get();
 
