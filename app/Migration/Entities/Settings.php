@@ -34,13 +34,5 @@ class Settings
     public function getData($accountIds)
     {
         return $this->settingsQuery->executeFor($accountIds);
-
-//        foreach ($accountIds as $accountId) {
-//            if ($organization = getOrganizationFor($accountId)) {
-//                $SettingsData[] = $this->settings->SettingsDataFetch($organization->id, $accountId);
-//            }
-//        }
-//
-//        return $SettingsData;
     }
 }
