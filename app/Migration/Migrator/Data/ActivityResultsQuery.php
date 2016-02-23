@@ -99,7 +99,7 @@ class ActivityResultsQuery extends Query
         ];
 
         $this->data['activity_id'] = $activityId;
-        $this->data['result']      = $resultData;
+        $this->data['result']      = json_encode($resultData);
 
         return $this;
     }

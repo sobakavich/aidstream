@@ -3,6 +3,7 @@
 use App\Migration\Entities\User;
 use App\User as UserModel;
 use App\Migration\Migrator\Contract\MigratorContract;
+use Illuminate\Database\DatabaseManager;
 
 /**
  * Class UserMigrator
@@ -36,15 +37,26 @@ class UserMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
+        $database = app()->make(DatabaseManager::class);
+
         $oldUserData = $this->user->getData($accountIds);
 
-        foreach ($oldUserData as $userData) {
-            $newUser = $this->userModel->newInstance($userData);
+        try {
+            foreach ($oldUserData as $userData) {
+                $newUser = $this->userModel->newInstance($userData);
 
-            if (!$newUser->save()) {
-                return 'Error during User table migration.';
+                if (!$newUser->save()) {
+                    return 'Error during User table migration.';
+                }
             }
+
+            $database->commit();
+        } catch (\Exception $e) {
+            $database->rollback();
+
+            throw $e;
         }
+
 
         return 'Users table migrated.';
     }

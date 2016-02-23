@@ -3,6 +3,7 @@
 use App\Migration\Entities\ActivityResults;
 use App\Models\Activity\ActivityResult as ResultModel;
 use App\Migration\Migrator\Contract\MigratorContract;
+use Illuminate\Database\DatabaseManager;
 
 
 /**
@@ -37,18 +38,29 @@ class ResultMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
+        $database = app()->make(DatabaseManager::class);
+
         $accountsActivities = $this->result->getData($accountIds);
 
-        foreach ($accountsActivities as $accountActivities) {
-            foreach ($accountActivities as $activity) {
-                foreach ($activity as $resultData) {
-                    $result = $this->resultModel->newInstance($resultData);
-
-                    if (!$result->save()) {
-                        return 'Error during Activity Result table migration.';
-                    }
+        try {
+            foreach ($accountsActivities as $accountActivities) {
+                foreach ($accountActivities as $activity) {
+                    $this->resultModel->query()->insert($activity);
+//                    foreach ($activity as $resultData) {
+//                        $result = $this->resultModel->newInstance($resultData);
+//
+//                        if (!$result->save()) {
+//                            return 'Error during Activity Result table migration.';
+//                        }
+//                    }
                 }
             }
+
+            $database->commit();
+        } catch (\Exception $e) {
+            $database->rollback();
+
+            throw $e;
         }
 
         return 'Activity Result table migrated.';

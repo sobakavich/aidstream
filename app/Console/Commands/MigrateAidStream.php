@@ -50,14 +50,19 @@ class MigrateAidStream extends Command
     protected $settingsMigrator;
 
     /**
-     * @var $ActivityPublishedMigrator
+     * @var ActivityPublishedMigrator
      */
     protected $activityPublishedMigrator;
 
     /**
-     * @var $OrganizationPublishedMigrator
+     * @var OrganizationPublishedMigrator
      */
     protected $organizationPublishedMigrator;
+
+    /**
+     * @var ResultMigrator
+     */
+    protected $resultMigrator;
 
     /**
      * @var Activity
@@ -163,7 +168,7 @@ class MigrateAidStream extends Command
             $this->databaseManager->beginTransaction();
             $this->beginMigration($argument, $country);
 
-            $this->databaseManager->commit();
+//            $this->databaseManager->commit();
         } catch (Exception $exception) {
             $this->rollback($exception, $trace);
         }
