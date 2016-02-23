@@ -19,6 +19,7 @@ class OrganizationPublishedQuery extends Query
                 $data[] = $this->getData($organization->id, $accountId);
             }
         }
+
         return $data;
     }
 
@@ -39,6 +40,7 @@ class OrganizationPublishedQuery extends Query
                 'organization_id'       => $accountId,
             ];
         }
+
         return $organisationPublished;
     }
 }
