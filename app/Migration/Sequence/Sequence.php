@@ -3,6 +3,10 @@
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class Sequence
+ * @package App\Migration\Sequence
+ */
 class Sequence
 {
     /**
@@ -10,10 +14,19 @@ class Sequence
      */
     protected $databaseManager;
 
+    /**
+     * @var array
+     */
     protected $tables = [];
-    protected $sequences = [];
-    protected $except = ['migrations', 'password_resets', ''];
 
+    /**
+     * @var array
+     */
+    protected $except = ['migrations', 'password_resets', 'versions', 'user_activities', 'jobs', 'failed_jobs', 'role'];
+
+    /**
+     * @param DatabaseManager $databaseManager
+     */
     public function synchronize(DatabaseManager $databaseManager)
     {
         $this->databaseManager = $databaseManager;
@@ -28,6 +41,10 @@ class Sequence
         $this->resetSequences();
     }
 
+    /**
+     * @param $tables
+     * @return $this
+     */
     protected function getTablesNames($tables)
     {
         array_walk(
@@ -40,38 +57,41 @@ class Sequence
         return $this;
     }
 
-    protected function extractSequenceNames()
-    {
-        foreach ($this->tables as $table) {
-            $this->sequences[] = $this->extractSequenceFor($table);
-        }
-
-        return $this;
-    }
-
-    protected function extractSequenceFor($table)
+    /**
+     * @param $table
+     * @return string
+     */
+    protected function extractSequenceNameFor($table)
     {
         return sprintf('%s_id_seq', $table);
     }
 
+    /**
+     * Reset Sequences for all migrated tables.
+     */
     protected function resetSequences()
     {
-        $max = $this->getNewBuilder()->selectRaw("MAX(id)")->from('activity_data')->get();
-
-        foreach ($this->tables as $table) {
-            $sequence = $this->extractSequenceFor($table);
-
+        foreach (array_diff($this->tables, $this->except) as $table) {
+            $sequenceName         = $this->extractSequenceNameFor($table);
+            $lastRecordIndex      = $this->latest($table)->index;
+            DB::statement("ALTER SEQUENCE $sequenceName RESTART WITH $lastRecordIndex");
         }
     }
 
+    /**
+     * @return \Illuminate\Database\Query\Builder
+     */
     protected function getNewBuilder()
     {
         return $this->databaseManager->connection()->query();
     }
 
+    /**
+     * @param $table
+     * @return mixed|static
+     */
     protected function latest($table)
     {
-        $this->getNewBuilder()->selectRaw("MAX(id)")->from($table)->get();
-
+        return $this->getNewBuilder()->selectRaw("MAX(id) as index")->from($table)->first();
     }
 }

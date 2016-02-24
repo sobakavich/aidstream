@@ -588,7 +588,7 @@ class ActivityQuery extends Query
             $percentage   = $sectorInfo->percentage;
 
             if (!is_null($vocabId)) {
-                $sectorCode = fetchCode($vocabId, 'Sector', $activityId);
+                $sectorCode = fetchCode($sectorCodeId, 'Sector', $activityId);
             }
 
             $sectorNarratives = fetchNarratives($sectorInfo->id, 'iati_sector/narrative', 'sector_id');
