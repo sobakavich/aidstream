@@ -3,6 +3,7 @@
 
 use App\Migration\Elements\DocumentLink;
 use App\Migration\Elements\OrganizationData\Name;
+use Carbon\Carbon;
 
 /**
  * Class OrganizationDataQuery
@@ -255,6 +256,8 @@ class OrganizationDataQuery extends Query
         }
 
         $this->data[$organizationId]['recipient_country_budget'] = json_encode($recipientCountryBudgetData);
+        $this->data[$organizationId]['created_at']               = Carbon::now();
+        $this->data[$organizationId]['updated_at']               = Carbon::now();
 
         return $this;
     }

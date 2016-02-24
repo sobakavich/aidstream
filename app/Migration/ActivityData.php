@@ -151,4 +151,9 @@ class ActivityData
     {
         $this->mysqlConn = app()->make(DatabaseManager::class)->connection($connection);
     }
+
+    public function getActivityWorkflowFor($activityId)
+    {
+        return $this->mysqlConn->table('iati_activity')->select('status_id')->where('id', '=', $activityId)->first();
+    }
 }

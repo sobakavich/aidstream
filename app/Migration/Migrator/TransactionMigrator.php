@@ -43,15 +43,16 @@ class TransactionMigrator implements MigratorContract
 
         $activityDetails = $this->transaction->getData($accountIds);
         $counter = 0;
+        $builder = $this->transactionModel->query();
 
         try {
             foreach ($activityDetails as $details) {
                 foreach ($details as $detail) {
-                    $this->transactionModel->query()->insert($detail);
+                    $builder->insert($detail);
 
                     $counter++;
 
-                    if ($counter > 100) {
+                    if ($counter > 500) {
                         $database->commit();
                         $counter = 0;
                     }

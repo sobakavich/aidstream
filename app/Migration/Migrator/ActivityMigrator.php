@@ -44,8 +44,6 @@ class ActivityMigrator implements MigratorContract
         $orgActivityDetails = $this->activity->getData($accountIds);
 
         try {
-            $database->beginTransaction();
-
             foreach ($orgActivityDetails as $activityDetail) {
                 foreach ($activityDetail as $detail) {
                     $activity = $this->activityModel->newInstance($detail);
@@ -55,6 +53,7 @@ class ActivityMigrator implements MigratorContract
                     }
                 }
             }
+
             $database->commit();
         } catch (Exception $e) {
             $database->rollback();
