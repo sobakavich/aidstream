@@ -19,7 +19,7 @@ class Location
     ) {
         return [
             'reference'            => isset($ref) ? $ref : "",
-            'location_reach'       => [["code" => isset($locationReach) ? $locationReach : []]],
+            'location_reach'       => [["code" => isset($locationReach) ? $locationReach : ""]],
             'location_id'          => isset($locationID) ? $locationID : [['vocabulary' => "", 'code' => ""]],
             'name'                 => [['narrative' => isset($fetchNameNarratives) ? $fetchNameNarratives : []]],
             'location_description' => [['narrative' => isset($fetchDescriptionNarratives) ? $fetchDescriptionNarratives : []]],
