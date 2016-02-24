@@ -147,9 +147,11 @@ class ActivityQuery extends Query
         $this->data = [];
 
         foreach ($activities as $activity) {
-            $activityId                                 = $activity->id;
-            $this->data[$activityId]['organization_id'] = $accountId;
-            $this->data[$activityId]['id']              = $activityId;
+            $activityId                                   = $activity->id;
+            $this->data[$activityId]['organization_id']   = $accountId;
+            $this->data[$activityId]['id']                = $activityId;
+            $activityStatus                               = $this->activityData->getActivityWorkflowFor($activityId)->status_id;
+            $this->data[$activityId]['activity_workflow'] = $activityStatus ? ($activityStatus - 1) : 0;
 
             $this->titleDataFetch($activityId)
                  ->fetchIdentifier($activityId)

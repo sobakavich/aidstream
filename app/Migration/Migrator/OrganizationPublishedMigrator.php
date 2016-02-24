@@ -20,7 +20,7 @@ class OrganizationPublishedMigrator implements MigratorContract
 
     /**
      * OrganizationPublishedMigrator constructor.
-     * @param OrganizationPublished    $organizationPublished
+     * @param OrganizationPublished       $organizationPublished
      * @param  OrganizationPublishedModel $organizationPublishedModel
      */
     public function __construct(OrganizationPublished $organizationPublished, OrganizationPublishedModel $organizationPublishedModel)
@@ -37,26 +37,14 @@ class OrganizationPublishedMigrator implements MigratorContract
         $database = app()->make(DatabaseManager::class);
 
         $organizationPublished = $this->organizationPublished->getData($accountIds);
+        $builder               = $this->organizationPublishedModel->query();
 
         try {
             $database->beginTransaction();
 
             foreach ($organizationPublished as $org) {
-                $this->organizationPublishedModel->query()->insert($org);
+                $builder->insert($org);
             }
-
-//            foreach ($organizationPublished as $activitiesPublished) {
-//                foreach ($activitiesPublished as $activityPublished) {
-//                    if (!empty($activityPublished)) {
-//                        $newActivityPublished = $this->organizationPublishedModel->newInstance($activityPublished);
-//
-//                        if (!$newActivityPublished->save()) {
-//                            return 'Error during OrganizationPublish table migration.';
-//                        }
-//                    }
-//                }
-//            }
-
 
             $database->commit();
         } catch (\Exception $e) {

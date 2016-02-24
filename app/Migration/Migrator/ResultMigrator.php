@@ -41,18 +41,12 @@ class ResultMigrator implements MigratorContract
         $database = app()->make(DatabaseManager::class);
 
         $accountsActivities = $this->result->getData($accountIds);
+        $builder = $this->resultModel->query();
 
         try {
             foreach ($accountsActivities as $accountActivities) {
                 foreach ($accountActivities as $activity) {
-                    $this->resultModel->query()->insert($activity);
-//                    foreach ($activity as $resultData) {
-//                        $result = $this->resultModel->newInstance($resultData);
-//
-//                        if (!$result->save()) {
-//                            return 'Error during Activity Result table migration.';
-//                        }
-//                    }
+                    $builder->insert($activity);
                 }
             }
 
