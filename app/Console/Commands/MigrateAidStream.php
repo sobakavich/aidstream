@@ -12,6 +12,7 @@ use App\Migration\Migrator\UserMigrator;
 use App\Migration\Migrator\ActivityPublishedMigrator;
 use App\Migration\Migrator\OrganizationPublishedMigrator;
 use App\Migration\Migrator\UserGroupMigrator;
+use App\Migration\Sequence\Sequence;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
@@ -88,7 +89,7 @@ class MigrateAidStream extends Command
      * Signature for the command.
      * @var string
      */
-    protected $signature = 'migrate-aidstream {table} {--country=} {--trace}';
+    protected $signature = 'migrate-aidstream {table} {--country=} {--trace} {--reset-sequence}';
 
     /**
      * @var DatabaseManager
@@ -162,8 +163,16 @@ class MigrateAidStream extends Command
         $argument = $this->argument('table');
         $country  = $this->option('country');
         $trace    = $this->option('trace');
+        $sequenceOption = $this->option('reset-sequence');
 
         try {
+            if ($sequenceOption) {
+                $sequence = new Sequence();
+                $sequence->synchronize($this->databaseManager);
+
+                return 'All Sequences synchronized';
+            }
+
             $this->info('Running the migrations');
 
             $this->databaseManager->beginTransaction();
@@ -337,7 +346,8 @@ class MigrateAidStream extends Command
     {
         return [
             ['country', null, InputOption::VALUE_OPTIONAL, 'Run the migration for an Organization of a specific country.', null],
-            ['trace', null, InputOption::VALUE_OPTIONAL, 'Get the trace in case of errors during the migration process.', null]
+            ['trace', null, InputOption::VALUE_OPTIONAL, 'Get the trace in case of errors during the migration process.', null],
+            ['reset-sequence', null, InputOption::VALUE_OPTIONAL, 'Reset the sequences for the migrated tables.', null]
         ];
     }
 

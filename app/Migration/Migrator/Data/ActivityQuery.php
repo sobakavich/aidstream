@@ -592,7 +592,7 @@ class ActivityQuery extends Query
             }
 
             $sectorNarratives = fetchNarratives($sectorInfo->id, 'iati_sector/narrative', 'sector_id');
-            $Narrative        = [['narrative' => "", 'language' => ""]];
+            $Narrative        = [];
 
             foreach ($sectorNarratives as $eachNarrative) {
                 $narrativeText = $eachNarrative->text;
@@ -813,7 +813,7 @@ class ActivityQuery extends Query
                 $select       = ['@latitude as latitude', '@longitude as longitude'];
                 $positionInfo = getBuilderFor($select, 'iati_location/point/pos', 'point_id', $pointInfo->id)->first();
 
-                $positionData = ['latitude' => ($positionInfo) ? $positionInfo->latitude : [], 'longitude' => ($positionInfo) ? $positionInfo->longitude : []];
+                $positionData = ['latitude' => ($positionInfo) ? $positionInfo->latitude : '', 'longitude' => ($positionInfo) ? $positionInfo->longitude : ''];
                 $pointData    = ['srs_name' => $srsName, 'position' => [$positionData]];
             }
             $exactnessInfo = getBuilderFor('@code as code', 'iati_location/exactness', 'location_id', $location->id)->first();
