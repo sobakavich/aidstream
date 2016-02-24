@@ -31,17 +31,11 @@ class OrganizationDataMigrator implements MigratorContract
         $database = app()->make(DatabaseManager::class);
 
         $organizationDataDetails = $this->organization->getData($accountIds);
+        $builder                 = $this->organizationDataModel->query();
 
         try {
             foreach ($organizationDataDetails as $organizationDetail) {
-                $this->organizationDataModel->query()->insert($organizationDetail);
-//                foreach ($organizationDetail as $detail) {
-//                    $newOrganizationData = $this->organizationDataModel->newInstance($detail);
-//
-//                    if (!$newOrganizationData->save()) {
-//                        return 'Error during OrganizationData table migration.';
-//                    }
-//                }
+                $builder->insert($organizationDetail);
             }
 
             $database->commit();
