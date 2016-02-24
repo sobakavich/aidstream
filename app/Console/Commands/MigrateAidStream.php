@@ -12,6 +12,7 @@ use App\Migration\Migrator\UserMigrator;
 use App\Migration\Migrator\ActivityPublishedMigrator;
 use App\Migration\Migrator\OrganizationPublishedMigrator;
 use App\Migration\Migrator\UserGroupMigrator;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
@@ -167,8 +168,6 @@ class MigrateAidStream extends Command
 
             $this->databaseManager->beginTransaction();
             $this->beginMigration($argument, $country);
-
-//            $this->databaseManager->commit();
         } catch (Exception $exception) {
             $this->rollback($exception, $trace);
         }
@@ -183,16 +182,38 @@ class MigrateAidStream extends Command
     {
         $response   = [];
         $response[] = $this->organizationMigrator->migrate($accountIds);
+        $this->informFor('Organization');
+
         $response[] = $this->userMigrator->migrate($accountIds);
+        $this->informFor('User');
+
         $response[] = $this->documentMigrator->migrate($accountIds);
+        $this->informFor('Documents');
+
         $response[] = $this->settingsMigrator->migrate($accountIds);
+        $this->informFor('Settings');
+
         $response[] = $this->activityMigrator->migrate($accountIds);
+        $this->informFor('Activities');
+
         $response[] = $this->organizationDataMigrator->migrate($accountIds);
+        $this->informFor('OrganizationData');
+
         $response[] = $this->transactionMigrator->migrate($accountIds);
+        $this->informFor('Transaction');
+
         $response[] = $this->resultMigrator->migrate($accountIds);
+        $this->informFor('Results');
+
         $response[] = $this->activityPublishedMigrator->migrate($accountIds);
+        $this->informFor('ActivityPublished');
+
         $response[] = $this->organizationPublishedMigrator->migrate($accountIds);
+        $this->informFor('Organization Published');
+
         $response[] = $this->userGroupMigrator->migrate($accountIds);
+
+        $this->info("\n");
 
         return implode("\n", $response);
     }
@@ -406,5 +427,10 @@ class MigrateAidStream extends Command
 
         return $accountIds;
 
+    }
+
+    protected function informFor($table)
+    {
+        $this->info(sprintf('%s table migrated -- %s', $table, Carbon::now()));
     }
 }
