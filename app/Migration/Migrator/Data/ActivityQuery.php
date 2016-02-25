@@ -987,6 +987,11 @@ class ActivityQuery extends Query
 
         if ($budgetItemInstance) {
             $vocabularyCode = fetchCode($budgetItemInstance->vocabulary, 'BudgetIdentifierVocabulary', '');
+           if($vocabularyCode==1) {
+               $code = 'code';
+           } else {
+               $code = 'code_text';
+           }
 
             $select           = ['@code as code', '@percentage as percentage', 'id'];
             $budgetItemsBlock = getBuilderFor($select, 'iati_country_budget_items/budget_item', 'country_budget_items_id', $budgetItemInstance->id)->get();
@@ -1004,7 +1009,8 @@ class ActivityQuery extends Query
 
                     $description[] = ['narrative' => $descriptionNarratives];
                 }
-                $budgetItemsArray[] = ['code' => $budgetCode, 'percentage' => $budgetPercentage, 'description' => $description];
+
+                $budgetItemsArray[] = [$code => $budgetCode, 'percentage' => $budgetPercentage, 'description' => $description];
             }
 
             $countryBudgetItem        = new CountryBudgetItem();
