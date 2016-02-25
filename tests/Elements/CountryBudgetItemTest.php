@@ -21,7 +21,7 @@ class CountryBudgetItemTest extends AidStreamTestCase
     public function itShouldFormatCountryBudgetItem()
     {
         $vocabularyCode       = '1';
-        $budgetItemsArray     = $this->getTestCountryBudgetItemsData();
+        $budgetItemsArray     = $this->getTestCountryBudgetItemsData($vocabularyCode);
         $this->expectedOutput = $this->formatCountryBudgetItem($vocabularyCode, $budgetItemsArray);
 
         $this->assertEquals($this->expectedOutput, $this->countryBudgetItem->format($vocabularyCode, $budgetItemsArray));
@@ -30,8 +30,18 @@ class CountryBudgetItemTest extends AidStreamTestCase
     /** {@test} */
     public function itShouldFormatCountryBudgetItemWithEmptyNarratives()
     {
-        $vocabularyCode       = '1';
-        $budgetItemsArray     = $this->getTestCountryBudgetItemsDataWithEmptyNarratives();
+        $vocabularyCode       = '2';
+        $budgetItemsArray     = $this->getTestCountryBudgetItemsDataWithEmptyNarratives($vocabularyCode);
+        $this->expectedOutput = $this->formatCountryBudgetItem($vocabularyCode, $budgetItemsArray);
+
+        $this->assertEquals($this->expectedOutput, $this->countryBudgetItem->format($vocabularyCode, $budgetItemsArray));
+    }
+
+    /** {@test} */
+    public function itShouldHaveBeenFormattedAccordingToTemplate()
+    {
+        $vocabularyCode       = '2';
+        $budgetItemsArray     = $this->getEmptyCountryBudgetItemArray($vocabularyCode);
         $this->expectedOutput = $this->formatCountryBudgetItem($vocabularyCode, $budgetItemsArray);
 
         $this->assertEquals($this->expectedOutput, $this->countryBudgetItem->format($vocabularyCode, $budgetItemsArray));

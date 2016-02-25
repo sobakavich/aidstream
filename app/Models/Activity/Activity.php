@@ -49,6 +49,8 @@ class Activity extends Model
         'conditions',
         'default_field_values',
         'humanitarian_scope',
+        'activity_workflow',
+        'published_to_registry',
         'id'
     ];
 

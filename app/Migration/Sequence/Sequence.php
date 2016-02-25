@@ -74,7 +74,9 @@ class Sequence
         foreach (array_diff($this->tables, $this->except) as $table) {
             $sequenceName         = $this->extractSequenceNameFor($table);
             $lastRecordIndex      = $this->latest($table)->index;
-            DB::statement("ALTER SEQUENCE $sequenceName RESTART WITH $lastRecordIndex");
+            if ($lastRecordIndex) {
+                DB::statement("SELECT setval('$sequenceName', $lastRecordIndex, true)");
+            }
         }
     }
 

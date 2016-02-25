@@ -4,6 +4,7 @@
     "budget_item": [
       {
         "code": "",
+        "code_text" : "",
         "percentage": "",
         "description": [
           {

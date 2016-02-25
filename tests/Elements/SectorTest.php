@@ -31,61 +31,143 @@ class SectorTest extends AidStreamTestCase
         $percentage     = $this->getSectorPercentage();
         $narrative      = $this->getTestNarratives(['testNarrative1', 'testNarrative2'], ['testLanguage1', 'testLanguage2']);
 
-        $this->expectedOutput = $this->formatSector($vocabularyCode, $this->sectorCode, $this->sectorCategoryCode, $this->sectorText, $percentage, $narrative, $this->sector_code, $this->sectorCodeId, $this->sectorNarratives);
+        $this->expectedOutput = $this->formatSector(
+            $vocabularyCode,
+            $this->sectorCode,
+            $this->sectorCategoryCode,
+            $this->sectorText,
+            $percentage,
+            $narrative,
+            $this->sector_code,
+            $this->sectorCodeId,
+            $this->sectorNarratives
+        );
 
         $this->assertEquals(
             $this->expectedOutput,
-            $this->sector->format($vocabularyCode, $this->sectorCode, $this->sectorCategoryCode, $this->sectorText, $percentage, $narrative, $this->sector_code, $this->sectorCodeId, $this->sectorNarratives)
+            $this->sector->format(
+                $vocabularyCode,
+                $this->sectorCode,
+                $this->sectorCategoryCode,
+                $this->sectorText,
+                $percentage,
+                $narrative,
+                $this->sector_code,
+                $this->sectorCodeId,
+                $this->sectorNarratives
+            )
         );
     }
 
     /** {@test} */
     public function itShouldFormatSectorWithVocabularyCodeTwo()
     {
-        $vocabularyCode       = "2";
-        $percentage           = $this->getSectorPercentage();
-        $narrative            = $this->getTestNarratives(['testNarrative1', 'testNarrative2'], ['testLanguage1', 'testLanguage2']);
+        $vocabularyCode = "2";
+        $percentage     = $this->getSectorPercentage();
+        $narrative      = $this->getTestNarratives(['testNarrative1', 'testNarrative2'], ['testLanguage1', 'testLanguage2']);
 
-        $this->expectedOutput = $this->formatSector($vocabularyCode, $this->sectorCode, $this->sectorCategoryCode, $this->sectorText, $percentage, $narrative, $this->sector_code, $this->sectorCodeId, $this->sectorNarratives);
+        $this->expectedOutput = $this->formatSector(
+            $vocabularyCode,
+            $this->sectorCode,
+            $this->sectorCategoryCode,
+            $this->sectorText,
+            $percentage,
+            $narrative,
+            $this->sector_code,
+            $this->sectorCodeId,
+            $this->sectorNarratives
+        );
 
         $this->assertEquals(
             $this->expectedOutput,
-            $this->sector->format($vocabularyCode, $this->sectorCode, $this->sectorCategoryCode, $this->sectorText, $percentage, $narrative, $this->sector_code, $this->sectorCodeId, $this->sectorNarratives)
+            $this->sector->format(
+                $vocabularyCode,
+                $this->sectorCode,
+                $this->sectorCategoryCode,
+                $this->sectorText,
+                $percentage,
+                $narrative,
+                $this->sector_code,
+                $this->sectorCodeId,
+                $this->sectorNarratives
+            )
         );
     }
 
     /** {@test} */
     public function itShouldFormatSectorWithVocabularyCodeOtherThanOneAndTwo()
     {
-        $vocabularyCode       = "a";
-        $percentage           = $this->getSectorPercentage();
-        $narrative            = $this->getTestNarratives(['testNarrative1', 'testNarrative2'], ['testLanguage1', 'testLanguage2']);
+        $vocabularyCode = "a";
+        $percentage     = $this->getSectorPercentage();
+        $narrative      = $this->getTestNarratives(['testNarrative1', 'testNarrative2'], ['testLanguage1', 'testLanguage2']);
 
-        $this->expectedOutput = $this->formatSector($vocabularyCode, $this->sectorCode, $this->sectorCategoryCode, $this->sectorText, $percentage, $narrative, $this->sector_code, $this->sectorCodeId, $this->sectorNarratives);
+        $this->expectedOutput = $this->formatSector(
+            $vocabularyCode,
+            $this->sectorCode,
+            $this->sectorCategoryCode,
+            $this->sectorText,
+            $percentage,
+            $narrative,
+            $this->sector_code,
+            $this->sectorCodeId,
+            $this->sectorNarratives
+        );
 
         $this->assertEquals(
             $this->expectedOutput,
-            $this->sector->format($vocabularyCode, $this->sectorCode, $this->sectorCategoryCode, $this->sectorText, $percentage, $narrative, $this->sector_code, $this->sectorCodeId, $this->sectorNarratives)
+            $this->sector->format(
+                $vocabularyCode,
+                $this->sectorCode,
+                $this->sectorCategoryCode,
+                $this->sectorText,
+                $percentage,
+                $narrative,
+                $this->sector_code,
+                $this->sectorCodeId,
+                $this->sectorNarratives
+            )
         );
     }
 
     /** {@test} */
     public function itShouldFormatSectorWithEmptyNarratives()
     {
-        $vocabularyCode       = "2";
-        $percentage           = $this->getSectorPercentage();
-        $narrative            = $this->getTestNarratives();
+        $vocabularyCode = "2";
+        $percentage     = $this->getSectorPercentage();
+        $narrative      = $this->getTestNarratives();
 
-        $this->expectedOutput = $this->formatSector($vocabularyCode, $this->sectorCode, $this->sectorCategoryCode, $this->sectorText, $percentage, $narrative, $this->sector_code, $this->sectorCodeId, $this->sectorNarratives);
+        $this->expectedOutput = $this->formatSector(
+            $vocabularyCode,
+            $this->sectorCode,
+            $this->sectorCategoryCode,
+            $this->sectorText,
+            $percentage,
+            $narrative,
+            $this->sector_code,
+            $this->sectorCodeId,
+            $this->sectorNarratives
+        );
 
         $this->assertEquals(
             $this->expectedOutput,
-            $this->sector->format($vocabularyCode, $this->sectorCode, $this->sectorCategoryCode, $this->sectorText, $percentage, $narrative, $this->sector_code, $this->sectorCodeId, $this->sectorNarratives)
+            $this->sector->format(
+                $vocabularyCode,
+                $this->sectorCode,
+                $this->sectorCategoryCode,
+                $this->sectorText,
+                $percentage,
+                $narrative,
+                $this->sector_code,
+                $this->sectorCodeId,
+                $this->sectorNarratives
+            )
         );
     }
 
     protected function formatSector($vocabularyCode, $sectorCode, $sectorCategoryCode, $sectorText, $percentage, $Narrative, $sector_code, $sectorCodeId, $sectorNarratives)
     {
+        $template = getHeaders('ActivityData', 'sector')[0];
+
         if ($vocabularyCode == "1") {
             $sectorCode = $sector_code;
         } elseif ($vocabularyCode == "2") {
@@ -100,14 +182,15 @@ class SectorTest extends AidStreamTestCase
             $narrative = $Narrative;
         }
 
-        return [
-            'sector_vocabulary'    => $vocabularyCode,
-            'sector_code'          => $sectorCode,
-            'sector_category_code' => $sectorCategoryCode,
-            'sector_text'          => $sectorText,
-            'percentage'           => $percentage,
-            'narrative'            => $narrative
-        ];
+
+        $template['sector_vocabulary']    = $vocabularyCode;
+        $template['sector_code']          = $sectorCode;
+        $template['sector_category_code'] = $sectorCategoryCode;
+        $template['sector_text']          = $sectorText;
+        $template['percentage']           = $percentage;
+        $template['narrative']            = $narrative;
+
+        return $template;
     }
 
     public function tearDown()
