@@ -743,6 +743,7 @@ class ActivityQuery extends Query
         $exactnessCode              = null;
         $locationClassCode          = null;
         $featureDesignationCode     = null;
+        $locationIdVocabulary       = '';
         $positionData               = ['latitude' => '', 'longitude' => ''];
 
         foreach ($locationInstance as $location) {
@@ -765,9 +766,8 @@ class ActivityQuery extends Query
                     if ($locationIdVocab) {
                         $locationIdVocabulary = $locationIdVocab->Code;
                     }
-
                     $locationIdCode = $eachLocationId->code;
-                    $locationID[]   = ['vocabulary' => $locationIdVocabulary, 'code' => $locationIdCode];
+                    $locationId[]   = ['vocabulary' => $locationIdVocabulary, 'code' => $locationIdCode];
                 }
 
             }
@@ -987,11 +987,6 @@ class ActivityQuery extends Query
 
         if ($budgetItemInstance) {
             $vocabularyCode = fetchCode($budgetItemInstance->vocabulary, 'BudgetIdentifierVocabulary', '');
-           if($vocabularyCode==1) {
-               $code = 'code';
-           } else {
-               $code = 'code_text';
-           }
 
             $select           = ['@code as code', '@percentage as percentage', 'id'];
             $budgetItemsBlock = getBuilderFor($select, 'iati_country_budget_items/budget_item', 'country_budget_items_id', $budgetItemInstance->id)->get();
@@ -1010,7 +1005,11 @@ class ActivityQuery extends Query
                     $description[] = ['narrative' => $descriptionNarratives];
                 }
 
-                $budgetItemsArray[] = [$code => $budgetCode, 'percentage' => $budgetPercentage, 'description' => $description];
+                if ($vocabularyCode == 1) {
+                    $budgetItemsArray[] = ['code' => $budgetCode, 'percentage' => $budgetPercentage, 'description' => $description, 'code_text' => ''];
+                } else {
+                    $budgetItemsArray[] = ['code_text' => $budgetCode, 'percentage' => $budgetPercentage, 'description' => $description, 'code' => ''];
+                }
             }
 
             $countryBudgetItem        = new CountryBudgetItem();
