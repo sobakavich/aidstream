@@ -42,6 +42,17 @@ class ActivityDateTest extends AidStreamTestCase
         $this->assertEquals($this->expectedOutput, $this->activityDate->format($dateNarratives, $isoDate, $activityDateTypeCode));
     }
 
+    /** {@test} */
+    public function itShouldHaveBeenFormattedAccordingToTemplate()
+    {
+        $dateNarratives       = [];
+        $isoDate              = '';
+        $activityDateTypeCode = '';
+        $this->expectedOutput = $this->formatActivityDate($dateNarratives, $isoDate, $activityDateTypeCode);
+
+        $this->assertEquals($this->expectedOutput, $this->activityDate->format($dateNarratives, $isoDate, $activityDateTypeCode));
+    }
+
     protected function formatActivityDate($dateNarratives, $isoDate, $activityDateTypeCode)
     {
         $template         = getHeaders('ActivityData', 'activityDate')[0];
