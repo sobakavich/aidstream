@@ -153,12 +153,30 @@ class ActivityResultsQuery extends Query
      */
     protected function fetchIndicator($parentTable, $column, $totalBudgetId)
     {
-        $table         = $parentTable . '/indicator';
-        $indicatorData = [];
-        $indicators    = getBuilderFor(['id', '@measure as measure', '@ascending as ascending'], $table, $column, $totalBudgetId)->get();
+        $table = $parentTable . '/indicator';
+
+        $indicatorData[] = [
+            "measure"     => '',
+            "ascending"   => '',
+            "title"       => [['narrative' => ['narrative' => '', 'language' => '']]],
+            "description" => [['narrative' => ['narrative' => '', 'language' => '']]],
+            "baseline"    => [['year' => '', 'value' => '', 'comment' => [['narrative' => ['narrative' => '', 'language' => '']]]]],
+            "period"      => [
+                [
+                    'period_start' => ['date' => ''],
+                    'period_end'   => ['date' => ''],
+                    'target'       => [['value' => '', 'comment' => [['narrative' => ['narrative' => '', 'language' => '']]]]],
+                    'actual'       => [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]]
+                ]
+            ]
+        ];
+
+        $indicators = getBuilderFor(['id', '@measure as measure', '@ascending as ascending'], $table, $column, $totalBudgetId)->get();
+
         foreach ($indicators as $indicator) {
-            $indicatorId = $indicator->id;
-            $childColumn = 'indicator_id';
+            $indicatorData = [];
+            $indicatorId   = $indicator->id;
+            $childColumn   = 'indicator_id';
 
             $title       = $this->fetchTitle($table, $childColumn, $indicatorId);
             $description = $this->fetchDescription($table, $childColumn, $indicatorId);
@@ -248,7 +266,14 @@ class ActivityResultsQuery extends Query
             ];
         }
 
-        $periodData ?: $periodData = [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]];
+        $periodData ?: $periodData = [
+            [
+                'period_start' => [['date' => '']],
+                'period_end'   => [['date' => '']],
+                'target'       => [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]],
+                'actual'       => [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]]
+            ]
+        ];
 
         return $periodData;
     }
@@ -275,7 +300,7 @@ class ActivityResultsQuery extends Query
             ];
         }
 
-        $targetData ?: $targetData = [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]];
+        $targetData ?: $targetData = [[["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]]];
 
         return $targetData;
     }

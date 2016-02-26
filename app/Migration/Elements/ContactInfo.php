@@ -16,14 +16,14 @@ class ContactInfo
     ) {
         $contactInfoData = [
             'type'            => $typeCode,
-            'organization'    => [['narrative' => isset($contactOrgNarrative) ? $contactOrgNarrative : []]],
-            'department'      => [['narrative' => isset($contactInfoDepartmentNarrative) ? $contactInfoDepartmentNarrative : []]],
-            'person_name'     => [['narrative' => isset($contactInfoPersonNarrative) ? $contactInfoPersonNarrative : []]],
-            'job_title'       => [['narrative' => isset($contactInfoJobNarrative) ? $contactInfoJobNarrative : []]],
-            'telephone'       => $telephone ? $telephone : [],
-            'email'           => $email ? $email : [],
-            'website'         => $website ? $website : [],
-            'mailing_address' => $mailingAddress ? $mailingAddress : []
+            'organization'    => [['narrative' => isset($contactOrgNarrative) ? $contactOrgNarrative : [['narrative' => "", 'language' => ""]]]],
+            'department'      => [['narrative' => isset($contactInfoDepartmentNarrative) ? $contactInfoDepartmentNarrative : [['narrative' => "", 'language' => ""]]]],
+            'person_name'     => [['narrative' => isset($contactInfoPersonNarrative) ? $contactInfoPersonNarrative : [['narrative' => "", 'language' => ""]]]],
+            'job_title'       => [['narrative' => isset($contactInfoJobNarrative) ? $contactInfoJobNarrative : [['narrative' => "", 'language' => ""]]]],
+            'telephone'       => $telephone ? $telephone : [['telephone' => '']],
+            'email'           => $email ? $email : [['email' => '']],
+            'website'         => $website ? $website : [['website' => '']],
+            'mailing_address' => $mailingAddress ? $mailingAddress : ['narrative' => ['narrative' => "", 'language' => ""]]
         ];
 
         return $contactInfoData;
