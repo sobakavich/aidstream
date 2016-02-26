@@ -74,6 +74,8 @@ class OrganizationQuery extends Query
                                                       ->where('organisation_id', '=', $organizationId)
                                                       ->first();
 
+        $referenceTypeCode = fetchCode($reportingOrgReferenceType->reporting_organization_type,'OrganisationType');
+
         $reportingOrgNarratives = $this->connection->table('iati_organisation/reporting_org/narrative')
                                                    ->select('text', '@xml_lang as xml_lang')
                                                    ->where('reporting_org_id', '=', $organizationId)
@@ -89,7 +91,7 @@ class OrganizationQuery extends Query
         return [
             [
                 'reporting_organization_identifier' => $reportingOrgReferenceType->reporting_organization_identifier,
-                'reporting_organization_type'       => $reportingOrgReferenceType->reporting_organization_type,
+                'reporting_organization_type'       => $referenceTypeCode,
                 'narrative'                         => $reportingOrgNarrative
             ]
         ];
