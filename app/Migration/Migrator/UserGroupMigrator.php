@@ -89,7 +89,7 @@ class UserGroupMigrator implements MigratorContract
                 return 'Error during User Group table migration.';
             }
         }
-
+        $db->commit();
         return 'User Group table migrated.';
     }
 }

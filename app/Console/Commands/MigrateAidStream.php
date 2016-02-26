@@ -12,6 +12,7 @@ use App\Migration\Migrator\UserMigrator;
 use App\Migration\Migrator\ActivityPublishedMigrator;
 use App\Migration\Migrator\OrganizationPublishedMigrator;
 use App\Migration\Migrator\UserGroupMigrator;
+use App\Migration\Migrator\PublishToRegisterMigrator;
 use App\Migration\Sequence\Sequence;
 use Carbon\Carbon;
 use Exception;
@@ -65,6 +66,11 @@ class MigrateAidStream extends Command
      * @var ResultMigrator
      */
     protected $resultMigrator;
+
+    /**
+     * @var PublishToRegisterMigrator
+     */
+    protected $publishToRegisterMigrator;
 
     /**
      * @var Activity
@@ -138,6 +144,7 @@ class MigrateAidStream extends Command
         ActivityPublishedMigrator $activityPublishedMigrator,
         OrganizationPublishedMigrator $organizationPublishedMigrator,
         UserGroupMigrator $userGroupMigrator,
+        PublishToRegisterMigrator $publishToRegisterMigrator,
         DatabaseManager $databaseManager
     ) {
         parent::__construct();
@@ -153,6 +160,7 @@ class MigrateAidStream extends Command
         $this->transactionMigrator           = $transactionMigrator;
         $this->resultMigrator                = $resultMigrator;
         $this->userGroupMigrator             = $userGroupMigrator;
+        $this->publishToRegisterMigrator     = $publishToRegisterMigrator;
     }
 
     /**
@@ -190,6 +198,7 @@ class MigrateAidStream extends Command
     protected function migrateAll(array $accountIds)
     {
         $response   = [];
+
         $response[] = $this->organizationMigrator->migrate($accountIds);
         $this->informFor('Organization');
 
@@ -221,6 +230,8 @@ class MigrateAidStream extends Command
         $this->informFor('Organization Published');
 
         $response[] = $this->userGroupMigrator->migrate($accountIds);
+
+
 
         $this->info("\n");
 
@@ -335,6 +346,16 @@ class MigrateAidStream extends Command
     protected function migrateUserGroup(array $accountIds)
     {
         return $this->userGroupMigrator->migrate($accountIds);
+    }
+
+    /**
+     * Migrate PublishToRegister
+     * @param array $accountIds
+     * @return string
+     */
+    protected function migrateRegistry(array $accountIds)
+    {
+        return $this->publishToRegisterMigrator->migrate($accountIds);
     }
 
 
