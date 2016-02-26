@@ -140,7 +140,7 @@ class Settings
         $migrateHelper      = new MigrateHelper();
         $unrequiredKeys     = ['default_reporting_org', 'default_reporting_org_ref', 'default_reporting_org_type', 'default_reporting_org_lang'];
 
-        foreach (array_except($MetaDataDefaultFieldGroups, '__PHP_Incomplete_Class_Name') as $index => $data) {
+        foreach (array_except($MetaDataDefaultFieldGroups, ['__PHP_Incomplete_Class_Name', "\x00*\x00linked_data_default"]) as $index => $data) {
             $key = sprintf('default_%s', substr($index, 3));
 
             if (!in_array($key, $unrequiredKeys)) {
@@ -150,10 +150,11 @@ class Settings
                     $defaultFieldValues[$key] = $migrateHelper->FetchLangCode($data);
                 } elseif ($index === "\x00*\x00aid_type") {
                     $defaultFieldValues[$key] = $migrateHelper->FetchAidTypeCode($data);
+                } elseif ($index === "\x00*\x00flow_type") {
+                    $defaultFieldValues[$key] = fetchCode($data, 'FlowType');
+                } elseif ($index === "\x00*\x00finance_type") {
+                    $defaultFieldValues[$key] = fetchCode($data, 'FinanceType');
                 } else {
-                    if ($index === "\x00*\x00linked_data_default") {
-                        $key = 'linked_data_uri';
-                    }
                     $defaultFieldValues[$key] = array_key_exists($index, $MetaDataDefaultFieldGroups) ? $data : '';
                 }
             }
