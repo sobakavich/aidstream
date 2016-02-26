@@ -69,7 +69,7 @@ class SettingsQuery extends Query
 
         $registryInfoData = array(
             'publisher_id'  => $registryInfo ? ($registryInfo->publisher_id) : '',
-            'api_key'       => $registryInfo ? ($registryInfo->api_key) : '',
+            'api_id'       => $registryInfo ? ($registryInfo->api_key) : '',
             'publish_files' => $publish_files,
         );
 
