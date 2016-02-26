@@ -167,7 +167,7 @@ class OrganizationDataQuery extends Query
 
             $categories         = fetchDataWithCodeFrom('iati_organisation/document_link/category', 'document_link_id', $documentLinkId);
             $languages          = fetchDataWithCodeFrom('iati_organisation/document_link/language', 'document_link_id', $documentLinkId);
-            $recipientCountries = fetchDataWithCodeFrom('iati_organisation/document_link/recipient_country', 'document_link_id', 203);
+            $recipientCountries = fetchDataWithCodeFrom('iati_organisation/document_link/recipient_country', 'document_link_id', $documentLinkId);
             $titleNarratives    = getBuilderFor('id', 'iati_organisation/document_link/title', 'document_link_id', $documentLinkId)->first();
 
             $documentLinkData[] = $this->documentLink->format($url, $format, $titleNarratives, $categories, $languages, $recipientCountries);
