@@ -39,6 +39,24 @@ class DocumentQuery extends Query
         $document      = [];
         $activities    = $this->activityData->getActivitiesFor($organizationId);  // for 1 org
 
+        $userDocuments = $this->connection->table('user_documents')
+                                          ->select('*')
+                                          ->where('org_id', '=', $accountId)
+                                          ->get();
+
+
+        foreach ($userDocuments as $userDocument) {
+            $filename        = $userDocument->filename;
+
+            $document[rawurlencode($filename)] = array(
+                'filename'   => $filename,
+                'url'        => '',
+                'org_id'     => $accountId,
+                'activities' => null
+            );
+
+        }
+
         foreach ($activities as $key => $value) {
             $temp        = [];
             $activity_id = $value->id;
@@ -50,18 +68,28 @@ class DocumentQuery extends Query
 
             foreach ($docData as $data) {
                 $temp[$activity_id] = getActivityIdentifier($activity_id)->activity_identifier;
+                $url                = $data->url;
+                $res                = explode("/", $url);
+                $filename           = end($res);
 
-                $url            = $data->url;
-                $res            = explode("/", $url);
-                $filename       = end($res);
-                $document[$url] = array(
-                    'filename'   => $filename,
-                    'url'        => $url,
-                    'org_id'     => $accountId,
-                    'activities' => $temp
-                );
+                if (strpos($url, 'http://www.aidstream.org') !== false) {
+                    $document[$filename] = array(
+                        'filename'   => $filename,
+                        'url'        => $url,
+                        'org_id'     => $accountId,
+                        'activities' => $temp
+                    );
+                } elseif (strpos($url, 'http://aidstream.org') !== false) {
+                    $document[$filename] = array(
+                        'filename'   => $filename,
+                        'url'        => $url,
+                        'org_id'     => $accountId,
+                        'activities' => $temp
+                    );
+                }
             }
         }
+
         $formattedData[] = $this->document->format($document);
 
         return $formattedData;
