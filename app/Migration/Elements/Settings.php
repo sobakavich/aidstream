@@ -72,7 +72,7 @@ class Settings
         'Performance'                 => [
             'legacy_data' => 'Legacy Data',
             'result'      => 'Result',
-            'condition'   => 'Condition'
+            'conditions'   => 'Conditions'
         ]
     ];
 
@@ -154,6 +154,8 @@ class Settings
                     $defaultFieldValues[$key] = fetchCode($data, 'FlowType');
                 } elseif ($index === "\x00*\x00finance_type") {
                     $defaultFieldValues[$key] = fetchCode($data, 'FinanceType');
+                } elseif ($index === "\x00*\x00tied_status") {
+                    $defaultFieldValues[$key] = fetchCode($data, 'TiedStatus');
                 } else {
                     $defaultFieldValues[$key] = array_key_exists($index, $MetaDataDefaultFieldGroups) ? $data : '';
                 }

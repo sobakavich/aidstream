@@ -31,7 +31,7 @@ class OrganizationPublishedQuery extends Query
         //fetch published activity
         $organisationPublishedData = $this->connection->table('organisation_published')
                                                       ->select('*')
-                                                      ->where('publishing_org_id', '=', $organizationId)
+                                                      ->where('publishing_org_id', '=', $accountId)
                                                       ->get();
 
         foreach ($organisationPublishedData as $data) {

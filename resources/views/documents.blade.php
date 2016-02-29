@@ -32,17 +32,17 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>
-                                            {{--*/
-                                            $identifiers = (array) $document['activities'];
-                                            $identifierList = [];
-                                            /*--}}
-                                            @if (!$identifiers)
+                                            @if (!$document['activities'])
                                                 <a href="{{ url('/files/documents') . '/' . rawurlencode($document['filename']) }}">{{ url('/files/documents') . '/' . $document['filename'] }}</a>
                                             @else
                                                 <a href="{{ $document['url'] }}">{{ $document['url'] }}</a>
                                             @endif
                                         </td>
                                         <td>
+                                            {{--*/
+                                            $identifiers = (array) $document['activities'];
+                                            $identifierList = [];
+                                            /*--}}
                                             @foreach($identifiers as $activityId => $identifier)
                                                 {{--*/ $identifierList[] = sprintf('<a href="%s">%s</a>', route('activity.show', [$activityId]), $identifier); /*--}}
                                             @endforeach
