@@ -271,12 +271,7 @@ class ActivityQuery extends Query
                                                                  ->select('text', '@xml_lang as xml_lang')
                                                                  ->where('owner_org_id', '=', $id_owner_org)
                                                                  ->get();
-                $narrativeArray               = [
-                    [
-                        'narrative' => '',
-                        'language'  => ''
-                    ]
-                ];
+                $narrativeArray               = [];
 
                 if ($iatiOtherIdentifierNarrative) {
                     foreach ($iatiOtherIdentifierNarrative as $eachNarrative) {
@@ -284,6 +279,13 @@ class ActivityQuery extends Query
                         $lang_code        = getLanguageCodeFor($lang_id);
                         $narrativeArray[] = ['narrative' => $eachNarrative->text, 'language' => $lang_code];
                     }
+                } else {
+                    $narrativeArray = [
+                        [
+                            'narrative' => '',
+                            'language'  => ''
+                        ]
+                    ];
                 }
 
                 $otherIdentifierData = [
@@ -435,7 +437,8 @@ class ActivityQuery extends Query
 
             $OrgRoleCode = $FetchOrgRoleCode ? $FetchOrgRoleCode->Code : '';
 
-            $ParticipatingOrgNarratives = $this->connection->table('iati_participating_org/narrative')->select('*', '@xml_lang as xml_lang')
+            $ParticipatingOrgNarratives = $this->connection->table('iati_participating_org/narrative')
+                                                           ->select('*', '@xml_lang as xml_lang')
                                                            ->where('participating_org_id', '=', $participatingOrgInfo->id)
                                                            ->get();
 
@@ -443,7 +446,9 @@ class ActivityQuery extends Query
             foreach ($ParticipatingOrgNarratives as $eachNarrative) {
                 $narrativeText = $eachNarrative->text;
 
-                if ($eachNarrative->xml_lang != "") {
+                if ($eachNarrative->xml_lang == "") {
+                    $language = '';
+                } else {
                     $language = getLanguageCodeFor($eachNarrative->xml_lang);
                 }
                 $Narrative[] = ['narrative' => $narrativeText, 'language' => $language];

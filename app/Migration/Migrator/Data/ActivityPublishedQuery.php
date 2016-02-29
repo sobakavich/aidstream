@@ -32,7 +32,7 @@ class ActivityPublishedQuery extends Query
         //fetch published activity
         $activityPublishedData = $this->connection->table('published')
                                                   ->select('*')
-                                                  ->where('publishing_org_id', '=', $organizationId)
+                                                  ->where('publishing_org_id', '=', $accountId)
                                                   ->get();
 
         foreach ($activityPublishedData as $data) {

@@ -23,7 +23,7 @@ class ContactInfo
             'telephone'       => $telephone ? $telephone : [['telephone' => '']],
             'email'           => $email ? $email : [['email' => '']],
             'website'         => $website ? $website : [['website' => '']],
-            'mailing_address' => $mailingAddress ? $mailingAddress : ['narrative' => ['narrative' => "", 'language' => ""]]
+            'mailing_address' => $mailingAddress ? $mailingAddress : [['narrative' => ['narrative' => "", 'language' => ""]]]
         ];
 
         return $contactInfoData;
