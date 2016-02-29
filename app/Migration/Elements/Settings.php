@@ -72,7 +72,7 @@ class Settings
         'Performance'                 => [
             'legacy_data' => 'Legacy Data',
             'result'      => 'Result',
-            'conditions'   => 'Conditions'
+            'condition'   => 'Condition'
         ]
     ];
 
@@ -117,6 +117,12 @@ class Settings
             if ($fieldGroup == "1") {
                 $map      = $this->extract($index)->getMapping();
                 $category = $map['key'];
+
+                //Temproray fix !! keys dont match !!!
+                if ($index == "\x00*\x00conditions" && $MetaDataDefaultFieldGroups[$index] == '1') {
+                    $this->newDefaultFieldGroupsFormat[0]['Performance']['condition'] = ['condition' => 'Condition'];
+                }
+                //
 
                 if (!in_array($category, $this->unNestedValues) && array_key_exists($this->key, $map['value'])) {
                     $this->newDefaultFieldGroupsFormat[0][$category][array_search($map['value'][$this->key], $map['value'])] = $map['value'][$this->key];
