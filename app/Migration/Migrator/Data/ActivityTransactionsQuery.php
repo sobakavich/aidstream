@@ -168,7 +168,7 @@ class ActivityTransactionsQuery extends Query
         if ($transactionValue) {
             $amount   = $transactionValue[0]->text;
             $date     = $transactionValue[0]->date;
-            $currency = $transactionValue[0]->currency;
+            $currency = fetchCode($transactionValue[0]->currency, 'Currency');
         }
 
         return [

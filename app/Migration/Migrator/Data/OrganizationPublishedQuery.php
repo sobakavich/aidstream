@@ -39,8 +39,8 @@ class OrganizationPublishedQuery extends Query
                 'filename'              => $data->filename,
                 'published_to_register' => $data->pushed_to_registry,
                 'organization_id'       => $accountId,
-                'created_at'            => Carbon::now(),
-                'updated_at'            => Carbon::now()
+                'created_at'            => $data->published_date,
+                'updated_at'            => $data->published_date
             ];
         }
 

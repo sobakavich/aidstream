@@ -41,7 +41,6 @@ class UserGroupMigrator implements MigratorContract
     public function migrate(array $accountIds)
     {
         $groupIdArray = [];
-        // TODO: Implement migrate() method.
         $db                = app()->make(DatabaseManager::class)->connection('mysql');
         $groupIdCollection = $db->table('user_group')
                                 ->select('group_id')

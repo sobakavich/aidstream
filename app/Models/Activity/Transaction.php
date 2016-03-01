@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $table = 'activity_transactions';
-    protected $fillable = ['activity_id', 'transaction'];
+    protected $fillable = ['activity_id', 'transaction', 'created_at', 'updated_at'];
     protected $casts = ['transaction' => 'json'];
 
     /**
