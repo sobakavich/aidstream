@@ -1095,7 +1095,7 @@ class ActivityQuery extends Query
      */
     protected function fetchRelatedActivity($activityId)
     {
-        $select              = ['@type as type', 'text'];
+        $select              = ['@type as type', '@ref as text'];
         $relatedActivities   = getBuilderFor($select, 'iati_related_activity', 'activity_id', $activityId)->get();
         $relatedActivityData = [];
 
