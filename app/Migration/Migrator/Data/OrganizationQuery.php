@@ -46,6 +46,12 @@ class OrganizationQuery extends Query
                                                 ->where('publishing_org_id', '=', $accountId)
                                                 ->first();
 
+        $timestamp = ($org = $this->connection->table('iati_organisation')
+                                              ->select('@last_updated_datetime as time')
+                                              ->where('account_id', '=', $accountId)
+                                              ->first()) ? $org->time : '';
+
+
         $organization = [
             'id'                    => $accountId,
             'user_identifier'       => $account->username,
@@ -56,7 +62,9 @@ class OrganizationQuery extends Query
             'organization_url'      => $account->url,
             'disqus_comments'       => ($comment = $account->disqus_comments) ? $comment : 0,
             'twitter'               => $account->twitter,
-            'published_to_registry' => $publishedToRegistry ? $publishedToRegistry->pushed_to_registry : 0
+            'published_to_registry' => $publishedToRegistry ? $publishedToRegistry->pushed_to_registry : 0,
+            'created_at'            => $timestamp,
+            'updated_at'            => $timestamp
         ];
 
         return $organization;
@@ -74,7 +82,7 @@ class OrganizationQuery extends Query
                                                       ->where('organisation_id', '=', $organizationId)
                                                       ->first();
 
-        $referenceTypeCode = fetchCode($reportingOrgReferenceType->reporting_organization_type,'OrganisationType');
+        $referenceTypeCode = fetchCode($reportingOrgReferenceType->reporting_organization_type, 'OrganisationType');
 
         $reportingOrgNarratives = $this->connection->table('iati_organisation/reporting_org/narrative')
                                                    ->select('text', '@xml_lang as xml_lang')

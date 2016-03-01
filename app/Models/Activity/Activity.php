@@ -51,7 +51,9 @@ class Activity extends Model
         'humanitarian_scope',
         'activity_workflow',
         'published_to_registry',
-        'id'
+        'id',
+        'created_at',
+        'updated_at'
     ];
 
     /**

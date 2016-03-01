@@ -14,7 +14,9 @@ class OrganizationData extends Model
         'document_link',
         'organization_id',
         'status',
-        'total_expenditure'
+        'total_expenditure',
+        'created_at',
+        'updated_at'
     ];
     protected $casts = [
         'name'                          => 'json',

@@ -52,7 +52,9 @@ class DocumentQuery extends Query
                 'filename'   => $filename,
                 'url'        => '',
                 'org_id'     => $accountId,
-                'activities' => null
+                'activities' => null,
+                'created_at' => $userDocument->uploaded_datetime,
+                'updated_at' => $userDocument->uploaded_datetime
             );
 
         }
@@ -70,7 +72,7 @@ class DocumentQuery extends Query
                 $temp[$activity_id] = getActivityIdentifier($activity_id)->activity_identifier;
                 $url                = $data->url;
                 $res                = explode("/", $url);
-                $filename           = end($res);
+                $filename           = rawurlencode(end($res));
 
                 if (strpos($url, 'http://www.aidstream.org') !== false) {
                     $document[$filename] = array(
@@ -80,6 +82,13 @@ class DocumentQuery extends Query
                         'activities' => $temp
                     );
                 } elseif (strpos($url, 'http://aidstream.org') !== false) {
+                    $document[$filename] = array(
+                        'filename'   => $filename,
+                        'url'        => $url,
+                        'org_id'     => $accountId,
+                        'activities' => $temp
+                    );
+                } else {
                     $document[$filename] = array(
                         'filename'   => $filename,
                         'url'        => $url,

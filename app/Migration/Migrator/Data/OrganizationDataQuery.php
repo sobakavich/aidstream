@@ -93,8 +93,15 @@ class OrganizationDataQuery extends Query
             $dataName[] = $this->name->format($nameNarratives);
         }
 
+        $timestamp = ($org = $this->connection->table('iati_organisation')
+                                              ->select('@last_updated_datetime as time')
+                                              ->where('account_id', '=', $accountId)
+                                              ->first()) ? $org->time : '';
+
         $this->data[$organizationId]['name']            = json_encode($dataName);
         $this->data[$organizationId]['organization_id'] = (int) $accountId;
+        $this->data[$organizationId]['created_at']      = $timestamp;
+        $this->data[$organizationId]['updated_at']      = $timestamp;
 
         return $this;
     }

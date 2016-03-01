@@ -152,6 +152,8 @@ class ActivityQuery extends Query
             $this->data[$activityId]['id']                = $activityId;
             $activityStatus                               = $this->activityData->getActivityWorkflowFor($activityId)->status_id;
             $this->data[$activityId]['activity_workflow'] = $activityStatus ? ($activityStatus - 1) : 0;
+            $this->data[$activityId]['created_at']        = $activity->updated_at;
+            $this->data[$activityId]['updated_at']        = $activity->updated_at;
 
             $this->titleDataFetch($activityId)
                  ->fetchIdentifier($activityId)

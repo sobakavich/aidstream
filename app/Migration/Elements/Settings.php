@@ -120,7 +120,7 @@ class Settings
 
                 //Temproray fix !! keys dont match !!!
                 if ($index == "\x00*\x00conditions" && $MetaDataDefaultFieldGroups[$index] == '1') {
-                    $this->newDefaultFieldGroupsFormat[0]['Performance']['condition'] = ['condition' => 'Condition'];
+                    $this->newDefaultFieldGroupsFormat[0]['Performance']['condition'] = 'Condition';
                 }
                 //
 
