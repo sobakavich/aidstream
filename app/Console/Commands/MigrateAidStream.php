@@ -245,8 +245,6 @@ class MigrateAidStream extends Command
 
         $response[] = $this->userGroupMigrator->migrate($accountIds);
 
-
-
         $this->info("\n");
 
         return implode("\n", $response);

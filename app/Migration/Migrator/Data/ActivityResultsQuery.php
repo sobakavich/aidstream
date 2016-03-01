@@ -300,7 +300,7 @@ class ActivityResultsQuery extends Query
             ];
         }
 
-        $targetData ?: $targetData = [[["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]]];
+        $targetData ?: $targetData = [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]];
 
         return $targetData;
     }

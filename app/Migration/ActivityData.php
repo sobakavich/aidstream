@@ -138,7 +138,8 @@ class ActivityData
                                                           '@xml_lang as xml_lang',
                                                           '@default_currency as default_currency',
                                                           '@hierarchy as hierarchy',
-                                                          '@linked_data_uri as linked_data_uri'
+                                                          '@linked_data_uri as linked_data_uri',
+                                                          '@last_updated_datetime as updated_at'
                                                       ]
                                                   )
                                                   ->where('activities_id', '=', $IatiActivitiesId)

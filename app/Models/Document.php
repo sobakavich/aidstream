@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     protected $table = 'documents';
-    protected $fillable = ['filename', 'url', 'activities', 'org_id'];
+    protected $fillable = ['filename', 'url', 'activities', 'org_id', 'created_at', 'updated_at'];
     protected $casts = ['activities' => 'json'];
 
     /**

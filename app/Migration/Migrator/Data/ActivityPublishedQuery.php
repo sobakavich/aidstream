@@ -22,6 +22,7 @@ class ActivityPublishedQuery extends Query
                 $data[] = $this->getData($organization->id, $accountId);
             }
         }
+
         return $data;
     }
 
@@ -40,8 +41,11 @@ class ActivityPublishedQuery extends Query
                 'filename'              => $data->filename,
                 'published_to_register' => $data->pushed_to_registry,
                 'organization_id'       => $accountId,
+                'created_at'            => $data->published_date,
+                'updated_at'            => $data->published_date,
             ];
         }
+
         return $activityPublished;
     }
 

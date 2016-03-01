@@ -10,7 +10,9 @@ class ActivityResult extends Model
 {
     protected $fillable = [
         'activity_id',
-        'result'
+        'result',
+        'created_at',
+        'updated_at'
     ];
 
     protected $casts = [
