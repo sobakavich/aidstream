@@ -124,6 +124,12 @@ class Settings
                 }
                 //
 
+                //Temproray fix !! keys dont match !!!
+                if ($index == "\x00*\x00other_activity_identifier" && $MetaDataDefaultFieldGroups[$index] == '1') {
+                    $this->newDefaultFieldGroupsFormat[0]['Identification']['other_identifier'] = 'Other Identifier';
+                }
+                //
+
                 if (!in_array($category, $this->unNestedValues) && array_key_exists($this->key, $map['value'])) {
                     $this->newDefaultFieldGroupsFormat[0][$category][array_search($map['value'][$this->key], $map['value'])] = $map['value'][$this->key];
                 }
