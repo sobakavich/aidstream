@@ -18,15 +18,14 @@ class PublishToRegisterQuery extends Query
     }
 
     /**
-     * @param $groupId
+     * @param $filename
      * @return array
      */
 
     public function getData($filename)
     {
         $db                   = app()->make(DatabaseManager::class)->connection('pgsql');
-        $identifierCollection = [];
-        $filePath             = base_path('public/uploads/files/activity') . '/' . $filename;
+        $filePath             = base_path('public/files/xml') . '/' . $filename;
         $activities           = [];
 
         if (file_exists($filePath)) {
@@ -34,7 +33,6 @@ class PublishToRegisterQuery extends Query
             $xml = json_decode(json_encode($xml), true);
 
             foreach ($xml['iati-activity'] as $each) {
-                $select     = ['id'];
                 $identifier = $each['iati-identifier'];
 
                 if ($identifier) {

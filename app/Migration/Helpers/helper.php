@@ -204,8 +204,9 @@ function fetchPeriodEnd($parentTable, $column, $parentId, $customTable = null)
 function fetchBudgetLine($parentTable, $column, $totalBudgetId)
 {
     $table          = $parentTable . '/budget_line';
-    $budgetLineData = [];
     $budgetLines    = getBuilderFor(['id', '@ref as ref'], $table, $column, $totalBudgetId)->get();
+    $budgetLineData = $budgetLines ? [] : [['reference' => '', 'value' => [['amount' => '', 'currency' => '', 'value_date' => '']], 'narrative' => [['narrative' => '', 'language' => '']]]];
+
     foreach ($budgetLines as $budgetLine) {
         $budgetLineId     = $budgetLine->id;
         $value            = fetchValue($table, 'budget_line_id', $budgetLineId);
@@ -228,9 +229,10 @@ function fetchBudgetLine($parentTable, $column, $totalBudgetId)
  */
 function fetchValue($parentTable, $column, $parentId)
 {
-    $valueData = [];
     $fields    = ['@currency as currency', '@value_date as value_date', 'text'];
     $value     = getBuilderFor($fields, $parentTable . '/value', $column, $parentId)->first();
+    $valueData = $value ? [] : [['amount' => '', 'currency' => '', 'value_date' => '']];
+
     if ($value) {
         $currency  = fetchCode($value->currency, 'Currency');
         $valueData = [["amount" => $value->text, "currency" => $currency, "value_date" => $value->value_date]];
