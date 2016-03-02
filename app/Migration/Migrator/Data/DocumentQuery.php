@@ -46,7 +46,7 @@ class DocumentQuery extends Query
 
 
         foreach ($userDocuments as $userDocument) {
-            $filename        = $userDocument->filename;
+            $filename = $userDocument->filename;
 
             $document[rawurlencode($filename)] = array(
                 'filename'   => $filename,
@@ -69,33 +69,36 @@ class DocumentQuery extends Query
                                         ->get();
 
             foreach ($docData as $data) {
-                $temp[$activity_id] = getActivityIdentifier($activity_id)->activity_identifier;
-                $url                = $data->url;
-                $res                = explode("/", $url);
-                $filename           = rawurlencode(end($res));
+                $temp[]   = [$data->activity_id => getActivityIdentifier($data->activity_id)->activity_identifier];
+                $url      = $data->url;
+                $res      = explode("/", $url);
+                $filename = rawurlencode(end($res));
 
                 if (strpos($url, 'http://www.aidstream.org') !== false) {
                     $document[$filename] = array(
                         'filename'   => $filename,
                         'url'        => $url,
                         'org_id'     => $accountId,
-                        'activities' => $temp
+                        'activities' => $temp[0]
                     );
                 } elseif (strpos($url, 'http://aidstream.org') !== false) {
                     $document[$filename] = array(
                         'filename'   => $filename,
                         'url'        => $url,
                         'org_id'     => $accountId,
-                        'activities' => $temp
-                    );
-                } else {
-                    $document[$filename] = array(
-                        'filename'   => $filename,
-                        'url'        => $url,
-                        'org_id'     => $accountId,
-                        'activities' => $temp
+                        'activities' => $temp[0]
                     );
                 }
+
+//                Documents outside of aidstream not included in the documents folder.
+//                else {
+//                    $document[$filename] = array(
+//                        'filename'   => $filename,
+//                        'url'        => $url,
+//                        'org_id'     => $accountId,
+//                        'activities' => $temp
+//                    );
+//                }
             }
         }
 
