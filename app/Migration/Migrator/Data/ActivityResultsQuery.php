@@ -158,14 +158,14 @@ class ActivityResultsQuery extends Query
         $indicatorData[] = [
             "measure"     => '',
             "ascending"   => '',
-            "title"       => [['narrative' => ['narrative' => '', 'language' => '']]],
-            "description" => [['narrative' => ['narrative' => '', 'language' => '']]],
-            "baseline"    => [['year' => '', 'value' => '', 'comment' => [['narrative' => ['narrative' => '', 'language' => '']]]]],
+            "title"       => [['narrative' => [['narrative' => '', 'language' => '']]]],
+            "description" => [['narrative' => [['narrative' => '', 'language' => '']]]],
+            "baseline"    => [['year' => '', 'value' => '', 'comment' => [['narrative' => [['narrative' => '', 'language' => '']]]]]],
             "period"      => [
                 [
-                    'period_start' => ['date' => ''],
-                    'period_end'   => ['date' => ''],
-                    'target'       => [['value' => '', 'comment' => [['narrative' => ['narrative' => '', 'language' => '']]]]],
+                    'period_start' => [['date' => '']],
+                    'period_end'   => [['date' => '']],
+                    'target'       => [['value' => '', 'comment' => [['narrative' => [['narrative' => '', 'language' => '']]]]]],
                     'actual'       => [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]]
                 ]
             ]
