@@ -4,6 +4,7 @@ use App\Migration\Entities\PublishToRegister;
 use App\Models\Activity\Activity as ActivityModel;
 use Illuminate\Database\DatabaseManager;
 use App\Migration\Migrator\Contract\MigratorContract;
+use Illuminate\Support\Facades\File;
 
 class PublishToRegisterMigrator implements MigratorContract
 {
@@ -35,18 +36,21 @@ class PublishToRegisterMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
-        // TODO: Implement migrate() method.
         $filenameArray         = [];
         $db                    = app()->make(DatabaseManager::class);
-        $activityPublishedInfo = $db->table('activity_published')
-                                    ->select('filename')
-                                    ->get();
+//        $activityPublishedInfo = $db->table('activity_published')
+//                                    ->select('filename')
+//                                    ->get();
 
-        foreach ($activityPublishedInfo as $eachActivityPublishedInfo) {
-            $filenameArray[] = $eachActivityPublishedInfo->filename;
-        }
+//        foreach ($activityPublishedInfo as $eachActivityPublishedInfo) {
+//            $filenameArray[] = $eachActivityPublishedInfo->filename;
+//        }
 
-        $PublishInfo = $this->publishToRegister->getData($filenameArray);
+        $file = 'xml.txt';
+//        File::put($file, implode("\n", $filenameArray));
+        $fileNames = explode("\n", File::get($file));
+
+        $PublishInfo = $this->publishToRegister->getData($fileNames);
         foreach ($PublishInfo as $publishedActivityIdCollection) {
             if (!empty($publishedActivityIdCollection)) {
                 foreach ($publishedActivityIdCollection as $publishedActivityId) {
