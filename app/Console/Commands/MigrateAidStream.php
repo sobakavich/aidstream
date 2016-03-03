@@ -450,6 +450,8 @@ class MigrateAidStream extends Command
      */
     protected function getAccountIdsFor($country = null)
     {
+        return [];
+
         $accountIds = [];
 
         $builder = $this->databaseManager->connection('mysql')->table('account')->select('id');
