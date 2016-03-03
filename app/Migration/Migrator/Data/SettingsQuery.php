@@ -69,7 +69,7 @@ class SettingsQuery extends Query
 
         $registryInfoData = array(
             'publisher_id'  => $registryInfo ? ($registryInfo->publisher_id) : '',
-            'api_id'       => $registryInfo ? ($registryInfo->api_key) : '',
+            'api_id'        => $registryInfo ? ($registryInfo->api_key) : '',
             'publish_files' => $publish_files,
         );
 
@@ -86,7 +86,8 @@ class SettingsQuery extends Query
             'registry_info'        => [$registryInfoData],
             'default_field_values' => $formatDefaultFieldValues,
             'default_field_groups' => $formattedDefaultFieldGroups,
-            'organization_id'      => $accountId
+            'organization_id'      => $accountId,
+            'version'              => '2.01'
         );
 
         return $newSettingsDataFormat;
