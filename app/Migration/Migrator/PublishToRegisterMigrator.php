@@ -46,26 +46,39 @@ class PublishToRegisterMigrator implements MigratorContract
 //            $filenameArray[] = $eachActivityPublishedInfo->filename;
 //        }
 
-        $file = 'xml.txt';
+        $file = 'activities.txt';
 //        File::put($file, implode("\n", $filenameArray));
-        $fileNames = explode("\n", File::get($file));
+        $activities = array_unique(explode("\n", File::get($file)));
 
-        $PublishInfo = $this->publishToRegister->getData($fileNames);
-        foreach ($PublishInfo as $publishedActivityIdCollection) {
-            if (!empty($publishedActivityIdCollection)) {
-                foreach ($publishedActivityIdCollection as $publishedActivityId) {
-                    $activityData = $this->activityModel->findOrFail($publishedActivityId);
-                    if ($activityData) {
-                        $activityData->published_to_registry = 1;
-                        if (!$activityData->save()) {
-                            return 'error in updating publish_to_register';
-                        }
-                    } else {
-                        return "no activity updated";
-                    }
+//        $PublishInfo = $this->publishToRegister->getData($fileNames);
+
+        foreach ($activities as $index => $activityId) {
+            $activityData = $this->activityModel->findOrFail($activityId);
+            if ($activityData) {
+                $activityData->published_to_registry = 1;
+                if (!$activityData->save()) {
+                    return 'error in updating publish_to_register';
                 }
+            } else {
+                return "no activity updated";
             }
         }
+
+//        foreach ($PublishInfo as $publishedActivityIdCollection) {
+//            if (!empty($publishedActivityIdCollection)) {
+//                foreach ($publishedActivityIdCollection as $publishedActivityId) {
+//                    $activityData = $this->activityModel->findOrFail($publishedActivityId);
+//                    if ($activityData) {
+//                        $activityData->published_to_registry = 1;
+//                        if (!$activityData->save()) {
+//                            return 'error in updating publish_to_register';
+//                        }
+//                    } else {
+//                        return "no activity updated";
+//                    }
+//                }
+//            }
+//        }
 
         $db->commit();
         return "publish_to_register_field updated";

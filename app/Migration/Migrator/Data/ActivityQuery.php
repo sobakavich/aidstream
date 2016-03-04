@@ -1077,7 +1077,7 @@ class ActivityQuery extends Query
     {
         $select                  = ['id', '@type as type'];
         $plannedDisbursements    = getBuilderFor($select, 'iati_planned_disbursement', 'activity_id', $activityId)->get();
-        $plannedDisbursementData = [];
+        $plannedDisbursementData = null;
 
         foreach ($plannedDisbursements as $plannedDisbursement) {
             $plannedDisbursementFormatter = new PlannedDisbursement();
@@ -1132,7 +1132,7 @@ class ActivityQuery extends Query
     {
         $select     = ['id', '@type as type'];
         $budgets    = getBuilderFor($select, 'iati_budget', 'activity_id', $activityId)->get();
-        $budgetData = [];
+        $budgetData = null;
 
         foreach ($budgets as $budget) {
             $budgetFormatter = new Budget();
