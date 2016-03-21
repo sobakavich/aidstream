@@ -16,44 +16,47 @@
                     <div class="element-panel-heading">
                         <div>Published Files</div>
                     </div>
-                    <h2 class="panel-sub-heading">Organizations Published Files</h2>
-                    <div class="panel-body">
-                        @if(count($list) > 0)
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th width="30px"></th>
-                                    <th>Filename</th>
-                                    <th>Published Date</th>
-                                    <th>Registered in IATI Registry</th>
-                                    <th>Preview As</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($list as $file)
+
+                    @if(!isTanzania())
+                        <h2 class="panel-sub-heading">Organizations Published Files</h2>
+                        <div class="panel-body">
+                            @if(count($list) > 0)
+                                <table class="table table-striped">
+                                    <thead>
                                     <tr>
-                                        <td><input type="checkbox"/></td>
-                                        <td><a href="{{ url('/files/xml/' . $file->filename) }}"
-                                               target="_blank">{{ $file->filename }}</a></td>
-                                        <td>{{ changeTimeZone($file->updated_at ) }}</td>
-                                        <td>{{ $file->published_to_register ? 'Yes' : 'No' }}</td>
-                                        <td>
-                                            <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/files/xml/' . $file->filename) }}"
-                                               target="_blank">CSV</a></td>
-                                        <td><a href="{{ route('list-published-files', ['delete', $file->id]) }}"
-                                               class="delete">Delete</a>
-                                        </td>
+                                        <th width="30px"></th>
+                                        <th>Filename</th>
+                                        <th>Published Date</th>
+                                        <th>Registered in IATI Registry</th>
+                                        <th>Preview As</th>
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        @else
-                            <div class="text-center no-data no-document-data">
-                                You haven't published any organization file yet.
-                            </div>
-                        @endif
-                    </div>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($list as $file)
+                                        <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td><a href="{{ url('/files/xml/' . $file->filename) }}"
+                                                   target="_blank">{{ $file->filename }}</a></td>
+                                            <td>{{ changeTimeZone($file->updated_at ) }}</td>
+                                            <td>{{ $file->published_to_register ? 'Yes' : 'No' }}</td>
+                                            <td>
+                                                <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/files/xml/' . $file->filename) }}"
+                                                   target="_blank">CSV</a></td>
+                                            <td><a href="{{ route('list-published-files', ['delete', $file->id]) }}"
+                                                   class="delete">Delete</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <div class="text-center no-data no-document-data">
+                                    You haven't published any organization file yet.
+                                </div>
+                            @endif
+                        </div>
+                    @endif
 
                     <h2 class="panel-sub-heading">Activities Published Files</h2>
                     <div class="panel-body">
