@@ -41,7 +41,7 @@ class DocumentLink
      */
     protected function fetchDocumentLinkCategory($categories)
     {
-        $categoryData = [];
+        $categoryData = boolval($categories) ? [] : [['code' => '']];
 
         foreach ($categories as $category) {
             $categoryData[] = ['code' => fetchCode($category->code, 'DocumentCategory', '')];
@@ -56,7 +56,7 @@ class DocumentLink
      */
     protected function fetchDocumentLinkLanguage($languages)
     {
-        $languageData = [];
+        $languageData = boolval($languages) ? [] : [['language' => '']];
 
         foreach ($languages as $language) {
             $languageData[] = ['language' => getLanguageCodeFor($language->code)];
@@ -71,7 +71,15 @@ class DocumentLink
      */
     protected function fetchDocumentLinkRecipientCountry($recipientCountries)
     {
-        $recipientCountryData = [];
+        $recipientCountryData = boolval($recipientCountries) ? [] : [[
+            'code'      => '',
+            'narrative' => [
+                [
+                    "narrative" => "",
+                    "language"  => ""
+                ]
+            ]
+        ]];
 
         foreach ($recipientCountries as $recipientCountry) {
             $recipientCountryCode       = fetchCode($recipientCountry->code, 'Country', '');

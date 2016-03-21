@@ -80,7 +80,7 @@ class OrganizationDataQuery extends Query
      */
     protected function fetchName($organizationId, $accountId)
     {
-        $dataName           = [];
+        $dataName           = null;
         $fetchNameInstances = $this->connection->table('iati_organisation/name')
                                                ->select('*')
                                                ->where('organisation_id', '=', $organizationId)
@@ -133,7 +133,7 @@ class OrganizationDataQuery extends Query
     {
         $table           = 'iati_organisation/total_budget';
         $totalBudgets    = getBuilderFor('id', $table, 'organisation_id', $organizationId)->get();
-        $totalBudgetData = [];
+        $totalBudgetData = null;
 
         foreach ($totalBudgets as $totalBudget) {
             $totalBudgetId = $totalBudget->id;
@@ -193,7 +193,7 @@ class OrganizationDataQuery extends Query
     {
         $table                  = 'iati_organisation/recipient_org_budget';
         $recipientOrgBudgets    = getBuilderFor('id', $table, 'organisation_id', $organizationId)->get();
-        $recipientOrgBudgetData = [];
+        $recipientOrgBudgetData = null;
 
         foreach ($recipientOrgBudgets as $recipientOrgBudget) {
             $recipientOrgBudgetId = $recipientOrgBudget->id;
@@ -242,7 +242,7 @@ class OrganizationDataQuery extends Query
     {
         $table                      = 'iati_organisation/recipient_country_budget';
         $recipientCountryBudgets    = getBuilderFor('id', $table, 'organisation_id', $organizationId)->get();
-        $recipientCountryBudgetData = [];
+        $recipientCountryBudgetData = null;
 
         foreach ($recipientCountryBudgets as $recipientCountryBudget) {
             $recipientCountryBudgetId = $recipientCountryBudget->id;

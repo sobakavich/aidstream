@@ -1097,7 +1097,7 @@ class ActivityQuery extends Query
     {
         $select              = ['@type as type', '@ref as text'];
         $relatedActivities   = getBuilderFor($select, 'iati_related_activity', 'activity_id', $activityId)->get();
-        $relatedActivityData = [];
+        $relatedActivityData = null;
 
         foreach ($relatedActivities as $relatedActivity) {
             $relatedActivityFormatter = new RelatedActivity();
@@ -1112,7 +1112,7 @@ class ActivityQuery extends Query
     {
         $select           = ['*', '@url as url', '@format as format'];
         $documentLinks    = getBuilderFor($select, 'iati_document_link', 'activity_id', $activityId)->get();
-        $documentLinkData = [];
+        $documentLinkData = null;
 
         foreach ($documentLinks as $documentLink) {
             $fileFormat = ($documentLink->format) ? (fetchCode($documentLink->format, 'FileFormat')) : '';
@@ -1203,7 +1203,7 @@ class ActivityQuery extends Query
     {
         $select                 = ['@code as code'];
         $documentLinkCategories = getBuilderFor($select, 'iati_document_link/category', 'document_link_id', $documentLink->id)->get();
-        $categoryCode           = [];
+        $categoryCode           = boolval($documentLink) ? [] : [['code' => '']];
 
         foreach ($documentLinkCategories as $documentLinkCategory) {
             $documentLinkCategoryCode = ($documentLinkCategory->code) ? (fetchCode($documentLinkCategory->code, 'DocumentCategory')) : '';
@@ -1224,7 +1224,7 @@ class ActivityQuery extends Query
     {
         $select                   = ['@code as code'];
         $documentLinkLanguages    = getBuilderFor($select, 'iati_document_link/language', 'document_link_id', $documentLink->id)->get();
-        $documentLinkLanguageData = [];
+        $documentLinkLanguageData = boolval($documentLink) ? [] : [['language' => '']];
 
         foreach ($documentLinkLanguages as $documentLinkLanguage) {
             $documentLinkLanguageCode = ($documentLinkLanguage->code) ? (getLanguageCodeFor($documentLinkLanguage->code)) : '';
