@@ -28,3 +28,11 @@ function trimInput($input)
 {
     return trim(preg_replace('/\s+/', " ", $input));
 }
+
+/**
+ * checks if the system is for Tanzania
+ */
+function isTanzania()
+{
+    return (strpos(request()->getHost(), 'tz') === 0);
+}

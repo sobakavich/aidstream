@@ -36,15 +36,19 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace], function ($router) {
-            require app_path('Http/routes.php');
-            require app_path('Http/routes/organization.php');
-            require app_path('Http/routes/activity.php');
-            require app_path('Http/routes/wizard/activity.php');
-            require app_path('Http/routes/superAdmin.php');
-            require app_path('Http/routes/organizationGroup.php');
-            require app_path('Http/routes/user.php');
-            require app_path('Http/routes/download.php');
-        });
+        $router->group(
+            ['namespace' => $this->namespace],
+            function ($router) {
+                require app_path('Http/routes/tz.php');
+                require app_path('Http/routes.php');
+                require app_path('Http/routes/organization.php');
+                require app_path('Http/routes/activity.php');
+                require app_path('Http/routes/wizard/activity.php');
+                require app_path('Http/routes/superAdmin.php');
+                require app_path('Http/routes/organizationGroup.php');
+                require app_path('Http/routes/user.php');
+                require app_path('Http/routes/download.php');
+            }
+        );
     }
 }
