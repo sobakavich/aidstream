@@ -27,7 +27,6 @@ class SettingsFormCreator
         $this->formPath    = 'App\Core\tz\Forms\SettingsForm';
     }
 
-
     /**
      * @param $model
      * @return \Kris\LaravelFormBuilder\Form
@@ -39,7 +38,7 @@ class SettingsFormCreator
             [
                 'method' => 'PUT',
                 'model'  => $model,
-                'url'    => route('settings.update',[0])
+                'url'    => route('settings.update', [0])
             ]
         );
     }
