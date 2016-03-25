@@ -6,6 +6,7 @@ return [
     'activity_description'     => ':name of same type is not allowed to be added.',
     'participating_org'        => 'There should be at least one :name with the role "Funding" or "Implementing".',
     'created'                  => ':name has been created successfully.',
+    'saved'                    => ':name has been saved successfully.',
     'save_failed'              => 'Failed to save :name.',
     'deleted'                  => ':name has been deleted successfully.',
     'delete_failed'            => 'Failed to delete :name.',
