@@ -38,6 +38,7 @@ class PublishToRegisterMigrator implements MigratorContract
     {
         $files         = [];
         $db                    = app()->make(DatabaseManager::class);
+        $db->beginTransaction();
         $activityPublishedInfo = $db->table('activity_published')
                                     ->select('filename')
                                     ->get();
@@ -45,43 +46,27 @@ class PublishToRegisterMigrator implements MigratorContract
         foreach ($activityPublishedInfo as $eachActivityPublishedInfo) {
             $files[] = $eachActivityPublishedInfo->filename;
         }
-//        $db->beginTransaction();
-        $PublishInfo = $this->publishToRegister->getData($files);
 
-//        $file = 'activities.txt';
-//        File::put($file, implode("\n", $files));
-//        $activities = array_unique(explode("\n", File::get($file)));
+        $activities = $this->publishToRegister->getData($files);
 
+        $file = 'activities.txt';
+        $activityIds = array_unique(explode("\n", File::get($file)));
 
-//        foreach ($activities as $index => $activityId) {
-//            $activityData = $this->activityModel->findOrFail($activityId);
-//            if ($activityData) {
-//                $activityData->published_to_registry = 1;
-//                if (!$activityData->save()) {
-//                    return 'error in updating publish_to_register';
-//                }
-//            } else {
-//                return "no activity updated";
-//            }
-//        }
+        foreach ($activityIds as $index => $activityId) {
+            $activityData = $this->activityModel->query()->where('id', '=', $activityId)->first();
 
-//        foreach ($PublishInfo as $publishedActivityIdCollection) {
-//            if (!empty($publishedActivityIdCollection)) {
-//                foreach ($publishedActivityIdCollection as $publishedActivityId) {
-//                    $activityData = $this->activityModel->findOrFail($publishedActivityId);
-//                    if ($activityData) {
-//                        $activityData->published_to_registry = 1;
-//                        if (!$activityData->save()) {
-//                            return 'error in updating publish_to_register';
-//                        }
-//                    } else {
-//                        return "no activity updated";
-//                    }
-//                }
-//            }
-//        }
+            if ($activityData) {
+                $activityData->published_to_registry = 1;
+                if (!$activityData->save()) {
+                    return 'error in updating publish_to_register';
+                }
+            } else {
+                return "no activity updated";
+            }
+        }
 
         $db->commit();
+
         return "publish_to_register_field updated";
     }
 }
