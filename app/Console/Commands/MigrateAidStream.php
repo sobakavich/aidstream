@@ -370,6 +370,16 @@ class MigrateAidStream extends Command
         return $this->publishToRegisterMigrator->migrate($accountIds);
     }
 
+    /**
+     * Create old activity xml files.
+     * @param array $accountIds
+     * @return string
+     */
+    protected function migrateOldFiles(array $accountIds)
+    {
+        return $this->publishToRegisterMigrator->generateXmlFiles();
+    }
+
 
     /**
      * Get the command options
