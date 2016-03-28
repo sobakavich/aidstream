@@ -14,7 +14,7 @@ class Identifier extends BaseForm
                 'text',
                 [
                     'wrapper'    => ['class' => 'col-xs-12 col-sm-6'],
-                    'attr'       => ['class' => 'noSpace'],
+                    'attr'       => ['class' => 'noSpace activity_identifier_input'],
                     'required'   => true,
                     'help_block' => $this->addHelpText('Activity_IatiIdentifier-activity_identifier', false)
                 ]
@@ -46,7 +46,7 @@ class Identifier extends BaseForm
                 [
                     'label'      => 'IATI Identifier',
                     'rules'      => 'required',
-                    'attr'       => ['readonly' => 'readonly', 'class' => 'form-control hover_help_text'],
+                    'attr'       => ['readonly' => 'readonly', 'class' => 'form-control hover_help_text iati_identifier_input'],
                     'wrapper'    => ['class' => 'col-xs-12 col-sm-6 hidden'],
                     'help_block' => $this->addHelpText('Activity_IatiIdentifier-text')
                 ]

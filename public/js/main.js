@@ -187,8 +187,23 @@ $(document).ready(function () {
         $('input[name="username"]').val(username);
         $('.alternate_input').html(username);
     });
-    if ($('input[name="organization_user_identifier"]').val() !== '') {
-        $('input[name="organization_user_identifier"]').trigger('keyup');
+
+    var identifierInput = $('form .activity_identifier_input').eq(0);
+    identifierInput.on('keyup change blur', function () {
+        var iatiIdentifier = '';
+        if ($(this).val() == "") {
+            $('.identifier_text').removeClass('hidden');
+            $('.iati_identifier_text').addClass('hidden');
+        } else {
+            iatiIdentifier = $('#reporting_organization_identifier').text() + '-' + $(this).val();
+            $('.identifier_text').addClass('hidden');
+            $('.iati_identifier_text').removeClass('hidden');
+        }
+        $('.iati_identifier_input').val(iatiIdentifier);
+        $('.alternate_input').html(iatiIdentifier);
+    });
+    if (identifierInput.val() !== '') {
+        identifierInput.trigger('keyup');
     }
 
     $('input[name="activity_identifier"]').on('keyup change', function () {
