@@ -1,7 +1,6 @@
 <?php namespace App\Core\tz\Forms;
 
 use App\Core\tz\BaseForm;
-use Illuminate\Database\DatabaseManager;
 
 /**
  * Class SettingsForm
@@ -9,20 +8,6 @@ use Illuminate\Database\DatabaseManager;
  */
 class SettingsForm extends BaseForm
 {
-    protected $versions;
-
-    /**
-     * @param DatabaseManager $databaseManager
-     */
-    function __construct(DatabaseManager $databaseManager)
-    {
-        $db_versions = $databaseManager->table('versions')->get();
-        $versions    = [];
-        foreach ($db_versions as $ver) {
-            $versions[$ver->version] = $ver->version;
-        }
-        $this->versions = $versions;
-    }
 
     public function buildForm()
     {
@@ -36,16 +21,20 @@ class SettingsForm extends BaseForm
                 [
                     'attr' => ['class' => 'btn btn-submit btn-form']
                 ]
-            )->add('Cancel', 'static', [
-                'tag'     => 'a',
-                'label'   => false,
-                'value'   => 'Cancel',
-                'attr'    => [
-                    'class' => 'btn btn-cancel',
-                    'href'  => route('activity.index')
-                ],
-                'wrapper' => false
-            ]);
+            )->add(
+                'Cancel',
+                'static',
+                [
+                    'tag'     => 'a',
+                    'label'   => false,
+                    'value'   => 'Cancel',
+                    'attr'    => [
+                        'class' => 'btn btn-cancel',
+                        'href'  => route('activity.index')
+                    ],
+                    'wrapper' => false
+                ]
+            );
 
     }
 }
