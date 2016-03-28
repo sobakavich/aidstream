@@ -16,7 +16,7 @@ class Transaction extends BaseForm
             ->add('reference', 'text', ['required' => true])
             ->add('date', 'date', ['required' => true])
             ->add('amount', 'text', ['required' => true])
-            ->add('narrative', 'textarea', ['required' => true])
+            ->add('narrative', 'textarea', ['required'   => true])
             ->addRemoveThisButton('remove_transaction');
     }
 }

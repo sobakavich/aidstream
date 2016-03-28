@@ -11,7 +11,7 @@ class Transactions extends BaseForm
     public function buildForm()
     {
         return $this
-            ->addCollection('transaction', 'Transaction', 'transaction', [], null, 'tz')
+            ->addCollection('transaction', 'Transaction', 'transaction', [], false, 'tz')
             ->addAddMoreButton('add_transaction', 'transaction');
     }
 }

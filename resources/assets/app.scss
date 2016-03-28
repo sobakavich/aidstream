@@ -2860,6 +2860,105 @@ div[class*="panel-level-"] .panel > .panel-body {
   width: calc(100% - 267px);
 }
 
+.transaction-title {
+  padding: 0 36px;
+  > span {
+    font: 15px $font_1;
+    text-transform: uppercase;
+    display: block;
+    padding-bottom: 10px;
+  }
+}
+
+.transaction-btn {
+  border: 1px solid $color_concrete;
+  border-radius: 17px;
+  font-size: 13px;
+  color: $color_black_approx;
+  line-height: 32px;
+  display: inline-block;
+  padding: 0 18px 0 15px;
+  margin-bottom: 10px;
+  &:hover {
+    text-decoration: none;
+    border-color: $color_dodger_blue_approx;
+  }
+}
+
+.add-transaction-type {
+  span {
+    background: $url_3 no-repeat  -5px -637px;
+    padding-left: 24px;
+  }
+  &:hover {
+    span {
+      background: $url_3 no-repeat  -5px -677px;
+    }
+  }
+}
+
+.edit-transaction-type {
+  span {
+    background: $url_3 no-repeat  -164px -636px;
+    padding-left: 24px;
+  }
+  &:hover {
+    span {
+      background: $url_3 no-repeat  -74px -587px;
+    }
+  }
+}
+
+.transaction-wrapper {
+  padding: 20px 0 0;
+  .panel-body > .form-group {
+    border-bottom: 11px solid $color_concrete;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+  }
+}
+
+.collection_form.transaction > .form-group{
+  display: table;
+  width: 100%;
+  border: 1px solid transparent;
+  padding-top: 20px;
+  position: relative;
+  > .form-group {
+    display: table-cell;
+    width: 25%;
+    &:first-of-type {
+      width: 10%;
+      input {
+        width: 88%;
+      }
+    }
+    &:last-of-type {
+      width: 40%;
+      textarea {
+        width: 90%;
+      }
+    }
+    label {
+      color: $color_gravel_approx;
+      border-bottom: 1px solid #efefef;
+      margin-bottom: 12px!important;
+      padding: 0 26px 7px;
+    }
+    .required:after {
+      color: $color_mandy_approx;
+    }
+    input,textarea {
+      width: 95%;
+      margin-left: 25px;
+    }
+  }
+}
+
+.create-transaction-form .btn-form {
+  margin-left: 20px;
+}
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;
@@ -2875,7 +2974,7 @@ div[class*="panel-level-"] .panel > .panel-body {
     right: 0;
   }
 
-  .element-content-wrapper,.organization-wrapper {
+  .element-content-wrapper, .organization-wrapper {
     width: 100%;
     padding-bottom: 100px;
   }
@@ -3636,6 +3735,8 @@ div[class*="panel-level-"] .panel > .panel-body {
 .document-wrapper td a {
   word-wrap: break-word;
 }
+
+
 
 
 

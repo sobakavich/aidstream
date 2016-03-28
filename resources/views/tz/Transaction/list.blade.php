@@ -15,13 +15,16 @@
                         <div class="element-panel-heading-info"><span>{{$activity->IdentifierTitle}}</span></div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper transaction-wrapper">
+                <div class="col-xs-12 transaction-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="row form-group">
 
                                 @if(count($commitment) > 0)
-                                    <div class="col-sm-12">Commitment <a class="btn btn-primary pull-right" href="{{url(sprintf('activity/%s/transaction/%s/edit', $activity->id,2))}}">Edit</a></div>
+                                    <div class="col-sm-12 transaction-title">
+                                        <span>Commitment</span>
+                                        <a class="transaction-btn edit-transaction-type" href="{{url(sprintf('activity/%s/transaction/%s/edit', $activity->id,2))}}"><span>Edit a Commitment</span></a>
+                                    </div>
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -45,16 +48,22 @@
                                         </tbody>
                                     </table>
                                 @else
-                                    <div class="col-sm-12">Commitment <a class="btn btn-primary pull-right" href="{{url(sprintf('activity/%s/transaction/%s/create', $activity->id,2))}}">Add</a></div>
-                                    <div class="text-center">
-                                        You haven’t added any transactions yet.
+                                    <div class="col-sm-12 transaction-title">
+                                        <span>Commitment</span>
+                                        <a class="transaction-btn add-transaction-type" href="{{url(sprintf('activity/%s/transaction/%s/create', $activity->id,2))}}"><span>Add a Commitment</span></a>
                                     </div>
+                                    {{--<div class="text-center">--}}
+                                        {{--You haven’t added any transactions yet.--}}
+                                    {{--</div>--}}
                                 @endif
                             </div>
 
                             <div class="row form-group">
                                 @if(count($disbursement) > 0)
-                                    <div class="col-sm-12">Disbursement <a class="btn btn-primary pull-right" href="{{url(sprintf('activity/%s/transaction/%s/edit', $activity->id,3))}}">Edit</a></div>
+                                    <div class="col-sm-12 transaction-title">
+                                        <span>Disbursement</span>
+                                        <a class="transaction-btn edit-transaction-type" href="{{url(sprintf('activity/%s/transaction/%s/edit', $activity->id,3))}}"><span>Edit a Disbursement</span></a>
+                                    </div>
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
@@ -78,17 +87,23 @@
                                         </tbody>
                                     </table>
                                 @else
-                                    <div class="col-sm-12">Disbursement <a class="btn btn-primary pull-right" href="{{url(sprintf('activity/%s/transaction/%s/create', $activity->id,3))}}">Add</a></div>
-                                    <div class="text-center">
-                                        You haven’t added any transactions yet.
+                                    <div class="col-sm-12 transaction-title">
+                                        <span>Disbursement</span>
+                                        <a class="transaction-btn add-transaction-type" href="{{url(sprintf('activity/%s/transaction/%s/create', $activity->id,3))}}"><span>Add a Disbursement</span></a>
                                     </div>
+                                    {{--<div class="text-center">--}}
+                                        {{--You haven’t added any transactions yet.--}}
+                                    {{--</div>--}}
                                 @endif
                             </div>
 
                             <div class="row form-group">
 
                                 @if(count($expenditure) > 0)
-                                    <div class="col-sm-12">Expenditure <a class="btn btn-primary pull-right" href="{{url(sprintf('activity/%s/transaction/%s/edit', $activity->id,4))}}">Edit</a></div>
+                                    <div class="col-sm-12 transaction-title">
+                                        <span>Expenditure</span>
+                                        <a class="transaction-btn edit-transaction-type" href="{{url(sprintf('activity/%s/transaction/%s/edit', $activity->id,4))}}"><span>Edit a Expenditure</span></a>
+                                    </div>
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
@@ -112,17 +127,22 @@
                                         </tbody>
                                     </table>
                                 @else
-                                    <div class="col-sm-12">Expenditure <a class="btn btn-primary pull-right" href="{{url(sprintf('activity/%s/transaction/%s/create', $activity->id,4))}}">Add</a></div>
-                                    <div class="text-center">
-                                        You haven’t added any transactions yet.
-                                    </div>
+                                    <div class="col-sm-12 transaction-title">
+                                        <span>Expenditure</span>
+                                        <a class="transaction-btn add-transaction-type" href="{{url(sprintf('activity/%s/transaction/%s/create', $activity->id,4))}}"><span>Add a Expenditure</span></a></div>
+                                    {{--<div class="text-center">--}}
+                                        {{--You haven’t added any transactions yet.--}}
+                                    {{--</div>--}}
                                 @endif
                             </div>
 
                             <div class="row form-group">
 
                                 @if(count($incomingFund) > 0)
-                                    <div class="col-sm-12">Incoming Funds<a class="btn btn-primary pull-right" href="{{url(sprintf('activity/%s/transaction/%s/edit', $activity->id,1))}}">Edit</a></div>
+                                    <div class="col-sm-12 transaction-title">
+                                        <span>Incoming Funds</span>
+                                        <a class="transaction-btn edit-transaction-type" href="{{url(sprintf('activity/%s/transaction/%s/edit', $activity->id,1))}}"><span>Edit an Incoming Fund</span></a>
+                                    </div>
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
@@ -146,16 +166,17 @@
                                         </tbody>
                                     </table>
                                 @else
-                                    <div class="col-sm-12">Incoming Funds<a class="btn btn-primary pull-right" href="{{url(sprintf('activity/%s/transaction/%s/create', $activity->id,1))}}">Add</a></div>
-                                    <div class="text-center">
-                                        You haven’t added any transactions yet.
-                                    </div>
+                                    <div class="col-sm-12 transaction-title">
+                                        <span>Incoming Funds</span>
+                                        <a class="transaction-btn add-transaction-type" href="{{url(sprintf('activity/%s/transaction/%s/create', $activity->id,1))}}"><span>Add an Incoming Fund</span></a></div>
+                                    {{--<div class="text-center">--}}
+                                        {{--You haven’t added any transactions yet.--}}
+                                    {{--</div>--}}
                                 @endif
                             </div>
                         </div>
                     </div>
                 </div>
-                @include('includes.activity.element_menu')
             </div>
         </div>
     </div>
