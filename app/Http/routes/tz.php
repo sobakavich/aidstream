@@ -6,6 +6,7 @@ $router->group(
 
         $router->get('activity/create', ['as' => 'activity.create', 'uses' => 'ActivityController@create']);
         $router->post('activity/store', ['as' => 'activity.tzstore', 'uses' => 'ActivityController@store']);
+        $router->get('activity/{id}', ['as' => 'activity.show', 'uses' => 'ActivityController@show']);
         $router->get('activity/{id}/edit', ['as' => 'activity.edit', 'uses' => 'ActivityController@edit']);
         $router->put('activity/{id}/update', ['as' => 'activity.tzupdate', 'uses' => 'ActivityController@update']);
 
