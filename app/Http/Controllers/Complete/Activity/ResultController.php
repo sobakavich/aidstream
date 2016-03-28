@@ -62,9 +62,10 @@ class ResultController extends Controller
     {
         $result       = $this->resultManager->getResult($id, $activityId);
         $activityData = $this->activityManager->getActivityData($activityId);
+        $resultId     = $id;
         $id           = $activityId;
 
-        return view('Activity.result.show', compact('result', 'activityData', 'id'));
+        return view('Activity.result.show', compact('result', 'activityData', 'id', 'resultId'));
     }
 
     /**
@@ -119,9 +120,9 @@ class ResultController extends Controller
      */
     public function update($id, $resultId, Request $request, ResultRequestManager $resultRequestManager)
     {
-        $this->authorize('edit_activity');
         $resultData     = $request->all();
         $activityResult = $this->resultManager->getResult($resultId, $id);
+        $this->authorizeByRequestType($activityResult, 'result', true);
         if ($this->resultManager->update($resultData, $activityResult)) {
             $this->activityManager->resetActivityWorkflow($id);
             $response = ['type' => 'success', 'code' => [($resultId) ? 'updated' : 'created', ['name' => 'Activity Result']]];

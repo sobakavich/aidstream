@@ -14,18 +14,9 @@ class Transaction extends BaseForm
         $this
             ->add('id', 'hidden')
             ->add('reference', 'text', ['required' => true])
-            ->addCollection('date', 'Activity\Transactions\Date')
-            ->add('amount', 'text', ['help_block' => $this->addHelpText('Activity_Transaction_Value-text'), 'required' => true])
-            ->add(
-                'narrative',
-                'textarea',
-                [
-                    'label'      => $this->getData('label'),
-                    'help_block' => $this->addHelpText($this->getData('help-text-narrative') ? $this->getData('help-text-narrative') : 'Narrative-text'),
-                    'attr'       => ['rows' => 4],
-                    'required'   => true
-                ]
-            )
+            ->add('date', 'date', ['required' => true])
+            ->add('amount', 'text', ['required' => true])
+            ->add('narrative', 'textarea', ['required' => true])
             ->addRemoveThisButton('remove_transaction');
     }
 }

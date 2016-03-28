@@ -9,10 +9,10 @@
                 <span class="bar3"></span>
             </button>
         </div>
-        <div class="collapse navbar-collapse navbar-right">
+        <div class="navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url('/about') }}">About</a></li>
-                <li><a href="{{ url('/who-is-using') }}">Who's Using</a></li>
+                <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
+                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using</a></li>
                 <!--<li><a href="#">Snapshot</a></li>-->
             </ul>
             <div class="action-btn pull-left">

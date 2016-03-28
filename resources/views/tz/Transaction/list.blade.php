@@ -36,7 +36,7 @@
                                                 <tr>
                                                     <td>{{$data['reference']}}</td>
                                                     <td>{{$data['amount']}}</td>
-                                                    <td>{{$data['date'][0]['date']}}</td>
+                                                    <td>{{$data['date']}}</td>
                                                     <td><a class="delete"
                                                            href="{{ url(sprintf('activity/%s/transaction/%s/delete', $activity->id,$data['id'])) }}">Delete</a>
                                                     </td>

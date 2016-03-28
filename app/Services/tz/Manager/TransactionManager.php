@@ -108,7 +108,7 @@ class TransactionManager
 
             $transactionDetail['id']        = $id;
             $transactionDetail['reference'] = $transaction['reference'];
-            $transactionDetail['date']      = $transaction['transaction_date'];
+            $transactionDetail['date']      = $transaction['transaction_date'][0]['date'];
             $transactionDetail['amount']    = $transaction['value'][0]['amount'];
             $transactionDetail['narrative'] = $transaction['description'][0]['narrative'][0]['narrative'];
             $data[]                         = $transactionDetail;
@@ -143,7 +143,7 @@ class TransactionManager
         $dataTemplate                                                       = file_get_contents(app_path('Core/tz/DataTemplates/transaction.json'));
         $transactionTemplate                                                = json_decode($dataTemplate, true);
         $transactionTemplate['reference']                                   = $transactionDetail['reference'];
-        $transactionTemplate['transaction_date']                            = $transactionDetail['date'];
+        $transactionTemplate['transaction_date'][0]['date']                 = $transactionDetail['date'];
         $transactionTemplate['value'][0]['amount']                          = $transactionDetail['amount'];
         $transactionTemplate['description'][0]['narrative'][0]['narrative'] = $transactionDetail['narrative'];
 

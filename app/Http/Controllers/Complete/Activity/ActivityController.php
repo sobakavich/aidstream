@@ -167,6 +167,7 @@ class ActivityController extends Controller
      */
     public function store(IatiIdentifierRequest $request)
     {
+        $this->authorize('add_activity');
         $settings           = $this->settingsManager->getSettings($this->organization_id);
         $defaultFieldValues = $settings->default_field_values;
         $input              = $request->all();
@@ -208,10 +209,14 @@ class ActivityController extends Controller
      */
     public function updateStatus($id, Request $request, ActivityElementValidator $activityElementValidator)
     {
+        $this->authorize('edit_activity');
         $input            = $request->all();
+        $activityWorkflow = $input['activity_workflow'];
+        if($activityWorkflow == 3) {
+            $this->authorize('publish_activity');
+        }
         $activityData     = $this->activityManager->getActivityData($id);
         $settings         = $this->settingsManager->getSettings($activityData['organization_id']);
-        $activityWorkflow = $input['activity_workflow'];
         $transactionData  = $this->activityManager->getTransactionData($id);
         $resultData       = $this->activityManager->getResultData($id);
         $organization     = $this->organizationManager->getOrganization($activityData->organization_id);
@@ -243,10 +248,15 @@ class ActivityController extends Controller
 
             if ($settings['registry_info'][0]['publish_files'] == 'yes') {
                 $publishedStatus = $this->publishToRegistry();
+                $this->activityManager->updateStatus($input, $activityData);
 
-                if (!$publishedStatus) {
-                    $this->activityManager->updateStatus($input, $activityData);
+                if ($publishedStatus) {
                     $this->activityManager->makePublished($activityData);
+                    $this->activityManager->activityInRegistry($activityData);
+                    $response = ['type' => 'warning', 'code' => ['publish_registry_publish', ['name' => '']]];
+
+                    return redirect()->back()->withResponse($response);
+                } else {
                     $response = ['type' => 'warning', 'code' => ['publish_registry', ['name' => '']]];
 
                     return redirect()->back()->withResponse($response);
@@ -268,6 +278,7 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete_activity');
         $activity = $this->activityManager->getActivityData($id);
         $response = ($this->activityManager->destroy($activity)) ? ['type' => 'success', 'code' => ['deleted', ['name' => 'Activity']]] : [
             'type' => 'danger',
@@ -283,6 +294,7 @@ class ActivityController extends Controller
      */
     public function deletePublishedFile($id)
     {
+        $this->authorize('delete_activity');
         $result   = $this->activityManager->deletePublishedFile($id);
         $message  = $result ? 'File deleted successfully' : 'File couldn\'t be deleted.';
         $type     = $result ? 'success' : 'danger';
@@ -314,6 +326,7 @@ class ActivityController extends Controller
      */
     public function updateActivityDefault($activityId, Request $request, ChangeActivityDefaultRequest $changeActivityDefaultRequest)
     {
+        $this->authorize('edit_activity');
         $activityData               = $this->activityManager->getActivityData($activityId);
         $settings                   = $this->settingsManager->getSettings($this->organization_id);
         $SettingsDefaultFieldValues = $settings->default_field_values;
@@ -338,7 +351,7 @@ class ActivityController extends Controller
     {
         $activityPublishedFiles = $this->activityManager->getActivityPublishedFiles($this->organization_id);
         $settings               = $this->settingsManager->getSettings($this->organization_id);
-        $api_url                = config('filesystems.iati_registry_api_base_url');
+        $api_url                = config('filesystems.iati_registry_dummy_url');
         $apiCall                = new CkanClient($api_url, $settings['registry_info'][0]['api_id']);
 
         try {
@@ -359,7 +372,13 @@ class ActivityController extends Controller
 
             return true;
         } catch (\Exception $e) {
-            $this->loggerInterface->error(sprintf('Registry Info could not be registered due to %s', $e->getMessage()));
+            $this->loggerInterface->error(
+                sprintf('Registry Info could not be registered due to error code %s', $e->getCode()),
+                [
+                    'response' => $e->getMessage(),
+                    'trace'    => $e->getTraceAsString()
+                ]
+            );
 
             return false;
         }
@@ -435,6 +454,7 @@ class ActivityController extends Controller
      */
     public function duplicateActivityAction($activityId, IatiIdentifierRequest $request)
     {
+        $this->authorize('add_activity');
         $activityData                   = $this->activityManager->getActivityData($activityId);
         $newItem                        = $activityData->replicate();
         $input                          = $request->all();

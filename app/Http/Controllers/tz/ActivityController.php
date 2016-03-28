@@ -90,6 +90,19 @@ class ActivityController extends Controller
     }
 
     /**
+     * display activity view
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $activityData = $this->activityManager->getActivityData($id);
+        $activity     = $this->activityManager->getActivity($id);
+
+        return view('tz.Activity.show', compact('activityData', 'activity', 'id'));
+    }
+
+    /**
      * @param $id
      * @return \Illuminate\View\View
      */

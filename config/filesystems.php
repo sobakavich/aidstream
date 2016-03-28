@@ -66,14 +66,15 @@ return [
     /**
      * Path where all the generated xml files are stored in Aidstream.
      */
-    'xml'                        => public_path('files/xml/'),
+    'xml'                        => '/xml/',
     /**
      * Path where all the uploaded documents are stored in Aidstream.
      */
-    'documents'                  => public_path('files/documents'),
+    'documents'                  => '/documents/',
     /**
      * Api URL for the IATI Registry.
      */
     'iati_registry_api_base_url' => 'http://iatiregistry.org/api/',
+    'iati_registry_dummy_url' => ''
 
 ];
