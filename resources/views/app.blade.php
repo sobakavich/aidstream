@@ -41,14 +41,18 @@
             @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
                 <ul class="nav navbar-nav pull-left add-new-activity">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Add a New Activity<span
-                                    class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
-                            {{--                            <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
-                            <li><a href="{{ route('activity-upload.index') }}">Upload Activities</a></li>
-                        </ul>
+                        @if(isTanzania())
+                            <a href="{{route('activity.create') }}" class="dropdown-toggle">Add a New Activity</a>
+                        @else
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">Add a New Activity<span
+                                        class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
+                                {{--                            <li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
+                                <li><a href="{{ route('activity-upload.index') }}">Upload Activities</a></li>
+                            </ul>
+                        @endif
                     </li>
                 </ul>
             @endif
@@ -115,24 +119,27 @@
                 @endif
             </ul>
         </div>
-        <div class="navbar-right version-wrap">
-            @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
-                <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
-                    {{--{{dd(session('next_version'))}}--}}
-                    @if (session('next_version'))
-                        <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
-                        <span class="old-version">
+
+        @if(!isTanzania())
+            <div class="navbar-right version-wrap">
+                @if(Auth::user()->role_id != 3 && Auth::user()->role_id !=4)
+                    <div class="version pull-right {{ (Session::get('version') == 'V201') ? 'old' : 'new' }}">
+                        {{--{{dd(session('next_version'))}}--}}
+                        @if (session('next_version'))
+                            <a class="version-text" href="{{route('upgrade-version.index')}}">Update available</a>
+                            <span class="old-version">
                             <a href="{{route('upgrade-version.index')}}">Upgrade to IATI version {{ session('next_version') }} </a>
                       </span>
-                    @else
-                        <span class="version-text">IATI version {{ session('current_version') }}</span>
-                        <span class="new-version">
+                        @else
+                            <span class="version-text">IATI version {{ session('current_version') }}</span>
+                            <span class="new-version">
                    You’re using latest IATI version
                  </span>
-                    @endif
-                </div>
-            @endif
-        </div>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        @endif
     </div>
 </nav>
 
