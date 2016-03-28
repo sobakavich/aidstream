@@ -2530,6 +2530,130 @@ div[class*="panel-level-"] .panel > .panel-body {
   width: -moz-calc(100% - 267px);
   width: calc(100% - 267px); }
 
+.transaction-title {
+  padding: 0 36px; }
+  .transaction-title > span {
+    font: 15px Open-Sans-Bold;
+    text-transform: uppercase;
+    display: block;
+    padding-bottom: 10px; }
+
+.transaction-btn, .edit-activity {
+  border: 1px solid #f2f2f2;
+  -webkit-border-radius: 17px;
+          border-radius: 17px;
+  font-size: 13px;
+  color: #262626;
+  line-height: 32px;
+  display: inline-block;
+  padding: 0 18px 0 15px;
+  margin-bottom: 10px; }
+  .transaction-btn:hover, .transaction-btn:focus, .edit-activity:hover, .edit-activity:focus {
+    text-decoration: none;
+    border-color: #00A8FF; }
+
+.add-transaction-type span {
+  background: url(../../images/ic-sprite.png) no-repeat -5px -637px;
+  padding-left: 24px; }
+
+.add-transaction-type:hover span {
+  background: url(../../images/ic-sprite.png) no-repeat -5px -677px; }
+
+.edit-transaction-type span {
+  background: url(../../images/ic-sprite.png) no-repeat -164px -636px;
+  padding-left: 24px; }
+
+.edit-transaction-type:hover span {
+  background: url(../../images/ic-sprite.png) no-repeat -74px -587px; }
+
+.transaction-wrapper {
+  padding: 20px 0 0; }
+  .transaction-wrapper .panel-body > .form-group {
+    border-bottom: 11px solid #f2f2f2;
+    padding-bottom: 20px;
+    margin-bottom: 25px; }
+
+.collection_form.transaction > .form-group {
+  display: table;
+  width: 100%;
+  border: 1px solid transparent;
+  padding-top: 20px;
+  position: relative; }
+  .collection_form.transaction > .form-group > .form-group {
+    display: table-cell;
+    width: 25%; }
+    .collection_form.transaction > .form-group > .form-group:first-of-type {
+      width: 10%; }
+      .collection_form.transaction > .form-group > .form-group:first-of-type input {
+        width: 88%; }
+    .collection_form.transaction > .form-group > .form-group:last-of-type {
+      width: 40%; }
+      .collection_form.transaction > .form-group > .form-group:last-of-type textarea {
+        width: 90%; }
+    .collection_form.transaction > .form-group > .form-group label {
+      color: #484848;
+      border-bottom: 1px solid #efefef;
+      margin-bottom: 12px !important;
+      padding: 0 26px 7px; }
+    .collection_form.transaction > .form-group > .form-group input, .collection_form.transaction > .form-group > .form-group textarea {
+      width: 95%;
+      margin-left: 25px; }
+
+.create-transaction-form .btn-form {
+  margin-left: 20px; }
+
+.panel-activity-detail {
+  clear: both; }
+  .panel-activity-detail .col-sm-12 {
+    border-bottom: 1px solid #f1f1f1;
+    padding: 12px 0;
+    font-size: 13px;
+    line-height: 20px; }
+    .panel-activity-detail .col-sm-12:last-child {
+      border-bottom: 0; }
+
+.switch-tabs {
+  padding: 0 36px 24px; }
+  .switch-tabs li {
+    float: left;
+    margin-right: 5px; }
+    .switch-tabs li a {
+      background: #f1f1f1;
+      display: block;
+      line-height: 34px;
+      padding: 0 20px;
+      -webkit-border-radius: 17px;
+              border-radius: 17px;
+      font-size: 13px;
+      position: relative; }
+      .switch-tabs li a:hover, .switch-tabs li a.active, .switch-tabs li a:focus {
+        background: #262626;
+        color: #fff;
+        text-decoration: none; }
+      .switch-tabs li a.active:after {
+        content: '';
+        position: absolute;
+        border-top: 8px solid #262626;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        left: 45%;
+        bottom: -8px; }
+
+.switch-tabs + .pull-right {
+  padding-right: 36px; }
+
+.edit-activity span {
+  background: url(../../images/ic-sprite.png) no-repeat -422px -587px;
+  padding-left: 24px; }
+
+.edit-activity:hover, .edit-activity:focus {
+  text-decoration: none; }
+  .edit-activity:hover span, .edit-activity:focus span {
+    background: url(../../images/ic-sprite.png) no-repeat -547px -587px; }
+
+.activity-content-wrapper {
+  padding: 20px 0 0; }
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px; }
@@ -2712,7 +2836,7 @@ div[class*="panel-level-"] .panel > .panel-body {
     margin-bottom: 20px; }
   .panel-create > .panel-body {
     padding: 0 !important; }
-  .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization {
+  .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization, .panel-activity-detail, .switch-tabs, .switch-tabs + .pull-right {
     padding-left: 14px;
     padding-right: 14px; }
   .content-wrapper .panel-profile .username_text {

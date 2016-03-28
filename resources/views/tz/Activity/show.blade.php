@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
+                <div class="col-xs-12 activity-content-wrapper">
                     <div class="activity-status activity-status-{{ $status_label[$activity_workflow] }}">
                         <ol>
                             @foreach($status_label as $key => $val)
@@ -50,8 +50,18 @@
                             </form>
                         @endif
                     </div>
-                    <div class="panel panel-default panel-element-detail element-show">
-                        <div class="panel-body">
+
+                    <div class="switch-tabs pull-left">
+                        <ul>
+                            <li><a href="{{route('activity.show', $id)}}" class="active">Activity View</a></li>
+                            <li><a href="{{route('activity.transaction.index', $id)}}">Transactions</a></li>
+                        </ul>
+                    </div>
+                    <div class="pull-right">
+                        <a href="{{route('activity.edit', $id)}}" class="edit-activity"><span>Edit this activity</span></a>
+                    </div>
+                    <div class="panel panel-default panel-element-detail panel-activity-detail">
+                        <div class="panel-body panel-element-body">
                             <div class="col-sm-12">
                                 <div class="col-sm-4">Description:</div>
                                 <div class="col-sm-8">{{ $activity['description'][0]['general'] }}</div>
@@ -107,7 +117,6 @@
                         </div>
                     </div>
                 </div>
-                @include('includes.activity.element_menu')
             </div>
         </div>
     </div>

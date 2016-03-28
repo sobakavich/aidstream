@@ -16,6 +16,15 @@
                     </div>
                 </div>
                 <div class="col-xs-12 transaction-wrapper">
+                    <div class="switch-tabs pull-left">
+                        <ul>
+                            <li><a href="{{route('activity.show', $id)}}">Activity View</a></li>
+                            <li><a href="{{route('activity.transaction.index', $id)}}" class="active">Transactions</a></li>
+                        </ul>
+                    </div>
+                    <div class="pull-right">
+                        <a href="{{route('activity.edit', $id)}}" class="edit-activity"><span>Edit this activity</span></a>
+                    </div>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="row form-group">
