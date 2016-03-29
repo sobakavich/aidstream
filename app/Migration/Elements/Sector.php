@@ -5,7 +5,7 @@ class Sector
 {
     public function format($vocabCode, $sector_code, $sector_category_code, $sector_text, $percentage, $Narrative, $sectorCode, $sectorCodeId, $sectorNarratives)
     {
-        if ($vocabCode == "1") {
+        if (($vocabCode == "1") || ($vocabCode === "")) {
             $sector_code = $sectorCode;
         } elseif ($vocabCode == "2") {
             $sector_category_code = $sectorCode;
