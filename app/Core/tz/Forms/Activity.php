@@ -11,10 +11,10 @@ class Activity extends BaseForm
     {
 
         $this
-            ->addCollection('iati_identifiers', 'Activity\Identifier')
+            ->addCollection('iati_identifiers', 'Activity\Identifier','identifier-form', [], false)
             ->add('title', 'textarea', ['required' => true])
-            ->addCollection('description', 'Description', '', [], null, 'tz')
-            ->addCollection('participating_organization', 'ParticipatingOrganization', '', [], null, 'tz')
+            ->addCollection('description', 'Description', '', [], false, 'tz')
+            ->addCollection('participating_organization', 'ParticipatingOrganization', 'participation-org-form', [], false, 'tz')
             ->addSelect('activity_status', $this->getCodeList('ActivityStatus', 'Activity'), 'Activity status', $this->addHelpText('Activity_ActivityStatus-code'), null, true)
             ->addMultipleSelect('sector_category_code', $this->getCodeList('SectorCategory', 'Activity'), 'Sector', null, null, true)
             ->add('start_date', 'date', ['help_block' => $this->addHelpText('Activity_Budget_PeriodStart-iso_date'), 'required' => true])

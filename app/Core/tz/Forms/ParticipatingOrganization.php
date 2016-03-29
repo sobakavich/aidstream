@@ -14,9 +14,9 @@ class ParticipatingOrganization extends BaseForm
     public function buildForm()
     {
         $this
-            ->addCollection('funding_organization', 'OrganizationName', 'funding_organization', [], null, 'tz')
+            ->addCollection('funding_organization', 'OrganizationName', 'funding_organization', ['label' => 'Funding Organization'], false, 'tz')
             ->addAddMoreButton('add_funding_organization', 'funding_organization')
-            ->addCollection('implementing_organization', 'OrganizationName', 'implementing_organization', [], null, 'tz')
+            ->addCollection('implementing_organization', 'OrganizationName', 'implementing_organization', ['label' => 'Implementing Organization'], false, 'tz')
             ->addAddMoreButton('add_implementing_organization', 'implementing_organization');
     }
 }

@@ -9,6 +9,6 @@ class Activities extends BaseForm
      */
     public function buildForm()
     {
-        $this->addCollection('activity', 'Activity', '', [], null, 'tz');
+        $this->addCollection('activity', 'Activity', '', [], false, 'tz');
     }
 }

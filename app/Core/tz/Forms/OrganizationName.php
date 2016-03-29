@@ -13,8 +13,9 @@ class OrganizationName extends BaseForm
      */
     public function buildForm()
     {
+        $label = $this->getData('label');
         $this
-            ->add('organization_name', 'textarea')
+            ->add('organization_name', 'textarea', ['label' => $label])
             ->addRemoveThisButton('remove_participating_org');
     }
 }
