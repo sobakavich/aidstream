@@ -157,7 +157,7 @@ class ActivityRepository
     public function saveActivityRegistryData($activityData, $jsonData)
     {
         $activityInRegistry                  = $this->activityInRegistry->firstOrNew(['activity_id' => $activityData->id]);
-        $activityInRegistry->organization_id = session('org_id');
+        $activityInRegistry->organization_id = $activityData->organization_id;
         $activityInRegistry->activity_id     = $activityData->id;
         $activityInRegistry->activity_data   = $jsonData;
         if ($activityInRegistry->save()) {

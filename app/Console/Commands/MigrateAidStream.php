@@ -1,5 +1,6 @@
 <?php namespace App\Console\Commands;
 
+use App\Migration\Migrator\ActivityInRegistryMigrator;
 use App\Migration\Migrator\ActivityMigrator;
 use App\Migration\Entities\Activity;
 use App\Migration\Migrator\DocumentMigrator;
@@ -118,6 +119,11 @@ class MigrateAidStream extends Command
     protected $userGroupMigrator;
 
     /**
+     * @var ActivityInRegistryMigrator
+     */
+    protected $activityInRegistryMigrator;
+
+    /**
      * MigrateAidStream constructor.
      * @param ActivityMigrator              $activityMigrator
      * @param UserMigrator                  $userMigrator
@@ -131,6 +137,7 @@ class MigrateAidStream extends Command
      * @param OrganizationPublishedMigrator $organizationPublishedMigrator
      * @param UserGroupMigrator             $userGroupMigrator
      * @param PublishToRegisterMigrator     $publishToRegisterMigrator
+     * @param ActivityInRegistryMigrator    $activityInRegistryMigrator
      * @param DatabaseManager               $databaseManager
      */
     public function __construct(
@@ -146,6 +153,7 @@ class MigrateAidStream extends Command
         OrganizationPublishedMigrator $organizationPublishedMigrator,
         UserGroupMigrator $userGroupMigrator,
         PublishToRegisterMigrator $publishToRegisterMigrator,
+        ActivityInRegistryMigrator $activityInRegistryMigrator,
         DatabaseManager $databaseManager
     ) {
         parent::__construct();
@@ -162,6 +170,7 @@ class MigrateAidStream extends Command
         $this->resultMigrator                = $resultMigrator;
         $this->userGroupMigrator             = $userGroupMigrator;
         $this->publishToRegisterMigrator     = $publishToRegisterMigrator;
+        $this->activityInRegistryMigrator    = $activityInRegistryMigrator;
     }
 
     /**
@@ -211,7 +220,7 @@ class MigrateAidStream extends Command
      */
     protected function migrateAll(array $accountIds)
     {
-        $response   = [];
+        $response = [];
 
         $response[] = $this->organizationMigrator->migrate($accountIds);
         $this->informFor('Organization');
@@ -367,7 +376,11 @@ class MigrateAidStream extends Command
      */
     protected function migrateRegistry(array $accountIds)
     {
-        return $this->publishToRegisterMigrator->migrate($accountIds);
+        $response   = [];
+        $response[] = $this->publishToRegisterMigrator->migrate($accountIds);
+        $response[] = $this->migrateActivityInRegistry($accountIds);
+
+        return implode("\n", $response);
     }
 
     /**
@@ -380,6 +393,15 @@ class MigrateAidStream extends Command
         return $this->publishToRegisterMigrator->generateXmlFiles();
     }
 
+    /**
+     * Migrate Activity in Registry table.
+     * @param array $accountIds
+     * @return string
+     */
+    protected function migrateActivityInRegistry(array $accountIds)
+    {
+        return $this->activityInRegistryMigrator->migrate($accountIds);
+    }
 
     /**
      * Get the command options
