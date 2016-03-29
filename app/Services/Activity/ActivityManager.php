@@ -380,8 +380,10 @@ class ActivityManager
      */
     protected function getSector(Activity $activityData)
     {
-        $arrays = [];
-        foreach ($activityData->sector as $sectors) {
+        $arrays          = [];
+        $activitySectors = $activityData->sector ? $activityData->sector : [];
+
+        foreach ($activitySectors as $sectors) {
             foreach ($sectors['narrative'] as $narrative) {
                 $index = $narrative['narrative'];
                 if ($index != "") {
