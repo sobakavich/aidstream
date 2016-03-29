@@ -12,6 +12,7 @@
     <link href="{{ asset('/css/jquery-ui-1.10.4.tooltip.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.css"/>
 
 
     <!-- Fonts -->
@@ -181,6 +182,13 @@
 @yield('content')
 
         <!-- Scripts -->
+<script type="text/javascript">
+    var dateFields = document.querySelectorAll('form [type="date"]');
+    for (var i = 0; i < dateFields.length; i++) {
+        dateFields[i].setAttribute('type', 'text');
+        dateFields[i].classList.add('datepicker');
+    }
+</script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
@@ -188,6 +196,7 @@
 <script type="text/javascript" src="{{url('/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.full.min.js"></script>
+<script type="text/javascript" src="/js/jquery.datetimepicker.full.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('form select').select2();
