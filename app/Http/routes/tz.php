@@ -1,7 +1,7 @@
 <?php
 
 $router->group(
-    ['domain' => 'tz.localhost', 'namespace' => 'tz'],
+    ['domain' => 'tz.' . env('HOST'), 'namespace' => 'tz'],
     function ($router) {
 
         $router->get('activity/create', ['as' => 'activity.create', 'uses' => 'ActivityController@create']);
