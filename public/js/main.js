@@ -536,4 +536,11 @@ $(document).ready(function () {
             $(document).scrollTop(parseInt(a.style.height));
         }
     }
+
+    $('form .datepicker').datetimepicker({
+        timepicker: false,
+        format: 'm/d/Y',
+        formatDate: 'm/d/Y',
+        mask: true
+    });
 });
