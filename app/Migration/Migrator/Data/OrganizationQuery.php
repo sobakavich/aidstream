@@ -51,7 +51,6 @@ class OrganizationQuery extends Query
                                               ->where('account_id', '=', $accountId)
                                               ->first()) ? $org->time : '';
 
-
         $organization = [
             'id'                    => $accountId,
             'user_identifier'       => $account->username,
@@ -63,6 +62,8 @@ class OrganizationQuery extends Query
             'disqus_comments'       => ($comment = $account->disqus_comments) ? $comment : 0,
             'twitter'               => $account->twitter,
             'published_to_registry' => $publishedToRegistry ? $publishedToRegistry->pushed_to_registry : 0,
+            'logo'                  => $account->file_name ? $account->file_name : null,
+            'logo_url'              => $account->file_name ? '/files/logos/' . $account->file_name : null,
             'created_at'            => $timestamp,
             'updated_at'            => $timestamp
         ];
