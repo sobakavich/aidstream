@@ -68,11 +68,11 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="col-sm-4">Objectives:</div>
-                                <div class="col-sm-8">{{ $activity['description'][0]['objectives'] }}</div>
+                                <div class="col-sm-8">{{ isset($activity['description'][0]['objectives']) ? formatDate($activity['description'][0]['objectives']) : '' }}</div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="col-sm-4">Target Groups:</div>
-                                <div class="col-sm-8">{{ $activity['description'][0]['target_groups'] }}</div>
+                                <div class="col-sm-8">{{ isset($activity['description'][0]['objectives']) ? $activity['description'][0]['target_groups'] : '' }}</div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="col-sm-4">Funding Organization:</div>
