@@ -20,23 +20,29 @@ class Narrative extends BaseForm
      */
     public function buildForm()
     {
-        $this
-            ->add(
-                'narrative',
-                'textarea',
-                [
-                    'label'      => $this->getData('label'),
-                    'help_block' => $this->addHelpText($this->getData('help-text-narrative') ? $this->getData('help-text-narrative') : 'Narrative-text'),
-                    'attr'       => ['rows' => 4],
-                    'required'   => $this->getData('narrative_required')
-                ]
-            )
-            ->addSelect(
-                'language',
-                $this->getCodeList('Language', 'Activity'),
-                null,
-                $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang')
-            )
-            ->addRemoveThisButton('remove_from_collection');
+        $defaultFieldValues = app()->make(Databasemanager::class)->table('settings')->select('default_field_values')->where('organization_id', '=', session('org_id'))->first();
+        $defaultLanguage    = $defaultFieldValues ? json_decode($defaultFieldValues->default_field_values, true)[0]['default_language'] : null;
+
+        $this->add(
+            'narrative',
+            'textarea',
+            [
+                'label'      => $this->getData('label'),
+                'help_block' => $this->addHelpText($this->getData('help-text-narrative') ? $this->getData('help-text-narrative') : 'Narrative-text'),
+                'attr'       => ['rows' => 4],
+                'required'   => $this->getData('narrative_required')
+            ]
+        );
+
+        !(checkDataExists($this->model)) ?: $defaultLanguage = null;
+        $this->addSelect(
+            'language',
+            $this->getCodeList('Language', 'Activity'),
+            null,
+            $this->addHelpText($this->getData('help-text-language') ? $this->getData('help-text-language') : 'activity-xml_lang'),
+            $defaultLanguage
+        );
+
+        $this->addRemoveThisButton('remove_from_collection');
     }
 }
