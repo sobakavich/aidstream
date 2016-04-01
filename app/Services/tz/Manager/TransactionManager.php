@@ -145,6 +145,7 @@ class TransactionManager
         $transactionTemplate['reference']                                   = $transactionDetail['reference'];
         $transactionTemplate['transaction_date'][0]['date']                 = $transactionDetail['date'];
         $transactionTemplate['value'][0]['amount']                          = $transactionDetail['amount'];
+        $transactionTemplate['value'][0]['date']                            = $transactionDetail['date'];
         $transactionTemplate['description'][0]['narrative'][0]['narrative'] = $transactionDetail['narrative'];
 
         return $transactionTemplate;
