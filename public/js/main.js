@@ -538,12 +538,16 @@ $(document).ready(function () {
         }
     }
 
-    if (typeof $.datetimepicker != 'undefined') {
-        $('form .datepicker').datetimepicker({
-            timepicker: false,
-            format: 'Y-m-d',
-            formatDate: 'Y-m-d',
-            mask: true
-        });
+    function addDatepicker() {
+        if (typeof $.datetimepicker != 'undefined') {
+            $('form .datepicker').datetimepicker({
+                timepicker: false,
+                format: 'Y-m-d',
+                formatDate: 'Y-m-d',
+                mask: true
+            });
+        }
     }
+
+    addDatepicker();
 });
