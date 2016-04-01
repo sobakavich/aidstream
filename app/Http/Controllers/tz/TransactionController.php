@@ -102,7 +102,7 @@ class TransactionController extends Controller
 
         $form = $formBuilder->editForm($transaction, $id, $code);
 
-        return view('tz.Transaction.edit', compact('form', 'activity', 'id'));
+        return view('tz.Transaction.create', compact('form', 'activity', 'id'));
     }
 
     public function destroy($id, $transactionId)

@@ -121,6 +121,7 @@ select, .form-control[readonly] {
 textarea, textarea.form-control {
   border: 1px solid $color_blue !important;
   height: 45px;
+  font-size: 16px;
 }
 
 #{$all-text-inputs}, select,
@@ -2531,6 +2532,7 @@ $organization-logo-width: 124px;
   line-height: 18px;
   color: rgba($color_gravel_approx, 0.7);
   padding-right: 40px;
+  clear: both;
 }
 
 .iati_identifier_text {
@@ -3072,13 +3074,13 @@ label.required::after {
   }
   &:hover {
     span {
-      background: $url_3 no-repeat  -74px -587px;
+      background: $url_3 no-repeat  -94px -586px;
     }
   }
 }
 
 .transaction-wrapper {
-  padding: 20px 0 0;
+  padding: 20px 0 100px;
   .panel-body > .form-group {
     border-bottom: 11px solid $color_concrete;
     padding-bottom: 20px;
@@ -3206,7 +3208,7 @@ label.required::after {
       > div {
         overflow: hidden;
         border-bottom: 1px solid $color_gallery;
-        padding: 16px 25px 7px !important;
+        padding: 16px 40px 7px 20px !important;
         margin-bottom: 0;
         &:last-child {
           border-bottom: 0;
@@ -3218,7 +3220,7 @@ label.required::after {
 }
 
 .create-new-activity-form .collection_form.has_add_more {
-  padding-bottom: 0!important;
+  padding-bottom: 0 !important;
 }
 
 .create-new-activity-form .collection_form .form-group {
@@ -3232,18 +3234,18 @@ label.required::after {
   overflow: hidden;
 }
 
-.create-new-activity-form .form-group {
-  label {
-    float: left;
-    width: 25%;
-    padding-right: 10px;
-    padding-top: 14px;
-    & + textarea, & + select, & ~ .select2-container, & + input {
-      float: left;
-      width: 50% !important;
-    }
-  }
-}
+//.create-new-activity-form .form-group {
+//  label {
+//    float: left;
+//    width: 25%;
+//    padding-right: 10px;
+//    padding-top: 14px;
+//    & + textarea, & + select, & ~ .select2-container, & + input {
+//      float: left;
+//      width: 50% !important;
+//    }
+//  }
+//}
 
 .create-new-activity-form .collection_form > label {
   float: none;
@@ -3257,50 +3259,33 @@ label.required::after {
   overflow: hidden;
 }
 
-.identifier-form {
-  .identifier_text {
-    clear: both;
-    margin-bottom: 3px;
-    label {
-      padding: 0;
-    }
-  }
-  .iati_identifier_text label {
-    padding: 0;
-  }
-  .iati_identifier_text .help-text {
-    margin-left: 19%;
-    margin-top: -30px;
-  }
-  > .form-group {
-    position: relative;
-    margin-bottom: 0;
-    > div {
-      width: 100%;
-      padding: 0;
-    }
-    .col-xs-12 label + input {
-      width: 50%;
-    }
-    .help-block {
-      padding-left: 25%;
-      width: 70%;
-    }
-  }
+.identifier-form .col-xs-12 {
+  padding: 0;
 }
 
 .select2-container .select2-selection--multiple {
   min-height: initial !important;
 }
 
-.funding_organization.has_add_more + button, .implementing_organization.has_add_more + button {
-  float: right;
-  margin-top: -57px !important;
-  margin-right: 14%;
-  position: relative;
+.participation-org-form > .form-group {
+  padding-bottom: 26px;
+  display: inline-block;
+  width: 100%;
 }
 
-.funding_organization .form-group,.implementing_organization .form-group {
+.funding_organization.has_add_more + button, .implementing_organization.has_add_more + button {
+  float: left;
+  margin-top: -15px !important;
+  margin-right: 0;
+  position: relative;
+  padding-left: 33px;
+  background-position: 6px -629px;
+  &:hover, &:focus {
+    background-position: 6px -629px;
+  }
+}
+
+.funding_organization .form-group, .implementing_organization .form-group {
   border: 1px solid transparent;
   > .form-group {
     margin-bottom: 0;
@@ -3309,7 +3294,9 @@ label.required::after {
     }
   }
   .remove_from_collection, .remove_from_collection:focus {
-    top: 19px;
+    //top: 19px;
+    top: 46px;
+    right: -34px;
   }
 }
 
@@ -3318,10 +3305,23 @@ label.required::after {
 }
 
 .create-new-activity-form > form > .collection_form > .form-group > div.participation-org-form {
-  padding: 0 25px!important;
+  padding: 0 40px 0 20px !important;
   .collection_form > .form-group {
-    padding: 15px 0!important;
+    padding: 15px 0 !important;
   }
+}
+
+.create-new-activity-form .text-danger {
+  clear: both;
+  padding-bottom: 7px;
+}
+
+.funding_organization ~ .text-danger, .implementing_organization ~ .text-danger {
+  padding-bottom: 15px;
+}
+
+.identifier-form .alternate_input {
+  padding-bottom: 7px;
 }
 
 @media all and (max-width: 1030px) {
@@ -3625,7 +3625,7 @@ label.required::after {
     padding: 0 !important;
   }
 
-  .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization {
+  .create-form, .create-activity-form, .content-wrapper .panel-profile, .panel-associated-organization, .create-new-activity-form {
     padding-left: 14px;
     padding-right: 14px;
   }
@@ -3785,6 +3785,34 @@ label.required::after {
     color: $color_emerald_approx;
   }
 
+  .collection_form.transaction > .form-group {
+    display: block;
+    > .form-group {
+      display: block;
+      width: 100% !important;
+    }
+  }
+
+  .collection_form.transaction > .form-group > .form-group input, .collection_form.transaction > .form-group > .form-group textarea {
+    width: 95% !important;
+    margin-left: 4px;
+  }
+
+  .collection_form.transaction > .form-group > .form-group label {
+    padding: 0 4px 7px;
+  }
+
+  .has_add_more + .add_to_collection {
+    margin-left: -24px;
+  }
+
+  .create-transaction-form .btn-form {
+    margin-left: 0;
+  }
+
+  .funding_organization.has_add_more + button, .implementing_organization.has_add_more + button {
+    margin-left: -7px;
+  }
 }
 
 @media all and (max-width: 640px) {
@@ -3892,14 +3920,19 @@ label.required::after {
 }
 
 @media all and (max-width: 480px) {
-  .create-form .btn-form, .btn-cancel {
-    width: 92%;
+  .create-form .btn-form, .btn-cancel, .btn-form {
+    width: 100%;
+    margin-left: 0 !important;
   }
 
-  .create-form .btn-cancel, .create-activity-form .btn-cancel {
+  .create-form .btn-cancel, .create-activity-form .btn-cancel, .create-new-activity-form .btn-cancel {
     left: -5px;
     bottom: 0;
     margin-left: 0;
+  }
+
+  .create-new-activity-form .btn-cancel {
+    width: 100%;
   }
 
   .download-transaction-wrap > a, .create-activity-form button {
@@ -3912,10 +3945,6 @@ label.required::after {
 
   .btn-register {
     max-width: 100%;
-  }
-
-  .btn-form {
-    width: 100%;
   }
 
   .organization-detail ul li {
@@ -4042,6 +4071,121 @@ label.required::after {
       bottom: 70px;
     }
   }
+  .create-new-activity-form .form-group {
+    label {
+      float: left;
+      width: 202px;
+      padding-right: 10px;
+      padding-top: 14px;
+      & + textarea, & + select, & ~ .select2-container, & + input {
+        float: left;
+        width: 264px !important;
+      }
+    }
+  }
+
+  .identifier-form > .form-group .help-block, .identifier-form .alternate_input {
+    width: 264px;
+  }
+
+  .identifier-form {
+    .identifier_text {
+      clear: both;
+      margin-bottom: 3px;
+      label {
+        padding: 0;
+      }
+    }
+    .iati_identifier_text label {
+      padding: 0;
+    }
+    .iati_identifier_text .help-text {
+      margin-left: 19%;
+      margin-top: -30px;
+    }
+    > .form-group {
+      position: relative;
+      margin-bottom: 0;
+      > div {
+        width: 100%;
+        padding: 0;
+      }
+      .col-xs-12 label + input {
+        width: 47%;
+      }
+      .help-block {
+        margin-left: 202px;
+        width: 70%;
+      }
+    }
+  }
+  .funding_organization.has_add_more + button, .implementing_organization.has_add_more + button {
+    margin-top: -4px !important;
+    position: relative;
+    float: left;
+  }
+
+  .identifier-form .alternate_input, .create-new-activity-form .text-danger {
+    margin-left: 202px;
+  }
+
+  .funding_organization.has_add_more + button, .implementing_organization.has_add_more + button {
+    margin-left: 195px;
+  }
+
+  .funding_organization .form-group .remove_from_collection, .funding_organization .form-group .remove_from_collection:focus, .implementing_organization .form-group .remove_from_collection, .implementing_organization .form-group .remove_from_collection:focus {
+    top: 21px;
+    position: static;
+    margin: 7px 8px 0;
+    float: right;
+  }
+
+  .create-new-activity-form > form > .collection_form > .form-group > div.participation-org-form .collection_form > .form-group {
+    padding: 15px 0 0 !important;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .create-new-activity-form > form > .collection_form > .form-group > div.participation-org-form .collection_form > .form-group.added-new-block {
+    padding: 15px 0 !important;
+    margin-top: 15px;
+    &+.added-new-block {
+      margin-top: 0;
+    }
+  }
+
+  .funding_organization, .implementing_organization {
+    float: left;
+    width: 100%;
+    .form-group > .form-group {
+      float: left;
+    }
+  }
+
+  .participation-org-form > .form-group {
+    padding-bottom: 0;
+  }
+
+  .create-new-activity-form > form > .collection_form > .form-group > div.participation-org-form {
+    padding: 0 20px !important;
+  }
+
+  .collection_form.transaction > .form-group > .form-group input + .text-danger, .collection_form.transaction > .form-group > .form-group textarea + .text-danger {
+    margin-left: 25px;
+  }
+}
+
+@media all and (min-width: 800px) {
+  .create-new-activity-form .form-group label + textarea, .create-new-activity-form .form-group label + select, .create-new-activity-form .form-group label ~ .select2-container, .create-new-activity-form .form-group label + input, .identifier-form > .form-group .help-block, .identifier-form .alternate_input {
+    width: 300px !important;
+  }
+}
+
+@media all and (min-width: 900px) {
+  .create-new-activity-form .form-group label + textarea, .create-new-activity-form .form-group label + select, .create-new-activity-form .form-group label ~ .select2-container, .create-new-activity-form .form-group label + input, .identifier-form > .form-group .help-block, .identifier-form .alternate_input {
+    width: 400px !important;
+  }
 }
 
 @media all and (min-width: 1001px) {
@@ -4065,6 +4209,22 @@ label.required::after {
     &:nth-child(-n+3) {
       margin-top: 0;
     }
+  }
+
+  .create-new-activity-form .form-group label {
+    width: 242px;
+  }
+
+  .identifier-form > .form-group .help-block, .identifier-form .alternate_input, .create-new-activity-form .text-danger {
+    margin-left: 242px;
+  }
+
+  .funding_organization.has_add_more + button, .implementing_organization.has_add_more + button {
+    margin-left: 242px;
+  }
+
+  .create-new-activity-form .form-group label + textarea, .create-new-activity-form .form-group label + select, .create-new-activity-form .form-group label ~ .select2-container, .create-new-activity-form .form-group label + input, .identifier-form > .form-group .help-block {
+    width: 500px !important;
   }
 }
 
@@ -4094,6 +4254,18 @@ label.required::after {
       opacity: 1 !important;
     }
   }
+
+  .create-new-activity-form .form-group label {
+    width: 290px;
+  }
+
+  .identifier-form > .form-group .help-block, .identifier-form .alternate_input, .create-new-activity-form .text-danger {
+    margin-left: 290px;
+  }
+
+  .funding_organization.has_add_more + button, .implementing_organization.has_add_more + button {
+    margin-left: 283px;
+  }
 }
 
 @media all and (min-width: 1340px) {
@@ -4104,6 +4276,10 @@ label.required::after {
     &:nth-child(-n+5) {
       margin-top: 0;
     }
+  }
+
+  .create-new-activity-form .form-group label + textarea, .create-new-activity-form .form-group label + select, .create-new-activity-form .form-group label ~ .select2-container, .create-new-activity-form .form-group label + input, .identifier-form > .form-group .help-block {
+    width: 600px !important;
   }
 }
 

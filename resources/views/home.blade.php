@@ -117,13 +117,11 @@
 <script>
     $(document).ready(function () {
         function hamburgerMenu() {
-            if ($(window).width() < 600) {
                 //responsive menu
                 $('.navbar-toggle.collapsed').click(function(){
                     $('.navbar-collapse').toggleClass('out');
                     $(this).toggleClass('collapsed');
                 });
-            }
         }
         hamburgerMenu();
     });
