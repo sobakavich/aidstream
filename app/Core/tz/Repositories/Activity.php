@@ -47,4 +47,9 @@ class Activity
 
         return $activityData->save();
     }
+
+    public function resetActivityWorkflow($activity_id)
+    {
+        $this->activity->whereId($activity_id)->update(['activity_workflow' => 0]);
+    }
 }

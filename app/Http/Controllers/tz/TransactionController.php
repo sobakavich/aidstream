@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\tz;
 
 use App\Core\tz\Requests\TransactionRequest;
-use App\Services\Activity\ActivityManager;
+use App\Services\tz\Manager\Activity as ActivityManager;
 use App\Services\tz\FormCreator\TransactionFormCreator as FormBuilder;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
