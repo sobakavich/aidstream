@@ -223,4 +223,9 @@ class Activity
 
         return $this->activityRepo->update($activity, $activityModel);
     }
+
+    public function resetActivityWorkflow($activity_id)
+    {
+        return $this->activityRepo->resetActivityWorkflow($activity_id);
+    }
 }

@@ -132,6 +132,7 @@ class ActivityController extends Controller
             return redirect()->back()->withResponse($response);
         }
 
+        $this->activityManager->resetActivityWorkflow($id);
         $response = ['type' => 'success', 'code' => ['updated', ['name' => 'Activity']]];
 
         return redirect()->route('activity.show', [$id])->withResponse($response);
