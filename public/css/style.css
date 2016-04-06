@@ -58,7 +58,7 @@ h2 {
   border-radius: 0; }
 
 .navbar-brand {
-  background: url("../images/logo-aidstream.png") no-repeat left;
+  background: url("../images/logo-aidstream.svg") no-repeat left;
   width: 160px;
   height: 42px;
   display: block;
@@ -196,7 +196,7 @@ footer {
       text-indent: -9999px;
       display: block; }
       .social-wrapper li a:before {
-        background: url("../images/social-sprite.png") no-repeat;
+        background: url("../images/social-sprite.svg") no-repeat;
         float: left;
         content: '';
         width: 32px;

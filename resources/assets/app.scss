@@ -393,6 +393,7 @@ label {
 
 .login-container {
   @include outer-container(392px);
+  padding-top: 40px;
   clear: both;
   .form-group .btn-link {
     float: right;
@@ -464,7 +465,6 @@ label {
 
 .create-account-wrapper {
   font-size: 15px;
-  margin-bottom: 60px;
   color: $color_white;
   padding: 0 10px;
   text-align: center;
@@ -480,8 +480,7 @@ label {
 .support-desc {
   text-align: center;
   font-size: 13px;
-  color: rgba($color_white, 0.7);
-  max-width: 276px;
+  color: $color_gravel_approx;
   margin: 0 auto;
   float: none;
   clear: both;
@@ -501,6 +500,7 @@ label {
 
 .register-container {
   @include outer-container(814px);
+  padding-top: 40px;
   clear: both;
   .username_text {
     padding: 0;
@@ -569,7 +569,6 @@ label {
 // navbar
 .navbar.navbar-static {
   padding: 14px 30px;
-  position: static;
 }
 
 .navbar-default {
@@ -3853,6 +3852,10 @@ label.required::after {
       left: 290px;
       bottom: 70px;
     }
+  }
+
+  .login-container,.register-container {
+    padding-top: 80px;
   }
 }
 

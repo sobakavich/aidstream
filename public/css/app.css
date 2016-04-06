@@ -491,6 +491,7 @@ label {
   max-width: 392px;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 40px;
   clear: both; }
   .login-container::after {
     clear: both;
@@ -555,7 +556,6 @@ label {
 
 .create-account-wrapper {
   font-size: 15px;
-  margin-bottom: 60px;
   color: #fff;
   padding: 0 10px;
   text-align: center; }
@@ -569,8 +569,7 @@ label {
 .support-desc {
   text-align: center;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-  max-width: 276px;
+  color: #484848;
   margin: 0 auto;
   float: none;
   clear: both; }
@@ -587,6 +586,7 @@ label {
   max-width: 814px;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 40px;
   clear: both; }
   .register-container::after {
     clear: both;
@@ -639,8 +639,7 @@ label {
   max-width: 174px; }
 
 .navbar.navbar-static {
-  padding: 14px 30px;
-  position: static; }
+  padding: 14px 30px; }
 
 .navbar-default {
   background: #fff;
@@ -3183,7 +3182,9 @@ label.required::after {
     width: 260px; }
   .create-form .btn-cancel {
     left: 290px;
-    bottom: 70px; } }
+    bottom: 70px; }
+  .login-container, .register-container {
+    padding-top: 80px; } }
 
 @media all and (min-width: 1001px) {
   .element-sidebar-wrapper {
