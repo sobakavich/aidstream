@@ -5,9 +5,12 @@ if (isset($language)) {
     App::setLocale($language);
 }
 
-$router->get('/public/files/xml/{file}', function ($file) {
-    return redirect('/files/xml/' . $file);
-});
+$router->get(
+    '/public/files/xml/{file}',
+    function ($file) {
+        return redirect('/files/xml/' . $file);
+    }
+);
 
 $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
@@ -17,6 +20,15 @@ $router->get('who-is-using/{page}/{count}', 'WhoIsUsingController@listOrganizati
 $router->get('admin/dashboard', 'SuperAdmin\OrganizationController@adminDashboard');
 $router->resource('settings', 'Complete\SettingsController');
 $router->get('who-is-using/{organization_id}', 'WhoIsUsingController@getDataForOrganization');
+
+$router->get('generate-activities', 'GenerateExcelController@generateActivities');
+$router->get('generate-updated-activities', 'GenerateExcelController@generateUpdatedActivities');
+$router->get('generate-organizations', 'GenerateExcelController@generateOrganizations');
+$router->get('generate-multiple-indicators', 'GenerateExcelController@generateActivitiesWithMultipleResultIndicators');
+$router->get('generate-compared-indicators', 'GenerateExcelController@generateComparedIndicators');
+$router->get('generate-element-counts', 'GenerateExcelController@generateElementCounts');
+$router->get('generate-published-activity-list', 'GenerateExcelController@generatePublishedActivityList');
+$router->get('generate-publishing-type', 'GenerateExcelController@generatePublishingType');
 
 $router->get(
     'test',
