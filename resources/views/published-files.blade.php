@@ -29,6 +29,7 @@
                         <div>Published Files</div>
                     </div>
                     <h2 class="panel-sub-heading">Organizations Published Files</h2>
+                    <div><input type="submit" value="Publish Organizations To IATI"></div>
                     <div class="panel-body">
                         @if(count($list) > 0)
                             <form action="{{route('org.bulk-publish')}}" method="POST">
@@ -39,7 +40,7 @@
                                     <th width="30px"></th>
                                     <th>Filename</th>
                                     <th>Published Date</th>
-                                    <th>Registered in IATI Registry</th>
+                                    <th width="200px">Registered in IATI Registry</th>
                                     <th>Preview As</th>
                                     <th>Action</th>
                                 </tr>
@@ -55,17 +56,16 @@
                                         <td>
                                             <a href="{{ 'http://tools.aidinfolabs.org/csv/direct_from_registry/?xml=' . url('/files/xml/' . $file->filename) }}"
                                                target="_blank">CSV</a></td>
-                                        @if($file->published_to_register == 0)
                                         <td>
+                                            @if($file->published_to_register == 0)
                                             <a href="{{ route('list-published-files', ['delete', $file->id]) }}"
                                                class="delete">Delete</a>
+                                            @endif
                                         </td>
-                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                                <input type="submit" value="Publish Organizations To IATI">
                             </form>
                         @else
                             <div class="text-center no-data no-document-data">
@@ -75,6 +75,7 @@
                     </div>
 
                     <h2 class="panel-sub-heading">Activities Published Files</h2>
+                    <div><input type="submit" value="Publish Activities To IATI"></div>
                     <div class="panel-body">
                         @if(count($activity_list) > 0)
                             <form action="{{route('activity.bulk-publish')}}" method="POST">
@@ -85,7 +86,7 @@
                                     <th width="30px"></th>
                                     <th>Filename</th>
                                     <th>Published Date</th>
-                                    <th>Registered in IATI Registry</th>
+                                    <th width="200px">Registered in IATI Registry</th>
                                     <th>Preview As</th>
                                     <th>Action</th>
                                 </tr>
@@ -111,7 +112,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <input type="submit" value="Publish Activities To IATI">
                         </form>
                         @else
                             <div class="text-center no-data no-document-data">
