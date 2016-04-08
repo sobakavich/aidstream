@@ -166,3 +166,10 @@ $router->get(
         'uses' => 'CompleteValidateController@show'
     ]
 );
+$router->get(
+    'validate-activity-xml/{version}/{fileName}',
+    [
+        'as'   => 'validate-activity-xml',
+        'uses' => 'CompleteValidateController@validateXml'
+    ]
+);

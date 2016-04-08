@@ -69,6 +69,28 @@ class CompleteValidateController extends Controller
         return $this->validateCompletedActivity($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
     }
 
+    public function validateXml($version, $fileName)
+    {
+        // Enable user error handling
+        libxml_use_internal_errors(true);
+
+        $xmlPath        = public_path('files' . config('filesystems.xml') . $fileName);
+        $tempXmlContent = file_get_contents($xmlPath);
+        $xml            = new \DOMDocument();
+        $xml->loadXML($tempXmlContent);
+        $schemaPath = app_path(sprintf('/Core/V%s/XmlSchema/iati-activities-schema.xsd', str_replace('.', '', $version)));
+        $messages   = [];
+        if (!$xml->schemaValidate($schemaPath)) {
+            $messages = $this->libxml_display_errors();
+        }
+
+        $xmlString = htmlspecialchars($tempXmlContent);
+        $xmlString = str_replace(" ", "&nbsp;&nbsp;", $xmlString);
+        $xmlLines  = explode("\n", $xmlString);
+
+        return view('validate-schema', compact('messages', 'xmlLines'));
+    }
+
     public function validateCompletedActivity($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization)
     {
         // Enable user error handling
@@ -76,7 +98,7 @@ class CompleteValidateController extends Controller
 
         $xmlService     = $activityElement->getActivityXmlService();
         $tempXmlContent = $xmlService->generateTemporaryActivityXml($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
-        $xml = new \DOMDocument();
+        $xml            = new \DOMDocument();
         $xml->loadXML($tempXmlContent);
         $schemaPath = app_path(sprintf('/Core/%s/XmlSchema/iati-activities-schema.xsd', session('version')));
         $messages   = [];
@@ -86,7 +108,7 @@ class CompleteValidateController extends Controller
 
         $xmlString = htmlspecialchars($tempXmlContent);
         $xmlString = str_replace(" ", "&nbsp;&nbsp;", $xmlString);
-        $xmlLines = explode("\n", $xmlString);
+        $xmlLines  = explode("\n", $xmlString);
 
         return view('validate-schema', compact('messages', 'xmlLines'));
     }
