@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -96,7 +97,7 @@ class MigrateAidStream extends Command
      * Signature for the command.
      * @var string
      */
-    protected $signature = 'migrate-aidstream {table} {--country=} {--trace} {--reset-sequence}';
+    protected $signature = 'migrate-aidstream {table} {--country=} {--trace} {--reset-sequence} {--missing-values}';
 
     /**
      * @var DatabaseManager
@@ -182,6 +183,7 @@ class MigrateAidStream extends Command
         $country        = $this->option('country');
         $trace          = $this->option('trace');
         $sequenceOption = $this->option('reset-sequence');
+        $missingValues  = $this->option('missing-values');
 
         try {
             if ($argument == 'reset-sequence') {
@@ -195,9 +197,14 @@ class MigrateAidStream extends Command
             }
 
             $this->info('Running the migrations');
-
             $this->databaseManager->beginTransaction();
-            $this->beginMigration($argument, $country);
+
+            if ($missingValues) {
+                $this->beginMigration($argument, $country, true);
+            } else {
+
+                $this->beginMigration($argument, $country);
+            }
 
             if ($sequenceOption) {
                 $sequence = new Sequence();
@@ -222,11 +229,11 @@ class MigrateAidStream extends Command
     {
         $response = [];
 
-        $response[] = $this->organizationMigrator->migrate($accountIds);
-        $this->informFor('Organization');
-
-        $response[] = $this->userMigrator->migrate($accountIds);
-        $this->informFor('User');
+//        $response[] = $this->organizationMigrator->migrate($accountIds);
+//        $this->informFor('Organization');
+//
+//        $response[] = $this->userMigrator->migrate($accountIds);
+//        $this->informFor('User');
 
         $response[] = $this->documentMigrator->migrate($accountIds);
         $this->informFor('Documents');
@@ -237,8 +244,8 @@ class MigrateAidStream extends Command
         $response[] = $this->activityMigrator->migrate($accountIds);
         $this->informFor('Activities');
 
-        $response[] = $this->organizationDataMigrator->migrate($accountIds);
-        $this->informFor('OrganizationData');
+//        $response[] = $this->organizationDataMigrator->migrate($accountIds);
+//        $this->informFor('OrganizationData');
 
         $response[] = $this->transactionMigrator->migrate($accountIds);
         $this->informFor('Transaction');
@@ -252,7 +259,7 @@ class MigrateAidStream extends Command
         $response[] = $this->organizationPublishedMigrator->migrate($accountIds);
         $this->informFor('Organization Published');
 
-        $response[] = $this->userGroupMigrator->migrate($accountIds);
+//        $response[] = $this->userGroupMigrator->migrate($accountIds);
 
         $this->info("\n");
 
@@ -432,9 +439,13 @@ class MigrateAidStream extends Command
      * @param $argument
      * @param $country
      */
-    protected function beginMigration($argument, $country)
+    protected function beginMigration($argument, $country, $missingValues = null)
     {
-        $accountIds = $this->getAccountIdsFor($country);
+        if ($missingValues) {
+            $accountIds = $this->getMissingAccountIds($this->getAccountIdsFor($country));
+        } else {
+            $accountIds = $this->getAccountIdsFor($country);
+        }
 
         if ($argument == 'all') {
             $this->info($this->migrateAll($accountIds));
@@ -507,5 +518,53 @@ class MigrateAidStream extends Command
     protected function informFor($table)
     {
         $this->info(sprintf('%s table migrated -- %s', $table, Carbon::now()));
+    }
+
+    protected function getMissingAccountIds($allAccountIds)
+    {
+        $missingIds = [];
+
+        foreach ($allAccountIds as $accountId) {
+            if (is_null(getOrganizationFor($accountId))) {
+                $missingIds[] = $accountId;
+            }
+        }
+
+        return $missingIds;
+    }
+
+    protected function migrateMissing($accountIds)
+    {
+        return $this->saveMissing($accountIds);
+    }
+
+    protected function saveMissing($missingAccountIds)
+    {
+        $result = [];
+        $missingAccounts = [];
+
+        foreach ($missingAccountIds as $accountId) {
+            $account = getAccountInformation($accountId);
+
+
+
+        }
+
+        foreach ($missingAccounts as $account) {
+            $result[] = [
+                'id' => $account[0]->id,
+                'name' => $account[0]->name,
+                'username' => $account[0]->username
+            ];
+        }
+        $fileData = [];
+
+        foreach ($result as $r) {
+            $fileData[] = json_encode($r);
+        }
+
+        File::put('missingAccounts.txt', implode("\n", $fileData));
+
+        dd('sss');
     }
 }

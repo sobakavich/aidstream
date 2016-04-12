@@ -25,19 +25,19 @@ class DocumentQuery extends Query
         $data = [];
 
         foreach ($accountIds as $accountId) {
-            if ($organization = getOrganizationFor($accountId)) {
-                $data[] = $this->getData($organization->id, $accountId);
+            if (is_null(getOrganizationFor($accountId))) {
+                $data[] = $this->getData($accountId);
             }
         }
 
         return $data;
     }
 
-    public function getData($organizationId, $accountId)
+    public function getData($accountId)
     {
         $formattedData = [];
         $document      = [];
-        $activities    = $this->activityData->getActivitiesFor($organizationId);  // for 1 org
+        $activities    = $this->activityData->getActivitiesFor($accountId);  // for 1 org
 
         $userDocuments = $this->connection->table('user_documents')
                                           ->select('*')

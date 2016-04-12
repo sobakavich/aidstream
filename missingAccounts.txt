@@ -1,0 +1,177 @@
+{"id":"6","name":"Testing organization","username":"US-TEST ID"}
+{"id":"10","name":"International Finance Corporation (test)","username":"ifctest"}
+{"id":"21","name":"Guest","username":"guest"}
+{"id":"24","name":"Publish What You Fund","username":"pwyf"}
+{"id":"25","name":"Groupsia","username":"groupsia"}
+{"id":"26","name":"DGI","username":"dm"}
+{"id":"27","name":"Libertic","username":"libertic"}
+{"id":"31","name":"WaterAid","username":"WaterAid"}
+{"id":"32","name":"Alterseed","username":"ats"}
+{"id":"44","name":"Open Knowledge Foundation ","username":"OKFN"}
+{"id":"49","name":"The Rainforest Foundation UK","username":"RFUK"}
+{"id":"52","name":"Advocates for Human Dignity","username":"AHD"}
+{"id":"57","name":"OpenAid - Open Knowledge Foundation Germany","username":"oi"}
+{"id":"59","name":"InterClimate Network Ltd","username":"ICN"}
+{"id":"60","name":"YoungInnovations Pvt. Ltd.","username":"yipl"}
+{"id":"65","name":"Interact Worldwide","username":"interact"}
+{"id":"66","name":"Esri","username":"Esri"}
+{"id":"75","name":"Lead International ","username":"LI"}
+{"id":"82","name":"Homeless International","username":"HICov"}
+{"id":"83","name":"Karuna Trust","username":"Karuna"}
+{"id":"85","name":"Fauna & Flora International","username":"ffi"}
+{"id":"88","name":"PONT","username":"PONT"}
+{"id":"89","name":"India Development Group (Known as Jeevika Trust)","username":"Jeevika"}
+{"id":"97","name":"mi2","username":"mi2"}
+{"id":"105","name":"Overseas Aid Committee, Isle of Man Government","username":"IOM"}
+{"id":"109","name":"Owen","username":"owen_ewb_test"}
+{"id":"111","name":"Medipeace","username":"medipeace"}
+{"id":"112","name":"Water and Sanitation for the Urban Poor","username":"WSUP1"}
+{"id":"121","name":"Home Office - UKBA","username":"HO- UKBA"}
+{"id":"124","name":"urbanlink","username":"urbanlink"}
+{"id":"128","name":"TransparentAid","username":"Traid"}
+{"id":"133","name":"Self Help Africa","username":"IE6663"}
+{"id":"139","name":"Christian Aid","username":"CAid"}
+{"id":"144","name":"Foundation Center","username":"FC"}
+{"id":"146","name":"WWF Pakistan","username":"wwfpak"}
+{"id":"155","name":"Open Data Research Network","username":"odr"}
+{"id":"157","name":"Chris Test Org","username":"ChrisT"}
+{"id":"158","name":"College of William and Mary","username":"wm"}
+{"id":"159","name":"Testing1","username":"Test1"}
+{"id":"167","name":"WILDLIFE CONSERVATION SOCIETY-EUROPE","username":"WCSE"}
+{"id":"175","name":"Ethical Trading Intiative","username":"ETI8"}
+{"id":"202","name":"Daraja Trust","username":"daraja"}
+{"id":"203","name":"WWF-UK","username":"WWFUK"}
+{"id":"204","name":"ActionAid UK","username":"aauk"}
+{"id":"212","name":"Deutsche Welthungerhilfe e.V.","username":"DWHH"}
+{"id":"213","name":"Freedom Forum","username":"ff"}
+{"id":"214","name":"NGO Federation of Nepal","username":"NFN"}
+{"id":"219","name":"Aidbrella","username":"AB"}
+{"id":"221","name":"Young Mothers Club","username":"YMC-Admin"}
+{"id":"222","name":"Shabaki De Cafe","username":"SDC-admin"}
+{"id":"223","name":"YOUNG BACHELORS ASSOCIATION","username":"KE-NCB-2364746"}
+{"id":"224","name":"Masterd","username":"MD"}
+{"id":"225","name":"Wanaume Maendeleo","username":"JMG_admin"}
+{"id":"226","name":"CEAPRED","username":"CEAPRED_Research"}
+{"id":"236","name":"UNDP","username":"UNDPniger"}
+{"id":"238","name":"MCNV","username":"mcnv"}
+{"id":"243","name":"Spatial Development International","username":"SDI"}
+{"id":"249","name":"Test Organisation","username":"bjwebb"}
+{"id":"261","name":"Village by Village","username":"villagebyvillage"}
+{"id":"267","name":"International Rescue Committee UK","username":"IRC-UK"}
+{"id":"268","name":"Simal ko Vuwa","username":"SkV_Thamel"}
+{"id":"269","name":"Walk for Nepal","username":"wfn"}
+{"id":"270","name":"NEPAL KO YUWA","username":"NKY"}
+{"id":"271","name":"Janahit Gramin Sewa Samitee","username":"JGSS"}
+{"id":"272","name":"Tuki Association","username":"Tuki"}
+{"id":"273","name":"Community Capacaty Building Center","username":"CCBC"}
+{"id":"274","name":"GRAMIN SIRJANSHIL PARIWAR","username":"GMSP"}
+{"id":"275","name":"MANK","username":"mank"}
+{"id":"276","name":"Sindhu Development Center","username":"SIDEC"}
+{"id":"277","name":"District Micro Intrepreneur Group Association","username":"DMEGA"}
+{"id":"278","name":"Centre for Energy and Environment Development (CEED)","username":"CEED"}
+{"id":"281","name":"Empower Dalit Women of Nepal","username":"EDWON"}
+{"id":"285","name":"Youth Business International","username":"YBI"}
+{"id":"301","name":"ACORD","username":"GB-CHC-283302"}
+{"id":"305","name":"CIFAL Scotland","username":"CIFAL"}
+{"id":"316","name":"Green Action","username":"GA"}
+{"id":"321","name":"War Child Holland","username":"WCH"}
+{"id":"322","name":"War Child Holland","username":"WCH1"}
+{"id":"329","name":"THET","username":"THET"}
+{"id":"331","name":"United Network of Young Peacebuilders","username":"unoy"}
+{"id":"335","name":"Near East Foundation UK","username":"nefuk"}
+{"id":"337","name":"Terre des hommes","username":"tdh"}
+{"id":"342","name":"Finance Canada","username":"FINTEST"}
+{"id":"346","name":"Department of Finance Canada","username":"FIN"}
+{"id":"348","name":"TEST","username":"test2014"}
+{"id":"349","name":"Freelancer","username":"danmihaila"}
+{"id":"354","name":"Lily Colins","username":"01"}
+{"id":"360","name":"Organisation 123","username":"org123"}
+{"id":"362","name":"SmartSimple","username":"smartsimple"}
+{"id":"372","name":"Organisation 1","username":"Org1"}
+{"id":"374","name":"Test Organisation 1234","username":"org1234"}
+{"id":"377","name":"LIGHT FOR THE WORLD The Netherlands","username":"lftwnl"}
+{"id":"401","name":"CDPN","username":"sanya"}
+{"id":"406","name":"dance4lifetest","username":"dance4lifetest"}
+{"id":"414","name":"gyan mahadew","username":"TdHNL"}
+{"id":"418","name":"Young Innovations","username":"yiplUI"}
+{"id":"430","name":"International Growth Centre","username":"IGC"}
+{"id":"432","name":"IRC International Water and Sanitation Centre","username":"IRCWASH"}
+{"id":"433","name":"Charles Kendall Consulting","username":"aid"}
+{"id":"435","name":"BoP Innovation Center","username":"BoPInc"}
+{"id":"439","name":"test","username":"testnl"}
+{"id":"442","name":"Concern","username":"CWW"}
+{"id":"445","name":"Sightsavers","username":"Sightsaver"}
+{"id":"451","name":"Baclward Society Education (BASE)","username":"basenepal"}
+{"id":"458","name":"Cordaid","username":"NL-KVK-41160054"}
+{"id":"459","name":"Example Org","username":"GB-CHC-123456"}
+{"id":"461","name":"MIS4D","username":"MIS4D"}
+{"id":"468","name":"Across","username":"Across"}
+{"id":"473","name":"Avanti Communications Plc","username":"AVA"}
+{"id":"476","name":"World Vision International","username":"WVI"}
+{"id":"482","name":"Farm Radio International","username":"fri"}
+{"id":"489","name":"Sherman Health Care Foundation","username":"Sherman Foundation"}
+{"id":"494","name":"Oxfam Novib","username":"OXFAMNOVIB"}
+{"id":"497","name":"NepalkoGaun","username":"NKG"}
+{"id":"499","name":"The Salvation Army International Development","username":"SAID"}
+{"id":"503","name":"Danish Refugee Council","username":"DRC"}
+{"id":"505","name":"Social Development Direct","username":"SDDirect"}
+{"id":"509","name":"iplussolutions","username":"iplussolutions"}
+{"id":"510","name":"Health Research and Social Development Forum (HERD)","username":"HERD"}
+{"id":"511","name":"Rory","username":"RORY"}
+{"id":"513","name":"The Dulverton Trust","username":"Dulverton"}
+{"id":"517","name":"Women Win","username":"WomenWin"}
+{"id":"523","name":"Motivation Pakistan","username":"motivation"}
+{"id":"525","name":"YIPL-test","username":"yipl-test"}
+{"id":"528","name":"GRAMEEN SWAPNA (GS)","username":"GS"}
+{"id":"529","name":"International Children's Trust","username":"The ICT"}
+{"id":"532","name":"cfbt Education trust","username":"cfbt -Uk"}
+{"id":"536","name":"World Bank","username":"WBG"}
+{"id":"537","name":"Horizon Women","username":"KJD\/N\/CBO\/1800117\/14"}
+{"id":"538","name":"Horizon Women CBO","username":"KJD\/N\/CBO\/1800117"}
+{"id":"539","name":"HADA - Horn of Africa Development Association","username":"HADA"}
+{"id":"540","name":"Niskrity Foundation","username":"niskrity"}
+{"id":"546","name":"UNITAID","username":"UTD"}
+{"id":"547","name":"Overseas Development Institute","username":"ODI"}
+{"id":"549","name":"Mensen met een Missie","username":"MMM"}
+{"id":"553","name":"Testing","username":"tes"}
+{"id":"555","name":"Data Mining Myanmar","username":"DMM"}
+{"id":"561","name":"SOMO","username":"somo"}
+{"id":"569","name":"Terre des Hommes Netherlands","username":"NL-KVK-41149287"}
+{"id":"570","name":"Stichting Tear Fund Nederland","username":"Tear"}
+{"id":"574","name":"Michele Weldon","username":"mw"}
+{"id":"575","name":"Protecting Families Against HIV\/AIDS","username":"PREFA"}
+{"id":"578","name":"Salvation Army Netherlands International Development Services","username":"TSA-NLA"}
+{"id":"582","name":"Salvation Army International","username":"tsa"}
+{"id":"585","name":"The Convention on Business Integrity","username":"CBi"}
+{"id":"587","name":"Archer Foundation","username":"archerfoundation"}
+{"id":"590","name":"juod trading company","username":"Eyadjaghasi"}
+{"id":"592","name":"testorg","username":"testorg"}
+{"id":"593","name":"test","username":"testqqq"}
+{"id":"594","name":"this","username":"2334"}
+{"id":"595","name":"PAX","username":"PAXforPEACE"}
+{"id":"597","name":"meri","username":"tffgd"}
+{"id":"598","name":"meri","username":"kitfd"}
+{"id":"599","name":"Pamma Limited","username":"pam"}
+{"id":"600","name":"Simprints","username":"sp"}
+{"id":"602","name":"Vision Africa - Give a Child a Future","username":"GB-CHC-1091198"}
+{"id":"608","name":"SKT Welfare","username":"sktwelfare"}
+{"id":"609","name":"Dhaka Ahsania Mission UK","username":"damuk"}
+{"id":"611","name":"Habra Work for Development & Social Research Organization","username":"HWDSRO"}
+{"id":"612","name":"Lunek Organization","username":"lo"}
+{"id":"616","name":"Red Cross Red Crescent Climate Centre","username":"RCCC"}
+{"id":"619","name":"Practical Action","username":"GB-COH-871954"}
+{"id":"620","name":"Dinika","username":"DInika"}
+{"id":"621","name":"Wemos","username":"wemos"}
+{"id":"622","name":"ActionAid UK","username":"AAUK."}
+{"id":"623","name":"yi-test-test","username":"yi_test"}
+{"id":"624","name":"CNV Internationaal","username":"CNV-I"}
+{"id":"625","name":"International Women\\'s Development Agency","username":"IWDA"}
+{"id":"628","name":"mar3-test","username":"mar3"}
+{"id":"631","name":"John Joseph","username":"Defra"}
+{"id":"632","name":"World Bank Group","username":"davenport.steve@gmail.com"}
+{"id":"634","name":"Urgent Action Fund-Africa","username":"uaf-africa"}
+{"id":"635","name":"Law Policy and Research Private Limited","username":"LPR"}
+{"id":"638","name":"SERVE","username":"SERVE"}
+{"id":"640","name":"Association for Women\\'s Rights in Development","username":"AWID"}
+{"id":"641","name":"Mensen met een Missie","username":"MM1"}
+{"id":"642","name":"SP UK","username":"spuk_dhekel"}

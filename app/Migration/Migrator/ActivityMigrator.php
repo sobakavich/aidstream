@@ -39,18 +39,22 @@ class ActivityMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
+
         $database = app()->make(DatabaseManager::class);
 
         $orgActivityDetails = $this->activity->getData($accountIds);
+        $activities = [];
 
         try {
             foreach ($orgActivityDetails as $activityDetail) {
-                foreach ($activityDetail as $detail) {
-                    $activity = $this->activityModel->newInstance($detail);
 
-                    if (!$activity->save()) {
-                        return 'Error during Activity table migration.';
-                    }
+                foreach ($activityDetail as $detail) {
+                    $activities[] = json_encode($detail);
+//                    $activity = $this->activityModel->newInstance($detail);
+//
+//                    if (!$activity->save()) {
+//                        return 'Error during Activity table migration.';
+//                    }
                 }
             }
 
@@ -60,6 +64,7 @@ class ActivityMigrator implements MigratorContract
 
             throw $e;
         }
+        dd($activities);
 
         return 'Activities table migrated.';
     }

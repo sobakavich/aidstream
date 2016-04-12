@@ -4,6 +4,7 @@ use App\Migration\Entities\Document;
 use App\Models\Document as DocumentModel;
 use App\Migration\Migrator\Contract\MigratorContract;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class DocumentMigrator
@@ -40,15 +41,40 @@ class DocumentMigrator implements MigratorContract
         $database = app()->make(DatabaseManager::class);
 
         $organizationDocuments = $this->document->getData($accountIds);
-
+        $documentSqlQueries = [];
+//dd($organizationDocuments);
         try {
-            foreach ($organizationDocuments as $documents) {
-                foreach ($documents[0] as $document) {
-                    $newDocument = $this->documentModel->newInstance($document);
+            foreach ($organizationDocuments as $index => $documents) {
+                foreach ($documents as $key => $document) {
+                    if (count($document) > 1) {
+                        foreach ($document as $d) {
+                            if (!empty($d)) {
+                                $query = sprintf("insert into documents values (%s)", implode(',', $d));
+                                $documentSqlQueries[] = $query;
+                            }
+                        }
+                    } else {
+//                        try {
+                            if (!empty($document)) {
+                                $query = sprintf("insert into documents values (%s)", implode(',', array_values($document)[0]));
+                                $documentSqlQueries[] = $query;
+                            }
 
-                    if (!$newDocument->save()) {
-                        return 'Error during Documents table migration.';
+//                        } catch (\Exception $e) {
+//                            dd($document);
+//                        }
+
                     }
+
+
+//                    else {
+
+//                    }
+                   // $newDocument = $this->documentModel->newInstance($document);
+
+//                    if (!$newDocument->save()) {
+//                        return 'Error during Documents table migration.';
+//                    }
                 }
             }
 
@@ -59,6 +85,7 @@ class DocumentMigrator implements MigratorContract
             throw $e;
         }
 
+        File::put('missingDocumentsSql.txt', implode("\n", $documentSqlQueries));
         return 'Documents table migrated';
     }
 }

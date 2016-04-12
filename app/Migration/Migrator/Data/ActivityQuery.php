@@ -128,8 +128,8 @@ class ActivityQuery extends Query
         $this->initDBConnection();
 
         foreach ($accountIds as $accountId) {
-            if ($organization = getOrganizationFor($accountId)) {
-                $data[] = $this->getData($organization->id, $accountId);
+            if (is_null(getOrganizationFor($accountId))) {
+                $data[] = $this->getData($accountId);
             }
         }
 
@@ -137,13 +137,12 @@ class ActivityQuery extends Query
     }
 
     /**
-     * @param $organizationId
      * @param $accountId
      * @return array
      */
-    protected function getData($organizationId, $accountId)
+    protected function getData($accountId)
     {
-        $activities = $this->activityData->getActivitiesFor($organizationId);
+        $activities = $this->activityData->getActivitiesFor($accountId);
         $this->data = [];
 
         foreach ($activities as $activity) {

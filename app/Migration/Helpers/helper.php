@@ -276,3 +276,30 @@ function getActivitiesFor($accountId)
                   ->get()
         : null;
 }
+
+function getAccountInformation($accountId)
+{
+    $builder = app()->make(DatabaseManager::class)->connection('mysql');
+
+    return $builder->table('account')->select('*')->where('id', '=', $accountId)->get();
+}
+
+function getSql($query)
+{
+    if( $query instanceof Illuminate\Database\Eloquent\Relations\Relation )
+    {
+        $query = $query->getBaseQuery();
+    }
+
+    if( $query instanceof Illuminate\Database\Eloquent\Builder )
+    {
+        $query = $query->getQuery();
+    }
+
+    if( $query instanceof Illuminate\Database\Query\Builder )
+    {
+        return [ 'query' => $query->toSql(), 'bindings' => $query->getBindings() ];
+    }
+
+    return false;
+}

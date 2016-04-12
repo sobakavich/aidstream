@@ -1,0 +1,8 @@
+insert into documents values (activity-standard-example-annotated.xml,,6,null,2014-11-06 22:02:58,2014-11-06 22:02:58)
+insert into documents values (MinBuZa IATI publication guidelines-v09.pdf,,561,null,2015-11-02 14:12:38,2015-11-02 14:12:38)
+insert into documents values (MinBuZa%2520IATI%2520publication%2520guidelines-v09.pdf,http://www.aidstream.org/files/documents/MinBuZa%20IATI%20publication%20guidelines-v09.pdf,561,{"2188":"Test1"})
+insert into documents values (Copy of PMP for UK AID.xls,,575,null,2016-02-08 14:17:51,2016-02-08 14:17:51)
+insert into documents values (Copy of UK Aid Direct-logical-framework v3 approved-2.xls,,575,null,2016-02-11 17:39:01,2016-02-11 17:39:01)
+insert into documents values (Copy%2520of%2520UK%2520Aid%2520Direct-logical-framework%2520v3%2520approved-2.xls,http://www.aidstream.org/files/documents/Copy%20of%20UK%20Aid%20Direct-logical-framework%20v3%20approved-2.xls,575,{"2473":"Reproductive health project"})
+insert into documents values (Bsk ActionAid.pdf,,622,null,2016-03-10 21:30:00,2016-03-10 21:30:00)
+insert into documents values (Bsk%2520ActionAid.pdf,http://aidstream.org/files/documents/Bsk%20ActionAid.pdf,622,{"2557":"GB-XUKDU15001"})

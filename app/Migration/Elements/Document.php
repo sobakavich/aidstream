@@ -5,7 +5,7 @@ class Document
     public function format(array $docMetaData)
     {
         foreach ($docMetaData as $url => $data) {
-            $docMetaData[$url]['activities'] = $data['activities'];
+            $docMetaData[$url]['activities'] = json_encode($data['activities']);
         }
 
         return $docMetaData;

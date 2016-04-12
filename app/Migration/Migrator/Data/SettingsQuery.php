@@ -34,11 +34,11 @@ class SettingsQuery extends Query
         $data = [];
 
         foreach ($accountIds as $accountId) {
-            if ($organization = getOrganizationFor($accountId)) {
-                $data[] = $this->getData($organization->id, $accountId);
+            if (is_null(getOrganizationFor($accountId))) {
+                $data[] = $this->getData($accountId);
             }
         }
-
+        //dd($data);
         return $data;
     }
 
@@ -47,7 +47,7 @@ class SettingsQuery extends Query
      * @param $accountId
      * @return array
      */
-    protected function getData($organizationId, $accountId)
+    protected function getData($accountId)
     {
         $registryInfo = $this->connection->table('registry_info')
                                          ->select('*')
@@ -63,9 +63,13 @@ class SettingsQuery extends Query
                                                  ->select('*')
                                                  ->where('account_id', '=', $accountId)
                                                  ->first();
+        $publishing_type = null;
+        $publish_files   = null;
 
-        $publishing_type = ($registryInfo->publishing_type == 1) ? 'segmented' : 'unsegmented';
-        $publish_files   = ($registryInfo->update_registry == 1) ? 'yes' : 'no';
+        if ($registryInfo) {
+            $publishing_type = ($registryInfo->publishing_type == 1) ? 'segmented' : 'unsegmented';
+            $publish_files   = ($registryInfo->update_registry == 1) ? 'yes' : 'no';
+        }
 
         $registryInfoData = array(
             'publisher_id'  => $registryInfo ? ($registryInfo->publisher_id) : '',
@@ -90,6 +94,6 @@ class SettingsQuery extends Query
             'version'              => '2.01'
         );
 
-        return $newSettingsDataFormat;
+       return $newSettingsDataFormat;
     }
 }

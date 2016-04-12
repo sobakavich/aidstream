@@ -16,15 +16,15 @@ class OrganizationPublishedQuery extends Query
         $data = [];
 
         foreach ($accountIds as $accountId) {
-            if ($organization = getOrganizationFor($accountId)) {
-                $data[] = $this->getData($organization->id, $accountId);
+            if (is_null(getOrganizationFor($accountId))) {
+                $data[] = $this->getData($accountId);
             }
         }
 
         return $data;
     }
 
-    public function getData($organizationId, $accountId)
+    public function getData($accountId)
     {
         $organisationPublished = [];
 

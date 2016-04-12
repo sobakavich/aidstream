@@ -36,8 +36,8 @@ class ActivityTransactionsQuery extends Query
         $this->initDBConnection();
 
         foreach ($accountIds as $accountId) {
-            if ($organization = getOrganizationFor($accountId)) {
-                $data[] = $this->getTransaction($organization->id);
+            if (is_null(getOrganizationFor($accountId))) {
+                $data[] = $this->getTransaction($accountId);
             }
         }
 
@@ -49,10 +49,10 @@ class ActivityTransactionsQuery extends Query
      * @param $organizationId
      * @return array
      */
-    protected function getTransaction($organizationId)
+    protected function getTransaction($accountId)
     {
         $transactionData = [];
-        $activities      = $this->activityData->getActivitiesFor($organizationId);
+        $activities      = $this->activityData->getActivitiesFor($accountId);
 
         foreach ($activities as $activity) {
             $transactions = $this->connection->table('iati_transaction')

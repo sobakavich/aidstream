@@ -113,16 +113,16 @@ class ActivityData
         return $IatiActivityIds;
     }
 
-    public function getActivitiesFor($orgId)
+    public function getActivitiesFor($accountId)
     {
         $this->initDBConnection('mysql');
 
-        $accountId = $this->mysqlConn->table('iati_organisation')
-                                     ->select('account_id')
-                                     ->where('id', '=', $orgId)
-                                     ->first();
+//        $accountId = $this->mysqlConn->table('iati_organisation')
+//                                     ->select('account_id')
+//                                     ->where('id', '=', $orgId)
+//                                     ->first();
 
-        $accountId = ($accountId) ? $accountId->account_id : null;
+//        $accountId = ($accountId) ? $accountId->account_id : null;
 
         $IatiActivitiesId = $this->mysqlConn->table('iati_activities')
                                             ->select('id')

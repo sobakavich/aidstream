@@ -55,7 +55,7 @@ return [
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'aidstream'),
+            'database'  => env('MYSQL_DATABASE', 'aidstream'),
             'username'  => env('MYSQL_DB_USERNAME', 'root'),
             'password'  => env('MYSQL_DB_PASSWORD', ''),
             'charset'   => 'utf8',

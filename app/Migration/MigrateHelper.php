@@ -93,7 +93,7 @@ class MigrateHelper
                                         ->where('id', '=', $currency_code)
                                         ->first();
 
-            return $currency->Code;
+             return $currency ? $currency->Code : '';
         }
 
         return '';
