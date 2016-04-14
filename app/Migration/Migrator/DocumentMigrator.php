@@ -46,10 +46,12 @@ class DocumentMigrator implements MigratorContract
         try {
             foreach ($organizationDocuments as $index => $documents) {
                 foreach ($documents as $key => $document) {
-                    $newDocument = $this->documentModel->newInstance($document);
+                    foreach ($document as $d) {
+                        $newDocument = $this->documentModel->newInstance($d);
 
-                    if (!$newDocument->save()) {
-                        return 'Error during Documents table migration.';
+                        if (!$newDocument->save()) {
+                            return 'Error during Documents table migration.';
+                        }
                     }
 
 //                    if (count($document) > 1) {

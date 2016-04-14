@@ -63,8 +63,8 @@ class SettingsQuery extends Query
                                                  ->select('*')
                                                  ->where('account_id', '=', $accountId)
                                                  ->first();
-        $publishing_type = null;
-        $publish_files   = null;
+        $publishing_type = 'unsegmented';
+        $publish_files   = 'no';
 
         if ($registryInfo) {
             $publishing_type = ($registryInfo->publishing_type == 1) ? 'segmented' : 'unsegmented';

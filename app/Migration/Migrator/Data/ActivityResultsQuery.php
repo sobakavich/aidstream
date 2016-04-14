@@ -153,30 +153,13 @@ class ActivityResultsQuery extends Query
      */
     protected function fetchIndicator($parentTable, $column, $totalBudgetId)
     {
-        $table = $parentTable . '/indicator';
-
-        $indicatorData[] = [
-            "measure"     => '',
-            "ascending"   => '',
-            "title"       => [['narrative' => [['narrative' => '', 'language' => '']]]],
-            "description" => [['narrative' => [['narrative' => '', 'language' => '']]]],
-            "baseline"    => [['year' => '', 'value' => '', 'comment' => [['narrative' => [['narrative' => '', 'language' => '']]]]]],
-            "period"      => [
-                [
-                    'period_start' => [['date' => '']],
-                    'period_end'   => [['date' => '']],
-                    'target'       => [['value' => '', 'comment' => [['narrative' => [['narrative' => '', 'language' => '']]]]]],
-                    'actual'       => [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]]
-                ]
-            ]
-        ];
-
-        $indicators = getBuilderFor(['id', '@measure as measure', '@ascending as ascending'], $table, $column, $totalBudgetId)->get();
+        $table         = $parentTable . '/indicator';
+        $indicators    = getBuilderFor(['id', '@measure as measure', '@ascending as ascending'], $table, $column, $totalBudgetId)->get();
+        $indicatorData = [];
 
         foreach ($indicators as $indicator) {
-            $indicatorData = [];
-            $indicatorId   = $indicator->id;
-            $childColumn   = 'indicator_id';
+            $indicatorId = $indicator->id;
+            $childColumn = 'indicator_id';
 
             $title       = $this->fetchTitle($table, $childColumn, $indicatorId);
             $description = $this->fetchDescription($table, $childColumn, $indicatorId);
@@ -192,6 +175,24 @@ class ActivityResultsQuery extends Query
                 "period"      => $period
             ];
         }
+
+        $template = [
+            "measure"     => '',
+            "ascending"   => '',
+            "title"       => [['narrative' => [['narrative' => '', 'language' => '']]]],
+            "description" => [['narrative' => [['narrative' => '', 'language' => '']]]],
+            "baseline"    => [['year' => '', 'value' => '', 'comment' => [['narrative' => [['narrative' => '', 'language' => '']]]]]],
+            "period"      => [
+                [
+                    'period_start' => [['date' => '']],
+                    'period_end'   => [['date' => '']],
+                    'target'       => [['value' => '', 'comment' => [['narrative' => [['narrative' => '', 'language' => '']]]]]],
+                    'actual'       => [["value" => "", "comment" => [["narrative" => [["narrative" => "", "language" => ""]]]]]]
+                ]
+            ]
+        ];
+
+        $indicatorData = isset($indicatorData) ? $indicatorData : $template;
 
         return $indicatorData;
     }

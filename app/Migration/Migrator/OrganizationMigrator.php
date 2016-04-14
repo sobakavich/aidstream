@@ -41,17 +41,21 @@ class OrganizationMigrator implements MigratorContract
         $database = app()->make(DatabaseManager::class);
 
         $organizationDetail = $this->organization->getData($accountIds);
+        $unmigratedAccounts = $this->check($accountIds);
 
         try {
             foreach ($organizationDetail as $detail) {
-                $organization = $this->organizationModel->newInstance($detail);
+                if (in_array($detail['id'], $unmigratedAccounts)) {
+                    $organization = $this->organizationModel->newInstance($detail);
 
-                if (!$organization->save()) {
-                    return 'Error during Organization table migration.';
+                    if (!$organization->save()) {
+                        return 'Error during Organization table migration.';
+                    }
                 }
             }
 
             $database->commit();
+
             return 'Organizations table migrated.';
         } catch (Exception $exception) {
             $database->rollback();
@@ -59,5 +63,21 @@ class OrganizationMigrator implements MigratorContract
             throw $exception;
         }
 
+    }
+
+    protected function check($accountIds)
+    {
+        $unmigratedAccounts = [];
+
+        foreach ($accountIds as $accountId) {
+            $organization = null;
+            $organization = app()->make(OrganizationModel::class)->query()->select('*')->where('id', '=', $accountId)->first();
+
+            if ($organization === null) {
+                $unmigratedAccounts[] = $accountId;
+            }
+        }
+
+        return $unmigratedAccounts;
     }
 }

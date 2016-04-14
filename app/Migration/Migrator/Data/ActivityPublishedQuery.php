@@ -15,18 +15,19 @@ class ActivityPublishedQuery extends Query
     public function executeFor(array $accountIds)
     {
         $this->initDBConnection();
-        $data = [];
+        $data    = [];
+        $counter = 1;
 
         foreach ($accountIds as $accountId) {
             if (is_null(getOrganizationFor($accountId))) {
-                $data[] = $this->getData($accountId);
+                $data[] = $this->getData($accountId, $counter);
             }
         }
 
         return $data;
     }
 
-    public function getData($accountId)
+    public function getData($accountId, &$counter)
     {
         $activityPublished = [];
 
@@ -38,12 +39,15 @@ class ActivityPublishedQuery extends Query
 
         foreach ($activityPublishedData as $data) {
             $activityPublished[$data->filename] = [
+                'id'                    => getLatestSequence('activity_published')->index + $counter,
                 'filename'              => $data->filename,
                 'published_to_register' => $data->pushed_to_registry,
                 'organization_id'       => $accountId,
                 'created_at'            => $data->published_date,
                 'updated_at'            => $data->published_date,
             ];
+
+            $counter++;
         }
 
         return $activityPublished;

@@ -1,5 +1,7 @@
 <?php namespace App\Migration\Migrator\Data;
 
+use App\Models\Organization\Organization;
+
 /**
  * Class OrganizationQuery
  * @package App\Migration\Migrator\Data
@@ -14,13 +16,16 @@ class OrganizationQuery extends Query
     {
         $this->initDBConnection();
 
-        $organizations = [];
+        $organizations      = [];
+        $unmigratedAccounts = $this->check($accountIds);
 
         foreach ($accountIds as $accountId) {
             $organizationData = $this->simpleValues($accountId);
 
-            if ($organization = getOrganizationFor($accountId)) {
-                $organizationData['reporting_org'] = $this->reportingOrgValues($organization->id);
+            if (in_array($accountId, $unmigratedAccounts)) {
+                if ($organization = getOrganizationFor($accountId)) {
+                    $organizationData['reporting_org'] = $this->reportingOrgValues($organization->id);
+                }
             }
 
             $organizations[] = $organizationData;
@@ -104,5 +109,21 @@ class OrganizationQuery extends Query
                 'narrative'                         => $reportingOrgNarrative
             ]
         ];
+    }
+
+    protected function check($accountIds)
+    {
+        $unmigratedAccounts = [];
+
+        foreach ($accountIds as $accountId) {
+            $organization = null;
+            $organization = app()->make(Organization::class)->query()->select('*')->where('id', '=', $accountId)->first();
+
+            if ($organization === null) {
+                $unmigratedAccounts[] = $accountId;
+            }
+        }
+
+        return $unmigratedAccounts;
     }
 }

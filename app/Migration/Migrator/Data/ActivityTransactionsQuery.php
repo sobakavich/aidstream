@@ -2,6 +2,7 @@
 
 use App\Migration\ActivityData;
 use Carbon\Carbon;
+use Illuminate\Database\DatabaseManager;
 
 class ActivityTransactionsQuery extends Query
 {
@@ -34,10 +35,11 @@ class ActivityTransactionsQuery extends Query
     {
         $data = [];
         $this->initDBConnection();
+        $counter = 1;
 
         foreach ($accountIds as $accountId) {
             if (is_null(getOrganizationFor($accountId))) {
-                $data[] = $this->getTransaction($accountId);
+                $data[] = $this->getTransaction($accountId, $counter);
             }
         }
 
@@ -49,19 +51,22 @@ class ActivityTransactionsQuery extends Query
      * @param $organizationId
      * @return array
      */
-    protected function getTransaction($accountId)
+    protected function getTransaction($accountId, &$counter)
     {
         $transactionData = [];
         $activities      = $this->activityData->getActivitiesFor($accountId);
 
         foreach ($activities as $activity) {
-            $transactions = $this->connection->table('iati_transaction')
-                                             ->select('*', '@ref as ref')
-                                             ->where('activity_id', '=', $activity->id)
-                                             ->get();
+            //->join('iati_activity', 'iati_transaction.activity_id', '=', 'iati_activity.id')
+
+//            $migratedActivity = app()->make(DatabaseManager::class)->table('activity_data')->select('*')->where('organization_id', '=', $accountId)->get();
+            $transactions     = $this->connection->table('iati_transaction')
+                                                 ->select('iati_transaction.*', 'iati_transaction.@ref as ref')
+                                                 ->where('activity_id', '=', $activity->id)
+                                                 ->get();
 
             foreach ($transactions as $transaction) {
-                $transactionData[$activity->id][] = $this->getDataFor($transaction, $activity->id);
+                $transactionData[$activity->id][] = $this->getDataFor($transaction, $activity->id, $counter);
             }
         }
 
@@ -73,16 +78,17 @@ class ActivityTransactionsQuery extends Query
      * @param $activityId
      * @return array
      */
-    public function getDataFor($transaction, $activityId)
+    public function getDataFor($transaction, $activityId, &$counter)
     {
         $this->data = [];
-        $this->fetchTransaction($transaction, $activityId);
+        $this->fetchTransaction($transaction, $activityId, $counter);
 
         return $this->data;
     }
 
-    protected function fetchTransaction($transaction, $activityId)
+    protected function fetchTransaction($transaction, $activityId, &$counter)
     {
+//        $transactionId = getLatestSequence('activity_transactions')->index + $counter;
         $transactionId = $transaction->id;
 
         $transactionData = [
@@ -105,8 +111,10 @@ class ActivityTransactionsQuery extends Query
 
         $this->data['activity_id'] = $activityId;
         $this->data['transaction'] = json_encode($transactionData);
-        $this->data['created_at']  = Carbon::now();
-        $this->data['updated_at']  = Carbon::now();
+        $this->data['created_at']  = Carbon::now()->toDateTimeString();
+        $this->data['updated_at']  = Carbon::now()->toDateTimeString();
+
+        $counter ++;
 
         return $this;
     }

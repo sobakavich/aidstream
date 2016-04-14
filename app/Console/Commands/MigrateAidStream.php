@@ -15,6 +15,7 @@ use App\Migration\Migrator\OrganizationPublishedMigrator;
 use App\Migration\Migrator\UserGroupMigrator;
 use App\Migration\Migrator\PublishToRegisterMigrator;
 use App\Migration\Sequence\Sequence;
+use App\Models\Organization\Organization;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
@@ -229,11 +230,13 @@ class MigrateAidStream extends Command
     {
         $response = [];
 
-//        $response[] = $this->organizationMigrator->migrate($accountIds);
-//        $this->informFor('Organization');
-//
-//        $response[] = $this->userMigrator->migrate($accountIds);
-//        $this->informFor('User');
+//        $unmigratedAccounts = $this->check($accountIds);
+
+        $response[] = $this->organizationMigrator->migrate($accountIds);
+        $this->informFor('Organization');
+
+        $response[] = $this->userMigrator->migrate($accountIds);
+        $this->informFor('User');
 
         $response[] = $this->documentMigrator->migrate($accountIds);
         $this->informFor('Documents');
@@ -244,8 +247,8 @@ class MigrateAidStream extends Command
         $response[] = $this->activityMigrator->migrate($accountIds);
         $this->informFor('Activities');
 
-//        $response[] = $this->organizationDataMigrator->migrate($accountIds);
-//        $this->informFor('OrganizationData');
+        $response[] = $this->organizationDataMigrator->migrate($accountIds);
+        $this->informFor('OrganizationData');
 
         $response[] = $this->transactionMigrator->migrate($accountIds);
         $this->informFor('Transaction');
@@ -566,5 +569,21 @@ class MigrateAidStream extends Command
         File::put('missingAccounts.txt', implode("\n", $fileData));
 
         dd('sss');
+    }
+
+    protected function check($accountIds)
+    {
+        $unmigratedAccounts = [];
+
+        foreach ($accountIds as $accountId) {
+            $organization = null;
+            $organization = app()->make(Organization::class)->query()->select('*')->where('id', '=', $accountId)->first();
+
+            if ($organization === null) {
+                $unmigratedAccounts[] = $accountId;
+            }
+        }
+
+        return $unmigratedAccounts;
     }
 }

@@ -52,9 +52,18 @@ class PublishToRegisterMigrator implements MigratorContract
         $activities = $this->publishToRegister->getData($files);
 
         $file        = 'activities.txt';
-        $activityIds = array_unique(explode("\n", File::get($file)));
+        $activityIds = $db->table('activity_published')->select('*')->where('organization_id', '=', '204')->get();
 
-        foreach ($activityIds as $index => $activityId) {
+        $activities = json_decode($activityIds[0]->published_activities, true);
+
+        $b = [];
+        foreach (array_unique($activities) as $a) {
+            $b[] = $this->extractActivityId($a);
+        }
+
+//        $activityIds = array_unique(explode("\n", File::get($file)));
+
+        foreach ($b as $index => $activityId) {
             $activityData = $this->activityModel->query()->where('id', '=', $activityId)->first();
 
             if ($activityData) {

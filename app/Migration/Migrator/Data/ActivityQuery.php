@@ -149,7 +149,8 @@ class ActivityQuery extends Query
         foreach ($activities as $activity) {
             $activityId                                   = $activity->id;
             $this->data[$activityId]['organization_id']   = $accountId;
-            $this->data[$activityId]['id']                = getLatestSequence('activity_data')->index + $counter;
+//            $this->data[$activityId]['id']                = getLatestSequence('activity_data')->index + $counter;
+            $this->data[$activityId]['id']                = $activityId;
             $activityStatus                               = $this->activityData->getActivityWorkflowFor($activityId)->status_id;
             $this->data[$activityId]['activity_workflow'] = $activityStatus ? ($activityStatus - 1) : 0;
             $this->data[$activityId]['created_at']        = $activity->updated_at;

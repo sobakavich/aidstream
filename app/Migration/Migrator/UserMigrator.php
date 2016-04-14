@@ -1,6 +1,7 @@
 <?php namespace App\Migration\Migrator;
 
 use App\Migration\Entities\User;
+use App\Models\Organization\Organization;
 use App\User as UserModel;
 use App\Migration\Migrator\Contract\MigratorContract;
 use Illuminate\Database\DatabaseManager;
@@ -40,13 +41,16 @@ class UserMigrator implements MigratorContract
         $database = app()->make(DatabaseManager::class);
 
         $oldUserData = $this->user->getData($accountIds);
+        $unmigrated = $this->check($accountIds);
 
         try {
             foreach ($oldUserData as $userData) {
-                $newUser = $this->userModel->newInstance($userData);
+                if (in_array($userData['org_id'], $unmigrated)) {
+                    $newUser = $this->userModel->newInstance($userData);
 
-                if (!$newUser->save()) {
-                    return 'Error during User table migration.';
+                    if (!$newUser->save()) {
+                        return 'Error during User table migration.';
+                    }
                 }
             }
 
@@ -59,5 +63,21 @@ class UserMigrator implements MigratorContract
 
 
         return 'Users table migrated.';
+    }
+
+    protected function check($accountIds)
+    {
+        $unmigratedAccounts = [];
+
+        foreach ($accountIds as $accountId) {
+            $organization = null;
+            $organization = app()->make(Organization::class)->query()->select('*')->where('id', '=', $accountId)->first();
+
+            if ($organization === null) {
+                $unmigratedAccounts[] = $accountId;
+            }
+        }
+
+        return $unmigratedAccounts;
     }
 }

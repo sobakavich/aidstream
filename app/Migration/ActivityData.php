@@ -125,7 +125,7 @@ class ActivityData
 //        $accountId = ($accountId) ? $accountId->account_id : null;
 
         $IatiActivitiesId = $this->mysqlConn->table('iati_activities')
-                                            ->select('id')
+                                            ->select('*')
                                             ->where('account_id', '=', $accountId)
                                             ->first();
 
