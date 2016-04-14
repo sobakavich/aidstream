@@ -126,10 +126,11 @@ class ActivityQuery extends Query
     {
         $data = [];
         $this->initDBConnection();
+        $counter = 1;
 
         foreach ($accountIds as $accountId) {
             if (is_null(getOrganizationFor($accountId))) {
-                $data[] = $this->getData($accountId);
+                $data[] = $this->getData($accountId, $counter);
             }
         }
 
@@ -140,7 +141,7 @@ class ActivityQuery extends Query
      * @param $accountId
      * @return array
      */
-    protected function getData($accountId)
+    protected function getData($accountId, &$counter)
     {
         $activities = $this->activityData->getActivitiesFor($accountId);
         $this->data = [];
@@ -148,7 +149,7 @@ class ActivityQuery extends Query
         foreach ($activities as $activity) {
             $activityId                                   = $activity->id;
             $this->data[$activityId]['organization_id']   = $accountId;
-            $this->data[$activityId]['id']                = $activityId;
+            $this->data[$activityId]['id']                = getLatestSequence('activity_data')->index + $counter;
             $activityStatus                               = $this->activityData->getActivityWorkflowFor($activityId)->status_id;
             $this->data[$activityId]['activity_workflow'] = $activityStatus ? ($activityStatus - 1) : 0;
             $this->data[$activityId]['created_at']        = $activity->updated_at;
@@ -182,6 +183,8 @@ class ActivityQuery extends Query
                  ->fetchConditions($activityId)
                  ->fetchDocumentLink($activityId)
                  ->fetchDefaultFieldValues($activity);
+
+            $counter++;
         }
 
         return $this->data;

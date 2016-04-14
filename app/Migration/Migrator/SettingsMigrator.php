@@ -38,30 +38,29 @@ class SettingsMigrator implements MigratorContract
      */
     public function migrate(array $accountIds)
     {
-        $database = app()->make(DatabaseManager::class);
+        $database           = app()->make(DatabaseManager::class);
         $settingsSqlQueries = [];
-        $settingsData = $this->settings->getData($accountIds);
+        $settingsData       = $this->settings->getData($accountIds);
 
         try {
             foreach ($settingsData as $setting) {
-                $data = [];
-                foreach ($setting as $key => $s) {
-                    $data[$key] = is_array($s) ? json_encode($s) : $s;
+//                $data = [];
 
+                $newSettings = $this->settingsModel->newInstance($setting);
 
+                if (!$newSettings->save()) {
+                    return 'Error during Settings table migration.';
                 }
+//                foreach ($setting as $key => $s) {
+//                    $data[$key] = is_array($s) ? json_encode($s) : $s;
+//                }
 
                 //dd($data);
-                $query = sprintf("insert into settings values (%s)", implode(',', $data));
-                $settingsSqlQueries[] = $query;
-             //   $settingSqlQueries[] = $query;
-//                $newSettings = $this->settingsModel->newInstance($setting);
-
-//                if (!$newSettings->save()) {
-//                    return 'Error during Settings table migration.';
-//                }
+//                $query                = sprintf("insert into settings values (%s)", implode(',', $data));
+//                $settingsSqlQueries[] = $query;
+                //   $settingSqlQueries[] = $query;
             }
-           // dd($settingsSqlQueries);
+            // dd($settingsSqlQueries);
             $database->commit();
         } catch (\Exception $e) {
             $database->rollback();
@@ -69,8 +68,9 @@ class SettingsMigrator implements MigratorContract
             throw $e;
         }
 
-        File::put('missingSettingsSql.txt', implode("\n", $settingsSqlQueries));
-       // return 'Documents table migrated';
+//        File::put('missingSettingsSql.txt', implode("\n", $settingsSqlQueries));
+
+        // return 'Documents table migrated';
         return 'Settings table migrated';
     }
 }

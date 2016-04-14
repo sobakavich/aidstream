@@ -42,39 +42,41 @@ class DocumentMigrator implements MigratorContract
 
         $organizationDocuments = $this->document->getData($accountIds);
         $documentSqlQueries = [];
-//dd($organizationDocuments);
+
         try {
             foreach ($organizationDocuments as $index => $documents) {
                 foreach ($documents as $key => $document) {
-                    if (count($document) > 1) {
-                        foreach ($document as $d) {
-                            if (!empty($d)) {
-                                $query = sprintf("insert into documents values (%s)", implode(',', $d));
-                                $documentSqlQueries[] = $query;
-                            }
-                        }
-                    } else {
-//                        try {
-                            if (!empty($document)) {
-                                $query = sprintf("insert into documents values (%s)", implode(',', array_values($document)[0]));
-                                $documentSqlQueries[] = $query;
-                            }
+                    $newDocument = $this->documentModel->newInstance($document);
 
-//                        } catch (\Exception $e) {
-//                            dd($document);
-//                        }
-
+                    if (!$newDocument->save()) {
+                        return 'Error during Documents table migration.';
                     }
+
+//                    if (count($document) > 1) {
+//                        foreach ($document as $d) {
+//                            if (!empty($d)) {
+//                                $query = sprintf("insert into documents values (%s)", implode(',', $d));
+//                                $documentSqlQueries[] = $query;
+//                            }
+//                        }
+//                    } else {
+////                        try {
+//                            if (!empty($document)) {
+//                                $query = sprintf("insert into documents values (%s)", implode(',', array_values($document)[0]));
+//                                $documentSqlQueries[] = $query;
+//                            }
+//
+////                        } catch (\Exception $e) {
+////                            dd($document);
+////                        }
+//
+//                    }
 
 
 //                    else {
 
 //                    }
-                   // $newDocument = $this->documentModel->newInstance($document);
 
-//                    if (!$newDocument->save()) {
-//                        return 'Error during Documents table migration.';
-//                    }
                 }
             }
 
@@ -85,7 +87,7 @@ class DocumentMigrator implements MigratorContract
             throw $e;
         }
 
-        File::put('missingDocumentsSql.txt', implode("\n", $documentSqlQueries));
+//        File::put('missingDocumentsSql.txt', implode("\n", $documentSqlQueries));
         return 'Documents table migrated';
     }
 }

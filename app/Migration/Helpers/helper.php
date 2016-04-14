@@ -303,3 +303,10 @@ function getSql($query)
 
     return false;
 }
+
+function getLatestSequence($tableName)
+{
+    $databaseManager = app()->make(DatabaseManager::class)->connection('pgsql')->query();
+
+    return $databaseManager->selectRaw("MAX(id) as index")->from($tableName)->first();
+}
