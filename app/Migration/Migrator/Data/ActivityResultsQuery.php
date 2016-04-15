@@ -35,10 +35,13 @@ class ActivityResultsQuery extends Query
         $data = [];
         $this->initDBConnection();
 
+        $count  = 0;
         foreach ($accountIds as $accountId) {
-            if (is_null(getOrganizationFor($accountId))) {
+            if (!is_null(getOrganizationFor($accountId))) {
                 $data[] = $this->getResult($accountId);
+                $count++;
             }
+//            if($count > 150) break;
         }
 
         return $data;

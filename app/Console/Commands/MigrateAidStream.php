@@ -350,6 +350,16 @@ class MigrateAidStream extends Command
     }
 
     /**
+     * Migrate missing activity result indicators
+     * @param array $accountIds
+     * @return string
+     */
+    protected function migrateMissingIndicators(array $accountIds)
+    {
+        return $this->resultMigrator->migrateMissingIndicators($accountIds);
+    }
+
+    /**
      * Migrate activity published table
      * @param array $accountIds
      * @return string
