@@ -636,7 +636,7 @@ class ActivityController extends Controller
             if (file_exists($filePath)) {
                 $xml = simplexml_load_string(file_get_contents($filePath));
                 $xml = json_decode(json_encode($xml), true);
-                if (isset($xml['iati-activity']['asdfasf']['fasdf']['transaction'])) {
+                if (isset($xml['iati-activity']['transaction'])) {
                     $xmlTransaction = $xml['iati-activity']['transaction'];
                     $transaction    = $this->activityManager->getTransactionForBulk($xmlTransaction);
                 }
