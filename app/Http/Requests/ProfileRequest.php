@@ -22,7 +22,7 @@ class ProfileRequest extends Request
         return [
             'first_name'           => 'required',
             'last_name'            => 'required',
-            'email'                => 'required|email',
+            'email'                => 'required|email|unique:users',
             'time_zone'            => 'required',
             'organization_name'    => 'required',
             'organization_address' => 'required',
