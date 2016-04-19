@@ -188,4 +188,9 @@ return [
     'password_reset_link'          => sprintf('Password reset link has been sent successfully to ":email"'),
     'settings_updated'             => sprintf('Settings updated for <a href="%s">":organization - :organization_id"</a>', route('organization.show', ':organization_id')),
     'activity_status_changed'      => sprintf('Activity with activity id <a href="%s">":activity_id"</a> has been marked as ":status"', route('activity.show', ':activity_id')),
+    'activity_element_deleted'     => sprintf(
+        'Activity element ":element" has been deleted from activity with activity id ":activity_id" and ":organization - :organization_id"',
+        route('activity.show', ':activity_id'),
+        route('organization.show', ':organization_id')
+    ),
 ];
