@@ -49,4 +49,6 @@ return [
     'password_reset_link'          => 'Password reset link has been sent successfully to ":email"',
     'settings_updated'             => 'Settings updated for ":organization - :organization_id"',
     'activity_status_changed'      => 'Activity with activity id ":activity_id" has been marked as ":status"',
+    'group_organization_deleted'   => 'Organization Group ":group_name" has been deleted by Super Admin with username ":super_admin"',
+    'organization_deleted'         => 'Organization ":org_name" has been deleted by Super Admin with username ":super_admin"'
 ];
