@@ -226,10 +226,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
             $xml = simplexml_load_string(file_get_contents($filePath));
             $xml = json_decode(json_encode($xml), true);
 
-            if (count($xml['iati-organisation']['name']) == 1) {
-                $orgTitle = $xml['iati-organisation']['name']['narrative'];
-            } elseif (count($xml['iati-organisation']['name']) > 0) {
+            if (is_array($xml['iati-organisation']['name']['narrative'])) {
                 $orgTitle = $xml['iati-organisation']['name']['narrative'][0];
+            } else {
+                $orgTitle = $xml['iati-organisation']['name']['narrative'];
             }
         } else {
             $organization = $this->getOrganization($organization->id);
