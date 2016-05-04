@@ -71,9 +71,10 @@ class ActivityBaseRequest extends Request
         Validator::extendImplicit(
             'required_with_language',
             function ($attribute, $value, $parameters, $validator) {
-                $language = preg_replace('/([^~]+).narrative/', '$1.language', $attribute);
+                $language        = preg_replace('/([^~]+).narrative/', '$1.language', $attribute);
+                $defaultLanguage = getDefaultLanguage();
 
-                return !(Input::get($language) && !Input::get($attribute));
+                return !(Input::get($language) && Input::get($language) != $defaultLanguage && !Input::get($attribute));
             }
         );
 

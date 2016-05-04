@@ -1,5 +1,6 @@
 <?php
 use App\Models\Activity\Activity;
+use App\Models\Settings;
 use Illuminate\Database\DatabaseManager;
 
 /**
@@ -50,8 +51,13 @@ function emptyOrHasEmptyTemplate($data)
  */
 function getDefaultCurrency()
 {
-    $defaultFieldValues = app(Activity::class)->find(request()->activity)->default_field_values;
-    $defaultCurrency    = $defaultFieldValues ? $defaultFieldValues[0]['default_currency'] : null;
+    if (request()->activity) {
+        $defaultFieldValues = app(Activity::class)->find(request()->activity)->default_field_values;
+    } else {
+        $defaultFieldValues = app(Settings::class)->where('organization_id', session('org_id'))->first()->default_field_values;
+    }
+
+    $defaultCurrency = $defaultFieldValues ? $defaultFieldValues[0]['default_currency'] : null;
 
     return $defaultCurrency;
 }
@@ -62,8 +68,12 @@ function getDefaultCurrency()
  */
 function getDefaultLanguage()
 {
-    $defaultFieldValues = app(Activity::class)->find(request()->activity)->default_field_values;
-    $defaultLanguage    = $defaultFieldValues ? $defaultFieldValues[0]['default_language'] : null;
+    if (request()->activity) {
+        $defaultFieldValues = app(Activity::class)->find(request()->activity)->default_field_values;
+    } else {
+        $defaultFieldValues = app(Settings::class)->where('organization_id', session('org_id'))->first()->default_field_values;
+    }
+    $defaultLanguage = $defaultFieldValues ? $defaultFieldValues[0]['default_language'] : null;
 
     return $defaultLanguage;
 }
