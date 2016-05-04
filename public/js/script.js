@@ -71,7 +71,15 @@ $(document).ready(function () {
         $('[type="date"]', protoHtml).attr('type', 'text').addClass('datepicker');
         protoHtml.children('.form-group').addClass('added-new-block');
         protoHtml.children('label').remove();
-        $('select[name$="[language]"] [selected="selected"], select[name$="[currency]"] [selected="selected"]', protoHtml).removeAttr('selected');
+        var rawName = $('select[name$="[language]"]', protoHtml).attr('name');
+        if (rawName != undefined) {
+            var narrativeIndex = rawName.indexOf('NAME' + level);
+            var currentIndexString = rawName.substring(0, rawName.indexOf('[', narrativeIndex));
+            $('select[name$="[language]"] [value="' + defaultLanguage + '"]', protoHtml).attr('selected', 'selected');
+            $('select[name="' + currentIndexString + '[language]"] [selected="selected"]', protoHtml).removeAttr('selected');
+        }
+        $('select[name$="[currency]"] [value="' + defaultCurrency + '"]', protoHtml).attr('selected', 'selected');
+
         var proto = protoHtml.html();
         for (var i = 0; i < level; i++) {
             var parentIndex = parentIndexes[i];

@@ -1,5 +1,6 @@
 <?php namespace App\Core\V201\Requests\Organization;
 
+use App\Helpers\GetCodeName;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -30,11 +31,40 @@ class OrganizationBaseRequest extends Request
         );
 
         Validator::extendImplicit(
+            'unique_default_lang',
+            function ($attribute, $value, $parameters, $validator) {
+                $languages       = [];
+                $defaultLanguage = getDefaultLanguage();
+
+                $validator->addReplacer(
+                    'unique_default_lang',
+                    function ($message, $attribute, $rule, $parameters) use ($validator, $defaultLanguage) {
+                        return str_replace(':language', app(GetCodeName::class)->getActivityCodeName('Language', $defaultLanguage), $message);
+                    }
+                );
+
+                $check = true;
+                foreach ($value as $narrative) {
+                    $languages[] = $narrative['language'];
+                }
+
+                if (count($languages) === count(array_unique($languages))) {
+                    if (in_array("", $languages) && in_array($defaultLanguage, $languages)) {
+                        $check = false;
+                    }
+                }
+
+                return $check;
+            }
+        );
+
+        Validator::extendImplicit(
             'required_with_language',
             function ($attribute, $value, $parameters, $validator) {
-                $language = preg_replace('/([^~]+).narrative/', '$1.language', $attribute);
+                $language        = preg_replace('/([^~]+).narrative/', '$1.language', $attribute);
+                $defaultLanguage = getDefaultLanguage();
 
-                return !(Input::get($language) && !Input::get($attribute));
+                return !(Input::get($language) && Input::get($language) != $defaultLanguage && !Input::get($attribute));
             }
         );
     }
@@ -47,8 +77,9 @@ class OrganizationBaseRequest extends Request
      */
     public function getRulesForNarrative($formFields, $formBase)
     {
-        $rules                                     = [];
-        $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
+        $rules                                       = [];
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_lang';
+        $rules[sprintf('%s.narrative', $formBase)][] = 'unique_default_lang';
         foreach ($formFields as $narrativeIndex => $narrative) {
             $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
         }
