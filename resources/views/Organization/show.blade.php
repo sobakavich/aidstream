@@ -4,9 +4,7 @@
 
 @section('content')
 
-    {{--*/
-    $orgId = session('org_id');
-    /*--}}
+    {{--*/ $orgId = session('org_id');   /*--}}
     @inject('code', 'App\Helpers\GetCodeName')
     <div class="container main-container">
         <div class="row">
@@ -34,7 +32,8 @@
                             @endforeach
                         </ol>
                         @if($btn_text != "")
-                            <form method="POST" id="change_status" class="pull-right" action="{{ url('/organization/' . Auth::user()->org_id . '/update-status') }}">
+                            <form method="POST" id="change_status" class="pull-right"
+                                  action="{{ url('/organization/' . Auth::user()->org_id . '/update-status') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                                 <input type="hidden" name="status" value="{{ $status + 1 }}">
                                 @if($status == 2)

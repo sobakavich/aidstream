@@ -1,7 +1,7 @@
 <?php
 use App\Models\Activity\Activity;
 use App\Models\Settings;
-use Illuminate\Database\DatabaseManager;
+use App\User;
 
 /**
  * removes empty values
@@ -123,7 +123,90 @@ function getVal(array $arr, array $arguments, $default = "")
  * Checks if the request route contains prefix SuperAdmin.
  * @return bool
  */
-function isSuperAdminRoute() {
+function isSuperAdminRoute()
+{
     $routeAction = request()->route()->getAction();
+
     return isset($routeAction['SuperAdmin']);
+}
+
+/**
+ * Check if the logged in user is admin or user of any organization.
+ * @param User $user
+ * @return bool
+ */
+function isUserOrAdmin(User $user)
+{
+    if (!$user->isSuperAdmin() && !$user->isGroupAdmin()) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Get the language name for the given language code.
+ * @param $code
+ * @return
+ */
+function getLanguage($code)
+{
+    $code ?: $code = getDefaultLanguage();
+    $languages = json_decode(
+        file_get_contents(app_path().config('filesystems.languages.v201.activity.language_codelist_path')),
+        true
+    );
+
+    foreach ($languages['Language'] as $lang) {
+        if ($lang['code'] === $code) {
+            return $lang['name'];
+        }
+    }
+}
+
+/**
+ * Get the language code for other than the first one.
+ * @param array $language
+ * @return array
+ */
+function getOtherLanguages(array $language)
+{
+    return array_slice($language, 1);
+}
+
+/**
+ *
+ * @param array $elements
+ * @param       $type
+ * @return collection
+ */
+function groupActivityElements(array $elements, $type)
+{
+    return collect($elements)->groupBy($type);
+}
+
+/**
+ * Get Owner Narrative
+ * @param array $groupedIdentifiers
+ * @return string
+ */
+function getOwnerNarrative(array $groupedIdentifiers)
+{
+    return getVal($groupedIdentifiers, ['owner_org', 0, 'narrative'], []);
+}
+
+/**
+ * Returns the first element of Narrative.
+ * @param array $narrative
+ * @return string
+ */
+function getFirstNarrative(array $narrative)
+{
+    $narrativeElements = $narrative['narrative'][0];
+
+    return sprintf(
+        "%s <em>(language: %s)</em>",
+        $narrativeElements['narrative'],
+        getLanguage($narrativeElements['language'])
+    );
 }
