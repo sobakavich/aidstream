@@ -2687,7 +2687,14 @@ $(document).ready(function () {
         }
     };
 
+    //activity view
+    $('.show-more-info,.hide-more-info').click(function () {
+        $(this).toggleClass('hidden').siblings('a').toggleClass('hidden');
+        $(this).parent('dd').siblings('.more-info').toggleClass('hidden');
+    });
 });
+
+
 $(document).ready(function () {
     var t = $('#data-table').DataTable({
         "aoColumnDefs": [{
