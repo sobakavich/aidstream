@@ -56,7 +56,7 @@ class GetCodeName
     public function getCodeNameOnly($listName, $code)
     {
         $descriptionWithCode = $this->getCodeName('Activity', $listName, $code);
-        return sprintf("%s", substr($descriptionWithCode, 0, -3));
+        return sprintf("%s", substr($descriptionWithCode, 0, -4));
     }
 
     /**

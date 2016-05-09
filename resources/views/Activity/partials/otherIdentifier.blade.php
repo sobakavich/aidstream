@@ -16,12 +16,9 @@
                                     : {{ $identifiers['owner_org'][0]['reference'] }}
                                 </dl>
 
-                                <dl>@lang('activityView.owner_org_name')
-                                    : {{ getVal($identifiers, ['owner_org', 0, 'narrative'], [])[0]['narrative'] }}
-                                    <em>(language: {{ getLanguage(getOwnerNarrative($identifiers)[0]['language']) }}
-                                        )</em>
-
-                                    @include('Activity.partials.viewInOtherLanguage' ,$otherLanguages = getOtherLanguages(getOwnerNarrative($identifiers)))
+                                <dl>@lang('activityView.owner_org_name'):
+                                    {!! getFirstNarrative($identifiers['owner_org'][0]) !!}
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getOwnerNarrative($identifiers))])
 
                                 </dl>
                             </dl>

@@ -1,17 +1,13 @@
 @if(!empty($activityScope))
     <div class="panel panel-default">
         <div class="panel-heading">
-            <div class="activity-element-title">
-                Activity Scope
-            </div>
-            <a href="{{route('activity.activity-scope.index', $id)}}" class="edit-element">edit</a>
-            <a href="{{route('activity.delete-element', [$id, 'activity_scope'])}}" class="delete pull-right">remove</a>
+            <dl class="dl-horizontal">
+                <dt>@lang('activityView.activity_scope')</dt>
+                <dd>
+                {{ $getCode->getCodeNameOnly('ActivityScope', $activityScope) }}
+            </dl>
         </div>
-        <div class="panel-body panel-element-body">
-            <div class="col-xs-12 col-md-12 clearfix">
-                <div class="col-xs-12 col-sm-4">Code:</div>
-                <div class="col-xs-12 col-sm-8">{{ $getCode->getActivityCodeName('ActivityScope', $activityScope) }}</div>
-            </div>
-        </div>
+        {{--<a href="{{route('activity.activity-status.index', $id)}}" class="edit-element">edit</a>--}}
+        {{--<a href="{{route('activity.delete-element', [$id, 'activity_status'])}}" class="delete pull-right">remove</a>--}}
     </div>
 @endif
