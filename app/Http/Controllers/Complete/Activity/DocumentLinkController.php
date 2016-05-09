@@ -7,7 +7,6 @@ use App\Services\DocumentManager;
 use App\Services\FormCreator\Activity\DocumentLink as DocumentLinkForm;
 use App\Services\RequestManager\Activity\DocumentLink as DocumentLinkRequestManager;
 use App\Http\Requests\Request;
-use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Gate;
 
