@@ -159,7 +159,7 @@ class ResultController extends Controller
 
             return redirect()->to(sprintf('/activity/%s/result', $id))->withResponse($response);
         }
-        $response = ['type' => 'danger', 'code' => ['update_failed', ['name' => 'Related Activity']]];
+        $response = ['type' => 'danger', 'code' => [($resultId) ? 'update_failed' : 'save_failed', ['name' => 'Activity Result']]];
 
         return redirect()->back()->withInput()->withResponse($response);
     }
