@@ -220,3 +220,19 @@ $router->get(
         'uses'       => 'Complete\AdminController@updateOrganizationIdForUserActivities'
     ]
 );
+
+$router->get(
+    'user-logs',
+    [
+        'as'   => 'user-logs',
+        'uses' => 'Complete\UserLogController@search'
+    ]
+);
+
+$router->post(
+    'user-logs',
+    [
+        'as'   => 'user-logs.filter',
+        'uses' => 'Complete\UserLogController@search'
+    ]
+);
