@@ -1,42 +1,29 @@
 @if(!emptyOrHasEmptyTemplate($recipientRegions))
     <div class="panel panel-default expanded">
         <div class="panel-heading">
-            <div class="activity-element-title">
-                Recipient Region
-            </div>
-            <a href="{{route('activity.recipient-region.index', $id)}}" class="edit-element">edit</a>
-            <a href="{{route('activity.delete-element', [$id, 'recipient_region'])}}" class="delete pull-right">remove</a>
-        </div>
-        <div class="panel-body panel-level-1">
-            @foreach($recipientRegions as $recipientRegion)
-                <div class="panel-heading">
-                    <div class="activity-element-title">
-                        {{$getCode->getActivityCodeName('Region', $recipientRegion['region_code']) . ' ; ' . $recipientRegion['percentage']}}
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="panel-element-body row">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Percentage:</div>
-                            <div class="col-xs-12 col-sm-8">{{$recipientRegion['percentage']}}</div>
-                        </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Code:</div>
-                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('Region', $recipientRegion['region_code'])}}</div>
-                        </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Vocabulary:</div>
-                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary'])}}</div>
-                        </div>
-                        @foreach($recipientRegion['narrative'] as $narrative)
-                            <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Text:</div>
-                                <div class="col-xs-12 col-sm-8">{{$narrative['narrative'] . hideEmptyArray('Organization', 'Language', $narrative['language'])}}</div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endforeach
+            <dl class="dl-horizontal">
+                <dt>@lang('activityView.recipient_region')</dt>
+                <dd>
+                    @foreach($recipientRegions as $recipientRegion)
+                        <li>{!! getRecipientInformation($recipientRegion['region_code'], $recipientRegion['percentage'], 'Region') !!}</li>
+                        <a href="#" class="show-more-info">Show more info</a>
+                        <a href="#" class="hide-more-info hidden">Hide more info</a>
+                        <dl class="hidden-info">
+                            <dl>@lang('activityView.region_vocabulary')
+                                :{{ $recipientRegion['region_vocabulary'] . '-' . substr($getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary']) , 0 , -4) }}
+                            </dl>
+                            <dl>@lang('activityView.vocabulary_uri')
+                                :{!!  checkIfEmpty($recipientRegion['vocabulary_uri']) !!}
+                            </dl>
+                            <dl>@lang('activityView.description')
+                                :{!! getFirstNarrative($recipientRegion) !!}
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientRegion['narrative'])])
+                            </dl>
+                        </dl>
+                    @endforeach
+                </dd>
+            {{--<a href="{{route('activity.recipient-region.index', $id)}}" class="edit-element">edit</a>--}}
+            {{--<a href="{{route('activity.delete-element', [$id, 'recipient_region'])}}" class="delete pull-right">remove</a>--}}
         </div>
     </div>
 @endif

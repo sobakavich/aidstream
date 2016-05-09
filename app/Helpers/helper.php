@@ -204,9 +204,123 @@ function getFirstNarrative(array $narrative)
 {
     $narrativeElements = $narrative['narrative'][0];
 
-    return sprintf(
-        "%s <em>(language: %s)</em>",
-        $narrativeElements['narrative'],
-        getLanguage($narrativeElements['language'])
-    );
+    return (empty($narrativeElements['narrative'])) ? '<em>Not available</em>' :
+        sprintf(
+            "%s <em>(language: %s)</em>",
+            $narrativeElements['narrative'],
+            getLanguage($narrativeElements['language'])
+        );
 }
+
+/**
+ * Returns the telephone number / email as string with commas after each other.
+ * @param       $type
+ * @param array $contactInformation
+ * @return string
+ */
+function getContactInfo($type, array $contactInformation)
+{
+    $arrayContactInfo = [];
+
+    foreach ($contactInformation as $information) {
+
+        $information        = checkIfEmailOrWebSite($type, $information);
+        $arrayContactInfo[] = $information;
+    }
+    $stringContactInfo = implode(' , ', $arrayContactInfo);
+
+    return (empty($stringContactInfo)) ? '<em>Not Available</em>' : $stringContactInfo;
+}
+
+/**
+ * Check if the provided contact information type is email or website.
+ * @param $type
+ * @param $information
+ * @return string
+ */
+function checkIfEmailOrWebSite($type, $information)
+{
+    if ($type == "website" && !empty($information[$type])) {
+        $information = sprintf("<a target='_blank' href='%s'>%s</a>", $information[$type], $information[$type]);
+    } else {
+        if ($type == "email" && !empty($information[$type])) {
+            $information = sprintf("<a href='mailto:%s'>%s</a>", $information[$type], $information[$type]);
+        } else {
+            $information = $information[$type];
+        }
+    }
+
+    return $information;
+}
+
+/**
+ * Checks if the provided value is empty or not. If empty returns not available.
+ * @param $information
+ * @return string
+ */
+function checkIfEmpty($information)
+{
+    return (empty($information)) ? '<em>Not Available</em>' : $information;
+}
+
+/**
+ * Get Recipient Information
+ *
+ * @param       $code
+ * @param       $percentage
+ * @param       $type
+ * @return string
+ */
+function getRecipientInformation($code, $percentage, $type)
+{
+    $method = ($type == 'Country') ? 'getOrganizationCodeName' : 'getActivityCodeName';
+    $name   = app('App\Helpers\GetCodeName')->$method($type, $code);
+    $name   = ucfirst(strtolower(substr($name, 0, -5)));
+
+    return sprintf('%s - %s(%s%s)', $code, $name, $percentage, '%');
+}
+
+/**
+ * Get the location reach code value.
+ * @param array $locations
+ * @return array
+ */
+function getLocationReach(array $locations)
+{
+    $newLocations = [];
+    foreach ($locations as $location) {
+        $code = $location['location_reach'][0]['code'];
+        $code = app('App\Helpers\GetCodeName')->getCodeNameOnly(
+            'GeographicLocationReach',
+            $code
+        );
+        $code = ($code == "") ? 'Other' : sprintf('%s Location', $code);
+
+        $newLocations[$code][] = $location;
+    }
+
+    return $newLocations;
+
+}
+
+/**
+ * Get the location ID vocabulary when the code is provided.
+ * @param array $locationId
+ */
+function getLocationIdVocabulary(array $locationId)
+{
+    $vocabularyCode = $locationId['vocabulary'];
+    $vocabulary     = app('App\Helpers\GetCodeName')->getActivityCodeName(
+        'GeographicVocabulary',
+        $vocabularyCode
+    );
+
+    $vocabularyValue = substr($vocabulary, 0, -4);
+
+    if (empty($vocabularyValue)) {
+        return '<em>Not Available</em>';
+    } else {
+        return sprintf('%s - %s (Code:%s)', $vocabularyCode, $vocabularyValue, $locationId['code']);
+    }
+}
+
