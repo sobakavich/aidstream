@@ -49,14 +49,16 @@ class GetCodeName
 
     /**
      * Get Only the activity code name (without the code value)
-     * @param $listName
-     * @param $code
+     * @param     $listName
+     * @param     $code
+     * @param int $default
      * @return string
      */
-    public function getCodeNameOnly($listName, $code)
+    public function getCodeNameOnly($listName, $code, $default = -4)
     {
         $descriptionWithCode = $this->getCodeName('Activity', $listName, $code);
-        return sprintf("%s", substr($descriptionWithCode, 0, -4));
+
+        return sprintf("%s", substr($descriptionWithCode, 0, $default));
     }
 
     /**

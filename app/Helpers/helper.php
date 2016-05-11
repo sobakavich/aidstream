@@ -241,7 +241,8 @@ function getContactInfo($type, array $contactInformation)
 function checkIfEmailOrWebSite($type, $information)
 {
     if ($type == "website" && !empty($information[$type])) {
-        $information = sprintf("<a target='_blank' href='%s'>%s</a>", $information[$type], $information[$type]);
+        $information = getClickableLink($information[$type]);
+
     } else {
         if ($type == "email" && !empty($information[$type])) {
             $information = sprintf("<a href='mailto:%s'>%s</a>", $information[$type], $information[$type]);
@@ -304,12 +305,13 @@ function getLocationReach(array $locations)
 }
 
 /**
- * Get the location ID vocabulary when the code is provided.
- * @param array $locationId
+ * Get Location vocabularies
+ * @param array $location
+ * @return string
  */
-function getLocationIdVocabulary(array $locationId)
+function getLocationVocabularies(array $location)
 {
-    $vocabularyCode = $locationId['vocabulary'];
+    $vocabularyCode = $location['vocabulary'];
     $vocabulary     = app('App\Helpers\GetCodeName')->getActivityCodeName(
         'GeographicVocabulary',
         $vocabularyCode
@@ -317,10 +319,243 @@ function getLocationIdVocabulary(array $locationId)
 
     $vocabularyValue = substr($vocabulary, 0, -4);
 
+    return $vocabularyValue;
+}
+
+/**
+ * Get the location ID vocabulary when the code is provided.
+ * @param array $locationId
+ * @return string
+ */
+function getLocationIdVocabulary(array $locationId)
+{
+    $vocabularyValue = getLocationVocabularies($locationId);
+
     if (empty($vocabularyValue)) {
         return '<em>Not Available</em>';
     } else {
-        return sprintf('%s - %s (Code:%s)', $vocabularyCode, $vocabularyValue, $locationId['code']);
+        return sprintf('%s - %s (Code:%s)', $locationId['vocabulary'], $vocabularyValue, $locationId['code']);
     }
 }
 
+/**
+ * Get Administrative Vocabulary
+ * @param array $location
+ * @return string
+ */
+function getAdministrativeVocabulary(array $location)
+{
+    $administrativeVocabulary = getLocationVocabularies($location);
+
+    if (empty($administrativeVocabulary)) {
+        return '<em>Not Available</em>';
+    } else {
+        return sprintf(
+            '%s - %s (Code:%s , level: %s)',
+            $location['vocabulary'],
+            $administrativeVocabulary,
+            $location['code'],
+            $location['level']
+        );
+    }
+
+}
+
+/**
+ * Get the location point provided an array of location in format.
+ * @param array $location
+ * @return string
+ */
+function getLocationPoint(array $location)
+{
+    $latitude  = $location['point'][0]['position'][0]['latitude'];
+    $longitude = $location['point'][0]['position'][0]['longitude'];
+    $srsLink   = sprintf(
+        '<a href="%s" target="_blank">%s</a>',
+        $location['point'][0]['srs_name'],
+        $location['point'][0]['srs_name']
+    );
+    $latLong   = (empty($latitude && $longitude)) ? '<em>Not Available</em>' : sprintf('%s, %s', $latitude, $longitude);
+
+    return sprintf('%s (<em>SRS Name: %s </em>)', $latLong, $srsLink);
+}
+
+/**
+ * Returns the location properties values based upon the code is provided in a specific format.
+ * @param array $location
+ * @param       $codeType
+ * @param       $codeNameType
+ * @param int   $lengthToCut
+ * @return string
+ */
+function getLocationPropertiesValues(array $location, $codeType, $codeNameType, $lengthToCut = -4)
+{
+    $codeValue         = $location[$codeType][0]['code'];
+    $codeNameWithValue = getCodeNameWithCodeValue($codeNameType, $codeValue, $lengthToCut);
+
+    return $codeNameWithValue;
+}
+
+/**
+ * Get sector information when sector array is provided.
+ * @param array $sector
+ * @return string
+ */
+function getSectorInformation(array $sector)
+{
+    $sectorVocabulary = $sector['sector_vocabulary'];
+
+    if ($sectorVocabulary == 1 || $sectorVocabulary == "") {
+        $sectorCodeValue = app('App\Helpers\GetCodeName')->getCodeNameOnly('Sector', $sector['sector_code'], -7);
+
+        return sprintf('%s - %s', $sector['sector_code'], $sectorCodeValue);
+    } else {
+        if ($sectorVocabulary === "2") {
+            $sectorCodeValue = app('App\Helpers\GetCodeName')->getCodeNameOnly(
+                'SectorCategory',
+                $sector['sector_category_code'],
+                -5
+            );
+
+            return sprintf('%s - %s', $sector['sector_category_code'], $sectorCodeValue);
+        } else {
+            return $sector['sector_text'];
+        }
+    }
+}
+
+/**
+ * Returns the clickable link when the link is provided
+ * @param $url
+ * @return string
+ */
+function getClickableLink($url)
+{
+    return ($url == "") ? '<em>Not Available</em>' : sprintf("<a target='_blank' href='%s'> %s</a>", $url, $url);
+}
+
+/**
+ * Returns the codename with Code value in format. eg. 1 - Exact
+ * @param $codeNameType
+ * @param $codeValue
+ * @param $lengthToCut
+ * @return string
+ */
+function getCodeNameWithCodeValue($codeNameType, $codeValue, $lengthToCut)
+{
+    $codeName = app('App\Helpers\GetCodeName')->getCodeNameOnly($codeNameType, $codeValue, $lengthToCut);
+
+    if ($codeValue == "") {
+        return sprintf('<em>Not Available</em>');
+    } else {
+        return sprintf('%s - %s', $codeValue, ucfirst($codeName));
+    }
+}
+
+/**
+ * Get the country budget items in format:
+ * @param       $vocabularyType
+ * @param array $countryBudgetItem
+ * @return string
+ */
+function getCountryBudgetItems($vocabularyType, array $countryBudgetItem)
+{
+    $budgetItemCode = ($vocabularyType == 1) ? $countryBudgetItem['code'] : $countryBudgetItem['code_text'];
+
+    return sprintf('%s (%s%s)', $budgetItemCode, $countryBudgetItem['percentage'], '%');
+}
+
+/**
+ * Get Budget of the country with currency. In format: 202020 Nepalese Rupee ( Valued at May 13, 2016)
+ * @param array $budget
+ * @param null  $key
+ * @return string
+ */
+function getBudgetInformation($key = null, array $budget)
+{
+    $budgetInformation                            = [];
+    $budgetValue                                  = $budget['value'][0];
+    $currencyDate                                 = getCurrencyValueDate($budgetValue);
+    $period                                       = getBudgetPeriod($budget);
+    $budgetInformation['currency_with_valuedate'] = $currencyDate;
+    $budgetInformation['period']                  = $period;
+    $budgetInformation['status']                  = getCodeNameWithCodeValue('BudgetStatus', $budget['status'], -4);
+
+    return (array_key_exists($key, $budgetInformation) ? $budgetInformation[$key] : null);
+}
+
+/**
+ * Group the budget elements and planned disbursement elements according to type.
+ * @param $budgets
+ * @param $type
+ * @return array
+ */
+function groupBudgetElements($budgets, $type)
+{
+    $newBudgetItems = [];
+
+    foreach ($budgets as $budget) {
+        $budgetType                    = (empty($budget[$type])) ? "1" : $budget[$type];
+        $newBudgetItems[$budgetType][] = $budget;
+    }
+
+    return $newBudgetItems;
+}
+
+/**
+ * Get the currency with its value date and currency code value. Eg. 20000 Lek (Valued at August 13, 2016)
+ * @param $budgetValue
+ * @return string
+ */
+function getCurrencyValueDate($budgetValue)
+{
+    $budgetAmount = $budgetValue['amount'];
+    $currency     = $budgetValue['currency'];
+    $valueDate    = formatDate($budgetValue['value_date']);
+    $currency     = app('App\Helpers\GetCodeName')->getCodeNameOnly('Currency', $currency, -6);
+
+    return sprintf(
+        '%s %s (<em>Valued at %s</em>)',
+        $budgetAmount,
+        $currency,
+        $valueDate
+    );
+
+}
+
+/**
+ * Get Budget Period.
+ * @param array $budget
+ * @return string
+ */
+function getBudgetPeriod(array $budget)
+{
+    $periodStart = formatDate($budget['period_start'][0]['date']);
+    $periodEnd   = formatDate($budget['period_end'][0]['date']);
+
+    return sprintf('%s-%s', $periodStart, $periodEnd);
+
+}
+
+/**
+ * Get the planned disbursement organization details.
+ * @param array $disbursement
+ * @param       $type
+ * @return string
+ */
+function getDisbursementOrganizationDetails(array  $disbursement, $type)
+{
+    $organization = $disbursement[$type][0];
+    $ref          = $organization['ref'];
+    $activity_id  = $organization['activity_id'];
+    $type         = $organization['type'];
+
+    $details = sprintf(
+        '(<em>Ref: %s , Activity id: %s , Type: %s</em>)',
+        checkIfEmpty($ref),
+        checkIfEmpty($activity_id),
+        checkIfEmpty($type)
+    );
+
+    return $details;
+}
