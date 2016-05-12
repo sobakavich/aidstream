@@ -18,6 +18,7 @@
                         {{--<li><a href="#">Generate Published XML Files</a></li>--}}
                     @endif
                 </ul>
+                <button class="button btn-default"><a href="{{ route('admin.exportOrganizationInfo') }}">Export organization details</a></button>
             </div>
         </div>
     </div>
