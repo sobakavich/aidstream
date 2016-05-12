@@ -13,7 +13,7 @@
                                 :{{ $recipientRegion['region_vocabulary'] . '-' . substr($getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary']) , 0 , -4) }}
                             </dl>
                             <dl>@lang('activityView.vocabulary_uri')
-                                :{!!  checkIfEmpty($recipientRegion['vocabulary_uri']) !!}
+                                :{!!  getClickableLink($recipientRegion['vocabulary_uri']) !!}
                             </dl>
                             <dl>@lang('activityView.description')
                                 :{!! getFirstNarrative($recipientRegion) !!}
