@@ -53,4 +53,7 @@ return [
     'provider_organization'                 => 'Provider Organization',
     'receiver_organization'                 => 'Receiver Organization',
     'capital_spend'                         => 'Capital Spend',
+    'related_activity'                      => 'Related Activity',
+    'legacy_data'                           => 'Legacy Data',
+    'iati_equivalent'                       => 'IATI Equivalent',
 ];

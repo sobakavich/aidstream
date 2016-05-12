@@ -4,33 +4,22 @@
             <dl class="dl-horizontal">
                 <dt>@lang('activityView.related_activity')</dt>
                 <dd>
-
-                </dd>
+                @foreach(groupActivityElements($relatedActivities , 'relationship_type') as $key => $relatedActivities)
+                    <dt>
+                        {!! $getCode->getCodeNameOnly('RelatedActivityType' , $key) !!}
+                    </dt>
+                    <dd>
+                        @foreach($relatedActivities as $relatedActivity)
+                            <li> {{ $relatedActivity['activity_identifier'] }}</li>
+                        @endforeach
+                        <hr>
+                    <dd>
+                        @endforeach
+                    </dd>
             </dl>
             {{--<a href="{{route('activity.related-activity.index', $id)}}" class="edit-element">edit</a>--}}
             {{--<a href="{{route('activity.delete-element', [$id, 'related_activity'])}}"--}}
-               {{--class="delete pull-right">remove</a>--}}
-        </div>
-        <div class="panel-body panel-level-1">
-            @foreach($relatedActivities as $relatedActivity)
-                <div class="panel-heading">
-                    <div class="activity-element-title">
-                        {{$relatedActivity['activity_identifier']}}
-                    </div>
-                </div>
-                <div class="panel-body row">
-                    <div class="panel-element-body">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Activity Identifier:</div>
-                            <div class="col-xs-12 col-sm-8">{{$relatedActivity['activity_identifier']}}</div>
-                        </div>
-                        <div class="col-xs-12 col-md-12">
-                            <div class="col-xs-12 col-sm-4">Type:</div>
-                            <div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('RelatedActivityType', $relatedActivity['relationship_type'])}}</div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+            {{--class="delete pull-right">remove</a>--}}
         </div>
     </div>
 @endif
