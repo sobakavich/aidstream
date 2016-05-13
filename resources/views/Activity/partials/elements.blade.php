@@ -25,7 +25,7 @@
         $defaultTiedStatus = $activityDataList['default_tied_status'];
         $budgets = $activityDataList['budget'];
         $plannedDisbursements = $activityDataList['planned_disbursement'];
-        $documentLinks = $activityDataList['document_link'];
+        $documentLinks = $activityDataList['document_links'];
         $relatedActivities = $activityDataList['related_activity'];
         $legacyDatas = $activityDataList['legacy_data'];
         $conditions = $activityDataList['conditions'];

@@ -186,11 +186,14 @@ class ActivityController extends Controller
         if (Gate::denies('ownership', $activityData)) {
             return redirect()->route('activity.index')->withResponse($this->getNoPrivilegesMessage());
         }
-        $activityDataList                  = $activityData->activity_data_list;
-        $activityResult                    = $this->resultManager->getResults($id)->toArray();
-        $activityTransaction               = $this->transactionManager->getTransactions($id)->toArray();
-        $activityDataList['results']       = $activityResult;
-        $activityDataList['transaction']   = $activityTransaction;
+
+        $activityDataList                   = $activityData->activity_data_list;
+        $activityResult                     = $this->resultManager->getResults($id)->toArray();
+        $activityTransaction                = $this->transactionManager->getTransactions($id)->toArray();
+        $activityDocumentLinks              = $this->documentLinkManager->getDocumentLinks($id)->toArray();
+        $activityDataList['results']        = $activityResult;
+        $activityDataList['transaction']    = $activityTransaction;
+        $activityDataList['document_links'] = $activityDocumentLinks;
         $activityDataList['reporting_org'] = $activityData->organization->reporting_org;
 
         return view('Activity.show', compact('activityDataList', 'id'));
