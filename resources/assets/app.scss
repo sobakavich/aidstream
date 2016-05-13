@@ -268,7 +268,7 @@ button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
 
 .table {
   table-layout: auto;
-  margin-top: 20px!important;
+  margin-top: 20px !important;
   > thead {
     > tr {
       > th {
@@ -3092,7 +3092,7 @@ label.required::after {
   margin-left: 2px;
 }
 
-.added-new-block,.has_add_more > .form-group + .form-group {
+.added-new-block, .has_add_more > .form-group + .form-group {
   border-top: 1px dashed #A9C6DE !important;
   padding-bottom: 0 !important;
 }
@@ -3251,7 +3251,7 @@ table.dataTable thead .sorting_desc {
   background: $url_13 no-repeat right;
 }
 
-.logs-container .collection_form .form-group+.form-group {
+.logs-container .collection_form .form-group + .form-group {
   padding-top: 10px;
 }
 
@@ -3263,7 +3263,7 @@ table.dataTable thead .sorting_desc {
     padding-top: 8px;
   }
   .select2-container {
-    width: 415px!important;
+    width: 415px !important;
   }
 }
 
@@ -3993,7 +3993,7 @@ table.dataTable thead .sorting_desc {
     }
   }
 
-  .logs-container .collection_form .form-group+.form-group {
+  .logs-container .collection_form .form-group + .form-group {
     padding-top: 25px;
   }
 }
@@ -4296,13 +4296,12 @@ table.dataTable thead .sorting_desc {
   word-wrap: break-word;
 }
 
-
 .logs-container .settings-wrapper .create-form.activity-log-filter-wrap .select2-container {
-  width: 100%!important;
+  width: 100% !important;
 }
 
 .sector_category_select {
-  label,.select2-container {
+  label, .select2-container {
     margin-left: 15px;
   }
 }
