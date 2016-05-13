@@ -4,7 +4,6 @@
             <dl class="dl-horizontal">
                 <dt>@lang('activityView.budget')</dt>
                 <dd>
-
                 @foreach( groupBudgetElements($budgets , 'budget_type') as $key => $budgets)
                     <dt>{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</dt>
                     <dd>

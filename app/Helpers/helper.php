@@ -559,3 +559,76 @@ function getDisbursementOrganizationDetails(array  $disbursement, $type)
 
     return $details;
 }
+
+/**
+ * Group the condition elements by the condition type.
+ * @param array $conditions
+ * @return array
+ */
+function groupConditionElements(array $conditions)
+{
+    $newConditions = [];
+
+    foreach ($conditions['condition'] as $condition) {
+        $conditionType                 = $condition['condition_type'];
+        $newConditions[$conditionType] = $condition;
+    }
+
+    return $newConditions;
+}
+
+/**
+ * Group the Result elements based upon the type.
+ * @param array $results
+ * @return array
+ */
+function groupResultElements(array $results)
+{
+    $newResults = [];
+
+    foreach ($results as $result) {
+
+        $resultType                     = $result['result']['type'];
+        $resultTypeValue                = app('App\Helpers\GetCodeName')->getCodeNameOnly(
+            'ResultType',
+            $resultType,
+            -4
+        );
+        $newResults[$resultTypeValue][] = $result['result'];
+    }
+
+    return $newResults;
+}
+
+/**
+ * write brief description
+ * @param array $reference
+ * @return string
+ */
+function getIndicatorReference(array $reference)
+{
+    $vocabulary = ($reference['vocabulary'] == "") ? '<em>Vocabulary not set</em>' : getCodeNameWithCodeValue(
+        'IndicatorVocabulary',
+        $reference['vocabulary'],
+        -4
+    );
+
+    $code         = checkIfEmpty($reference['code']);
+    $indicatorUri = checkIfEmpty($reference['indicator_uri']);
+
+    return sprintf('%s <br> (Code: %s <br> Indicator URI: %s )', $vocabulary, $code, $indicatorUri);
+
+}
+
+/**
+ * Returns the baseline values for the indicator.
+ * @param array $baseLine
+ * @return string
+ */
+function getResultsBaseLine(array $baseLine)
+{
+    $year  = checkIfEmpty($baseLine['year']);
+    $value = ($baseLine['value'] == "") ? '<em> Not Available </em>' : $baseLine['value']."%";
+
+    return sprintf('%s (Year:%s)', $value, $year);
+}
