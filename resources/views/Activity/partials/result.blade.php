@@ -42,6 +42,28 @@
                                             <br>
                                             {!! getFirstNarrative($indicator['baseline'][0]['comment'][0]) !!}
                                         </dl>
+                                        <dl>
+                                            <span style="margin-right: 160px">Period</span> <span
+                                                    style="margin-right: 40px"> Target Value </span>
+                                            <span> Actual Vaule </span>
+                                            : @foreach(getIndicatorPeriod($indicator['period']) as $period)
+                                                <br>
+
+                                                <span style="margin-right: 40px">{!!   $period['period'] !!}</span>
+                                                <a href="#"
+                                                   style="margin-right: 40px" data-toggle="tooltip"
+                                                   title="So i will add here">
+                                                    {!!  $period['target_value'] !!}
+                                                </a>
+                                                {{ dump(getAdditionalDetails('target' , $period['target'])) }}
+
+
+                                                <a href="#"> {!!  $period['actual_value']  !!} </a>
+                                                {{ dump(getAdditionalDetails('target' , $period['actual'])) }}
+                                                <br>
+                                            @endforeach
+                                            <hr>
+                                        </dl>
                                     @endforeach
                                 </dl>
                             </dl>
