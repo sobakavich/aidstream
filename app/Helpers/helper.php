@@ -632,3 +632,89 @@ function getResultsBaseLine(array $baseLine)
 
     return sprintf('%s (Year:%s)', $value, $year);
 }
+
+/**
+ * Get Indicator Period in a format.
+ * @param array $periods
+ * @internal param array $period
+ * @return array
+ */
+function getIndicatorPeriod(array $periods)
+{
+    $outputPeriod      = [];
+    $finalOutputPeriod = [];
+
+    foreach ($periods as $period) {
+
+        $targetValue                  = $period['target'][0]['value'];
+        $actualValue                  = $period['actual'][0]['value'];
+        $periodValue                  = getBudgetPeriod($period);
+        $targetValue                  = ($targetValue == "") ? '<em>Not Available</em>' : $targetValue."%";
+        $actualValue                  = ($actualValue == "") ? '<em>Not Available</em>' : $actualValue."%";
+        $outputPeriod['period']       = $periodValue;
+        $outputPeriod['target_value'] = $targetValue;
+        $outputPeriod['actual_value'] = $actualValue;
+        $outputPeriod['target']       = $period['target'][0];
+        $outputPeriod['actual']       = $period['actual'][0];
+
+        $finalOutputPeriod[] = $outputPeriod;
+
+    }
+
+    return $finalOutputPeriod;
+}
+
+/**
+ * Get additional details for the target / actual value
+ * @param       $type
+ * @param array $target
+ * @internal param array $period
+ * @return array
+ */
+function getAdditionalDetails($type, array $target)
+{
+//    dump($target);
+    $details                  = [];
+    $details['locationRef']   = getLocationRef('location', $target);
+    $details['dimension']     = getDimension('dimension', $target);
+    $details['first_comment'] = getFirstNarrative($target['comment'][0]);
+
+    return $details;
+
+}
+
+/**
+ * Get the location ref for any period.
+ * @param $type
+ * @param $target
+ * @return array|string
+ */
+function getLocationRef($type, $target)
+{
+    $locationRef = [];
+    foreach ($target[$type] as $location) {
+        $locationRef[] = checkIfEmpty($location['ref']);
+    }
+    $locationRef = implode(',', $locationRef);
+
+    return $locationRef;
+}
+
+function getDimension($type, $target)
+{
+    $dimesnions = [];
+
+    foreach ($target['dimension'] as $dimension) {
+        $name = $dimension['name'];
+        if (empty($name)) {
+            return $dimension = '<em>Not Available </em>';
+        } else {
+            $value        = $dimension['value'];
+            $dimensions[] = sprintf('%s (%s)', $name, $value);
+        }
+    }
+
+    $dimensions = implode(' , ', $dimensions);
+
+    return $dimensions;
+}
