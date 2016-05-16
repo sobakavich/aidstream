@@ -7,7 +7,6 @@
                 @foreach(groupResultElements($results) as $key => $results)
                     <dt>{{ $key }}</dt>
                     <dd>
-                        {{ dump($results) }}
                         @foreach($results as $result)
                             <li> {!! getFirstNarrative($result['title'][0]) !!} </li>
                             @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($result['title'][0]['narrative'])])

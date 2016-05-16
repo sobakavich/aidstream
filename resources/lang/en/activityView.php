@@ -68,4 +68,12 @@ return [
     'indicator_reference'                   => 'Indicator Reference',
     'indicator_uri'                         => 'Indicator URI',
     'baseline_value'                        => 'Baseline Value',
+    'transaction'                           => 'Transaction',
+    'transaction_reference'                 => 'Transaction Reference',
+    'disbursement_channel'                  => 'Disbursement Channel',
+    'vocabulary'                            => 'Vocabulary',
+    'flow_type'                             => 'Flow Type',
+    'finance_type'                          => 'Finance Type',
+    'aid_type'                              => 'Aid Type',
+    'tied_status'                           => 'Tied Status',
 ];

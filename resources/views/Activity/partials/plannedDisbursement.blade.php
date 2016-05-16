@@ -8,7 +8,7 @@
                     <dt>{{ $getCode->getCodeNameOnly('BudgetType' , $key) }}</dt>
                     <dd>
                         @foreach($disbursements as $disbursement)
-                            <li>{!! getCurrencyValueDate($disbursement['value'][0]) !!}</li>
+                            <li>{!! getCurrencyValueDate($disbursement['value'][0] , "planned") !!}</li>
                             <a href="#" class="show-more-info">Show more info</a>
                             <a href="#" class="hide-more-info hidden">Hide more info</a>
                             <dl class="more-info-hidden">
