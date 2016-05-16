@@ -98,4 +98,38 @@ class XmlService
     {
         return $this->xmlGenerator->segmentedXmlFile($activity);
     }
+
+    /**
+     * get messages for schema errors
+     * @param $tempXmlContent
+     * @param $version
+     * @return array
+     */
+    public function getSchemaErrors($tempXmlContent, $version)
+    {
+        libxml_use_internal_errors(true);
+        $xml = new \DOMDocument();
+        $xml->loadXML($tempXmlContent);
+        $schemaPath = app_path(sprintf('Core/%s/XmlSchema/iati-activities-schema.xsd', $version));
+        $messages   = [];
+        if (!$xml->schemaValidate($schemaPath)) {
+            $messages = $this->libxml_display_errors();
+        }
+
+        return $messages;
+    }
+
+    /**
+     * get Xml in format
+     * @param $tempXmlContent
+     * @return array
+     */
+    public function getFormattedXml($tempXmlContent)
+    {
+        $xmlString = htmlspecialchars($tempXmlContent);
+        $xmlString = str_replace(" ", "&nbsp;&nbsp;", $xmlString);
+        $xmlLines  = explode("\n", $xmlString);
+
+        return $xmlLines;
+    }
 }
