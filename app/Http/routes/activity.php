@@ -107,5 +107,30 @@ $router->group(
                 'uses' => 'ActivityController@twitterPost'
             ]
         );
+
+        $router->get(
+            '/activity/{activityId}/xml/view',
+            [
+                'as'   => 'view.activityXml',
+                'uses' => 'ActivityController@viewActivityXml'
+            ]
+        );
+
+        $router->get(
+            '/activity/{activityId}/xml/view/{true}',
+            [
+                'as' => 'errors.activityXml',
+                'uses' => 'ActivityController@viewActivityXml'
+            ]
+        );
+
+        $router->get(
+            '/activity/{activity}/xml/download',
+            [
+                'as'   => 'download.activityXml',
+                'uses' => 'ActivityController@downloadActivityXml'
+            ]
+        );
+
     }
 );
