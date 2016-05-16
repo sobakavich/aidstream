@@ -747,4 +747,46 @@ class ActivityController extends Controller
 
         return redirect()->back()->withResponse($response);
     }
+
+    /**
+     * Get data from DB and generate xml
+     * @param $activityId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewActivityXml($activityId)
+    {
+        $activityDataList    = $this->activityManager->getActivityData($activityId);
+        $activityElement = $this->activityManager->getActivityElement();
+        $xmlService      = $activityElement->getActivityXmlService();
+
+        $xml = $xmlService->generateTemporaryActivityXml($this->activityManager->getActivityData($activityId), $this->activityManager->getTransactionData($activityId),
+            $this->activityManager->getResultData($activityId), $this->settingsManager->getSettings($activityDataList['organization_id']), $activityElement,
+            $this->organizationManager->getOrganizationElement(), $this->organizationManager->getOrganization($activityDataList->organization_id));
+
+        $xmlLines = $xmlService->getFormattedXml($xml);
+        $messages = $xmlService->getSchemaErrors($xml, session('version'));
+
+        return view('Activity.xmlView', compact('xmlLines', 'messages', 'activityDataList', 'activityId'));
+    }
+
+    /**
+     * Download of activity xml files
+     * @param $activityId
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadActivityXml($activityId)
+    {
+        $activityData    = $this->activityManager->getActivityData($activityId);
+        $activityElement = $this->activityManager->getActivityElement();
+        $xmlService      = $activityElement->getActivityXmlService();
+
+        $xml = $xmlService->generateTemporaryActivityXml($this->activityManager->getActivityData($activityId), $this->activityManager->getTransactionData($activityId),
+            $this->activityManager->getResultData($activityId), $this->settingsManager->getSettings($activityData['organization_id']), $activityElement,
+            $this->organizationManager->getOrganizationElement(), $this->organizationManager->getOrganization($activityData->organization_id));
+
+        return response()->make($xml, 200, [
+            'Content-type'        => 'text/xml',
+            'Content-Disposition' => sprintf('attachment; filename=activityXmlFile.xml')
+        ]);
+    }
 }
