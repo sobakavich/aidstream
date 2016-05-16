@@ -475,7 +475,7 @@ function getBudgetInformation($key = null, array $budget)
 {
     $budgetInformation                            = [];
     $budgetValue                                  = $budget['value'][0];
-    $currencyDate                                 = getCurrencyValueDate($budgetValue);
+    $currencyDate                                 = getCurrencyValueDate($budgetValue, "planned");
     $period                                       = getBudgetPeriod($budget);
     $budgetInformation['currency_with_valuedate'] = $currencyDate;
     $budgetInformation['period']                  = $period;
@@ -505,13 +505,14 @@ function groupBudgetElements($budgets, $type)
 /**
  * Get the currency with its value date and currency code value. Eg. 20000 Lek (Valued at August 13, 2016)
  * @param $budgetValue
+ * @param $type
  * @return string
  */
-function getCurrencyValueDate($budgetValue)
+function getCurrencyValueDate($budgetValue, $type)
 {
     $budgetAmount = $budgetValue['amount'];
     $currency     = $budgetValue['currency'];
-    $valueDate    = formatDate($budgetValue['value_date']);
+    $valueDate    = ($type == "planned") ? formatDate($budgetValue['value_date']) : formatDate($budgetValue['date']);
     $currency     = app('App\Helpers\GetCodeName')->getCodeNameOnly('Currency', $currency, -6);
 
     return sprintf(
@@ -673,10 +674,9 @@ function getIndicatorPeriod(array $periods)
  */
 function getAdditionalDetails($type, array $target)
 {
-//    dump($target);
     $details                  = [];
     $details['locationRef']   = getLocationRef('location', $target);
-    $details['dimension']     = getDimension('dimension', $target);
+    $details['dimension']     = getDimension($target);
     $details['first_comment'] = getFirstNarrative($target['comment'][0]);
 
     return $details;
@@ -700,7 +700,7 @@ function getLocationRef($type, $target)
     return $locationRef;
 }
 
-function getDimension($type, $target)
+function getDimension($target)
 {
     $dimesnions = [];
 
@@ -717,4 +717,98 @@ function getDimension($type, $target)
     $dimensions = implode(' , ', $dimensions);
 
     return $dimensions;
+}
+
+/**
+ * Group Transaction Elements.
+ * @param array $transactions
+ * @return array
+ */
+function groupTransactionElements(array $transactions)
+{
+    $newTransactions = [];
+    foreach ($transactions as $transaction) {
+        $transaction = $transaction['transaction'];
+
+        $transactionTypeCode = $transaction['transaction_type'][0]['transaction_type_code'];
+        $transactionType     = app('App\Helpers\GetCodeName')->getCodeNameOnly('TransactionType', $transactionTypeCode);
+
+        $newTransactions[$transactionType][] = $transaction;
+    }
+
+    return $newTransactions;
+}
+
+/**
+ * Get transaction details provided transaction array.
+ * @param array $transaction
+ * @param       $type
+ * @return string
+ */
+function getTransactionProviderDetails(array $transaction, $type)
+{
+    $organizationIdentifierCode = checkIfEmpty($transaction['organization_identifier_code']);
+    $activityId                 = ($type == 'provider') ? $transaction['provider_activity_id'] : $transaction['receiver_activity_id'];
+    $activityId                 = checkIfEmpty($activityId);
+    $type                       = checkIfEmpty($transaction['type']);
+    $activityIdText             = ($type == 'provider') ? 'Provider activity id' : 'Receiver activity id';
+
+    return sprintf(
+        '<em>
+        (Organizational identifier code: %s , %s: %s , Type: %s)
+        </em>',
+        $organizationIdentifierCode,
+        $activityIdText,
+        $activityId,
+        $type
+    );
+}
+
+/**
+ * Returns the details of the transaction sector.
+ * @param array $sector
+ * @return string
+ */
+function getTransactionSectorDetails(array $sector)
+{
+    $vocabulary    = checkIfEmpty(
+        app('App\Helpers\GetCodeName')->getCodeNameOnly('SectorVocabulary', $sector['sector_vocabulary'])
+    );
+    $vocabularyURI = ($sector['vocabulary_uri'] == "") ? '<em> Not Available </em>' : $sector['vocabulary_uri'];
+    $vocabularyURI = getClickableLink($vocabularyURI);
+
+    return sprintf('<em>(Vocabulary: %s Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
+}
+
+/**
+ * Returns the country code with country name.
+ * @param $countryCode
+ * @return string
+ */
+function getCountryNameWithCode($countryCode)
+{
+    if ($countryCode == "") {
+        return "<em>Not Available</em>";
+    } else {
+        $countryName = substr(app('App\Helpers\GetCodeName')->getOrganizationCodeName('Country', $countryCode), 0, -4);
+
+        return sprintf('%s - %s', $countryCode, $countryName);
+    }
+}
+
+/**
+ * Get the description of the recipient region.
+ * @param array $region
+ * @return string
+ */
+function getRecipientRegionDetails(array $region)
+{
+    $vocabulary    = checkIfEmpty(
+        app('App\Helpers\GetCodeName')->getCodeNameOnly('SectorVocabulary', $region['vocabulary'])
+    );
+    $vocabularyURI = ($region['vocabulary_uri'] == "") ? '<em> Not Available </em>' : getClickableLink(
+        $region['vocabulary_uri']
+    );
+
+    return sprintf('<em>(Vocabulary: %s Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
 }

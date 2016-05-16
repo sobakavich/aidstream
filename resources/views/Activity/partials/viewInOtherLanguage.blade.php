@@ -4,7 +4,7 @@
         <div class="hidden">
             @foreach($otherLanguages as $otherLanguage)
                 <ul>
-                    <li><em>{{ getLanguage($otherLanguage['language']) .'-'. $otherLanguage['narrative'] }}</em></li>
+                    <li><em>{{ getLanguage($otherLanguage['language']) .' - '. $otherLanguage['narrative'] }}</em></li>
                 </ul>
             @endforeach
         </div>
