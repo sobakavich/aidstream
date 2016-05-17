@@ -278,7 +278,11 @@ function getRecipientInformation($code, $percentage, $type)
     $name   = app('App\Helpers\GetCodeName')->$method($type, $code);
     $name   = ucfirst(strtolower(substr($name, 0, -5)));
 
-    return sprintf('%s - %s(%s%s)', $code, $name, $percentage, '%');
+    if (empty($percentage)) {
+        return sprintf('%s - %s', $code, $name);
+    }
+
+    return sprintf('%s - %s (%s)', $code, $name, $percentage);
 }
 
 /**
@@ -399,16 +403,22 @@ function getLocationPropertiesValues(array $location, $codeType, $codeNameType, 
 /**
  * Get sector information when sector array is provided.
  * @param array $sector
+ * @param       $percentage
  * @return string
  */
-function getSectorInformation(array $sector)
+function getSectorInformation(array $sector, $percentage)
 {
     $sectorVocabulary = $sector['sector_vocabulary'];
 
     if ($sectorVocabulary == 1 || $sectorVocabulary == "") {
         $sectorCodeValue = app('App\Helpers\GetCodeName')->getCodeNameOnly('Sector', $sector['sector_code'], -7);
 
-        return sprintf('%s - %s', $sector['sector_code'], $sectorCodeValue);
+        if (empty($percentage)) {
+            return sprintf('%s - %s', $sector['sector_code'], $sectorCodeValue);
+        }
+
+        return sprintf('%s - %s (%s)', $sector['sector_code'], $sectorCodeValue, $percentage."%");
+
     } else {
         if ($sectorVocabulary === "2") {
             $sectorCodeValue = app('App\Helpers\GetCodeName')->getCodeNameOnly(
@@ -416,10 +426,19 @@ function getSectorInformation(array $sector)
                 $sector['sector_category_code'],
                 -5
             );
+            if (empty($percentage)) {
+                return sprintf('%s - %s', $sector['sector_category_code'], $sectorCodeValue);
+            }
 
-            return sprintf('%s - %s', $sector['sector_category_code'], $sectorCodeValue);
+            return sprintf('%s - %s (%s)', $sector['sector_category_code'], $sectorCodeValue, $percentage." %");
+
         } else {
-            return $sector['sector_text'];
+            if (empty($percentage)) {
+                return $sector['sector_text'];
+            }
+
+            return sprintf('%s (%s)', $sector['sector_text'], $percentage."%");
+
         }
     }
 }
@@ -479,7 +498,10 @@ function getBudgetInformation($key = null, array $budget)
     $period                                       = getBudgetPeriod($budget);
     $budgetInformation['currency_with_valuedate'] = $currencyDate;
     $budgetInformation['period']                  = $period;
-    $budgetInformation['status']                  = getCodeNameWithCodeValue('BudgetStatus', $budget['status'], -4);
+
+    if (session('version') != 'V201') {
+        $budgetInformation['status'] = getCodeNameWithCodeValue('BudgetStatus', $budget['status'], -4);
+    }
 
     return (array_key_exists($key, $budgetInformation) ? $budgetInformation[$key] : null);
 }
@@ -512,7 +534,9 @@ function getCurrencyValueDate($budgetValue, $type)
 {
     $budgetAmount = $budgetValue['amount'];
     $currency     = $budgetValue['currency'];
-    $valueDate    = ($type == "planned") ? formatDate($budgetValue['value_date']) : formatDate($budgetValue['date']);
+    $valueDate    = ($type == "planned") ? formatDate($budgetValue['value_date']) : formatDate(
+        $budgetValue['date']
+    );
     $currency     = app('App\Helpers\GetCodeName')->getCodeNameOnly('Currency', $currency, -6);
 
     return sprintf(
@@ -731,7 +755,10 @@ function groupTransactionElements(array $transactions)
         $transaction = $transaction['transaction'];
 
         $transactionTypeCode = $transaction['transaction_type'][0]['transaction_type_code'];
-        $transactionType     = app('App\Helpers\GetCodeName')->getCodeNameOnly('TransactionType', $transactionTypeCode);
+        $transactionType     = app('App\Helpers\GetCodeName')->getCodeNameOnly(
+            'TransactionType',
+            $transactionTypeCode
+        );
 
         $newTransactions[$transactionType][] = $transaction;
     }
@@ -747,10 +774,14 @@ function groupTransactionElements(array $transactions)
  */
 function getTransactionProviderDetails(array $transaction, $type)
 {
+//    dd($transaction);
+
     $organizationIdentifierCode = checkIfEmpty($transaction['organization_identifier_code']);
     $activityId                 = ($type == 'provider') ? $transaction['provider_activity_id'] : $transaction['receiver_activity_id'];
     $activityId                 = checkIfEmpty($activityId);
-    $type                       = checkIfEmpty($transaction['type']);
+    $transactionType            = (session('version') != 'V201') ? checkIfEmpty(
+        $transaction['type']
+    ) : '<em>Not available</em>';
     $activityIdText             = ($type == 'provider') ? 'Provider activity id' : 'Receiver activity id';
 
     return sprintf(
@@ -760,7 +791,7 @@ function getTransactionProviderDetails(array $transaction, $type)
         $organizationIdentifierCode,
         $activityIdText,
         $activityId,
-        $type
+        $transactionType
     );
 }
 
@@ -771,13 +802,20 @@ function getTransactionProviderDetails(array $transaction, $type)
  */
 function getTransactionSectorDetails(array $sector)
 {
-    $vocabulary    = checkIfEmpty(
+    $vocabulary = checkIfEmpty(
         app('App\Helpers\GetCodeName')->getCodeNameOnly('SectorVocabulary', $sector['sector_vocabulary'])
     );
-    $vocabularyURI = ($sector['vocabulary_uri'] == "") ? '<em> Not Available </em>' : $sector['vocabulary_uri'];
-    $vocabularyURI = getClickableLink($vocabularyURI);
 
-    return sprintf('<em>(Vocabulary: %s Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
+    if (session('version') != 'V201') {
+        $vocabularyURI = ($sector['vocabulary_uri'] == "") ? '<em> Not Available </em>' : $sector['vocabulary_uri'];
+        $vocabularyURI = getClickableLink($vocabularyURI);
+
+        return sprintf('<em>(Vocabulary: %s Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
+    } else {
+
+        return sprintf('<em>(Vocabulary: %s)</em>', $vocabulary);
+    }
+
 }
 
 /**
@@ -790,7 +828,11 @@ function getCountryNameWithCode($countryCode)
     if ($countryCode == "") {
         return "<em>Not Available</em>";
     } else {
-        $countryName = substr(app('App\Helpers\GetCodeName')->getOrganizationCodeName('Country', $countryCode), 0, -4);
+        $countryName = substr(
+            app('App\Helpers\GetCodeName')->getOrganizationCodeName('Country', $countryCode),
+            0,
+            -4
+        );
 
         return sprintf('%s - %s', $countryCode, $countryName);
     }
@@ -803,12 +845,17 @@ function getCountryNameWithCode($countryCode)
  */
 function getRecipientRegionDetails(array $region)
 {
-    $vocabulary    = checkIfEmpty(
+    $vocabulary = checkIfEmpty(
         app('App\Helpers\GetCodeName')->getCodeNameOnly('SectorVocabulary', $region['vocabulary'])
     );
-    $vocabularyURI = ($region['vocabulary_uri'] == "") ? '<em> Not Available </em>' : getClickableLink(
-        $region['vocabulary_uri']
-    );
 
-    return sprintf('<em>(Vocabulary: %s Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
+    if (session('version') != 'V201') {
+        $vocabularyURI = ($region['vocabulary_uri'] == "") ? '<em> Not Available </em>' : getClickableLink(
+            $region['vocabulary_uri']
+        );
+
+        return sprintf('<em>(Vocabulary: %s Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
+    }
+
+    return sprintf('<em>(Vocabulary: %s)</em>', $vocabulary);
 }

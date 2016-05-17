@@ -9,7 +9,7 @@
                         <a href="#" class="show-more-info">Show more info</a>
                         <a href="#" class="hide-more-info hidden">Hide more info</a>
                         <dl class="hidden-info">@lang('activityView.description')
-                            :{!! getFirstNarrative($recipientCountry) !!}
+                            :{!! checkIfEmpty(getFirstNarrative($recipientCountry)) !!}
                         @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientCountry['narrative'])])
                         </dl>
                     @endforeach

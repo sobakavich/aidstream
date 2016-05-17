@@ -7,9 +7,8 @@
                 @foreach($descriptions as $description)
                     <dt>{{$getCode->getCodeNameOnly('DescriptionType', $description['type'])}} Description</dt>
                     <dd>
-                        {{ $description['narrative'][0]['narrative'] }}
-                        (language: {{ getLanguage($description['narrative'][0]['language']) }})
-                        @include('Activity.partials.viewInOtherLanguage' , $otherLanguages = array_slice($description['narrative'] ,1))
+                        {!! getFirstNarrative($description) !!}
+                        @include('Activity.partials.viewInOtherLanguage' , ['otherLanguages' => getOtherLanguages($description['narrative']) ])
                         @endforeach
                     </dd>
             </dl>

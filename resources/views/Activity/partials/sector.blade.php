@@ -8,13 +8,15 @@
                     <dt>{{ $getCode->getCodeNameOnly('SectorVocabulary' , $key) }}</dt>
                     <dd>
                         @foreach($sectors as $sector)
-                            <li>{!! checkIfEmpty(getSectorInformation($sector)) . ' ( '.$sector['percentage'].'%)'  !!} </li>
+                            <li>{!! checkIfEmpty(getSectorInformation($sector , $sector['percentage']))  !!} </li>
                             <a href="#" class="show-more-info">Show more info</a>
                             <a href="#" class="hide-more-info hidden">Hide more info</a>
                             <dl class="more-info-hidden">
-                                <dl>@lang('activityView.vocabulary_uri')
-                                    :{!!  checkIfEmpty(getClickableLink($sector['vocabulary_uri']))  !!}
-                                </dl>
+                                @if(session('version') != 'V201')
+                                    <dl>@lang('activityView.vocabulary_uri')
+                                        :{!!  checkIfEmpty(getClickableLink($sector['vocabulary_uri']))  !!}
+                                    </dl>
+                                @endif
 
                                 <dl>@lang('activityView.description')
                                     : {!!  getFirstNarrative($sector)  !!}
