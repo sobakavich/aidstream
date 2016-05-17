@@ -16,9 +16,11 @@
                                     : {!! getBudgetInformation('period' , $budget) !!}
                                 </dl>
 
-                                <dl>@lang('activityView.status')
-                                    : {!! getBudgetInformation('status' , $budget) !!}
-                                </dl>
+                                @if(session('version') != 'V201')
+                                    <dl>@lang('activityView.status')
+                                        : {!! getBudgetInformation('status' , $budget) !!}
+                                    </dl>
+                                @endif
                             </dl>
                         @endforeach
                         <hr>

@@ -13,13 +13,12 @@
                             <a href="#" class="hide-more-info hidden">Hide more info</a>
                             <dl class="more-info-hidden">
                                 <dl>@lang('activityView.owner_org_reference')
-                                    : {{ $identifiers['owner_org'][0]['reference'] }}
+                                    : {!!  checkIfEmpty($identifiers['owner_org'][0]['reference'])  !!}
                                 </dl>
 
                                 <dl>@lang('activityView.owner_org_name'):
-                                    {!! getFirstNarrative($identifiers['owner_org'][0]) !!}
+                                    {!! checkIfEmpty(getFirstNarrative($identifiers['owner_org'][0])) !!}
                                     @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getOwnerNarrative($identifiers))])
-
                                 </dl>
                             </dl>
 
