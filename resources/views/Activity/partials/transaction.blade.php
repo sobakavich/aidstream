@@ -14,12 +14,34 @@
                             <a href="#" class="hide-more-info hidden">Hide more info</a>
                             <dl class="more-info-hidden">
                                 <dl>@lang('activityView.transaction_reference')
-                                    : {{ $transaction['reference'] }}
+                                    :  {!! checkIfEmpty($transaction['reference']) !!}
                                 </dl>
 
                                 <dl>@lang('activityView.description')
                                     : {!! getFirstNarrative($transaction['description'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['description'][0]['narrative'])])
+                                </dl>
+
+                                @if(session('version') != 'V201')
+                                    @if(array_key_exists('humanitarian' , $transaction))
+                                        <dl>@lang('activityView.humanitarian')
+                                            : @if($transaction['humanitarian'] == "")
+                                                <em>Not Available</em>
+                                            @elseif($transaction['humanitarian'] == 1)
+                                                Yes
+                                            @elseif($transaction['humanitarian'] == 0)
+                                                No
+                                            @endif
+                                        </dl>
+                                    @endif
+                                @endif
+
+                                <dl>@lang('activityView.transaction_type')
+                                    : {!! getCodeNameWithCodeValue('TransactionType' , $transaction['transaction_type'][0]['transaction_type_code'] , -4) !!}
+                                </dl>
+
+                                <dl>@lang('activityView.transaction_date')
+                                    : {{ formatDate($transaction['transaction_date'][0]['date']) }}
                                 </dl>
 
                                 <dl>@lang('activityView.provider_organization')
@@ -39,7 +61,7 @@
                                 </dl>
 
                                 <dl>@lang('activityView.sector')
-                                    : {!! checkIfEmpty($getCode->getCodeNameOnly('SectorCategory' , $transaction['sector'][0]['sector_category_code'] , -5)) !!}
+                                    : {!! getSectorInformation($transaction['sector'][0] , "") !!}
                                     {!! getTransactionSectorDetails($transaction['sector'][0]) !!} <br>
                                     {!! getFirstNarrative($transaction['sector'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['sector'][0]['narrative'])])

@@ -6,7 +6,8 @@
                 <dd>
                     @foreach($legacyDatas as $legacyData)
                         <li>{{ $legacyData['name'] . ':'. $legacyData['value'] }}</li>
-                        <em>@lang('activityView.iati_equivalent'): {{ $legacyData['iati_equivalent'] }}</em>
+                        <em>@lang('activityView.iati_equivalent')
+                            : {!!   checkIfEmpty($legacyData['iati_equivalent']) !!}</em>
                     @endforeach
                 </dd>
 

@@ -30,14 +30,21 @@
                                         <dl><strong>{!! getFirstNarrative($indicator['title'][0]) !!}</strong>
                                             @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($indicator['title'][0]['narrative'])])
                                         </dl>
-                                        <dl>@lang('activityView.indicator_reference')
-                                            : @foreach($indicator['reference'] as $reference)
-                                                <li>{!! getIndicatorReference($reference) !!}</li>
-                                            @endforeach
-                                        </dl>
+                                        @if(session('version') != 'V201')
+                                            <dl>@lang('activityView.indicator_reference')
+                                                :@if(array_key_exists('reference' , $indicator))
+                                                    @foreach($indicator['reference'] as $reference)
+                                                        <li>{!! getIndicatorReference($reference) !!}</li>
+                                                    @endforeach
+                                                @endif
+                                            </dl>
+                                        @endif
                                         <hr>
+                                        <dl>@lang('activityView.measure')
+                                            : {!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}
+                                        </dl>
                                         <dl>@lang('activityView.baseline_value')
-                                            :{!! getResultsBaseLine($indicator['baseline'][0]) !!}
+                                            : {!! getResultsBaseLine($indicator['measure'] , $indicator['baseline'][0]) !!}
                                             <br>
                                             {!! getFirstNarrative($indicator['baseline'][0]['comment'][0]) !!}
                                         </dl>
@@ -45,7 +52,7 @@
                                             <span style="margin-right: 160px">Period</span> <span
                                                     style="margin-right: 40px"> Target Value </span>
                                             <span> Actual Vaule </span>
-                                            : @foreach(getIndicatorPeriod($indicator['period']) as $period)
+                                            : @foreach(getIndicatorPeriod($indicator['measure'] , $indicator['period']) as $period)
                                                 <br>
 
                                                 <span style="margin-right: 40px">{!!   $period['period'] !!}</span>
@@ -54,11 +61,11 @@
                                                    title="So i will add here">
                                                     {!!  $period['target_value'] !!}
                                                 </a>
-                                                {{ dump(getAdditionalDetails('target' , $period['target'])) }}
+                                                {{ dump(getTargetAdditionalDetails('target' , $period['target'])) }}
 
 
                                                 <a href="#"> {!!  $period['actual_value']  !!} </a>
-                                                {{ dump(getAdditionalDetails('target' , $period['actual'])) }}
+                                                {{ dump(getTargetAdditionalDetails('actual' , $period['actual'])) }}
                                                 <br>
                                             @endforeach
                                             <hr>
@@ -75,75 +82,5 @@
             </dl>
             {{--<a href="{{route('activity.result.index', $id)}}" class="edit-element">edit</a>--}}
         </div>
-        {{--<div class="panel-body panel-level-1">--}}
-        {{--@foreach($results as $result)--}}
-        {{--<div class="panel-heading">--}}
-        {{--<div class="activity-element-title">{{$getCode->getActivityCodeName('ResultType', $result['result']['type'])}}</div>--}}
-        {{--</div>--}}
-        {{--<div class="panel-body">--}}
-        {{--<div class="panel panel-default">--}}
-        {{--<div class="panel-element-body row">--}}
-        {{--<div class="col-xs-12 col-md-12">--}}
-        {{--<div class="col-xs-12 col-sm-4">Type:</div>--}}
-        {{--<div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('ResultType', $result['result']['type'])}}</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-xs-12 col-md-12">--}}
-        {{--<div class="col-xs-12 col-sm-4">Aggregation Status:</div>--}}
-        {{--<div class="col-xs-12 col-sm-8">{{($result['result']['aggregation_status'] == "1") ? 'True' : 'False' }}</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-xs-12 col-md-12 col-lg-12 panel-level-2">--}}
-        {{--@include('Activity.partials.resultPartials.title')--}}
-        {{--@include('Activity.partials.resultPartials.description')--}}
-
-
-        {{--<div class="panel panel-default">--}}
-        {{--<div class="panel-heading">--}}
-        {{--<div class="activity-element-title">Indicator</div>--}}
-        {{--</div>--}}
-        {{--<div class="panel-level-body">--}}
-        {{--@foreach($result['result']['indicator'] as $indicator)--}}
-        {{--<div class="panel-heading">--}}
-        {{--<div class="activity-element-title">{{$getCode->getActivityCodeName('IndicatorMeasure', $indicator['measure'])}}</div>--}}
-        {{--</div>--}}
-        {{--<div class="panel-body">--}}
-        {{--<div class="panel-element-body">--}}
-        {{--<div class="col-xs-12 col-md-12">--}}
-        {{--<div class="col-xs-12 col-sm-4">Measure:</div>--}}
-        {{--<div class="col-xs-12 col-sm-8">{{$getCode->getActivityCodeName('IndicatorMeasure', $indicator['measure'])}}</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-xs-12 col-md-12">--}}
-        {{--<div class="col-xs-12 col-sm-4">Ascending:</div>--}}
-        {{--<div class="col-xs-12 col-sm-8">{{($indicator['ascending'] == "1") ? 'True' : 'False' }}</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-xs-12 col-md-12 col-lg-12 panel-level-3">--}}
-        {{--@include('Activity.partials.resultPartials.indicatorTitle')--}}
-        {{--@include('Activity.partials.resultPartials.indicatorDescription')--}}
-        {{--@include('Activity.partials.resultPartials.indicatorBaseline')--}}
-
-        {{--<div class="panel panel-default">--}}
-        {{--<div class="panel-heading">--}}
-        {{--<div class="activity-element-title">Period</div>--}}
-        {{--</div>--}}
-        {{--<div class="panel-sub-body panel-level-4">--}}
-        {{--@foreach($indicator['period'] as $period)--}}
-        {{--@include('Activity.partials.resultPartials.indicatorPeriodStart')--}}
-        {{--@include('Activity.partials.resultPartials.indicatorPeriodEnd')--}}
-        {{--@include('Activity.partials.resultPartials.indicatorTarget')--}}
-        {{--@include('Activity.partials.resultPartials.indicatorActual')--}}
-        {{--@endforeach--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--@endforeach--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--@endforeach--}}
-        {{--</div>--}}
     </div>
 @endif

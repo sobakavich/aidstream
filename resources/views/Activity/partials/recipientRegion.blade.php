@@ -12,9 +12,11 @@
                             <dl>@lang('activityView.region_vocabulary')
                                 :{{ $recipientRegion['region_vocabulary'] . '-' . substr($getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary']) , 0 , -4) }}
                             </dl>
-                            <dl>@lang('activityView.vocabulary_uri')
-                                :{!!  getClickableLink($recipientRegion['vocabulary_uri']) !!}
-                            </dl>
+                            @if(session('version') != 'V201')
+                                <dl>@lang('activityView.vocabulary_uri')
+                                    :{!!  getClickableLink($recipientRegion['vocabulary_uri']) !!}
+                                </dl>
+                            @endif
                             <dl>@lang('activityView.description')
                                 :{!! getFirstNarrative($recipientRegion) !!}
                                 @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientRegion['narrative'])])

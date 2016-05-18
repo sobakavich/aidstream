@@ -14,11 +14,15 @@
                             <a href="#" class="show-more-info">Show more info</a>
                             <a href="#" class="hide-more-info hidden">Hide more info</a>
                             <dl class="more-info-hidden">
+                                <dl>@lang('activityView.location_reference')
+                                    : {!! checkIfEmpty($location['reference']) !!}
+                                </dl>
                                 <dl>@lang('activityView.location_id_vocabulary')
                                     : @foreach($location['location_id'] as $locationId)
                                         <li>{!!  getLocationIdVocabulary($locationId)  !!}</li>
                                     @endforeach
                                 </dl>
+
                                 <hr>
                                 <dl>@lang('activityView.location_description')
                                     : {!! getFirstNarrative($location['location_description'][0]) !!}

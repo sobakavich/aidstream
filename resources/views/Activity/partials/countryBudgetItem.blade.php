@@ -8,9 +8,15 @@
                         <li>{{ getCountryBudgetItems($countryBudgetItems[0]['vocabulary'], $budgetItems) }}</li>
                         <a href="#" class="show-more-info">Show more info</a>
                         <a href="#" class="hide-more-info hidden">Hide more info</a>
-                        <dl class="hidden-info">@lang('activityView.description')
-                            : {!!  getFirstNarrative($budgetItems['description'][0]) !!}
-                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($budgetItems['description'][0]['narrative'])])
+                        <dl class="hidden-info">
+                            <dl>@lang('activityView.description')
+                                : {!!  getFirstNarrative($budgetItems['description'][0]) !!}
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($budgetItems['description'][0]['narrative'])])
+                            </dl>
+
+                            <dl>@lang('activityView.vocabulary')
+                                : {!! getCodeNameWithCodeValue('BudgetIdentifierVocabulary' ,$countryBudgetItems[0]['vocabulary'] , -4 ) !!}
+                            </dl>
                         </dl>
                     @endforeach
                 </dd>

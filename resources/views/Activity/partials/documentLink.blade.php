@@ -21,13 +21,22 @@
                                     <li>{!! getCodeNameWithCodeValue('DocumentCategory' , $category['code'] , -5) !!}</li>
                                 @endforeach
                             </dl>
+
+                            <dl>@lang('activityView.language')
+                                : {!! checkIfEmpty(getDocumentLinkLanguages($documentLink['document_link']['language'])) !!}
+                            </dl>
+                            @if(session('version') != 'V201')
+                                <dl>@lang('activityView.document_date')
+                                    : {!! checkIfEmpty(formatDate(getVal($documentLink , ['document_link' , 'document_date' , 0 , 'date']))) !!}
+                                </dl>
+                            @endif
                         </dl>
                     @endforeach
 
                 </dd>
             </dl>
             {{--@if(!request()->route()->hasParameter('document_link'))--}}
-                {{--<a href="{{route('activity.document-link.index', $id)}}" class="edit-element">edit</a>--}}
+            {{--<a href="{{route('activity.document-link.index', $id)}}" class="edit-element">edit</a>--}}
             {{--@endif--}}
         </div>
     </div>

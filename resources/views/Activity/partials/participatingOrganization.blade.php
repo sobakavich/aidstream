@@ -26,6 +26,14 @@
                                 <dl>@lang('activityView.organization_role')
                                     : {{$organization['organization_role'] . ' - ' . $getCode->getCodeNameOnly("OrganisationRole",$organization['organization_role']) }}
                                 </dl>
+
+                                @if(session('version') != 'V201')
+                                    @if(array_key_exists('activity_id' , $organization))
+                                        <dl>@lang('activityView.activity_id')
+                                            : {!! checkIfEmpty($organization['activity_id']) !!}
+                                        </dl>
+                                    @endif
+                                @endif
                             </dl>
                             <hr>
                         @endforeach
