@@ -86,6 +86,7 @@ class OrganizationController extends Controller
         return view(
             'Organization/show',
             compact(
+                'id',
                 'organization',
                 'reporting_org',
                 'org_name',
@@ -238,5 +239,41 @@ class OrganizationController extends Controller
         }
 
         return redirect()->back()->withValue($value);
+    }
+
+    /**
+     * View organization xml file
+     * @param $orgId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewOrganizationXml($orgId)
+    {
+        $orgElem    = $this->organizationManager->getOrganizationElement();
+        $xmlService = $orgElem->getOrgXmlService();
+        $xml        = $xmlService->generateTemporaryOrganizationXml($this->organizationManager->getOrganization($orgId), $this->organizationManager->getOrganizationData($orgId),
+            $this->settingsManager->getSettings($orgId), $orgElem);
+
+        $xmlLines = $xmlService->getFormattedXml($xml);
+        $messages = $xmlService->getSchemaErrors($xml, session('version'));
+
+        return view('Organization.xmlView', compact('xmlLines', 'messages', 'orgId'));
+    }
+
+    /**
+     * Download organization xml
+     * @param $orgId
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadOrganizationXml($orgId)
+    {
+        $orgElem    = $this->organizationManager->getOrganizationElement();
+        $xmlService = $orgElem->getOrgXmlService();
+        $xml        = $xmlService->generateTemporaryOrganizationXml($this->organizationManager->getOrganization($orgId), $this->organizationManager->getOrganizationData($orgId),
+            $this->settingsManager->getSettings($orgId), $orgElem);
+
+        return response()->make($xml, 200, [
+            'Content-type'        => 'text/xml',
+            'Content-Disposition' => sprintf('attachment; filename=orgXmlFile.xml')
+        ]);
     }
 }

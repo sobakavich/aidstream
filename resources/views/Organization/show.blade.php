@@ -21,6 +21,7 @@
                 ?>
                 <div class="element-panel-heading">
                     <div><span class="pull-left">Organization</span></div>
+                    <div><span class="pull-left"><a href="{{route('view.organizationXml', ['orgId' => $id])}}" class="btn btn-primary">View Xml</a></span></div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper">
                     <div class="activity-status activity-status-{{ $status_label[$status] }}">
