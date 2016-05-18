@@ -34,8 +34,9 @@ function trimInput($input)
 
 /**
  * checks empty template or empty array
- * @param $input
+ * @param $data
  * @return bool
+ * @internal param $input
  */
 function emptyOrHasEmptyTemplate($data)
 {
@@ -202,7 +203,7 @@ function getOwnerNarrative(array $groupedIdentifiers)
  */
 function getFirstNarrative(array $narrative)
 {
-    $narrativeElements = $narrative['narrative'][0];
+    $narrativeElements = getVal($narrative, ['narrative', 0]);
 
     return (empty($narrativeElements['narrative'])) ? '<em>Not available</em>' :
         sprintf(
@@ -256,12 +257,13 @@ function checkIfEmailOrWebSite($type, $information)
 
 /**
  * Checks if the provided value is empty or not. If empty returns not available.
- * @param $information
+ * @param        $information
+ * @param string $message
  * @return string
  */
-function checkIfEmpty($information)
+function checkIfEmpty($information, $message = '<em>Not Available</em>')
 {
-    return (empty($information)) ? '<em>Not Available</em>' : $information;
+    return (empty($information)) ? $message : $information;
 }
 
 /**
@@ -358,8 +360,8 @@ function getAdministrativeVocabulary(array $location)
             '%s - %s (Code:%s , level: %s)',
             $location['vocabulary'],
             $administrativeVocabulary,
-            $location['code'],
-            $location['level']
+            checkIfEmpty($location['code']),
+            checkIfEmpty($location['level'])
         );
     }
 
@@ -374,12 +376,12 @@ function getLocationPoint(array $location)
 {
     $latitude  = $location['point'][0]['position'][0]['latitude'];
     $longitude = $location['point'][0]['position'][0]['longitude'];
-    $srsLink   = sprintf(
-        '<a href="%s" target="_blank">%s</a>',
-        $location['point'][0]['srs_name'],
+
+    $srsLink = (empty($location['point'][0]['srs_name']) ? '<em>Not Available </em>' : getClickableLink(
         $location['point'][0]['srs_name']
+    )
     );
-    $latLong   = (empty($latitude && $longitude)) ? '<em>Not Available</em>' : sprintf('%s, %s', $latitude, $longitude);
+    $latLong = (empty($latitude && $longitude)) ? '<em>Not Available</em>' : sprintf('%s, %s', $latitude, $longitude);
 
     return sprintf('%s (<em>SRS Name: %s </em>)', $latLong, $srsLink);
 }
@@ -414,10 +416,20 @@ function getSectorInformation(array $sector, $percentage)
         $sectorCodeValue = app('App\Helpers\GetCodeName')->getCodeNameOnly('Sector', $sector['sector_code'], -7);
 
         if (empty($percentage)) {
-            return sprintf('%s - %s', $sector['sector_code'], $sectorCodeValue);
+            return sprintf(
+                '%s - %s',
+                checkIfEmpty($sector['sector_code'], 'Sector Code Not Available'),
+                checkIfEmpty($sectorCodeValue),
+                'Sector Code Value Not Available'
+            );
         }
 
-        return sprintf('%s - %s (%s)', $sector['sector_code'], $sectorCodeValue, $percentage."%");
+        return sprintf(
+            '%s - %s (%s)',
+            checkIfEmpty($sector['sector_code'], 'Sector Code Not Available'),
+            checkIfEmpty($sectorCodeValue, 'Sector Code Value Not Available '),
+            $percentage."%"
+        );
 
     } else {
         if ($sectorVocabulary === "2") {
@@ -427,17 +439,30 @@ function getSectorInformation(array $sector, $percentage)
                 -5
             );
             if (empty($percentage)) {
-                return sprintf('%s - %s', $sector['sector_category_code'], $sectorCodeValue);
+                return sprintf(
+                    '%s - %s',
+                    checkIfEmpty($sector['sector_category_code'], 'Sector Code Not Available'),
+                    checkIfEmpty($sectorCodeValue, 'Sector Code Value Not Available')
+                );
             }
 
-            return sprintf('%s - %s (%s)', $sector['sector_category_code'], $sectorCodeValue, $percentage." %");
+            return sprintf(
+                '%s - %s (%s)',
+                checkIfEmpty($sector['sector_category_code'], 'Sector Code Not Available'),
+                checkIfEmpty($sectorCodeValue, 'Sector Code Value Not Available'),
+                $percentage." %"
+            );
 
         } else {
             if (empty($percentage)) {
                 return $sector['sector_text'];
             }
 
-            return sprintf('%s (%s)', $sector['sector_text'], $percentage."%");
+            return sprintf(
+                '%s (%s)',
+                checkIfEmpty($sector['sector_text'], 'Sector Text Not Available'),
+                $percentage."%"
+            );
 
         }
     }
@@ -479,9 +504,18 @@ function getCodeNameWithCodeValue($codeNameType, $codeValue, $lengthToCut)
  */
 function getCountryBudgetItems($vocabularyType, array $countryBudgetItem)
 {
-    $budgetItemCode = ($vocabularyType == 1) ? $countryBudgetItem['code'] : $countryBudgetItem['code_text'];
+    $budgetItemCode = ($vocabularyType == 1) ? getCodeNameWithCodeValue(
+        'BudgetIdentifier',
+        $countryBudgetItem['code'],
+        -7
+    ) : $countryBudgetItem['code_text'];
 
-    return sprintf('%s (%s%s)', $budgetItemCode, $countryBudgetItem['percentage'], '%');
+    return (empty($countryBudgetItem['percentage'])) ? sprintf('%s', $budgetItemCode) : sprintf(
+        '%s (%s%s)',
+        $budgetItemCode,
+        $countryBudgetItem['percentage'],
+        '%'
+    );
 }
 
 /**
@@ -647,24 +681,28 @@ function getIndicatorReference(array $reference)
 
 /**
  * Returns the baseline values for the indicator.
+ * @param       $measure
  * @param array $baseLine
  * @return string
  */
-function getResultsBaseLine(array $baseLine)
+function getResultsBaseLine($measure, array $baseLine)
 {
-    $year  = checkIfEmpty($baseLine['year']);
-    $value = ($baseLine['value'] == "") ? '<em> Not Available </em>' : $baseLine['value']."%";
+
+    $year    = checkIfEmpty($baseLine['year']);
+    $measure = ($measure == 2) ? '%' : trans_choice('activityView.units', $baseLine['value']);
+    $value   = ($baseLine['value'] == "") ? '<em> Not Available </em>' : $baseLine['value'].$measure;
 
     return sprintf('%s (Year:%s)', $value, $year);
 }
 
 /**
  * Get Indicator Period in a format.
+ * @param       $measure
  * @param array $periods
- * @internal param array $period
  * @return array
+ * @internal param array $period
  */
-function getIndicatorPeriod(array $periods)
+function getIndicatorPeriod($measure, array $periods)
 {
     $outputPeriod      = [];
     $finalOutputPeriod = [];
@@ -674,8 +712,9 @@ function getIndicatorPeriod(array $periods)
         $targetValue                  = $period['target'][0]['value'];
         $actualValue                  = $period['actual'][0]['value'];
         $periodValue                  = getBudgetPeriod($period);
-        $targetValue                  = ($targetValue == "") ? '<em>Not Available</em>' : $targetValue."%";
-        $actualValue                  = ($actualValue == "") ? '<em>Not Available</em>' : $actualValue."%";
+        $measure                      = ($measure == 2) ? '%' : ' '.trans_choice('activityView.units', $targetValue);
+        $targetValue                  = ($targetValue == "") ? '<em>Not Available</em>' : $targetValue.$measure;
+        $actualValue                  = ($actualValue == "") ? '<em>Not Available</em>' : $actualValue.$measure;
         $outputPeriod['period']       = $periodValue;
         $outputPeriod['target_value'] = $targetValue;
         $outputPeriod['actual_value'] = $actualValue;
@@ -696,11 +735,13 @@ function getIndicatorPeriod(array $periods)
  * @internal param array $period
  * @return array
  */
-function getAdditionalDetails($type, array $target)
+function getTargetAdditionalDetails($type, array $target)
 {
-    $details                  = [];
-    $details['locationRef']   = getLocationRef('location', $target);
-    $details['dimension']     = getDimension($target);
+    $details = [];
+    if (session('version') != 'V201') {
+        $details['locationRef'] = getLocationRef('location', $target);
+        $details['dimension']   = getDimension($target);
+    }
     $details['first_comment'] = getFirstNarrative($target['comment'][0]);
 
     return $details;
@@ -774,13 +815,12 @@ function groupTransactionElements(array $transactions)
  */
 function getTransactionProviderDetails(array $transaction, $type)
 {
-//    dd($transaction);
 
     $organizationIdentifierCode = checkIfEmpty($transaction['organization_identifier_code']);
     $activityId                 = ($type == 'provider') ? $transaction['provider_activity_id'] : $transaction['receiver_activity_id'];
     $activityId                 = checkIfEmpty($activityId);
     $transactionType            = (session('version') != 'V201') ? checkIfEmpty(
-        $transaction['type']
+        getVal($transaction, ['type'], '<em> Not Available </em>')
     ) : '<em>Not available</em>';
     $activityIdText             = ($type == 'provider') ? 'Provider activity id' : 'Receiver activity id';
 
@@ -807,10 +847,11 @@ function getTransactionSectorDetails(array $sector)
     );
 
     if (session('version') != 'V201') {
-        $vocabularyURI = ($sector['vocabulary_uri'] == "") ? '<em> Not Available </em>' : $sector['vocabulary_uri'];
-        $vocabularyURI = getClickableLink($vocabularyURI);
+        $vocabularyURI = ($sector['vocabulary_uri'] == "") ? '<em> Not Available </em>' : getClickableLink(
+            $sector['vocabulary_uri']
+        );
 
-        return sprintf('<em>(Vocabulary: %s Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
+        return sprintf('<em>(Vocabulary: %s , Vocabulary URI: %s )</em>', $vocabulary, $vocabularyURI);
     } else {
 
         return sprintf('<em>(Vocabulary: %s)</em>', $vocabulary);
@@ -858,4 +899,23 @@ function getRecipientRegionDetails(array $region)
     }
 
     return sprintf('<em>(Vocabulary: %s)</em>', $vocabulary);
+}
+
+/**
+ * Get the document link languages in comma separated way.
+ * @param array $languages
+ * @return array|string
+ */
+function getDocumentLinkLanguages(array $languages)
+{
+    $newLanguage = [];
+
+    foreach ($languages as $language) {
+        $newLanguage[] = getLanguage($language['language']);
+    }
+
+    $newLanguage = implode(', ', $newLanguage);
+
+    return $newLanguage;
+
 }

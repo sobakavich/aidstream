@@ -13,10 +13,11 @@
                             <a href="#" class="show-more-info">Show more info</a>
                             <a href="#" class="hide-more-info hidden">Hide more info</a>
                             <dl class="hidden-info">
-                                <dl>@lang('activityView.vocabulary_uri')
-                                    :{!! getClickableLink($policyMarker['vocabulary_uri']) !!}
-                                </dl>
-
+                                @if(session('version') == 'V201')
+                                    <dl>@lang('activityView.vocabulary_uri')
+                                        :{!! getClickableLink(getVal($policyMarker , ['vocabulary_uri'])) !!}
+                                    </dl>
+                                @endif
                                 <dl>@lang('activityView.significance')
                                     : {!! getCodeNameWithCodeValue('PolicySignificance' , $policyMarker['significance'] , -4) !!}
                                 </dl>

@@ -16,17 +16,19 @@
                                     :{!! getBudgetPeriod($disbursement) !!}
                                 </dl>
 
-                                <dl>@lang('activityView.provider_organization')
-                                    :{!!  getFirstNarrative($disbursement['provider_org'][0])  !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($disbursement['provider_org'][0]['narrative'])])
-                                    {!! getDisbursementOrganizationDetails($disbursement , 'provider_org') !!}
-                                </dl>
+                                @if(session('version') != 'V201')
+                                    <dl>@lang('activityView.provider_organization')
+                                        :{!!  getFirstNarrative($disbursement['provider_org'][0])  !!}
+                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($disbursement['provider_org'][0]['narrative'])])
+                                        {!! getDisbursementOrganizationDetails($disbursement , 'provider_org') !!}
+                                    </dl>
 
-                                <dl>@lang('activityView.receiver_organization')
-                                    :{!!  getFirstNarrative($disbursement['receiver_org'][0])  !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($disbursement['receiver_org'][0]['narrative'])])
-                                    {!! getDisbursementOrganizationDetails($disbursement , 'receiver_org') !!}
-                                </dl>
+                                    <dl>@lang('activityView.receiver_organization')
+                                        :{!!  getFirstNarrative($disbursement['receiver_org'][0])  !!}
+                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($disbursement['receiver_org'][0]['narrative'])])
+                                        {!! getDisbursementOrganizationDetails($disbursement , 'receiver_org') !!}
+                                    </dl>
+                                @endif
                             </dl>
                         @endforeach
                         <hr>

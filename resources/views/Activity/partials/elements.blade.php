@@ -55,6 +55,9 @@
         @include('Activity.partials.defaultAidType')
         @include('Activity.partials.defaultTiedStatus')
         @include('Activity.partials.countryBudgetItem')
+        @if(!empty($humanitarianScopes))
+            @include('Activity.partials.humanitarianScope')
+        @endif
         @include('Activity.partials.budget')
         @include('Activity.partials.plannedDisbursement')
         @include('Activity.partials.transaction')
@@ -64,8 +67,6 @@
         @include('Activity.partials.legacyData')
         @include('Activity.partials.condition')
         @include('Activity.partials.result')
-        @if(!empty($humanitarianScopes))
-            @include('Activity.partials.humanitarianScope')
-        @endif
+
     </div>
 </div>

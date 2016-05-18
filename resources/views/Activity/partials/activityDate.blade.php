@@ -13,7 +13,7 @@
                             <a href="#" class="hide-more-info hidden">Hide more info</a>
                             <dl class="more-info-hidden">
                                 <dl>{{ $getCode->getCodeNameOnly('ActivityDateType', $key) }} @lang('activityView.description')
-                                    : {!! checkIfEmpty(getFirstNarrative($groupedDate)) !!}</dl>
+                                    : {!! checkIfEmpty(checkIfEmpty(getFirstNarrative($groupedDate))) !!}</dl>
                                 @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($groupedDate['narrative'])])
 
                             </dl>
