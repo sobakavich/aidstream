@@ -30,5 +30,21 @@ $router->group(
                 'uses' => 'OrganizationController@orgBulkPublishToRegistry'
             ]
         );
+
+        $router->get(
+            'organization/{orgId}/view/xml',
+            [
+                'as'   => 'view.organizationXml',
+                'uses' => 'OrganizationController@viewOrganizationXml'
+            ]
+        );
+
+        $router->get(
+            'organization/{orgId}/download/xml',
+            [
+                'as'   => 'download.organizationXml',
+                'uses' => 'OrganizationController@downloadOrganizationXml'
+            ]
+        );
     }
 );
