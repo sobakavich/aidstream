@@ -2,6 +2,8 @@
 
 @section('title', 'Organization - ' . $reporting_org['reporting_organization_identifier'])
 
+@inject('getCode', 'App\Helpers\GetCodeName')
+
 @section('content')
 
     {{--*/ $orgId = session('org_id');   /*--}}
@@ -48,12 +50,13 @@
                     <div class="panel panel-default panel-element-detail element-show">
                         <div class="panel-body">
                             @include('Organization.partials.reportingOrganization')
+                            @include('Organization.partials.organizationIdentifier')
                             @include('Organization.partials.organizationName')
                             @include('Organization.partials.totalBudget')
                             @include('Organization.partials.recipientOrganizationBudget')
+                            @include('Organization.partials.recipientRegionBudget')
                             @include('Organization.partials.recipientCountryBudget')
                             @include('Organization.partials.documentLink')
-                            @include('Organization.partials.recipientRegionBudget')
                             @include('Organization.partials.totalExpenditure')
                         </div>
                     </div>

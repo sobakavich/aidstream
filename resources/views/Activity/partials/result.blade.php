@@ -43,6 +43,16 @@
                                         <dl>@lang('activityView.measure')
                                             : {!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}
                                         </dl>
+
+                                        <dl>@lang('activityView.ascending')
+                                            : @if($indicator['ascending'] == 1)
+                                                Yes
+                                            @elseif($indicator['ascending'] == 0)
+                                                No
+                                            @else
+                                                <em>Not Available</em>
+                                            @endif
+                                        </dl>
                                         <dl>@lang('activityView.baseline_value')
                                             : {!! getResultsBaseLine($indicator['measure'] , $indicator['baseline'][0]) !!}
                                             <br>
