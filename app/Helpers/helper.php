@@ -181,7 +181,7 @@ function getOtherLanguages(array $language)
  * @param       $type
  * @return collection
  */
-function groupActivityElements(array $elements, $type)
+function groupActivityElements(array $elements, $type = "")
 {
     return collect($elements)->groupBy($type);
 }
@@ -284,7 +284,7 @@ function getRecipientInformation($code, $percentage, $type)
         return sprintf('%s - %s', $code, $name);
     }
 
-    return sprintf('%s - %s (%s)', $code, $name, $percentage);
+    return sprintf('%s - %s (%s%s)', $code, $name, $percentage , '%');
 }
 
 /**
@@ -572,6 +572,13 @@ function getCurrencyValueDate($budgetValue, $type)
         $budgetValue['date']
     );
     $currency     = app('App\Helpers\GetCodeName')->getCodeNameOnly('Currency', $currency, -6);
+
+
+    $currency = (empty($currency)) ? getDefaultCurrency() : $currency;
+
+    if (empty($budgetAmount)) {
+        return sprintf('<em>Amount Not Available</em>');
+    }
 
     return sprintf(
         '%s %s (<em>Valued at %s</em>)',
@@ -918,4 +925,17 @@ function getDocumentLinkLanguages(array $languages)
 
     return $newLanguage;
 
+}
+
+/**
+ * Get First Name of the organization.
+ * @param array $orgName
+ * @return string
+ */
+function getFirstOrgName(array  $orgName)
+{
+    $name     = checkIfEmpty($orgName[0]['narrative']);
+    $language = checkIfEmpty(getLanguage($orgName[0]['language']));
+
+    return sprintf('%s (<em>language:  %s</em>)', $name, $language);
 }
