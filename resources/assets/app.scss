@@ -268,7 +268,7 @@ button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
 
 .table {
   table-layout: auto;
-  margin-top: 20px!important;
+  margin-top: 20px !important;
   > thead {
     > tr {
       > th {
@@ -3088,7 +3088,7 @@ label.required::after {
   margin-left: 2px;
 }
 
-.added-new-block,.has_add_more > .form-group + .form-group {
+.added-new-block, .has_add_more > .form-group + .form-group {
   border-top: 1px dashed #A9C6DE !important;
   padding-bottom: 0 !important;
 }
@@ -3247,7 +3247,7 @@ table.dataTable thead .sorting_desc {
   background: $url_13 no-repeat right;
 }
 
-.logs-container .collection_form .form-group+.form-group {
+.logs-container .collection_form .form-group + .form-group {
   padding-top: 10px;
 }
 
@@ -3259,7 +3259,7 @@ table.dataTable thead .sorting_desc {
     padding-top: 8px;
   }
   .select2-container {
-    width: 415px!important;
+    width: 415px !important;
   }
 }
 
@@ -3273,6 +3273,33 @@ table.dataTable thead .sorting_desc {
 
 .logs-container .create-form {
   padding-bottom: 0;
+}
+
+.view-xml-btn {
+  float: right;
+  margin: 8px 8px 0 8px;
+}
+
+.back-to-activity,.view-xml-btn a {
+  font-size: 14px;
+  text-decoration: underline;
+  margin: 0 8px;
+}
+
+.xml-info {
+  word-break: break-all;
+  li.error, li.success {
+    background: $color_mandy_approx;
+    color: $color_white;
+    padding: 10px 36px;
+    margin-bottom: 20px;
+  }
+  li.success {
+    background: $color_emerald_approx;
+  }
+  > div {
+    padding: 0 36px;
+  }
 }
 
 @media all and (max-width: 1030px) {
@@ -3989,7 +4016,7 @@ table.dataTable thead .sorting_desc {
     }
   }
 
-  .logs-container .collection_form .form-group+.form-group {
+  .logs-container .collection_form .form-group + .form-group {
     padding-top: 25px;
   }
 }
@@ -4088,7 +4115,7 @@ table.dataTable thead .sorting_desc {
 
   .element-panel-heading-info {
     float: left;
-    width: 80%;
+    width: 75%;
   }
 
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
@@ -4110,6 +4137,10 @@ table.dataTable thead .sorting_desc {
   .jspPane {
     width: 267px !important;
   }
+}
+
+.panel-xml-btn {
+  margin-top: 8px;
 }
 
 @media all and (max-width: 1200px) {
@@ -4292,13 +4323,12 @@ table.dataTable thead .sorting_desc {
   word-wrap: break-word;
 }
 
-
 .logs-container .settings-wrapper .create-form.activity-log-filter-wrap .select2-container {
-  width: 100%!important;
+  width: 100% !important;
 }
 
 .sector_category_select {
-  label,.select2-container {
+  label, .select2-container {
     margin-left: 15px;
   }
 }

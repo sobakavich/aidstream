@@ -13,24 +13,26 @@
                         <div class="element-panel-heading-info">
                             <span>{{$activityDataList['identifier']['iati_identifier_text']}}</span>
                             <span class="last-updated-date">Last Updated on: {{changeTimeZone($activityDataList['updated_at'], 'M d, Y H:i')}}</span>
+                        </div>
+                        <div class="panel-action-btn panel-xml-btn">
+                            <span><a href="{{ route('activity.show', $activityId) }}" class="back-to-activity">Back to Activity View</a></span>
                             <span><a href="{{route('download.activityXml', ['activityId' => $activityId])}}" class="btn btn-primary">Download Xml</a></span>
-                            <span><a href="{{ route('activity.show', $activityId) }}" class="btn btn-primary">View Activity</a></span>
                         </div>
                     </div>
                 </div>
+                <div class="xml-info">
                 <ul>
                     @forelse($messages as $message)
-                        <li>{!! $message !!}</li>
+                        <li class="error">{!! $message !!}</li>
                     @empty
-                        <li>Validated!!</li>
+                        <li class="success">Validated!!</li>
                     @endforelse
                 </ul>
-                <br/>
-                <div style="word-break: break-all;">
+                <div>
                 @foreach($xmlLines as $key => $line)
                     {{--*/ $number = $key + 1; /*--}}
                     {{--*/ $class = array_key_exists($number, $messages) ? 'class="error"' : '' /*--}}
-                    <div id="{{ $number }}" {{$class}}><strong style="{{ array_key_exists($number, $messages) ? 'color:red': ''  }}">{{ $number }}</strong>{{ $line }}</div>
+                    <div id="{{ $number }}" {{$class}} style="{{ array_key_exists($number, $messages) ? 'color:#e15454;background:#eee;': ''  }}"><strong>{{ $number }}</strong>{{ $line }}</div>
                 @endforeach
                 </div>
             </div>
