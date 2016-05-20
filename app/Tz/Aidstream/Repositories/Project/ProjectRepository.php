@@ -1,7 +1,6 @@
 <?php namespace App\Tz\Aidstream\Repositories\Project;
 
 use App\Tz\Aidstream\Models\Project;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class ProjectRepository
