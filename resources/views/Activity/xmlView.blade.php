@@ -26,10 +26,13 @@
                     @endforelse
                 </ul>
                 <br/>
+                <div style="word-break: break-all;">
                 @foreach($xmlLines as $key => $line)
                     {{--*/ $number = $key + 1; /*--}}
-                    <div id="{{ $number }}"><strong style="{{ array_key_exists($number, $messages) ? 'color:red': ''  }}">{{ $number }}</strong>{{ $line }}</div>
+                    {{--*/ $class = array_key_exists($number, $messages) ? 'class="error"' : '' /*--}}
+                    <div id="{{ $number }}" {{$class}}><strong style="{{ array_key_exists($number, $messages) ? 'color:red': ''  }}">{{ $number }}</strong>{{ $line }}</div>
                 @endforeach
+                </div>
             </div>
         </div>
     </div>
