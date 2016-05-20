@@ -2805,6 +2805,7 @@ body .ui-tooltip {
 	border: 1px solid #666;
 	}
 
+@charset "UTF-8";
 html {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -5639,6 +5640,34 @@ table.dataTable thead .sorting_desc {
 
 .logs-container .create-form {
   padding-bottom: 0; }
+
+.view-xml-btn {
+  float: right;
+   margin: 8px 8px 0 8px; }
+
+  .back-to-activity, .view-xml-btn a, .back-to-organization {
+   font-size: 14px;
+   text-decoration: underline;
+   margin: 0 8px; }
+
+  .xml-info {
+   word-break: break-all; }
+    .xml-info  li.error,   .xml-info li.success {
+    background: #e15454;
+     color: #fff;
+     padding: 10px 36px;
+     margin-bottom: 20px; }
+    .xml-info   li.success {
+     background: #52cc88; }
+    .xml-info   > div {
+     padding: 0 36px; }
+
+.org-title {
+  margin-top: 5px;
+  float: left; }
+
+.org-xml-btn {
+  margin-top: 4px; }
 
 @media all and (max-width: 1030px) {
   .activity-status {
