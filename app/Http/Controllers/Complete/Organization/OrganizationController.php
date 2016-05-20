@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\Activity\ActivityManager;
+use App\Services\RequestManager\OrganizationElementValidator;
 use App\Services\SettingsManager;
 use App\Services\Organization\OrganizationManager;
 use App\Services\FormCreator\Organization\OrgReportingOrgForm;
@@ -101,11 +102,12 @@ class OrganizationController extends Controller
     }
 
     /**
-     * @param         $id
-     * @param Request $request
+     * @param                              $id
+     * @param Request                      $request
+     * @param OrganizationElementValidator $orgElementValidator
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateStatus($id, Request $request)
+    public function updateStatus($id, Request $request, OrganizationElementValidator $orgElementValidator)
     {
         $organization = $this->organizationManager->getOrganization($id);
 
@@ -126,8 +128,16 @@ class OrganizationController extends Controller
         $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
         if ($status === "1") {
+            $validationMessage = $orgElementValidator->validateOrganization($organizationData);
+
+            if ($validationMessage) {
+                $response = ['type' => 'warning', 'code' => ['message', ['message' => $validationMessage]]];
+
+                return redirect()->back()->withResponse($response);
+            }
+
             $messages = $xmlService->validateOrgSchema($organization, $organizationData, $settings, $orgElem);
-            if ($messages !== '') {
+            if ($messages != []) {
                 $response = ['type' => 'danger', 'messages' => $messages];
 
                 return redirect()->back()->withResponse($response);
