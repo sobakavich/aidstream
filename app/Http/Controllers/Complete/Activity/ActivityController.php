@@ -267,7 +267,7 @@ class ActivityController extends Controller
 
             $messages = $xmlService->validateActivitySchema($activityData, $transactionData, $resultData, $settings, $activityElement, $orgElem, $organization);
             if ($messages) {
-                $response = ['type' => 'danger', 'messages' => $messages];
+                $response = ['type' => 'danger', 'messages' => $messages, 'schema' => 'true'];
 
                 return redirect()->back()->withResponse($response);
             }
@@ -750,10 +750,11 @@ class ActivityController extends Controller
 
     /**
      * Get data from DB and generate xml
-     * @param $activityId
+     * @param           $activityId
+     * @param bool|null $viewErrors
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function viewActivityXml($activityId)
+    public function viewActivityXml($activityId, $viewErrors = false)
     {
         $activityDataList    = $this->activityManager->getActivityData($activityId);
         $activityElement = $this->activityManager->getActivityElement();
@@ -766,7 +767,7 @@ class ActivityController extends Controller
         $xmlLines = $xmlService->getFormattedXml($xml);
         $messages = $xmlService->getSchemaErrors($xml, session('version'));
 
-        return view('Activity.xmlView', compact('xmlLines', 'messages', 'activityDataList', 'activityId'));
+        return view('Activity.xmlView', compact('xmlLines', 'messages', 'activityDataList', 'activityId', 'viewErrors'));
     }
 
     /**

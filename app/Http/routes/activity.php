@@ -117,6 +117,14 @@ $router->group(
         );
 
         $router->get(
+            '/activity/{activityId}/xml/view/{true}',
+            [
+                'as' => 'errors.activityXml',
+                'uses' => 'ActivityController@viewActivityXml'
+            ]
+        );
+
+        $router->get(
             '/activity/{activity}/xml/download',
             [
                 'as'   => 'download.activityXml',

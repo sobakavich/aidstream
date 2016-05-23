@@ -3280,7 +3280,7 @@ table.dataTable thead .sorting_desc {
   margin: 8px 8px 0 8px;
 }
 
-.back-to-activity,.view-xml-btn a {
+.back-to-activity, .view-xml-btn a {
   font-size: 14px;
   text-decoration: underline;
   margin: 0 8px;
@@ -3297,9 +3297,27 @@ table.dataTable thead .sorting_desc {
   li.success {
     background: $color_emerald_approx;
   }
-  > div {
-    padding: 0 36px;
+}
+
+.xml-info {
+  div + .pln {
+    display: none;
   }
+  div > span.pln:first-child {
+    display: none;
+  }
+
+  pre.prettyprint {
+    border: 0 !important;
+    padding: 10px !important;
+  }
+}
+
+.view-error, .view-error:hover {
+  color: $color_white;
+  text-decoration: underline;
+  margin-left: 57px;
+  display: inline-block;
 }
 
 @media all and (max-width: 1030px) {
@@ -4115,7 +4133,7 @@ table.dataTable thead .sorting_desc {
 
   .element-panel-heading-info {
     float: left;
-    width: 75%;
+    width: 72%;
   }
 
   .settings-checkall-wrapper > .collection_form > .form-group > .form-group, .checkall-wrapper .form-group:nth-child(3) > .form-group > .form-group {
