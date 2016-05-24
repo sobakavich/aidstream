@@ -1,11 +1,10 @@
 @if(!empty($activityScope))
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <dl class="dl-horizontal">
-                <dt>@lang('activityView.activity_scope')</dt>
-                <dd>
+    <div class="activity-element-wrapper">
+        <div class="activity-element-list">
+            <div class="activity-element-label"> @lang('activityView.activity_scope')</div>
+            <div class="activity-element-info">
                 {{ $getCode->getCodeNameOnly('ActivityScope', $activityScope) }}
-            </dl>
+            </div>
         </div>
         {{--<a href="{{route('activity.activity-status.index', $id)}}" class="edit-element">edit</a>--}}
         {{--<a href="{{route('activity.delete-element', [$id, 'activity_status'])}}" class="delete pull-right">remove</a>--}}

@@ -1,25 +1,15 @@
 @if(!emptyOrHasEmptyTemplate($relatedActivities))
-    <div class="panel panel-default expanded">
-        <div class="panel-heading">
-            <dl class="dl-horizontal">
-                <dt>@lang('activityView.related_activity')</dt>
-                <dd>
-                @foreach(groupActivityElements($relatedActivities , 'relationship_type') as $key => $relatedActivities)
-                    <dt>
-                        {!! $getCode->getCodeNameOnly('RelatedActivityType' , $key) !!}
-                    </dt>
-                    <dd>
-                        @foreach($relatedActivities as $relatedActivity)
-                            <li> {{ $relatedActivity['activity_identifier'] }}</li>
-                        @endforeach
-                        <hr>
-                    <dd>
-                        @endforeach
-                    </dd>
-            </dl>
-            {{--<a href="{{route('activity.related-activity.index', $id)}}" class="edit-element">edit</a>--}}
-            {{--<a href="{{route('activity.delete-element', [$id, 'related_activity'])}}"--}}
-            {{--class="delete pull-right">remove</a>--}}
-        </div>
+    <div class="activity-element-wrapper">
+        <div class="title">@lang('activityView.related_activity')</div>
+        @foreach(groupActivityElements($relatedActivities , 'relationship_type') as $key => $relatedActivities)
+            <div class="activity-element-list">
+                <div class="activity-element-label">{!! $getCode->getCodeNameOnly('RelatedActivityType' , $key) !!}</div>
+                <div class="activity-element-info">
+                    @foreach($relatedActivities as $relatedActivity)
+                        {{ $relatedActivity['activity_identifier'] }}
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
     </div>
 @endif

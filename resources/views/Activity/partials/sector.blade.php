@@ -1,36 +1,36 @@
 @if(!emptyOrHasEmptyTemplate($sectors))
-    <div class="panel panel-default expanded">
-        <div class="panel-heading">
-            <dl class="dl-horizontal">
-                <dt>@lang('activityView.sector')</dt>
-                <dd>
-                @foreach(groupActivityElements($sectors , 'sector_vocabulary') as $key => $sectors)
-                    <dt>{{ $getCode->getCodeNameOnly('SectorVocabulary' , $key) }}</dt>
-                    <dd>
-                        @foreach($sectors as $sector)
-                            <li>{!! checkIfEmpty(getSectorInformation($sector , $sector['percentage']))  !!} </li>
+    <div class="activity-element-wrapper">
+        <div class="title">@lang('activityView.sector')</div>
+        @foreach(groupActivityElements($sectors , 'sector_vocabulary') as $key => $sectors)
+            <div class="activity-element-list">
+                <div class="activity-element-label">{{ $getCode->getCodeNameOnly('SectorVocabulary' , $key) }}</div>
+                <div class="activity-element-info">
+                    @foreach($sectors as $sector)
+                        <li>{!! checkIfEmpty(getSectorInformation($sector , $sector['percentage']))  !!}</li>
+                        <div class="toggle-btn">
                             <a href="#" class="show-more-info">Show more info</a>
                             <a href="#" class="hide-more-info hidden">Hide more info</a>
-                            <dl class="more-info-hidden">
+                        </div>
+                        <div class="more-info">
+                            <dl>
                                 @if(session('version') != 'V201')
-                                    <dl>@lang('activityView.vocabulary_uri')
-                                        :{!!  checkIfEmpty(getClickableLink($sector['vocabulary_uri']))  !!}
-                                    </dl>
+                                    <dt>@lang('activityView.vocabulary_uri')</dt>
+                                    <dd>{!!  checkIfEmpty(getClickableLink($sector['vocabulary_uri']))  !!}</dd>
                                 @endif
-
-                                <dl>@lang('activityView.description')
-                                    : {!!  getFirstNarrative($sector)  !!}
-                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($sector['narrative'])])
-                                </dl>
                             </dl>
-
-                        @endforeach
-                        <hr>
-
-                        @endforeach
-                    </dd>
-            {{--<a href="{{route('activity.sector.index', $id)}}" class="edit-element">edit</a>--}}
-            {{--<a href="{{route('activity.delete-element', [$id, 'sector'])}}" class="delete pull-right">remove</a>--}}
-        </div>
+                            <dl>
+                                <dt>@lang('activityView.description')</dt>
+                                <dd>
+                                    {!!  getFirstNarrative($sector)  !!}
+                                    @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($sector['narrative'])])
+                                </dd>
+                            </dl>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+        {{--<a href="{{route('activity.sector.index', $id)}}" class="edit-element">edit</a>--}}
+        {{--<a href="{{route('activity.delete-element', [$id, 'sector'])}}" class="delete pull-right">remove</a>--}}
     </div>
 @endif
