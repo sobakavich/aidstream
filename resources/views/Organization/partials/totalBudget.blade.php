@@ -1,122 +1,47 @@
 @if(!emptyOrHasEmptyTemplate($total_budget))
-    <div class="panel panel-default expanded">
-        <div class="panel-heading">
-            <div class="activity-element-title">Total Budget</div>
-            <a href="{{ route('organization.total-budget.index', $orgId) }}" class="edit-element">edit</a>
-        </div>
-        <div class="panel-body row panel-level-2">
-            @foreach($total_budget as $totalBudget)
-                <div class="panel-heading">
-                    <div class="activity-element-title">
-                        {{ formatDate($totalBudget['period_start'][0]['date']) }}
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="panel panel-default">
-                        <div class="panel-body row">
-                            <div class="panel-heading">
-                                <div class="activity-element-title">Value</div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="panel panel-default">
-                                    <div class="panel-body panel-element-body row">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-xs-4">Text:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ $totalBudget['value'][0]['amount']}}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-xs-4">Value Date:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ formatDate($totalBudget['value'][0]['value_date']) }}</div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-xs-4">Currency:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ $totalBudget['value'][0]['currency']}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-heading">
-                                <div class="activity-element-title">Period Start</div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="panel panel-default">
-                                    <div class="panel-body panel-element-body row">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-xs-4">Iso Date:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ formatDate($totalBudget['period_start'][0]['date']) }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-heading">
-                                <div class="activity-element-title">Period End</div>
-                            </div>
-                            <div class="panel-body row">
-                                <div class="panel panel-default">
-                                    <div class="panel-body panel-element-body row">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="col-xs-12 col-xs-4">Iso Date:</div>
-                                            <div class="col-xs-12 col-xs-8">{{ formatDate($totalBudget['period_end'][0]['date']) }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-heading">
-                                <div class="activity-element-title">Budget Line</div>
-                            </div>
-                            <div class="panel-body row">
-                                @foreach($totalBudget['budget_line'] as $budgetLine)
-                                    <div class="panel-heading">
-                                        <div class="activity-element-title">{{ $budgetLine['reference']}}</div>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="panel panel-default">
-                                            <div class="panel-body panel-element-body row">
-                                                <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-xs-4">Reference:</div>
-                                                    <div class="col-xs-12 col-xs-8">{{ $budgetLine['reference']}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <div class="activity-element-title">Value</div>
-                                            </div>
-                                            <div class="panel-element-body row">
-                                                <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-xs-4">Text:</div>
-                                                    <div class="col-xs-12 col-xs-8">{{ $budgetLine['value'][0]['amount']}}</div>
-                                                </div>
-                                                <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-xs-4">Value Date:</div>
-                                                    <div class="col-xs-12 col-xs-8">{{ formatDate($budgetLine['value'][0]['value_date']) }}</div>
-                                                </div>
-                                                <div class="col-xs-12 col-md-12">
-                                                    <div class="col-xs-12 col-xs-4">Currency:</div>
-                                                    <div class="col-xs-12 col-xs-8">{{ $budgetLine['value'][0]['currency']}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <div class="activity-element-title">Narrative</div>
-                                            </div>
-                                            <div class="panel-element-body row">
-                                                @foreach($budgetLine['narrative'] as $budgetLineNarrative)
-                                                    <div class="col-xs-12 col-md-12">
-                                                        <div class="col-xs-12 col-xs-4">Text:</div>
-                                                        <div class="col-xs-12 col-xs-8">{{ $budgetLineNarrative['narrative'] . hideEmptyArray('Organization', 'Language', $budgetLineNarrative['language']) }}</div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+    <div class="activity-element-wrapper">
+        @if(session('version') != 'V201')
+            <div class="title">@lang('activityView.total_budget')</div>
+        @endif
+        @foreach(groupActivityElements($total_budget , 'status') as  $key => $totalBudgets)
+            <div class="activity-element-list">
+                @if(session('version') != 'V201')
+                    <div class="activity-element-label">{{ $getCode->getCodeNameOnly('BudgetStatus' , $key) }}</div>
+                @else
+                    <div class="activity-element-label">@lang('activityView.total_budget')</div>
+                @endif
+                <div class="activity-element-info">
+                    @foreach($totalBudgets as $totalBudget)
+                        <li>{!! getBudgetInformation('currency_with_valuedate' , $totalBudget) !!}</li>
+                        <div class="toggle-btn">
+                            <a href="#" class="show-more-info">Show more info</a>
+                            <a href="#" class="hide-more-info hidden">Hide more info</a>                   
                         </div>
-                    </div>
+                        <div class="more-info">
+                            <dl>
+                                <dt>@lang('activityView.period')</dt>
+                                <dd>{!! checkIfEmpty(getBudgetInformation('period' , $totalBudget)) !!}</dd>
+                            </dl>
+                            <dl>
+                                <dt>@lang('activityView.budget_line')</dt>
+                                @foreach($totalBudget['budget_line'] as $budgetLine)
+                                    <dd>
+                                        <li>{!! getCurrencyValueDate($budgetLine['value'][0] , "planned") !!}</li>
+                                    <dd>@lang('activityView.reference')
+                                        : {!! checkIfEmpty($budgetLine['reference']) !!}
+                                    </dd>
+
+                                    <dd>@lang('activityView.narrative')
+                                        : {!! checkIfEmpty(getFirstNarrative($budgetLine)) !!}
+                                        @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($budgetLine['narrative'])])
+                                    </dd>
+                                @endforeach
+                            </dl>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
+    <a href="{{ url('/organization/' . $orgId . '/total-budget') }}" class="edit-element">edit</a>
 @endif

@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers\Complete\Organization;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Services\Activity\ActivityManager;
-use App\Services\SettingsManager;
-use App\Services\Organization\OrganizationManager;
-use App\Services\FormCreator\Organization\OrgReportingOrgForm;
+use App\Http\Requests;
 use App\Http\Requests\Request;
+use App\Services\Activity\ActivityManager;
+use App\Services\FormCreator\Organization\OrgReportingOrgForm;
+use App\Services\Organization\OrganizationManager;
 use App\Services\Organization\OrgNameManager;
+use App\Services\SettingsManager;
 use Illuminate\Support\Facades\Gate;
 
 /**
@@ -72,14 +72,14 @@ class OrganizationController extends Controller
             return redirect('/settings')->withResponse($response);
         }
         $organizationData              = $this->nameManager->getOrganizationData($id);
-        $reporting_org                 = (array) $organization->reporting_org[0];
-        $org_name                      = (array) $organizationData->name;
-        $total_budget                  = (array) $organizationData->total_budget;
-        $recipient_organization_budget = (array) $organizationData->recipient_organization_budget;
-        $recipient_country_budget      = (array) $organizationData->recipient_country_budget;
-        $document_link                 = (array) $organizationData->document_link;
-        $recipient_region_budget       = (array) $organizationData->recipient_region_budget;
-        $total_expenditure             = (array) $organizationData->total_expenditure;
+        $reporting_org                 = (array)$organization->reporting_org[0];
+        $org_name                      = (array)$organizationData->name;
+        $total_budget                  = (array)$organizationData->total_budget;
+        $recipient_organization_budget = (array)$organizationData->recipient_organization_budget;
+        $recipient_country_budget      = (array)$organizationData->recipient_country_budget;
+        $document_link                 = (array)$organizationData->document_link;
+        $recipient_region_budget       = (array)$organizationData->recipient_region_budget;
+        $total_expenditure             = (array)$organizationData->total_expenditure;
 
         $status = $organizationData->status;
 
@@ -213,7 +213,10 @@ class OrganizationController extends Controller
         $value      = [];
 
         if (is_null($data)) {
-            $response = ['type' => 'warning', 'code' => ['message', ['message' => 'Please select organization XML files to be published.']]];
+            $response = [
+                'type' => 'warning',
+                'code' => ['message', ['message' => 'Please select organization XML files to be published.']],
+            ];
 
             return redirect()->back()->withResponse($response);
         }
@@ -232,7 +235,10 @@ class OrganizationController extends Controller
         }
 
         if ($unpubFiles) {
-            $value['unpublished'] = sprintf("The files %s could not be published to registry. Please try again.", implode(',', $unpubFiles));
+            $value['unpublished'] = sprintf(
+                "The files %s could not be published to registry. Please try again.",
+                implode(',', $unpubFiles)
+            );
         } elseif ($pubFiles) {
             $value['published'] = sprintf("The files %s have been published to registry", implode(',', $pubFiles));
         }
