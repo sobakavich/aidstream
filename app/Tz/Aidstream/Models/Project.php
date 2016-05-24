@@ -1,4 +1,4 @@
-<?php namespace App\Tz\Models;
+<?php namespace App\Tz\Aidstream\Models;
 
 use App\Models\Activity\Activity;
 
@@ -17,10 +17,25 @@ class Project extends Activity
      * Fillable property for mass assignment.
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'identifier',
+        'organization_id',
+        'other_identifier',
+        'title',
+        'description',
+        'activity_status'
+    ];
 
     /**
-     * @var array
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected $casts = [];
+    public function results()
+    {
+        return $this->hasMany(Result::class, 'activity_id', 'id');
+    }
+
+    public function transactions()
+    {
+        return $this->belongsTo(Transaction::class, 'activity_id', 'id');
+    }
 }
