@@ -4,6 +4,8 @@ use App\Services\Settings\Segmentation\SegmentationInterface;
 use App\Services\Settings\Segmentation\SegmentationService;
 use App\Tz\Aidstream\Repositories\Project\ProjectRepository;
 use App\Tz\Aidstream\Repositories\Project\ProjectRepositoryInterface;
+use App\Tz\Aidstream\Repositories\Transaction\TransactionRepository;
+use App\Tz\Aidstream\Repositories\Transaction\TransactionRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -39,6 +41,7 @@ class RepositoryServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
+        $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
 
     }
 }
