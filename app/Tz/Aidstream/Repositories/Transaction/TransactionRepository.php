@@ -55,7 +55,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function create($transactions)
     {
         foreach ($transactions['transaction'] as $transaction) {
-            $transactionData = $this->transaction->newInstance(['transaction' => $transaction, 'activity_id' => $transactions['activity_id']]);
+            $transactionData = $this->transaction->newInstance(['transaction' => $transaction, 'activity_id' => $transactions['project_id']]);
             $transactionData->save();
         }
 

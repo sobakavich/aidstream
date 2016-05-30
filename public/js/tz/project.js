@@ -103,3 +103,7 @@ var removeFunding = function (element) {
 var removeImplementing = function (element) {
     Project.removeBlock(element, 'implementing');
 };
+
+$(document).ready(function () {
+    $('.datepicker').datepicker();
+});

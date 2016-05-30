@@ -45,9 +45,12 @@ class TransactionController extends TanzanianController
      * @param Request $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store($id, Request $request)
     {
-        if (!$this->transaction->create($request->all())) {
+        $transactionDetails                = $request->all();
+        $transactionDetails['project_id'] = $id;
+
+        if (!$this->transaction->create($transactionDetails)) {
             $response = ['type' => 'danger', 'code' => ['message', ['message' => 'Transaction could not be saved.']]];
         } else {
             $response = ['type' => 'success', 'code' => ['message', ['message' => 'Transaction successfully saved.']]];

@@ -99,7 +99,11 @@ class ProjectService
     public function delete($id)
     {
         try {
+            $project        = $this->project->find($id);
+            $publishedFiles = $project->organization->publishedFiles;
+
             $this->project->delete($id);
+            $this->removePublishedFilesAssociation($id, $publishedFiles);
 
             $this->logger->info(
                 sprintf('Project (id: %s) successfully deleted.', $id),
@@ -248,6 +252,27 @@ class ProjectService
             );
 
             return null;
+        }
+    }
+
+    /**
+     * Remove deleted Project from published_activities column of ActivityPublished table.
+     * @param $projectId
+     * @param $publishedFiles
+     */
+    protected function removePublishedFilesAssociation($projectId, $publishedFiles)
+    {
+        foreach ($publishedFiles as $publishedFile) {
+            $containedActivities = $publishedFile->extractActivityId();
+
+            foreach ($containedActivities as $id => $filename) {
+                if ($id == $projectId) {
+                    $containedActivities = array_except($containedActivities, $id);
+                }
+
+                $publishedFile->published_activities = $containedActivities;
+                $publishedFile->save();
+            }
         }
     }
 }

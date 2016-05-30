@@ -139,6 +139,7 @@ trait FormatsProjectFormInformation
     public function process($projectDetails)
     {
         $mappings = [];
+        $settings = app()->make(Organization::class)->query()->where('id', '=', session('org_id'))->first()->settings;
 
         foreach ($this->mappings as $mapping) {
             $map                = camel_case($mapping);
@@ -147,6 +148,15 @@ trait FormatsProjectFormInformation
 
         $details                    = $this->fill($mappings, $projectDetails);
         $details['organization_id'] = $projectDetails['organization_id'];
+
+        $details['default_field_values'] = [
+            [
+                'default_currency'  => getVal($settings->default_field_values, [0, 'default_currency']),
+                'default_language'  => getVal($settings->default_field_values, [0, 'default_language']),
+                'default_hierarchy' => 1
+            ]
+
+        ];
 
         return $details;
     }

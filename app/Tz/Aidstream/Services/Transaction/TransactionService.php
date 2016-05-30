@@ -1,6 +1,7 @@
 <?php namespace App\Tz\Aidstream\Services\Transaction;
 
 use App\Tz\Aidstream\Repositories\Transaction\TransactionRepositoryInterface;
+use App\Tz\Aidstream\Services\Project\ProjectService;
 use App\Tz\Aidstream\Traits\TransactionsTrait;
 use Exception;
 use Illuminate\Database\DatabaseManager;
@@ -53,26 +54,32 @@ class TransactionService
         $data = [];
 
         foreach ($transactions as $transaction) {
-            $id          = $transaction->id;
-            $transaction = json_decode($transaction->transaction, true);
-
-            $transactionDetail['id']        = $id;
-            $transactionDetail['reference'] = $transaction['reference'];
-            $transactionDetail['date']      = $transaction['transaction_date'][0]['date'];
-            $transactionDetail['amount']    = $transaction['value'][0]['amount'];
-            $transactionDetail['narrative'] = $transaction['description'][0]['narrative'][0]['narrative'];
-//            $transactionDetail['receiver_org'] = $transaction['receiver_organization'][0]['narrative'][0]['narrative'];
-            $data[] = $transactionDetail;
+            $id                                = $transaction->id;
+            $transaction                       = json_decode($transaction->transaction, true);
+            $transactionDetail['id']           = $id;
+            $transactionDetail['reference']    = $transaction['reference'];
+            $transactionDetail['date']         = $transaction['transaction_date'][0]['date'];
+            $transactionDetail['amount']       = $transaction['value'][0]['amount'];
+            $transactionDetail['narrative']    = $transaction['description'][0]['narrative'][0]['narrative'];
+            $transactionDetail['receiver_org'] = $transaction['provider_organization'][0]['narrative'][0]['narrative'];
+            $data[]                            = $transactionDetail;
         }
 
         return $data;
     }
 
+    /**
+     * Create a new Transaction.
+     * @param array $transactions
+     * @return bool|null
+     */
     public function create(array $transactions)
     {
         try {
             $this->databaseManager->beginTransaction();
             $this->transaction->create($transactions);
+            $this->resetWorkflow($transactions['project_id']);
+
             $this->databaseManager->commit();
             $this->logger->info(
                 'Transactions successfully created.',
@@ -97,6 +104,13 @@ class TransactionService
 
     }
 
+    /**
+     * Get Transaction data.
+     * @param      $projectId
+     * @param      $transactionType
+     * @param bool $decode
+     * @return array|mixed
+     */
     public function getTransactionsData($projectId, $transactionType, $decode = false)
     {
         $transactions = $this->transaction->getTransactionTypeData($projectId, $transactionType);
@@ -125,6 +139,11 @@ class TransactionService
         return $decodedTransactions;
     }
 
+    /**
+     * Update an existing Transaction.
+     * @param $transactions
+     * @return bool|null
+     */
     public function update($transactions)
     {
         try {
@@ -151,5 +170,18 @@ class TransactionService
             return null;
         }
 
+    }
+
+    /**
+     * Reset Project workflow.
+     * @param $projectId
+     */
+    protected function resetWorkflow($projectId)
+    {
+        $project = app()->make(ProjectService::class)->find($projectId);
+
+        $project->activity_workflow = 0;
+
+        $project->save();
     }
 }

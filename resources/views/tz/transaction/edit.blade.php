@@ -2,6 +2,7 @@
 
 @section('title', 'Edit Transaction')
 @inject('code', 'App\Helpers\GetCodeName')
+
 @section('content')
     <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper">
         @include('includes.response')
@@ -37,12 +38,13 @@
 
                                 <div class="col-sm-6">
                                     {!! Form::label('transaction_date', 'Transaction Date', ['class' => 'control-label required']) !!}
-                                    {!! Form::text("transaction[$key][transaction_date][0][date]", $transaction['transaction']['transaction_date'][0]['date'], ['class' => 'form-control', 'required' => 'required', 'id' => 'datepicker']) !!}
+                                    {!! Form::text("transaction[$key][transaction_date][0][date]", $transaction['transaction']['transaction_date'][0]['date'], ['class' => 'form-control datepicker', 'required' => 'required']) !!}
                                 </div>
 
                                 <div class="col-sm-6">
                                     {!! Form::label('amount', 'Amount', ['class' => 'control-label required']) !!}
                                     {!! Form::text("transaction[$key][value][0][amount]", $transaction['transaction']['value'][0]['amount'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                    {!! Form::text("transaction[$key][value][0][date]", null, ['class' => 'hidden']) !!}
                                 </div>
 
                                 <div class="col-sm-6">
@@ -56,18 +58,31 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    {!! Form::label('receiver_org', 'Receiver Organization', ['class' => 'control-label required']) !!}
-                                    {!! Form::text("transaction[$key][receiver_organization][0][narrative][0][narrative]", $transaction['transaction']['receiver_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
+                                    {!! Form::label('provider_org', 'Receiver Organization', ['class' => 'control-label required']) !!}
+                                    {!! Form::text("transaction[$key][provider_organization][0][narrative][0][narrative]", $transaction['transaction']['provider_organization'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
                                 </div>
                             @endforeach
-
-
                         </div>
                     </div>
                     {!! Form::submit('Edit') !!}
+
+                    @if($transactionType == 1)
+                        <button type="button" id="add-more-transaction" class="add-more">Add More Incoming Funds</button>
+                    @elseif($transactionType == 3)
+                        <button type="button" id="add-more-transaction" class="add-more">Add More Disbursements</button>
+                    @elseif($transactionType == 4)
+                        <button type="button" id="add-more-transaction" class="add-more">Add More Expenditure</button>
+                    @endif
+
                     {!! Form::close() !!}
+
+                    @include('tz.transaction.partials.transaction-add')
                 </div>
             </div>
         </div>
     </div>
+@stop
+
+@section('script')
+    <script src="{{ asset('/js/tz/transaction.js') }}"></script>
 @stop
