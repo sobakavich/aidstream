@@ -13,15 +13,14 @@ $router->group(
                         'uses' => 'TransactionController@transactionCreate'
                     ]
                 );
-                
                 $router->get(
-                    '/project/{projectId}/transaction/{transactionType}/edit',
+                    '/project/{project}/transaction/{transaction}/{transactionType}',
                     [
                         'as'   => 'transaction.edit',
                         'uses' => 'TransactionController@editTransaction'
                     ]
                 );
-                
+
                 $router->resource('transaction', 'TransactionController');
             }
         );

@@ -21,6 +21,10 @@ class ProjectController extends TanzanianController
      * @var ProjectService
      */
     protected $project;
+
+    /**
+     * @var TransactionService
+     */
     protected $transaction;
 
     /**
