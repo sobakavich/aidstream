@@ -83,7 +83,7 @@
                             {{--*/ $number = $key + 1; /*--}}
                             {{--*/ $class = array_key_exists($number, $messages) ? 'class="error"' : '' /*--}}
                             @if($viewErrors)
-                            <div id="{{ $number }}" {{$class}} style="{{ array_key_exists($number, $messages) ? 'color:#e15454;background:#eee;': ''  }}">
+                            <div id="{{ $number }}" {{$class}} style="{{ array_key_exists($number, $messages) ? 'background:#F1D3D3;': ''  }}">
                             @else
                             <div>
                             @endif

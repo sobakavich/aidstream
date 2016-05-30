@@ -3293,6 +3293,10 @@ table.dataTable thead .sorting_desc {
     color: $color_white;
     padding: 10px 36px;
     margin-bottom: 20px;
+    a {
+      color: $color_white;
+      text-decoration: underline;
+    }
   }
   li.success {
     background: $color_emerald_approx;
