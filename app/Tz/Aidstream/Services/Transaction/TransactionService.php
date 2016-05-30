@@ -56,13 +56,13 @@ class TransactionService
             $id          = $transaction->id;
             $transaction = json_decode($transaction->transaction, true);
 
-            $transactionDetail['id']           = $id;
-            $transactionDetail['reference']    = $transaction['reference'];
-            $transactionDetail['date']         = $transaction['transaction_date'][0]['date'];
-            $transactionDetail['amount']       = $transaction['value'][0]['amount'];
-            $transactionDetail['narrative']    = $transaction['description'][0]['narrative'][0]['narrative'];
+            $transactionDetail['id']        = $id;
+            $transactionDetail['reference'] = $transaction['reference'];
+            $transactionDetail['date']      = $transaction['transaction_date'][0]['date'];
+            $transactionDetail['amount']    = $transaction['value'][0]['amount'];
+            $transactionDetail['narrative'] = $transaction['description'][0]['narrative'][0]['narrative'];
 //            $transactionDetail['receiver_org'] = $transaction['receiver_organization'][0]['narrative'][0]['narrative'];
-            $data[]                            = $transactionDetail;
+            $data[] = $transactionDetail;
         }
 
         return $data;
@@ -70,9 +70,8 @@ class TransactionService
 
     public function create(array $transactions)
     {
-        $projectId    = $transactions['project_id'];
-        $transactions = $this->formatTransactionFormsDataIntoJson($transactions);
         try {
+            $this->databaseManager->beginTransaction();
             $this->transaction->create($transactions);
             $this->databaseManager->commit();
             $this->logger->info(
@@ -94,6 +93,62 @@ class TransactionService
 
             return null;
 
+        }
+
+    }
+
+    public function getTransactionsData($projectId, $transactionType, $decode = false)
+    {
+        $transactions = $this->transaction->getTransactionTypeData($projectId, $transactionType);
+
+        if (!$decode) {
+            return $transactions;
+        }
+
+        return $this->decode($transactions);
+    }
+
+    /**
+     * Decode JSON data for Transactions for edit view.
+     * @param array $transactions
+     * @return array
+     */
+    protected function decode(array $transactions)
+    {
+        $decodedTransactions = [];
+
+        foreach ($transactions as $key => $transaction) {
+            $decodedTransactions[$key]['transaction'] = json_decode($transaction->transaction, true);
+            $decodedTransactions[$key]['id']          = $transaction->id;
+        }
+
+        return $decodedTransactions;
+    }
+
+    public function update($transactions)
+    {
+        try {
+            $this->databaseManager->beginTransaction();
+            $this->transaction->update($transactions);
+            $this->databaseManager->commit();
+            $this->logger->info(
+                'Transactions successfully updated.',
+                [
+                    'byUser' => auth()->user()->getNameAttribute()
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->databaseManager->rollback();
+            $this->logger->error(
+                sprintf('Transactions could not updated due to %s', $exception->getMessage()),
+                [
+                    'byUser' => auth()->user()->getNameAttribute()
+                ]
+            );
+
+            return null;
         }
 
     }

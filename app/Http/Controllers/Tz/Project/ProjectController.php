@@ -98,7 +98,6 @@ class ProjectController extends TanzanianController
         if (Gate::denies('ownership', $project)) {
             return redirect()->route('project.index')->withResponse($this->getNoPrivilegesMessage());
         }
-
         $incomingFund = $this->transaction->getTransactions($id, 1);
         $disbursement = $this->transaction->getTransactions($id, 3);
         $expenditure  = $this->transaction->getTransactions($id, 4);
