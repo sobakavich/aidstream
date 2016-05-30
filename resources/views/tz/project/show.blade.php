@@ -144,32 +144,39 @@
                     <div class="panel-heading">
                         Participating Organization
                     </div>
-                    @if(getVal($project->participating_organization, [0, 'organization_role']) == "1")
-                        <div class="col-xs-12 col-md-12">
-                            <div class="panel-heading">
-                                Funding:
-                            </div>
+                    @foreach ($project->participating_organization as $participatingOrganization)
+                        @if(getVal($participatingOrganization, ['organization_role']) == "1")
                             <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Organization Type:</div>
-                                <div class="col-xs-12 col-sm-8">
-                                    {{$getCode->getActivityCodeName('OrganisationType', getVal($project->participating_organization, [0, 'organization_type']))}}
+                                <div class="panel-heading">
+                                    Funding:
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Organization Name:</div>
+                                    <div class="col-sm-12 col-sm-4">
+                                        {{ getVal($participatingOrganization, ['narrative', 0, 'narrative']) }}
+                                    </div>
+                                    <br>
+                                    <div class="col-xs-12 col-sm-4">Organization Type:</div>
+                                    <div class="col-xs-12 col-sm-8">
+                                        {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
-                    @if(getVal($project->participating_organization, [0, 'organization_role']) == 4)
-                        <div class="col-xs-12 col-md-12">
-                            <div class="panel-heading">
-                                Implementing:
-                            </div>
+                        @endif
+                        @if(getVal($participatingOrganization, ['organization_role']) == 4)
                             <div class="col-xs-12 col-md-12">
-                                <div class="col-xs-12 col-sm-4">Organization Type:</div>
-                                <div class="col-xs-12 col-sm-8">
-                                    {{$getCode->getActivityCodeName('OrganisationType', getVal($project->participating_organization, [0, 'organization_type']))}}
+                                <div class="panel-heading">
+                                    Implementing:
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-4">Organization Type:</div>
+                                    <div class="col-xs-12 col-sm-8">
+                                        {{$getCode->getActivityCodeName('OrganisationType', getVal($participatingOrganization, ['organization_type']))}}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+                    @endforeach
                 </div>
 
                 @if ($project->document_link)

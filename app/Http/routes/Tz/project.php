@@ -54,6 +54,14 @@ $router->group(
                         'uses' => 'ProjectController@download'
                     ]
                 );
+
+                $router->post(
+                    'project/{project}/duplicate',
+                    [
+                        'as'   => 'project.duplicate',
+                        'uses' => 'ProjectController@duplicate'
+                    ]
+                );
             }
         );
     }

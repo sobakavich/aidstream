@@ -219,4 +219,35 @@ class ProjectService
     {
         return $this->user->getUserByOrgIdAndRoleId();
     }
+
+    /**
+     * Duplicate an existing Project.
+     * @param Project $project
+     * @return bool|null
+     */
+    public function duplicate(Project $project)
+    {
+        try {
+            $this->project->duplicate($project);
+
+            $this->logger->info(
+                'Project successfully duplicated.',
+                [
+                    'byUser' => auth()->user()->getNameAttibute
+                ]
+            );
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Project could not be duplicated due to %s', $exception->getMessage()),
+                [
+                    'byUser' => auth()->user()->getNameAttibute,
+                    'trace'  => $exception->getTraceAsString()
+                ]
+            );
+
+            return null;
+        }
+    }
 }
