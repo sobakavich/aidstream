@@ -327,30 +327,30 @@ trait FormatsProjectFormInformation
      * @param $projectDetails
      * @return array
      */
-    protected function participatingOrganization($projectDetails)
-    {
-        $details = [];
-
-        foreach ($projectDetails['funding_organization'] as $fundingOrganization) {
-            $details[] = [
-                "organization_role" => 1,
-                "identifier"        => "",
-                "organization_type" => $fundingOrganization['funding_organization_type'],
-                "narrative"         => [["narrative" => $fundingOrganization['funding_organization_name'], "language" => ""]]
-            ];
-        }
-
-        foreach ($projectDetails['implementing_organization'] as $implementingOrganization) {
-            $details[] = [
-                "organization_role" => 4,
-                "identifier"        => "",
-                "organization_type" => $implementingOrganization['implementing_organization_type'],
-                "narrative"         => [["narrative" => $implementingOrganization['implementing_organization_name'], "language" => ""]]
-            ];
-        }
-
-        return $details;
-    }
+//    protected function participatingOrganization($projectDetails)
+//    {
+//        $details = [];
+//
+//        foreach ($projectDetails['funding_organization'] as $fundingOrganization) {
+//            $details[] = [
+//                "organization_role" => 1,
+//                "identifier"        => "",
+//                "organization_type" => $fundingOrganization['funding_organization_type'],
+//                "narrative"         => [["narrative" => $fundingOrganization['funding_organization_name'], "language" => ""]]
+//            ];
+//        }
+//
+//        foreach ($projectDetails['implementing_organization'] as $implementingOrganization) {
+//            $details[] = [
+//                "organization_role" => 4,
+//                "identifier"        => "",
+//                "organization_type" => $implementingOrganization['implementing_organization_type'],
+//                "narrative"         => [["narrative" => $implementingOrganization['implementing_organization_name'], "language" => ""]]
+//            ];
+//        }
+//
+//        return $details;
+//    }
 
     /**
      * Process Default Field Values.
