@@ -10,56 +10,62 @@
                     @foreach($recipientRegionBudgets as $recipientRegionBudget)
                         <li>{!! getBudgetInformation('currency_with_valuedate' , $recipientRegionBudget) !!}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.period')</dt>
-                                <dd>{!! checkIfEmpty(getBudgetInformation('period' , $recipientRegionBudget)) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.vocabulary')</dt>
-                                <dd> {!! getCodeNameWithCodeValue('RegionVocabulary' , $recipientRegionBudget['recipient_region'][0]['vocabulary'] , -4) !!} </dd>
-                            </dl>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.period')</div>
+                                <div class="activity-element-info"> {!! checkIfEmpty(getBudgetInformation('period' , $recipientRegionBudget)) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.vocabulary')</div>
+                                <div class="activity-element-info"> {!! getCodeNameWithCodeValue('RegionVocabulary' , $recipientRegionBudget['recipient_region'][0]['vocabulary'] , -4) !!} </div>
+                            </div>
 
-                            <dl>
-                                <dt>@lang('activityView.vocabulary_uri')</dt>
-                                <dd> {!! getClickableLink($recipientRegionBudget['recipient_region'][0]['vocabulary_uri']) !!}</dd>
-                            </dl>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.vocabulary_uri')</div>
+                                <div class="activity-element-info"> {!! getClickableLink($recipientRegionBudget['recipient_region'][0]['vocabulary_uri']) !!}</div>
+                            </div>
 
-                            <dl>
-                                <dt>@lang('activityView.code')</dt>
-                                <dd>{!! getCodeNameWithCodeValue('Region' , $recipientRegionBudget['recipient_region'][0]['code'] , -5) !!}</dd>
-                            </dl>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.code')</div>
+                                <div class="activity-element-info"> {!! getCodeNameWithCodeValue('Region' , $recipientRegionBudget['recipient_region'][0]['code'] , -5) !!}</div>
+                            </div>
 
-                            <dl>
-                                <dt>@lang('activityView.description')</dt>
-                                <dd>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.description')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($recipientRegionBudget['recipient_region'][0]) !!}<br>
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientRegionBudget['recipient_region'][0]['narrative'])])
-                                </dd>
-                            </dl>
+                                </div>
+                            </div>
 
-                            <dl>
-                                <dt>@lang('activityView.budget_line')</dt>
-                                 @foreach($recipientRegionBudget['budget_line'] as $budgetLine)
-                                    <dd>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.budget_line')</div>
+                                @foreach($recipientRegionBudget['budget_line'] as $budgetLine)
+                                    <div class="activity-element-info">
                                         <li>{!! getCurrencyValueDate($budgetLine['value'][0] , "planned") !!}</li>
-                                        @lang('activityView.reference'):
-                                        {!! checkIfEmpty($budgetLine['reference']) !!}
-                                        <br>
-                                        @lang('activityView.narrative'):
-                                        {!! checkIfEmpty(getFirstNarrative($budgetLine)) !!}
-                                        @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($budgetLine['narrative'])])
-                                    </dd>
+                                        <div class="expanded">
+                                            <div class="element-info">
+                                                <div class="activity-element-label">@lang('activityView.reference')</div>
+                                                <div class="activity-element-info">{!! checkIfEmpty($budgetLine['reference']) !!}</div>
+                                            </div>
+                                            <div class="element-info">
+                                                <div class="activity-element-label">@lang('activityView.narrative')</div>
+                                                <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative($budgetLine)) !!}
+                                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($budgetLine['narrative'])])
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
-                            </dl>
+                            </div>
                         </div>
                     @endforeach
                 </div>
             </div>
         @endforeach
+        <a href="{{ url('/organization/' . $orgId . '/recipient-region-budget') }}" class="edit-element">edit</a>
     </div>
-    <a href="{{ url('/organization/' . $orgId . '/recipient-region-budget') }}" class="edit-element">edit</a>
 @endif

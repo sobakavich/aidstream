@@ -6,19 +6,19 @@
                 <li>{!! checkIfEmpty(getFirstNarrative($reportingOrganization)) !!}</li>
                 @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($reportingOrganization['narrative'])])
                 <div class="toggle-btn">
-                    <a href="#" class="show-more-info">Show more info</a>
-                    <a href="#" class="hide-more-info hidden">Hide more info</a>
+                    <span class="show-more-info">Show more info</span>
+                    <span class="hide-more-info hidden">Hide more info</span>
                 </div>
 
-                <div class="more-info">
-                    <dl>
-                        <dt>@lang('activityView.organization_identifier')</dt>
-                        <dd>{!! checkIfEmpty($reportingOrganization['reporting_organization_identifier']) !!}</dd>
-                    </dl>
-                    <dl>
-                        <dt>@lang('activityView.organization_type')</dt>
-                        <dd>{!! substr($getCode->getOrganizationCodeName('OrganizationType', $reportingOrganization['reporting_organization_type']), 0, -4) !!}</dd>
-                    </dl>
+                <div class="more-info hidden">
+                    <div class="element-info">
+                        <div class="activity-element-label">@lang('activityView.organization_identifier')</div>
+                        <div class="activity-element-info">{!! checkIfEmpty($reportingOrganization['reporting_organization_identifier']) !!}</div>
+                    </div>
+                    <div class="element-info">
+                        <div class="activity-element-label">@lang('activityView.organization_type')</div>
+                        <div class="activity-element-info">{!! substr($getCode->getOrganizationCodeName('OrganizationType', $reportingOrganization['reporting_organization_type']), 0, -4) !!}</div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -6,31 +6,40 @@
                 @foreach($total_expenditure as $expenditure)
                     <li>{!! getCurrencyValueDate($expenditure['value'][0], "planned") !!}</li>
                     <div class="toggle-btn">
-                        <a href="#" class="show-more-info">Show more info</a>
-                        <a href="#" class="hide-more-info hidden">Hide more info</a>         
+                        <span class="show-more-info">Show more info</span>
+                        <span class="hide-more-info hidden">Hide more info</span>         
                     </div>
-                    <div class="more-info">
-                        <dl>
-                            <dt>@lang('activityView.period')</dt>
-                            <dd>{!! checkIfEmpty(getBudgetInformation('period',$expenditure)) !!}</dd>
-                        </dl>
-                        <dl>
-                            <dt>@lang('activityView.expense_line')</dt>
+                    <div class="more-info hidden">
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.period')</div>
+                            <div class="activity-element-info">{!! checkIfEmpty(getBudgetInformation('period',$expenditure)) !!}</div>
+                        </div>
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.expense_line')</div>
                             @foreach($expenditure['expense_line'] as $expense)
-                               <dd>
-                                   <li>{!! getCurrencyValueDate($expense['value'][0], 'planned') !!}</li>
-                                   <dd>@lang('activityView.reference'): {!! checkIfEmpty($expense['reference']) !!}</dd>
-                                   <dd>
-                                       @lang('activityView.narrative'): {!! checkIfEmpty(getFirstNarrative($expense)) !!}
-                                       @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($expense['narrative'])])
-                                   </dd>
-                               </dd>
+                                <div class="activity-element-info">
+                                    <li>{!! getCurrencyValueDate($expense['value'][0], 'planned') !!}</li>
+                                    <div class="expanded">
+                                        <div class="element-info">
+                                            <div class="activity-element-label">@lang('activityView.reference')</div>
+                                            <div class="activity-element-info">{!! checkIfEmpty($expense['reference']) !!}</div>
+                                        </div>
+                                        <div class="element-info">
+                                            <div class="activity-element-label">
+                                                @lang('activityView.narrative')</div>
+                                            <div class="activity-element-info">
+                                                {!! checkIfEmpty(getFirstNarrative($expense)) !!}
+                                                @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($expense['narrative'])])
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
-                        </dl>
+                        </div>
                     </div>
                 @endforeach
             </div>
         </div>
+        <a href="{{ url('/organization/' . $orgId . '/total-expenditure') }}" class="edit-element">edit</a>
     </div>
-    <a href="{{ url('/organization/' . $orgId . '/total-expenditure') }}" class="edit-element">edit</a>
 @endif

@@ -14,34 +14,38 @@
                     @foreach($totalBudgets as $totalBudget)
                         <li>{!! getBudgetInformation('currency_with_valuedate' , $totalBudget) !!}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>                   
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>                   
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.period')</dt>
-                                <dd>{!! checkIfEmpty(getBudgetInformation('period' , $totalBudget)) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.budget_line')</dt>
-                                @foreach($totalBudget['budget_line'] as $budgetLine)
-                                    <dd>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.period')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getBudgetInformation('period' , $totalBudget)) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.budget_line')</div>
+                                <div class="activity-element-info">
+                                    @foreach($totalBudget['budget_line'] as $budgetLine)
                                         <li>{!! getCurrencyValueDate($budgetLine['value'][0] , "planned") !!}</li>
-                                    <dd>@lang('activityView.reference')
-                                        : {!! checkIfEmpty($budgetLine['reference']) !!}
-                                    </dd>
-
-                                    <dd>@lang('activityView.narrative')
-                                        : {!! checkIfEmpty(getFirstNarrative($budgetLine)) !!}
-                                        @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($budgetLine['narrative'])])
-                                    </dd>
-                                @endforeach
-                            </dl>
+                                        <div class="expanded">
+                                            <div>
+                                                <div class="activity-element-label">@lang('activityView.reference')</div>
+                                                <div class="activity-element-info">{!! checkIfEmpty($budgetLine['reference']) !!}</div>
+                                            </div>
+                                            <div>
+                                                <div class="activity-element-label">@lang('activityView.narrative')</div>
+                                                <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative($budgetLine)) !!}</div>
+                                                @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($budgetLine['narrative'])])
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
             </div>
         @endforeach
+            <a href="{{ url('/organization/' . $orgId . '/total-budget') }}" class="edit-element">edit</a>
     </div>
-    <a href="{{ url('/organization/' . $orgId . '/total-budget') }}" class="edit-element">edit</a>
 @endif

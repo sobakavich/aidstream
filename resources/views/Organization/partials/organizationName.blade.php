@@ -7,6 +7,6 @@
                 @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($org_name)])
             </div>
         </div>
+        <a href="{{ url('/organization/' . $orgId . '/name') }}" class="edit-element">edit</a>
     </div>
-    <a href="{{ url('/organization/' . $orgId . '/name') }}" class="edit-element">edit</a>
 @endif

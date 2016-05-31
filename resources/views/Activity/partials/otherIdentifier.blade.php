@@ -8,20 +8,21 @@
                     @foreach($groupedIdentifiers as $identifiers)
                         <li>{{$identifiers['reference']}}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.owner_org_reference')</dt>
-                                <dd>{!! checkIfEmpty($identifiers['owner_org'][0]['reference']) !!}</dd>
-                            </dl>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.owner_org_reference')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty($identifiers['owner_org'][0]['reference']) !!}</div>
+                            </div>
 
-                            <dl>
-                                <dt>@lang('activityView.owner_org_name')</dt>
-                                <dd>{!! checkIfEmpty(getFirstNarrative($identifiers['owner_org'][0])) !!}</dd>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.owner_org_name')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative($identifiers['owner_org'][0])) !!}
                                 @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages(getOwnerNarrative($identifiers))])
-                            </dl>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
