@@ -158,6 +158,13 @@ trait FormatsProjectFormInformation
 
         ];
 
+        $details['location'][0]['administrative'] = $projectDetails['location'];
+
+        foreach ($projectDetails['location'] as $key => $location) {
+            $details['location'][$key] = $this->location[0];
+            $details['location'][$key]['administrative'] = $location['administrative'];
+        }
+
         return $details;
     }
 
@@ -280,22 +287,22 @@ trait FormatsProjectFormInformation
         ];
     }
 
-    /**
-     * Map Recipient Region.
-     * @param $projectDetails
-     * @return array
-     */
-    protected function recipientRegion($projectDetails)
-    {
-        return [
-            [
-                "region_code"       => $projectDetails['recipient_region'],
-                "region_vocabulary" => "",
-                "percentage"        => "",
-                "narrative"         => [["narrative" => "", "language" => ""]]
-            ]
-        ];
-    }
+//    /**
+//     * Map Recipient Region.
+//     * @param $projectDetails
+//     * @return array
+//     */
+//    protected function recipientRegion($projectDetails)
+//    {
+//        return [
+//            [
+//                "region_code"       => $projectDetails['recipient_region'],
+//                "region_vocabulary" => "",
+//                "percentage"        => "",
+//                "narrative"         => [["narrative" => "", "language" => ""]]
+//            ]
+//        ];
+//    }
 
     /**
      * Map Activity Date.

@@ -73,77 +73,13 @@
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
                                         {!! Form::label('recipient_country', 'Project Country', ['class' => 'control-label required']) !!}
-                                        {!! Form::select('recipient_country', ['' => 'Select one of the following.'] + $recipientCountries, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        {!! Form::label('recipient_region', 'Recipient Region', ['class' => 'control-label required']) !!}
-                                        {!! Form::select('recipient_region', ['' => 'Select one of the following.'] + $recipientRegions, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                        {!! Form::select('recipient_country', ['' => 'Select one of the following.'] + $recipientCountries, null, ['class' => 'form-control', 'required' => 'required', 'id' => 'project-country']) !!}
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12" id="funding-wrap">
-                                    <h2>Funding</h2>
-
-                                    <div class="col-sm-6">
-                                        {!! Form::label('funding_organization[0][funding_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
-                                        {!! Form::text('funding_organization[0][funding_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        {!! Form::label('funding_organization[0][funding_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
-                                        {!! Form::select('funding_organization[0][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-                                    <button type="button" id="add-more-funding-organization" class="add-more">Add More Funding Organization</button>
-                                </div>
-
-                                <div class="col-sm-12" id="implementing-wrap">
-                                    <h2>Implementing</h2>
-                                    <div class="col-sm-6">
-                                        {!! Form::label('implementing_organization[0][implementing_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
-                                        {!! Form::text('implementing_organization[0][implementing_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        {!! Form::label('implementing_organization[0][implementing_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
-                                        {!! Form::select('implementing_organization[0][implementing_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-                                    <button type="button" id="add-more-implementing-organization" class="add-more">Add More Implementing Organization</button>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <h2>Results/Outcomes Documents</h2>
-                                    {!! Form::hidden('document_link[0][category][0][code]', 'A08') !!}
-                                    {!! Form::hidden('document_link[0][format]', 'text/html') !!}
-                                    {!! Form::hidden('document_link[0][title][0][narrative][0][language]', "") !!}
-                                    {!! Form::hidden('document_link[0][language]', '[]') !!}
-
-                                    <div class="col-sm-6">
-                                        {!! Form::label('result_document_title', 'Title', ['class' => 'control-label required']) !!}
-                                        {!! Form::text('document_link[0][title][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-                                    <div class="col-sm-6">
-                                        {!! Form::label('result_document_url', 'Document URL', ['class' => 'control-label required']) !!}
-                                        {!! Form::text('document_link[0][url]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <h2>Annual Reports</h2>
-                                    {!! Form::hidden('document_link[1][category][0][code]', 'B01') !!}
-                                    {!! Form::hidden('document_link[1][format]', 'text/html') !!}
-                                    {!! Form::hidden('document_link[1][title][0][narrative][0][language]', "") !!}
-                                    {!! Form::hidden('document_link[1][language]', '[]') !!}
-                                    <div class="col-sm-6">
-                                        {!! Form::label('annual_document_title', 'Title', ['class' => 'control-label required']) !!}
-                                        {!! Form::text('document_link[1][title][0][narrative][0][narrative]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label required']) !!}
-                                        {!! Form::text('document_link[1][url]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                    </div>
-                                </div>
+                                @include('tz.project.partials.location')
+                                @include('tz.project.partials.participating-organization')
+                                @include('tz.project.partials.document-link')
 
                                 <div class="col-sm-6">
                                     {!! Form::submit('Create Project', ['class' => 'btn btn-primary btn-create pull-right']) !!}
@@ -151,32 +87,10 @@
                                 </div>
                             </div>
 
-                            <div class="hidden" id="funding-org">
-                                <div class="col-sm-6">
-                                    {!! Form::label('funding_organization[index][funding_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
-                                    {!! Form::text('funding_organization[index][funding_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                </div>
-
-                                <div class="col-sm-6">
-                                    {!! Form::label('funding_organization[index][funding_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
-                                    {!! Form::select('funding_organization[index][funding_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                </div>
-                                <a href="javascript:void(0)" onclick="removeFunding(this)">Remove</a>
-                            </div>
-
-                            <div class="hidden" id="implementing-org">
-                                <div class="col-sm-6">
-                                    {!! Form::label('implementing_organization[index][implementing_organization_name]', 'Organization Name', ['class' => 'control-label required']) !!}
-                                    {!! Form::text('implementing_organization[index][implementing_organization_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                </div>
-
-                                <div class="col-sm-6">
-                                    {!! Form::label('implementing_organization[index][implementing_organization_type]', 'Organization Type', ['class' => 'control-label required']) !!}
-                                    {!! Form::select('implementing_organization[index][implementing_organization_type]', ['' => 'Select one of the following.'] + $organizationType, null, ['class' => 'form-control', 'required' => 'required']) !!}
-                                </div>
-
-                                <a href="javascript:void(0)" onclick="removeImplementing(this)">Remove</a>
-                            </div>
+                            @include('tz.project.partials.funding-clone')
+                            @include('tz.project.partials.implementing-clone')
+                            @include('tz.project.partials.location-clone')
+                            @include('tz.project.partials.tz-location-clone')
                         </div>
                     </div>
                 </div>
