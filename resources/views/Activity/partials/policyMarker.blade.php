@@ -8,27 +8,27 @@
                     @foreach($policyMarkers as $policyMarker)
                         <li>{{ $policyMarker['policy_marker'] .' - '. $getCode->getCodeNameOnly('PolicyMarker' , $policyMarker['policy_marker']) }}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
+                        <div class="more-info hidden">
                             @if(session('version') == 'V201')
-                                <dl>
-                                    <dt>@lang('activityView.vocabulary_uri')</dt>
-                                    <dd>{!! getClickableLink(getVal($policyMarker , ['vocabulary_uri'])) !!}</dd>
-                                </dl>
+                                <div class="element-info">
+                                    <div class="activity-element-label">@lang('activityView.vocabulary_uri')</div>
+                                    <div class="activity-element-info">{!! getClickableLink(getVal($policyMarker , ['vocabulary_uri'])) !!}</div>
+                                </div>
                             @endif
-                            <dl>
-                                <dt>@lang('activityView.significance')</dt>
-                                <dd>{!! getCodeNameWithCodeValue('PolicySignificance' , $policyMarker['significance'] , -4) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.description')</dt>
-                                <dd>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.significance')</div>
+                                <div class="activity-element-info">{!! getCodeNameWithCodeValue('PolicySignificance' , $policyMarker['significance'] , -4) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.description')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($policyMarker) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($policyMarker['narrative'])])
-                                </dd>
-                            </dl>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>

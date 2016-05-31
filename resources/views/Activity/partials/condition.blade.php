@@ -16,7 +16,7 @@
                 @endforeach
             @endif
         </div>
+        <a href="{{route('activity.condition.index', $id)}}" class="edit-element">edit</a>
+        <a href="{{route('activity.delete-element', [$id, 'condition'])}}" class="delete pull-right">remove</a>
     </div>
-    <a href="{{route('activity.condition.index', $id)}}" class="edit-element">edit</a>
-    <a href="{{route('activity.delete-element', [$id, 'condition'])}}" class="delete pull-right">remove</a>
 @endif

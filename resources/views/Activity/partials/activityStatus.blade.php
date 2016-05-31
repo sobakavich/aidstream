@@ -6,7 +6,7 @@
                 {{ $getCode->getCodeNameOnly('ActivityStatus', $activityStatus) }}
             </div>
         </div>
-        <a href="{{route('activity.activity-status.index', $id)}}" class="edit-element" data-toggle="tooltip">edit</a>
+        <a href="{{route('activity.activity-status.index', $id)}}" class="edit-element">edit</a>
         <a href="{{route('activity.delete-element', [$id, 'activity_status'])}}" class="delete pull-right">remove</a>
     </div>
 @endif

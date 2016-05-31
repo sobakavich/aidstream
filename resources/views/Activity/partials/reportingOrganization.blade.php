@@ -22,6 +22,6 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route('activity.reporting-organization.index' , $id) }}" class="edit-element"></a>
+        <a href="{{ route('settings.index') }}" class="edit-element"></a>
     </div>
 @endif

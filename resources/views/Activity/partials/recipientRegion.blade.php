@@ -6,27 +6,27 @@
                 @foreach($recipientRegions as $recipientRegion)
                     <li>{!! getRecipientInformation($recipientRegion['region_code'], $recipientRegion['percentage'], 'Region') !!}</li>
                     <div class="toggle-btn">
-                        <a href="#" class="show-more-info">Show more info</a>
-                        <a href="#" class="hide-more-info hidden">Hide more info</a>
+                        <span class="show-more-info">Show more info</span>
+                        <span class="hide-more-info hidden">Hide more info</span>
                     </div>
-                    <div class="more-info">
-                        <dl>
-                            <dt>@lang('activityView.region_vocabulary')</dt>
-                            <dd>{{ $recipientRegion['region_vocabulary'] . '-' . substr($getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary']) , 0 , -4) }}</dd>
-                        </dl>
+                    <div class="more-info hidden">
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.region_vocabulary')</div>
+                            <div class="activity-element-info">{{ $recipientRegion['region_vocabulary'] . '-' . substr($getCode->getActivityCodeName('RegionVocabulary', $recipientRegion['region_vocabulary']) , 0 , -4) }}</div>
+                        </div>
                         @if(session('version') != 'V201')
-                            <dl>
-                                <dt>@lang('activityView.vocabulary_uri')</dt>
-                                <dd>{!!  getClickableLink($recipientRegion['vocabulary_uri']) !!}</dd>
-                            </dl>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.vocabulary_uri')</div>
+                                <div class="activity-element-info">{!!  getClickableLink($recipientRegion['vocabulary_uri']) !!}</div>
+                            </div>
                         @endif
-                        <dl>
-                            <dt>@lang('activityView.description')</dt>
-                            <dd>
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.description')</div>
+                            <div class="activity-element-info">
                                 {!! getFirstNarrative($recipientRegion) !!}
                                 @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientRegion['narrative'])])
-                            </dd>
-                        </dl>
+                            </div>
+                        </div>
                     </div>
                 @endforeach
             </div>

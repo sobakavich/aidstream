@@ -6,19 +6,19 @@
                 @foreach($countryBudgetItems[0]['budget_item'] as $budgetItems)
                     <li>{{ getCountryBudgetItems($countryBudgetItems[0]['vocabulary'], $budgetItems) }}</li>
                     <div class="toggle-btn">
-                        <a href="#" class="show-more-info">Show more info</a>
-                        <a href="#" class="hide-more-info hidden">Hide more info</a>
+                        <span class="show-more-info">Show more info</span>
+                        <span class="hide-more-info hidden">Hide more info</span>
                     </div>
-                    <div class="more-info">
-                        <dl>
-                            <dt>@lang('activityView.description')</dt>
-                            <dd>{!!  getFirstNarrative($budgetItems['description'][0]) !!}</dd>
+                    <div class="more-info hidden">
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.description')</div>
+                            <div class="activity-element-info">{!!  getFirstNarrative($budgetItems['description'][0]) !!}</div>
                             @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($budgetItems['description'][0]['narrative'])])
-                        </dl>
-                        <dl>
-                            <dt>@lang('activityView.vocabulary')</dt>
-                            <dd>{!! getCodeNameWithCodeValue('BudgetIdentifierVocabulary' ,$countryBudgetItems[0]['vocabulary'] , -4 ) !!}</dd>
-                        </dl>
+                        </div>
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.vocabulary')</div>
+                            <div class="activity-element-info">{!! getCodeNameWithCodeValue('BudgetIdentifierVocabulary' ,$countryBudgetItems[0]['vocabulary'] , -4 ) !!}</div>
+                        </div>
                     </div>
                 @endforeach
             </div>

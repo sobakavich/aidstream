@@ -13,34 +13,34 @@
                             @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($organization['narrative'])])
                         </li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.identifier')</dt>
-                                <dd>{!! checkIfEmpty($organization['identifier']) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.organization_type')</dt>
-                                <dd>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.identifier')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty($organization['identifier']) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.organization_type')</div>
+                                <div class="activity-element-info">
                                     @if(!empty($organization['organization_type']))
                                         {{$organization['organization_type'] . ' - ' . $getCode->getCodeNameOnly("OrganisationType",$organization['organization_type']) }}
                                     @else
                                         <em>Not Available</em>
                                     @endif
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.organization_role')</dt>
-                                <dd>{{$organization['organization_role'] . ' - ' . $getCode->getCodeNameOnly("OrganisationRole",$organization['organization_role']) }}</dd>
-                            </dl>
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.organization_role')</div>
+                                <div class="activity-element-info">{{$organization['organization_role'] . ' - ' . $getCode->getCodeNameOnly("OrganisationRole",$organization['organization_role']) }}</div>
+                            </div>
                             @if(session('version') != 'V201')
                                 @if(array_key_exists('activity_id' , $organization))
-                                    <dl>
-                                        <dt>@lang('activityView.activity_id')</dt>
-                                        <dd>{!! checkIfEmpty($organization['activity_id']) !!}</dd>
-                                    </dl>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">@lang('activityView.activity_id')</div>
+                                        <div class="activity-element-info">{!! checkIfEmpty($organization['activity_id']) !!}</div>
+                                    </div>
                                 @endif
                             @endif
                         </div>

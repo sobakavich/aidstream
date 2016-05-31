@@ -6,17 +6,17 @@
                 @foreach($recipientCountries as $recipientCountry)
                     <li>{!! getRecipientInformation($recipientCountry['country_code'], $recipientCountry['percentage'], 'Country') !!}</li>
                     <div class="toggle-btn">
-                        <a href="#" class="show-more-info">Show more info</a>
-                        <a href="#" class="hide-more-info hidden">Hide more info</a>
+                        <span class="show-more-info">Show more info</span>
+                        <span class="hide-more-info hidden">Hide more info</span>
                     </div>
-                    <div class="more-info">
-                        <dl>
-                            <dt>@lang('activityView.description')</dt>
-                            <dd>
+                    <div class="more-info hidden">
+                        <div class="element-info">
+                            <div class="activity-element-label">@lang('activityView.description')</div>
+                            <div class="activity-element-info">
                                 {!! checkIfEmpty(getFirstNarrative($recipientCountry)) !!}
                                 @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientCountry['narrative'])])
-                            </dd>
-                        </dl>
+                            </div>
+                        </div>
                     </div>
                 @endforeach
             </div>

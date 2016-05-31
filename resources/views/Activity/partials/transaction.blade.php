@@ -9,87 +9,87 @@
                     <div class="activity-element-info">
                         <li>{!! getCurrencyValueDate($transaction['value'][0] , "transaction") !!}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.transaction_reference')</dt>
-                                <dd>{!! checkIfEmpty($transaction['reference']) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.description')</dt>
-                                <dd>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.transaction_reference')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty($transaction['reference']) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.description')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($transaction['description'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['description'][0]['narrative'])])
-                                </dd>
-                            </dl>
+                                </div>
+                            </div>
                             @if(session('version') != 'V201')
                                 @if(array_key_exists('humanitarian' , $transaction))
-                                    <dl>
-                                        <dt>@lang('activityView.humanitarian')</dt>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">@lang('activityView.humanitarian')</div>
                                         @if($transaction['humanitarian'] == "")
-                                            <dd><em>Not Available</em></dd>
+                                            <div class="activity-element-info"><em>Not Available</em></div>
                                         @elseif($transaction['humanitarian'] == 1)
-                                            <dd>Yes</dd>
+                                            <div class="activity-element-info">Yes</div>
                                         @elseif($transaction['humanitarian'] == 0)
-                                            <dd>No</dd>
+                                            <div class="activity-element-info">No</div>
                                         @endif
-                                    </dl>
+                                    </div>
                                 @endif
                             @endif
-                            <dl>
-                                <dt>@lang('activityView.transaction_type')</dt>
-                                <dd>{!! getCodeNameWithCodeValue('TransactionType' , $transaction['transaction_type'][0]['transaction_type_code'] , -4) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.transaction_date')</dt>
-                                <dd>{{ formatDate($transaction['transaction_date'][0]['date']) }}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.provider_organization')</dt>
-                                <dd>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.transaction_type')</div>
+                                <div class="activity-element-info">{!! getCodeNameWithCodeValue('TransactionType' , $transaction['transaction_type'][0]['transaction_type_code'] , -4) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.transaction_date')</div>
+                                <div class="activity-element-info">{{ formatDate($transaction['transaction_date'][0]['date']) }}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.provider_organization')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($transaction['provider_organization'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['provider_organization'][0]['narrative'])])
                                     {!! getTransactionProviderDetails($transaction['provider_organization'][0] , 'provider') !!}
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.receiver_organization')</dt>
-                                <dd>
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.receiver_organization')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($transaction['receiver_organization'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['receiver_organization'][0]['narrative'])])
                                     {!! getTransactionProviderDetails($transaction['receiver_organization'][0] , 'receiver') !!}
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.disbursement_channel')</dt>
-                                <dd>{!! checkIfEmpty($getCode->getCodeNameOnly('DisbursementChannel' , $transaction['disbursement_channel'][0]['disbursement_channel_code'])) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.sector')</dt>
-                                <dd>
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.disbursement_channel')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty($getCode->getCodeNameOnly('DisbursementChannel' , $transaction['disbursement_channel'][0]['disbursement_channel_code'])) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.sector')</div>
+                                <div class="activity-element-info">
                                     {!! getSectorInformation($transaction['sector'][0] , "") !!}
                                     {!! getTransactionSectorDetails($transaction['sector'][0]) !!} <br>
                                     {!! getFirstNarrative($transaction['sector'][0]) !!}
-                                </dd>
+                                </div>
                                 @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['sector'][0]['narrative'])])
-                            </dl>
+                            </div>
 
-                            <dl>
-                                <dt>@lang('activityView.recipient_country')</dt>
-                                <dd>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.recipient_country')</div>
+                                <div class="activity-element-info">
                                     {!! getCountryNameWithCode($transaction['recipient_country'][0]['country_code']) !!}
                                     <br>
                                     @if(!empty($transaction['recipient_country'][0]['narrative'][0]['narrative']))
                                         {!! getFirstNarrative($transaction['recipient_country'][0]) !!}
                                         @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['recipient_country'][0]['narrative'])])
                                     @endif
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.recipient_region')</dt>
-                                <dd>
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.recipient_region')</div>
+                                <div class="activity-element-info">
                                     {!! getCodeNameWithCodeValue('Region' , $transaction['recipient_region'][0]['region_code'] , -4) !!}
                                     <br>
                                     {!! getRecipientRegionDetails($transaction['recipient_region'][0]) !!} <br> <br>
@@ -97,24 +97,24 @@
                                         {!! getFirstNarrative($transaction['recipient_region'][0]) !!}
                                         @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($transaction['recipient_region'][0]['narrative'])])
                                     @endif
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.flow_type')</dt>
-                                <dd>{!! checkIfEmpty(getCodeNameWithCodeValue('FlowType' , $transaction['flow_type'][0]['flow_type'] , -4)) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.finance_type')</dt>
-                                <dd>{!! checkIfEmpty(getCodeNameWithCodeValue('FinanceType' , $transaction['finance_type'][0]['finance_type'] , -5)) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.aid_type')</dt>
-                                <dd>{!! checkIfEmpty(getCodeNameWithCodeValue('AidType' , $transaction['aid_type'][0]['aid_type'] , -5)) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.tied_status')</dt>
-                                <dd>{!! checkIfEmpty(getCodeNameWithCodeValue('TiedStatus' , $transaction['tied_status'][0]['tied_status_code'] , -4)) !!}</dd>
-                            </dl>
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.flow_type')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getCodeNameWithCodeValue('FlowType' , $transaction['flow_type'][0]['flow_type'] , -4)) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.finance_type')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getCodeNameWithCodeValue('FinanceType' , $transaction['finance_type'][0]['finance_type'] , -5)) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.aid_type')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getCodeNameWithCodeValue('AidType' , $transaction['aid_type'][0]['aid_type'] , -5)) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.tied_status')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(getCodeNameWithCodeValue('TiedStatus' , $transaction['tied_status'][0]['tied_status_code'] , -4)) !!}</div>
+                            </div>
                         </div>
                     </div>
                 </div>

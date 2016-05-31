@@ -11,7 +11,7 @@
                 </div>
             </div>
         @endforeach
+        <a href="{{route('activity.related-activity.index', $id)}}" class="edit-element">edit</a>
+        <a href="{{route('activity.delete-element', [$id, 'related-activity'])}}" class="delete pull-right">remove</a>
     </div>
-    <a href="{{route('activity.related-activity.index', $id)}}" class="edit-element">edit</a>
-    <a href="{{route('activity.delete-element', [$id, 'related-activity'])}}" class="delete pull-right">remove</a>
 @endif

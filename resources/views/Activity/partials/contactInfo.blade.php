@@ -3,7 +3,7 @@
         <div class="title">@lang('activityView.contact_info')</div>
         @foreach(groupActivityElements($contactInfo , 'type') as $key => $contactInformation)
             <div class="activity-element-list">
-                <div class="activity-element-label">{{ $getCode->getCodeNameOnly('ContactType' , $key) }}</div>
+                <div class="activity-element-label">{{ checkIfEmpty($getCode->getCodeNameOnly('ContactType' , $key), "General Enquiries") }}</div>
                 <div class="activity-element-info">
                     @foreach($contactInformation as $information)
                         <li>
@@ -14,46 +14,45 @@
                         </li>
 
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.department')</dt>
-                                <dd>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.department')</div>
+                                <div class="activity-element-info">
                                     {!!  getFirstNarrative($information['department'][0])  !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['department'][0]['narrative'])])
-                                </dd>
+                                </div>
 
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.job_title')</dt>
-                                <dd>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.job_title')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($information['job_title'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($information['job_title'][0]['narrative'])])
-                                </dd>
+                                </div>
 
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.telephone')</dt>
-                                <dd>{!! getContactInfo('telephone', $information['telephone'])  !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.email')</dt>
-                                <dd>{!! getContactInfo('email', $information['email']) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.website')</dt>
-                                <dd>{!! getContactInfo('website' , $information['website']) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.mailing_address')</dt>
-                                <dd>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.telephone')</div>
+                                <div class="activity-element-info">{!! getContactInfo('telephone', $information['telephone'])  !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.email')</div>
+                                <div class="activity-element-info">{!! getContactInfo('email', $information['email']) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.website')</div>
+                                <div class="activity-element-info">{!! getContactInfo('website' , $information['website']) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.mailing_address')</div>
+                                <div class="activity-element-info">
                                     {!!  getFirstNarrative($information['mailing_address'][0])  !!}
                                     @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($information['mailing_address'][0]['narrative'])])
-                                </dd>
-
-                            </dl>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>

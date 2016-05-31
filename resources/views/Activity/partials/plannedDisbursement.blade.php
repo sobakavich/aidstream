@@ -8,31 +8,31 @@
                     @foreach($disbursements as $disbursement)
                         <li>{!! getCurrencyValueDate($disbursement['value'][0] , "planned") !!}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.period')</dt>
-                                <dd>{!! getBudgetPeriod($disbursement) !!}</dd>
-                            </dl>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.period')</div>
+                                <div class="activity-element-info">{!! getBudgetPeriod($disbursement) !!}</div>
+                            </div>
                             @if(session('version') != 'V201')
-                                <dl>
-                                    <dt>@lang('activityView.provider_organization')</dt>
-                                    <dd>
+                                <div class="element-info">
+                                    <div class="activity-element-label">@lang('activityView.provider_organization')</div>
+                                    <div class="activity-element-info">
                                         {!!  getFirstNarrative($disbursement['provider_org'][0])  !!}
                                         @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($disbursement['provider_org'][0]['narrative'])])
                                         {!! getDisbursementOrganizationDetails($disbursement , 'provider_org') !!}
-                                    </dd>
-                                </dl>
-                                <dl>
-                                    <dt>@lang('activityView.receiver_organization')</dt>
-                                    <dd>
+                                    </div>
+                                </div>
+                                <div class="element-info">
+                                    <div class="activity-element-label">@lang('activityView.receiver_organization')</div>
+                                    <div class="activity-element-info">
                                         {!!  getFirstNarrative($disbursement['receiver_org'][0])  !!}
                                         @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($disbursement['receiver_org'][0]['narrative'])])
                                         {!! getDisbursementOrganizationDetails($disbursement , 'receiver_org') !!}
-                                    </dd>
-                                </dl>
+                                    </div>
+                                </div>
                             @endif
                         </div>
                     @endforeach

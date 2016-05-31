@@ -8,23 +8,23 @@
                     @foreach($sectors as $sector)
                         <li>{!! checkIfEmpty(getSectorInformation($sector , $sector['percentage']))  !!}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
+                        <div class="more-info hidden">
+                            <div class="element-info">
                                 @if(session('version') != 'V201')
-                                    <dt>@lang('activityView.vocabulary_uri')</dt>
-                                    <dd>{!!  checkIfEmpty(getClickableLink($sector['vocabulary_uri']))  !!}</dd>
+                                    <div class="activity-element-label">@lang('activityView.vocabulary_uri')</div>
+                                    <div class="activity-element-info">{!!  checkIfEmpty(getClickableLink($sector['vocabulary_uri']))  !!}</div>
                                 @endif
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.description')</dt>
-                                <dd>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.description')</div>
+                                <div class="activity-element-info">
                                     {!!  getFirstNarrative($sector)  !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($sector['narrative'])])
-                                </dd>
-                            </dl>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>

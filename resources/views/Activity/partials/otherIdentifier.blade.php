@@ -28,7 +28,7 @@
                 </div>
             </div>
         @endforeach
-    </div>
         <a href="{{route('activity.other-identifier.index', $id)}}" class="edit-element">edit</a>
         <a href="{{route('activity.delete-element', [$id, 'other_identifier'])}}" class="delete pull-right" data-toggle="tooltip" title="delete other identifier-">remove</a>
+    </div>
 @endif

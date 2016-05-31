@@ -8,7 +8,7 @@
                 @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => $titlesExceptFirstElement])
             </div>
         </div>
-        <a href="{{route('activity.title.index', $id)}}" class="edit-element" title="edit title" data-toggle="tooltip">edit</a>
-        <a href="{{route('activity.delete-element', [$id, 'title'])}}" class="delete pull-right" data-toggle="tooltip" title="delete title">remove</a>
+        <a href="{{route('activity.title.index', $id)}}" class="edit-element">edit</a>
+        <a href="{{route('activity.delete-element', [$id, 'title'])}}" class="delete pull-right">remove</a>
     </div>
 @endif

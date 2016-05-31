@@ -11,60 +11,61 @@
                             @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($result['title'][0]['narrative'])])
                         </li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <dl class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.description')</dt>
-                                <dd>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.description')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($result['description'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($result['description'][0]['narrative'])])
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.aggregation_status')</dt>
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.aggregation_status')</div>
                                 @if($result['aggregation_status'] == 1)
-                                    <dd>True</dd>
+                                    <div class="activity-element-info">True</div>
                                 @else
-                                    <dd>False</dd>
+                                    <div class="activity-element-info">False</div>
                                 @endif
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.indicators')</dt>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.indicators')</div>
                                 @foreach($result['indicator'] as $indicator)
-                                    <dd><strong>{!! getFirstNarrative($indicator['title'][0]) !!}</strong>
+                                    <div class="activity-element-info">
+                                        <strong>{!! getFirstNarrative($indicator['title'][0]) !!}</strong>
                                         @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($indicator['title'][0]['narrative'])])
-                                    </dd>
+                                    </div>
                                     @if(session('version') != 'V201')
-                                        <dd>
+                                        <div class="activity-element-info">
                                             @lang('activityView.indicator_reference')
                                             @if(array_key_exists('reference' , $indicator))
                                                 @foreach($indicator['reference'] as $reference)
                                                     <li>{!! getIndicatorReference($reference) !!}</li>
                                                 @endforeach
                                             @endif
-                                        </dd>
+                                        </div>
                                     @endif
-                                    <dl>
-                                        <dt>@lang('activityView.measure')</dt>
-                                        <dd>{!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>@lang('activityView.ascending')</dt>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">@lang('activityView.measure')</div>
+                                        <div class="activity-element-info">{!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}</div>
+                                    </div>
+                                    <div class="element-info">
+                                        <div class="activity-element-label">@lang('activityView.ascending')</div>
                                         @if($indicator['ascending'] == 1)
-                                            <dd>Yes</dd>
+                                            <div class="activity-element-info">Yes</div>
                                         @elseif($indicator['ascending'] == 0)
-                                            <dd>No</dd>
+                                            <div class="activity-element-info">No</div>
                                         @else
-                                            <dd><em>Not Available</em></dd>
+                                            <div class="activity-element-info"><em>Not Available</em></div>
                                         @endif
                                         <hr>
-                                        <dl>@lang('activityView.measure')
+                                        <div class="element-info">@lang('activityView.measure')
                                             : {!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}
-                                        </dl>
+                                        </div>
 
-                                        <dl>@lang('activityView.ascending')
+                                        <div class="element-info">@lang('activityView.ascending')
                                             : @if($indicator['ascending'] == 1)
                                                 Yes
                                             @elseif($indicator['ascending'] == 0)
@@ -72,13 +73,13 @@
                                             @else
                                                 <em>Not Available</em>
                                             @endif
-                                        </dl>
-                                        <dl>@lang('activityView.baseline_value')
+                                        </div>
+                                        <div class="element-info">@lang('activityView.baseline_value')
                                             : {!! getResultsBaseLine($indicator['measure'] , $indicator['baseline'][0]) !!}
                                             <br>
                                             {!! getFirstNarrative($indicator['baseline'][0]['comment'][0]) !!}
-                                        </dl>
-                                        <dl>
+                                        </div>
+                                        <div class="element-info">
                                             <span style="margin-right: 160px">Period</span> <span
                                                     style="margin-right: 40px"> Target Value </span>
                                             <span> Actual Vaule </span>
@@ -94,21 +95,21 @@
                                                 @include('Activity.partials.resultPartials.target' , ['type' => 'target'])
                                                 <br>
 
-                                                <a href="#" class="show-more-info"> {!!  checkIfEmpty($period['actual_value'])  !!} </a>
+                                                <a href="#"
+                                                   class="show-more-info"> {!!  checkIfEmpty($period['actual_value'])  !!} </a>
                                                 @include('Activity.partials.resultPartials.target' , ['type' => 'actual'])
                                             @endforeach
                                             <hr>
-                                        </dl>
+                                        </div>
                                         @endforeach
-                                    </dl>
-                            </dl>
-                            <hr>
-
+                                    </div>
+                            </div>
+                        </div>
                     @endforeach
                 </div>
             </div>
         @endforeach
+        <a href="{{route('activity.result.index', $id)}}" class="edit-element">edit</a>
+        <a href="{{route('activity.delete-element', [$id, 'result'])}}" class="delete pull-right">remove</a>
     </div>
-    <a href="{{route('activity.result.index', $id)}}" class="edit-element">edit</a>
-    <a href="{{route('activity.delete-element', [$id, 'result'])}}" class="delete pull-right">remove</a>
 @endif

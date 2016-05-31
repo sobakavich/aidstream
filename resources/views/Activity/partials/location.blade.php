@@ -13,62 +13,62 @@
                             @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($location['name'][0]['narrative'])])
                         </li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.location_reference')</dt>
-                                <dd>{!! checkIfEmpty($location['reference']) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.location_id_vocabulary')</dt>
-                                <dd>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.location_reference')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty($location['reference']) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.location_id_vocabulary')</div>
+                                <div class="activity-element-info">
                                     @foreach($location['location_id'] as $locationId)
                                         <li>{!!  getLocationIdVocabulary($locationId)  !!}</li>
                                     @endforeach
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.location_description')</dt>
-                                <dd>
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.location_description')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($location['location_description'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($location['location_description'][0]['narrative'])])
-                                </dd>
+                                </div>
 
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.activity_description')</dt>
-                                <dd>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.activity_description')</div>
+                                <div class="activity-element-info">
                                     {!! getFirstNarrative($location['activity_description'][0]) !!}
                                     @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($location['activity_description'][0]['narrative'])])
-                                </dd>
+                                </div>
 
-                            </dl>
-                            <dl>
-                                <dt> @lang('activityView.administrative_vocabulary')</dt>
-                                <dd>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label"> @lang('activityView.administrative_vocabulary')</div>
+                                <div class="activity-element-info">
                                     @foreach($location['administrative'] as $locationAdministrative)
                                         <li>{!! getAdministrativeVocabulary($locationAdministrative) !!}</li>
                                     @endforeach
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.point')</dt>
-                                <dd>{!! getLocationPoint($location) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.exactness')</dt>
-                                <dd>{!! getLocationPropertiesValues($location , 'exactness' ,'GeographicExactness' ) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.location_class')</dt>
-                                <dd>{!! getLocationPropertiesValues($location , 'location_class' ,'GeographicLocationClass' ) !!}</dd>
-                            </dl>
-                            <dl>
-                                <dt>@lang('activityView.feature_designation')</dt>
-                                <dd>{!! getLocationPropertiesValues($location , 'feature_designation' ,'LocationType' , -6) !!}</dd>
-                            </dl>
+                                </div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.point')</div>
+                                <div class="activity-element-info">{!! getLocationPoint($location) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.exactness')</div>
+                                <div class="activity-element-info">{!! getLocationPropertiesValues($location , 'exactness' ,'GeographicExactness' ) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.location_class')</div>
+                                <div class="activity-element-info">{!! getLocationPropertiesValues($location , 'location_class' ,'GeographicLocationClass' ) !!}</div>
+                            </div>
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.feature_designation')</div>
+                                <div class="activity-element-info">{!! getLocationPropertiesValues($location , 'feature_designation' ,'LocationType' , -6) !!}</div>
+                            </div>
                         </div>
                     @endforeach
                 </div>

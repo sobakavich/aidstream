@@ -8,19 +8,19 @@
                     @foreach($budgets as $budget)
                         <li>{!! getBudgetInformation('currency_with_valuedate' , $budget) !!}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>@lang('activityView.period')</dt>
-                                <dd>{!! getBudgetInformation('period' , $budget) !!}</dd>
-                            </dl>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">@lang('activityView.period')</div>
+                                <div class="activity-element-info">{!! getBudgetInformation('period' , $budget) !!}</div>
+                            </div>
                             @if(session('version') != 'V201')
-                                <dl>
-                                    <dt>@lang('activityView.status')</dt>
-                                    <dd>{!! getBudgetInformation('status' , $budget) !!}</dd>
-                                </dl>
+                                <div class="element-info">
+                                    <div class="activity-element-label">@lang('activityView.status')</div>
+                                    <div class="activity-element-info">{!! getBudgetInformation('status' , $budget) !!}</div>
+                                </div>
                             @endif
                         </div>
                     @endforeach

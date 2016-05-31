@@ -10,15 +10,16 @@
                     @foreach($groupedDates as $groupedDate)
                         <li>{{ formatDate($groupedDate['date']) }}</li>
                         <div class="toggle-btn">
-                            <a href="#" class="show-more-info">Show more info</a>
-                            <a href="#" class="hide-more-info hidden">Hide more info</a>
+                            <span class="show-more-info">Show more info</span>
+                            <span class="hide-more-info hidden">Hide more info</span>
                         </div>
-                        <div class="more-info">
-                            <dl>
-                                <dt>{{ $getCode->getCodeNameOnly('ActivityDateType', $key) }} @lang('activityView.description')</dt>
-                                <dd>{!! checkIfEmpty(checkIfEmpty(getFirstNarrative($groupedDate))) !!}</dd>
-                                @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($groupedDate['narrative'])])
-                            </dl>
+                        <div class="more-info hidden">
+                            <div class="element-info">
+                                <div class="activity-element-label">{{ $getCode->getCodeNameOnly('ActivityDateType', $key) }} @lang('activityView.description')</div>
+                                <div class="activity-element-info">{!! checkIfEmpty(checkIfEmpty(getFirstNarrative($groupedDate))) !!}
+                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($groupedDate['narrative'])])
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
