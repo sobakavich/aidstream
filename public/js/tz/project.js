@@ -76,7 +76,7 @@ var Project = {
     removeBlock: function (element, type) {
         if (type == 'implementing') {
             implementingOrganizationCount--;
-        } else if (type == 'funding')  {
+        } else if (type == 'funding') {
             fundingOrganizationCount--;
         } else {
             locationCount--;
@@ -103,9 +103,10 @@ var Project = {
         districtName = Project.rememberName(districtFields);
 
         var options = [{code: '', value: 'Select one of the following.'}, {code: 1, value: 'one'}, {code: 2, value: 'two'}];
+        var districts = [{code: '', value: 'Select one of the following.'}, {code: 1, value: 'D1'}, {code: 2, value: 'D2'}];
 
         var regionSelect = Project.addRegions(options, regionName);
-        var districtSelect = Project.addDistricts(districtName);
+        var districtSelect = Project.addDistricts(districts, districtName);
 
         tanzanianRegion = regionSelect;
         tanzanianDistrict = districtSelect;
@@ -122,13 +123,13 @@ var Project = {
 
         return name;
     },
-    improviseForm: function (selectedCountryCode) {
+    improviseForm: function (selectedCountryCode, edit) {
         if (selectedCountryCode == tanzanianCountryCode) {
             tanzaniaChosen = true;
             Project.changeFieldsForTanzania();
         } else {
             tanzaniaChosen = false;
-            Project.resetForm();
+            Project.resetForm(edit);
         }
     },
     addRegions: function (options, regionName) {
@@ -143,14 +144,18 @@ var Project = {
 
         return regionSelect;
     },
-    addDistricts: function (districtName) {
+    addDistricts: function (districts, districtName) {
         districtName = districtName.replace(/index/g, locationCount);
 
-        return $('<select/>', {
+        var districtSelect = $('<select/>', {
             class: 'form-control col-sm-4',
             name: districtName,
             disabled: 'disabled'
         });
+
+        Project.add(districts).to(districtSelect);
+
+        return districtSelect;
     },
     add: function (options) {
         selectOptions = options;
@@ -158,7 +163,7 @@ var Project = {
         return this;
     },
     to: function (regionSelect) {
-        for (var i=0; i< selectOptions.length; i++) {
+        for (var i = 0; i < selectOptions.length; i++) {
             regionSelect.append($('<option/>', {
                 value: selectOptions[i].code,
                 html: selectOptions[i].value
@@ -185,25 +190,38 @@ var Project = {
 
         projectForm.find('#location-wrap').find('#add-more-location').before(tempDiv);
     },
-    resetForm: function () {
+    resetForm: function (edit) {
         var fields = $('#location-wrap').children();
 
-        fields.each(function (index, field) {
-            if (index > 1 && $(field).is('div')) {
-                field.remove();
+        if (!edit) {
+            fields.each(function (index, field) {
+                if (index > 1 && $(field).is('div')) {
+                    field.remove();
+                }
+            });
+
+            if (tanzanianRegion && tanzanianDistrict) {
+                tanzanianDistrict.remove();
+                tanzanianRegion.remove();
             }
-        });
 
-        if (tanzanianRegion && tanzanianDistrict) {
-            tanzanianDistrict.remove();
-            tanzanianRegion.remove();
+            if (region && district) {
+                region.show();
+                district.show();
+            }
+        } else {
+            fields.each(function (index, field) {
+                if ($(field).is('div')) {
+                    field.remove();
+                }
+            });
+
+            var clone = $(Project.clone($('#location-clone'), locationCount));
+
+            $('input.region, input.district', clone).show();
+
+            $('#location-wrap').find('#add-more-location').before($('<div/>').append(clone));
         }
-
-        if (region && district) {
-            region.show();
-            district.show();
-        }
-
     }
 };
 
@@ -242,6 +260,7 @@ var removeLocation = function (element) {
 $('#project-country').on('change', function () {
     locationCount = 0;
     var that = $(this);
+
     Project.setForm(that.parent().find('#project-form')).improviseForm(that.val());
 });
 
