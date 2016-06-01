@@ -268,7 +268,7 @@ button, input[type="button"], input[type="reset"], input[type="submit"], .btn {
 
 .table {
   table-layout: auto;
-  margin-top: 20px!important;
+  margin-top: 20px !important;
   > thead {
     > tr {
       > th {
@@ -1954,7 +1954,7 @@ form .form-group + .text-danger {
   padding: 4px 26px;
 }
 
-.add_to_collection, .add_to_collection:focus, .add, .upload {
+.add_to_collection, .add_to_collection:focus, .add, .upload, .add-more {
   background: transparent $url_3 no-repeat 23px -629px;
   border: none;
   font-size: 12px;
@@ -1968,6 +1968,29 @@ form .form-group + .text-danger {
     background: transparent $url_3 no-repeat 23px -669px;
     color: $color_dodger_blue_approx;
     text-decoration: none;
+  }
+}
+
+.add-more,.add-more:focus,.add-more:active {
+  position: relative;
+  background: none;
+  padding-left: 48px;
+  float: left;
+  clear: both;
+  color: $color_gravel_approx;
+  margin: -10px 0 10px;
+  &:before {
+    content: '';
+    background: url(../../images/ic-sprite.svg) -3px -637px no-repeat;
+    @include size(20px);
+    @include position(absolute, 8px auto auto 23px);
+  }
+  &:hover {
+    background: none;
+    color: $color_dodger_blue_approx;
+    &:before {
+      background-position: -3px -677px;
+    }
   }
 }
 
@@ -3092,7 +3115,7 @@ label.required::after {
   margin-left: 2px;
 }
 
-.added-new-block,.has_add_more > .form-group + .form-group {
+.added-new-block, .has_add_more > .form-group + .form-group {
   border-top: 1px dashed #A9C6DE !important;
   padding-bottom: 0 !important;
 }
@@ -3251,7 +3274,7 @@ table.dataTable thead .sorting_desc {
   background: $url_13 no-repeat right;
 }
 
-.logs-container .collection_form .form-group+.form-group {
+.logs-container .collection_form .form-group + .form-group {
   padding-top: 10px;
 }
 
@@ -3263,7 +3286,7 @@ table.dataTable thead .sorting_desc {
     padding-top: 8px;
   }
   .select2-container {
-    width: 415px!important;
+    width: 415px !important;
   }
 }
 
@@ -3277,6 +3300,64 @@ table.dataTable thead .sorting_desc {
 
 .logs-container .create-form {
   padding-bottom: 0;
+}
+
+.create-project-form > form {
+  padding: 25px 0 10px;
+  .col-sm-12 {
+    padding: 0;
+  }
+  .btn-form {
+    height: 53px;
+  }
+  .btn-create {
+    background-position: -175px -116px;
+  }
+}
+
+#basic-info {
+  h2 {
+    font: 16px $font_0;
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+  input, select,.select2-container {
+    margin-bottom: 20px;
+  }
+  .col-sm-12 > .col-sm-6:first-of-type {
+    padding-right: 25px;
+    padding-left: 20px;
+  }
+  .col-sm-12 > .col-sm-6:last-of-type {
+    padding-left: 25px;
+    padding-right: 20px;
+  }
+  .col-sm-12 > .col-sm-6:only-of-type {
+    padding-left: 20px!important;
+  }
+  .remove_from_collection, .remove_from_collection:focus {
+    top: 5px;
+  }
+}
+
+.add-wrap {
+  border-top: 1px solid $color_gallery;
+  margin-top: 10px;
+  padding-top: 20px!important;
+}
+
+.added-new-block {
+  padding-top: 20px;
+  clear: both;
+  position: relative;
+}
+
+.auto-publish label {
+  margin-right: 20px;
+}
+
+.user-content-wrapper {
+  padding: 0;
 }
 
 @media all and (max-width: 1030px) {
@@ -3993,7 +4074,7 @@ table.dataTable thead .sorting_desc {
     }
   }
 
-  .logs-container .collection_form .form-group+.form-group {
+  .logs-container .collection_form .form-group + .form-group {
     padding-top: 25px;
   }
 }
@@ -4296,16 +4377,16 @@ table.dataTable thead .sorting_desc {
   word-wrap: break-word;
 }
 
-
 .logs-container .settings-wrapper .create-form.activity-log-filter-wrap .select2-container {
-  width: 100%!important;
+  width: 100% !important;
 }
 
 .sector_category_select {
-  label,.select2-container {
+  label, .select2-container {
     margin-left: 15px;
   }
 }
+
 
 
 
