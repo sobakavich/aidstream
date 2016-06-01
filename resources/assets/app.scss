@@ -3590,6 +3590,14 @@ table.dataTable thead .sorting_desc {
   }
 }
 
+.more-info {
+  margin-left: -280px;
+  margin-bottom: 10px;
+  &:before {
+    left: 300px;
+  }
+}
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px;
