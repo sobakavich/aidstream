@@ -299,4 +299,14 @@ class ProjectController extends TanzanianController
                 )
         ];
     }
+
+    public function projectDetails()
+    {
+        return view('tz.projectDetail');
+    }
+
+    public function projectPublicPage()
+    {
+        return view('tz.projectPublicPage');
+    }
 }
