@@ -10,11 +10,12 @@ function slash(value) {
         // ajax request handler
         request: function (url, data, callback, type) {
             type = type || 'POST';
-            $.ajax({
+            return $.ajax({
                 headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
                 type: type,
                 url: url,
                 data: data,
+                async: callback.async === undefined ? true : callback.async,
                 success: function (data) {
                     if (typeof callback == 'function') callback(data);
                 }
@@ -41,6 +42,7 @@ function slash(value) {
             }
 
             $('.organization_name').change(function () {
+                checkSimilarOrg = true;
                 if ($.trim($('.organization_name_abbr').val()) != "") {
                     return false;
                 }
@@ -54,7 +56,7 @@ function slash(value) {
         checkAbbrAvailability: function () {
             var checkElem = $('.organization_name_abbr');
             checkElem.on('change', checkAvailability);
-            checkElem.on('keydown', function () {
+            checkElem.on('focus', function () {
                 checkElem.siblings('.availability-check').html('').addClass('hidden').removeClass('text-success text-danger');
             });
             function checkAvailability() {
@@ -64,11 +66,13 @@ function slash(value) {
                 }
                 var callback = function (data) {
                     checkElem.siblings('.availability-check').removeClass('hidden').addClass('text-' + data.status).html(data.message);
-                    $(this).parents('.has-error').removeClass('has-error');
-                    $(this).siblings('.text-danger').remove();
+                    checkElem.parents('.has-error').removeClass('has-error');
+                    checkElem.siblings('.availability-check').siblings('.text-danger').remove();
                 };
-                Registration.request("/check-organization-user-identifier", {userIdentifier: $(this).val()}, callback);
+                Registration.request("/check-organization-user-identifier", {userIdentifier: checkElem.val()}, callback);
             }
+
+            checkElem.trigger('change');
         },
         // filters registration agencies on country change
         changeCountry: function () {
@@ -253,7 +257,6 @@ function slash(value) {
                             for (var i in data) {
                                 list += '<li><a data-value="' + i + '">' + data[i] + '</a></li>';
                             }
-                            list += '<li><a data-value="">None of these are my organisation.</a></li>';
                             $('ul.organization-list').html(list);
                         },
                         complete: function () {
@@ -376,6 +379,17 @@ function slash(value) {
             $.validator.addMethod("email", function (value, element) {
                 return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+\@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])\.[.a-zA-Z0-9](?:[.a-zA-Z0-9-]{0,61}[a-zA-Z0-9])*$/.test($.trim(value));
             });
+            $.validator.addMethod("uniqueAbbr", function (value, element) {
+                var validated = false;
+                var callback = function (data) {
+                    if (data) {
+                        validated = true;
+                    }
+                };
+                callback.async = false;
+                Registration.request("/check-organization-user-identifier", {userIdentifier: value, validation: true}, callback);
+                return this.optional(element) || validated;
+            });
 
             var form = $('#from-registration');
             var validation = form.validate({
@@ -462,58 +476,104 @@ function slash(value) {
             });
             $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
                 if ($(e.target).parent('li').index() < $(e.relatedTarget).parent('li').index()) {
+                    $(slash('#organization[organization_name_abbr]'), '#from-registration').rules('add', {
+                        uniqueAbbr: true,
+                        messages: {uniqueAbbr: 'Organization Name Abbreviation has already been taken.'}
+                    });
                     var isValid = $('input, select', '#from-registration').valid();
+                    $(slash('#organization[organization_name_abbr]'), '#from-registration').rules('remove', 'uniqueAbbr');
                     if (!isValid) {
                         validation.focusInvalid();
                         return false;
                     }
-                    if ($(e.relatedTarget).attr('href') == '#tab-users') {
+                    if ($(e.target).attr('href') == '#tab-organization') {
                         setIdentifier();
-                        Registration.checkOrgIdentifier();
+                        if (!(Registration.verifyOrgIdentifier() && Registration.verifySimilarOrgs())) {
+                            return false;
+                        }
                     }
                 }
-            });
+            })
             function setIdentifier() {
                 $('#username').val($('.organization_name_abbr').val() + '_admin');
             }
 
             setIdentifier();
         },
-        checkOrgIdentifier: function () {
-            var orgIdentifier = $('.organization_identifier').val();
-            if (orgIdentifier == '') {
+        verifyOrgIdentifier: function () {
+            if (!$.isEmptyObject(Registration.checkOrgIdentifier())) {
+                var form = $('#from-registration');
+                form.attr('action', '/same-organization-identifier');
+                form.submit();
                 return false;
             }
-            var callback = function (data) {
-                if (!$.isEmptyObject(data)) {
-                    Registration.orgData = data;
-                    $('a[href="#tab-organization"]').tab('show');
-                    $('#org-identifier-modal').modal('show');
-                }
-            };
-            Registration.request("/check-org-identifier", {org_identifier: orgIdentifier}, callback);
+            return true;
         },
+        checkOrgIdentifier: function () {
+            var orgIdentifier = $('.organization_identifier').val();
+            if ($.trim(orgIdentifier) == '') {
+                return [];
+            }
+            return Registration.request("/check-org-identifier", {org_identifier: orgIdentifier}, {async: false}).responseJSON;
+        },
+        verifySimilarOrgs: function () {
+            if (checkSimilarOrg && !$.isEmptyObject(Registration.checkSimilarOrgs())) {
+                var form = $('#from-registration');
+                form.attr('action', '/find-similar-organizations');
+                form.submit();
+                return false;
+            }
+            return true;
+        },
+        checkSimilarOrgs: function () {
+            var orgName = $('.organization_name').val();
+            if ($.trim(orgName) == "") {
+                return [];
+            }
+            return Registration.request('/similar-organizations/' + orgName, {}, {async: false}, 'GET').responseJSON;
+        },
+        // checkOrgIdentifier: function () {
+        //     var orgIdentifier = $('.organization_identifier').val();
+        //     if (orgIdentifier == '') {
+        //         return [];
+        //     }
+        //     var callback = function (data) {
+        //         if (!$.isEmptyObject(data)) {
+        //             Registration.orgData = data;
+        //             $('a[href="#tab-organization"]').tab('show');
+        //             $('#org-identifier-modal').modal('show');
+        //         }
+        //     };
+        //     callback.async = false;
+        //     return Registration.request("/check-org-identifier", {org_identifier: orgIdentifier}, callback).responseJSON;
+        // },
         // handles same organization identifier
+        // sameIdentifier: function () {
+        //     $('.preventClose').modal({
+        //         backdrop: 'static',
+        //         keyboard: false,
+        //         show: false
+        //     });
+        //     $('#org-identifier-modal').on('show.bs.modal', function () {
+        //         preventNavigation = false;
+        //         $('.org-name').html(Registration.orgData.org_name);
+        //         $('.admin-name').html(Registration.orgData.admin_name);
+        //     });
+        //
+        //     $('.confirm-organization').click(function () {
+        //         $('#org-identifier-modal').modal('hide');
+        //         $('#org-identifier-confirmation-modal').modal('show');
+        //     });
+        //
+        //     $('.need-new-user').click(function () {
+        //         $('#org-identifier-confirmation-modal').modal('hide');
+        //         $('#contact-admin-modal').modal('show');
+        //     });
+        // },
         sameIdentifier: function () {
-            $('.preventClose').modal({
-                backdrop: 'static',
-                keyboard: false,
-                show: false
-            });
-            $('#org-identifier-modal').on('show.bs.modal', function () {
-                preventNavigation = false;
-                $('.org-name').html(Registration.orgData.org_name);
-                $('.admin-name').html(Registration.orgData.admin_name);
-            });
-
-            $('.confirm-organization').click(function () {
-                $('#org-identifier-modal').modal('hide');
-                $('#org-identifier-confirmation-modal').modal('show');
-            });
-
-            $('.need-new-user').click(function () {
-                $('#org-identifier-confirmation-modal').modal('hide');
-                $('#contact-admin-modal').modal('show');
+            $('[data-section]').click(function () {
+                var sectionId = $(this).attr('data-section');
+                $(sectionId).removeClass('hidden').siblings('.section').addClass('hidden');
             });
         },
         // handles similar organizations

@@ -250,6 +250,7 @@ $router->post(
         'as'   => 'registration.submit-similar-organization',
         'uses' => 'Auth\RegistrationController@submitSimilarOrganization'
     ]
+
 );
 
 $router->get(
@@ -324,6 +325,14 @@ $router->match(
     [
         'as'   => 'similar-organizations',
         'uses' => 'Auth\RegistrationController@showSimilarOrganizations'
+    ]
+);
+
+$router->post(
+    'same-organization-identifier',
+    [
+        'as'   => 'same-organization-identifier',
+        'uses' => 'Auth\RegistrationController@showSameOrgIdentifier'
     ]
 );
 

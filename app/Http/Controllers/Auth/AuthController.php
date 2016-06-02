@@ -311,6 +311,9 @@ class AuthController extends Controller
             $response = ['status' => 'success', 'message' => 'Organization Name Abbreviation is available.'];
         } else {
             $response = ['status' => 'danger', 'message' => 'Organization Name Abbreviation has already been taken.'];
+            if ($request->get('validation')) {
+                return '';
+            }
         }
 
         return $response;

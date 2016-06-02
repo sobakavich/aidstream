@@ -85,87 +85,45 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body text-center">
 
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger">
-                                <span>
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </span>
-                            </div>
-                        @endif
-
-                        <h1 class="text-center">Organisation Name Warning</h1>
-                        <p>
-                            It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
-                        </p>
-                        <div class="input-wrapper">
-                            Search for same/similar organisation name on AidStream.
+                        <div id="org-confirmation" class="section">
+                            <h1>IATI Organisational Identifier Error</h1>
+                            <p>
+                                The IATI organisational identifier you entered is being used by another organisation on AidStream.
+                            </p>
+                            <p>Organization: {{ $orgName }}</p>
+                            <button class="btn btn-primary" data-section="#org-confirmed">Yes, this is my organisation</button>
+                            <p>
+                                No, this is not my organisation. <a href="{{ route('contact', ['not-my-organization']) }}">Contact Support at support@aidstream.org</a>
+                            </p>
+                            <p>
+                                On AidStream, two accounts cannot use the same IATI organisational identifier.
+                            </p>
                         </div>
 
-                        {{ Form::open(['url' => route('submit-similar-organization'), 'method' => 'post', 'id' => 'similar-org-form']) }}
-
-                        <div class="input-wrapper">
-                            {{ Form::hidden('type', $type) }}
-                            {!! AsForm::text(['name' => 'search_org', 'class' => 'search_org ignore_change', 'value' => $orgName, 'label' => false]) !!}
-                            {{ Form::button('Search Organisation', ['class' => 'btn btn-primary btn-search', 'type' => 'button']) }}
-                            {{ Form::hidden('similar_organization') }}
-                            <div class="col-xs-12 col-md-12">
-                                <ul class="organization-list">
-                                </ul>
-                            </div>
+                        <div id="org-confirmed" class="section hidden">
+                            <p>
+                                You have confirmed that your organisation already has an account on AidStream. Please select an option from below to continue.
+                            </p>
+                            <button class="btn btn-primary need-new-user" data-section="#contact-admin">Request New User Account</button>
+                            <p>
+                                I already have an account but forgot my login credentials.
+                            </p>
+                            <a href="/password/email" class="btn btn-primary">Retrieve Login Credentials</a>
                         </div>
 
-                        <div class="col-md-12 text-center">
-                            <div class="col-md-6">My organisation is not in the list.</div>
-                            <div class="col-md-6 organization-list">
-                                <a data-value="">None of these are my organisation.</a>
-                                {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
-                            </div>
+                        <div id="contact-admin" class="section hidden">
+                            <h1>Administrator Information</h1>
+                            <p>The administrator of the Organization: {{ $orgName }} is {{ $adminName }}</p>
+                            <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Request New User Account</a>
                         </div>
-
-                        {{ Form::close() }}
 
                     </div>
                 </div>
             </div>
             <div class="col-xs-12 col-md-12 create-account-wrapper">
                 <a href="{{ url('/auth/login') }}">I already have an account</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Contact Administrator Modal -->
-<div class="modal fade preventClose" id="contact-admin-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body clearfix text-center">
-                <p>Admin Name: <span class="admin-name"></span></p>
-                <p>
-                    For a new user account, please contact the admin.
-                </p>
-                <a href="{{ route('contact', ['forgot-user-email']) }}" class="btn btn-primary">Contact Administrator</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Contact Modal -->
-<div class="modal fade preventClose" id="contact-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body clearfix text-center">
-                <p>Admin Name: <span class="admin-name"></span></p>
-                <p>
-                    For a new user account, please contact the admin.
-                </p>
-                <a href="{{ route('contact', ['contact-admin-for-same-org']) }}" class="btn btn-primary">Contact Administrator</a>
-                <a href="{{ route('contact', ['contact-support-for-same-org']) }}" class="btn btn-primary">Contact Support for assistance</a>
             </div>
         </div>
     </div>
@@ -186,7 +144,7 @@
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
 <script>
-    Registration.filterSimilarOrg();
+    Registration.sameIdentifier();
 </script>
 </body>
 </html>

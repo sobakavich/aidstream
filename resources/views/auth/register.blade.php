@@ -235,18 +235,20 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+    <!-- End Google Analytics -->
 @endif
-<!-- Google Analytics -->
-<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-<!-- End Google Analytics -->
 <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/additional-methods.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
 <script type="text/javascript">
+    var checkSimilarOrg = true;
+    var checkOrgIdentifier = true;
     var agencies = JSON.parse($('.agencies').val());
     $(document).ready(function () {
-        $('form select').select2();
+//        $('form select').select2();
         Registration.abbrGenerator();
         Registration.checkAbbrAvailability();
         Registration.changeCountry();
@@ -256,10 +258,14 @@
         Registration.removeUser();
         Registration.usernameGenerator();
         Registration.tabs();
-        Registration.similarOrgs();
-        Registration.sameIdentifier();
-//        Registration.disableOrgSubmitButton();
-//        Registration.disableUsersSubmitButton();
+        @if($tab = session('tab'))
+                checkSimilarOrg = false;
+        $('a[href="{{ $tab }}"]').tab('show');
+        @endif
+        //        Registration.similarOrgs();
+        //        Registration.sameIdentifier();
+        //        Registration.disableOrgSubmitButton();
+        //        Registration.disableUsersSubmitButton();
     });
 </script>
 </body>

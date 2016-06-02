@@ -43,7 +43,7 @@
             Chunk.verifyPublisherAndApi();
             @if(session('first_login'))
                 UserOnBoarding.settingsTour();
-            UserOnBoarding.validatePublishingInfo();
+                UserOnBoarding.validatePublishingInfo();
             @endif
         });
     </script>

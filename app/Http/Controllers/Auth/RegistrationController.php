@@ -121,6 +121,20 @@ class RegistrationController extends Controller
     }
 
     /**
+     * show same organization identifier verification
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showSameOrgIdentifier()
+    {
+        $orgIdentifier = request('organization.organization_identifier');
+        $orgInfo       = $this->registrationManager->checkOrgIdentifier($orgIdentifier);
+        $orgName       = $orgInfo['org_name'];
+        $adminName     = $orgInfo['admin_name'];
+
+        return view('auth.sameOrgIdentifier', compact('orgName', 'adminName'));
+    }
+
+    /**
      * returns list of similar organizations
      * @param $orgName
      * @return array
@@ -151,7 +165,7 @@ class RegistrationController extends Controller
             return redirect()->route('contact', ['not-my-organization']);
         }
 
-        return redirect()->route('registration');
+        return redirect()->route('registration')->withTab('#tab-users');
     }
 
     /**
