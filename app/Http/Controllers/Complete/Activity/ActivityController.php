@@ -20,6 +20,7 @@ use App\Services\Twitter\TwitterAPI;
 use App\User;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 use Psr\Log\LoggerInterface;
 
 
@@ -166,6 +167,8 @@ class ActivityController extends Controller
                 $messages[$activity->id]               = $message;
             }
         }
+
+        Session::forget('first_login');
 
         return view('Activity.index', compact('activities', 'filenames', 'activityPublishedStats', 'messages'));
     }
