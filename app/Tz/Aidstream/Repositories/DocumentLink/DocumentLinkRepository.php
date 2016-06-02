@@ -43,15 +43,17 @@ class DocumentLinkRepository implements DocumentLinkRepositoryInterface
 
     /**
      * Update Document Link
+     * @param $projectId
      * @param $request
      * @return bool
      */
-    public function update($request)
+    public function update($projectId, $request)
     {
         foreach ($request['document_link'] as $document) {
             $documentLink = $this->documentLink->find($document['id']);
             unset($document['id']);
             $documentLinkData = [
+                'activity_id'   => $projectId,
                 'document_link' => $document
             ];
             $documentLink->update($documentLinkData);

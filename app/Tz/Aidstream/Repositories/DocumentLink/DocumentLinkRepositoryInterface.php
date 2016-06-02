@@ -7,5 +7,5 @@ interface DocumentLinkRepositoryInterface
     
     public function findByProjectId($projectId);
     
-    public function update($request);
+    public function update($projectId, $request);
 }

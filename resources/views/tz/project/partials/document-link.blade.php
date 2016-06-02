@@ -5,15 +5,15 @@
         {!! Form::hidden('document_link[0][format]', 'text/html') !!}
         {!! Form::hidden('document_link[0][title][0][narrative][0][language]', "") !!}
         {!! Form::hidden('document_link[0][language]', '[]') !!}
-        {!! Form::hidden('document_link[0][id]', $documentLinks['document_link'][0]['id']) !!}
+        {!! Form::hidden('document_link[0][id]', getVal($documentLinks, ['document_link', 0, 'id'])) !!}
 
         <div class="col-sm-6">
             {!! Form::label('result_document_title', 'Title', ['class' => 'control-label required']) !!}
-            {!! Form::text('document_link[0][title][0][narrative][0][narrative]', $documentLinks['document_link'][0]['title'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! Form::text('document_link[0][title][0][narrative][0][narrative]', getVal($documentLinks, ['document_link', 0, 'title', 0, 'narrative', 0, 'narrative']), ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
         <div class="col-sm-6">
             {!! Form::label('result_document_url', 'Document URL', ['class' => 'control-label required']) !!}
-            {!! Form::text('document_link[0][url]', $documentLinks['document_link'][0]['url'], ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! Form::text('document_link[0][url]', getVal($documentLinks, ['document_link', 0, 'url']), ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
     </div>
 
@@ -23,15 +23,15 @@
         {!! Form::hidden('document_link[1][format]', 'text/html') !!}
         {!! Form::hidden('document_link[1][title][0][narrative][0][language]', "") !!}
         {!! Form::hidden('document_link[1][language]', '[]') !!}
-        {!! Form::hidden('document_link[1][id]', $documentLinks['document_link'][1]['id']) !!}
+        {!! Form::hidden('document_link[1][id]', getVal($documentLinks, ['document_link', 1, 'id'])) !!}
         <div class="col-sm-6">
             {!! Form::label('annual_document_title', 'Title', ['class' => 'control-label required']) !!}
-            {!! Form::text('document_link[1][title][0][narrative][0][narrative]', $documentLinks['document_link'][1]['title'][0]['narrative'][0]['narrative'], ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! Form::text('document_link[1][title][0][narrative][0][narrative]', getVal($documentLinks, ['document_link', 1, 'title', 0, 'narrative', 0, 'narrative']), ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
 
         <div class="col-sm-6">
             {!! Form::label('annual_document_url', 'Document Url', ['class' => 'control-label required']) !!}
-            {!! Form::text('document_link[1][url]', $documentLinks['document_link'][1]['url'], ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! Form::text('document_link[1][url]', getVal($documentLinks, ['document_link', 1, 'url']), ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
 
     </div>

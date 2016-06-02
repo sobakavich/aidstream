@@ -184,7 +184,7 @@ class ProjectService
 //            dd($documents);
 //            $documentLink = $this->updateDocumentLinkJsonFormat($documents, $request['document_link'], $id);
 //            dd($documentLink);
-            $this->documentLink->update($request);
+            $this->documentLink->update($id, $request);
             $this->resetWorkflow($this->project->find($id));
 
             $this->logger->info(

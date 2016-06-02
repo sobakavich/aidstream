@@ -22,7 +22,6 @@ class ProjectRequests extends Request
         $rules['start_date']        = 'required|date';
         $rules['end_date']          = 'date';
         $rules['recipient_country'] = 'required';
-        $rules['recipient_region']  = 'required';
         $rules                      = array_merge(
             $rules,
             $this->getRulesForFundingOrganization($this->get('funding_organization')),
