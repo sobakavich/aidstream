@@ -14,7 +14,22 @@ use Illuminate\Support\Facades\Session;
 class Organization extends Model
 {
     protected $table = "organizations";
-    protected $fillable = ['name', 'address', 'user_identifier', 'reporting_org', 'status', 'country', 'twitter', 'organization_url', 'logo', 'logo_url', 'disqus_comments', 'published_to_registry'];
+    protected $fillable = [
+        'name',
+        'address',
+        'user_identifier',
+        'reporting_org',
+        'status',
+        'country',
+        'twitter',
+        'organization_url',
+        'logo',
+        'logo_url',
+        'disqus_comments',
+        'published_to_registry',
+        'registration_agency',
+        'registration_number'
+    ];
     protected $casts = ['reporting_org' => 'json'];
 
     /**

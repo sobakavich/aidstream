@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <title>Aidstream - Forgot Password</title>
-    <link rel="shotcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
-    <link href="{{ asset('/css/main.min.css') }}" rel="stylesheet">
+    <title>AidStream - Create Password</title>
+    <link rel="shortcut icon" type="image/png" sizes="32*32" href="{{ asset('/images/favicon.png') }}"/>
+    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/flag-icon.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
@@ -37,13 +39,16 @@
         <div class="navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
                 <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
+                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's
+                        Using</a></li>
+                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User
+                        Guide</a></li>
                 <!--<li><a href="#">Snapshot</a></li>-->
             </ul>
             <div class="action-btn pull-left">
                 @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
+                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}"
+                       class="btn btn-primary">Go
                         to Dashboard</a>
                 @else
                     <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
@@ -71,9 +76,10 @@
             <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <img src="{{url('images/logo.svg')}}" alt="">
+                        <img src="{{url('images/logo.png')}}" alt="">
 
-                        <div class="panel-title">Reset password</div>
+                        <div class="panel-title">Create password</div>
+                        <p>Thank you for verifying your email address. Please set a password for your account.</p>
                     </div>
                     <div class="panel-body">
                         @if (session('status'))
@@ -82,44 +88,17 @@
                             </div>
                         @endif
 
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger">
-                                <span>
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </span>
-                            </div>
-                        @endif
+                        {{ Form::open(['url' => route('create-password', [$verification_code]), 'method' => 'post']) }}
 
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        {!! AsForm::password(['name' => 'password', 'required' => true]) !!}
+                        {!! AsForm::password(['name' => 'confirm_password', 'required' => true]) !!}
 
-                            <div class="form-group">
-                                <label class="control-label">E-Mail Address</label>
+                        <div class="col-md-12 text-center">
+                            {{ Form::button('Create Password', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
+                        </div>
 
-                                <div class="col-md-12">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                                </div>
+                        {{ Form::close() }}
 
-                                @if(old('redirectedFrom') == 'registration')
-                                    <p>
-                                        If you don't have access to this email address which is associated with your account, contact us at
-                                        <a href="mailto:support@aidstream.org">support@aidstream.org</a>
-                                    </p>
-                                @endif
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-submit">
-                                        Send Password Reset Link
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -135,8 +114,6 @@
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
-<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-<!-- End Google Analytics -->
 <script>
     $(document).ready(function () {
         function hamburgerMenu() {
@@ -151,3 +128,5 @@
 </script>
 </body>
 </html>
+
+{{--l;fkmdhl;'sktrl';ku'e5--}}

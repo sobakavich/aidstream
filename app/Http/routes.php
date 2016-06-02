@@ -244,3 +244,83 @@ $router->get(
         'uses' => 'Complete\UserLogController@viewDeletedData'
     ]
 );
+
+$router->get(
+    'registration/organization',
+    [
+        'as'   => 'registration.organization',
+        'uses' => 'Auth\RegistrationController@showOrgForm'
+    ]
+);
+
+$router->post(
+    'registration/save-organization',
+    [
+        'as'   => 'registration.save-organization',
+        'uses' => 'Auth\RegistrationController@saveOrganization'
+    ]
+);
+
+$router->get(
+    'registration/users',
+    [
+        'as'   => 'registration.users',
+        'uses' => 'Auth\RegistrationController@showUsersForm'
+    ]
+);
+
+$router->post(
+    'registration/complete',
+    [
+        'as'   => 'registration.complete',
+        'uses' => 'Auth\RegistrationController@completeRegistration'
+    ]
+);
+
+$router->get(
+    'registration/similar-organizations',
+    [
+        'as'   => 'registration.similar-organizations',
+        'uses' => 'Auth\RegistrationController@showSimilarOrganizations'
+    ]
+);
+
+$router->post(
+    'registration/similar-organizations',
+    [
+        'as'   => 'registration.submit-similar-organization',
+        'uses' => 'Auth\RegistrationController@submitSimilarOrganization'
+    ]
+);
+
+$router->get(
+    'user/verification/{code}',
+    [
+        'as'   => 'user-verification',
+        'uses' => 'Auth\VerificationController@verifyUser'
+    ]
+);
+
+$router->post(
+    'settings/registry-info/{code}',
+    [
+        'as'   => 'save-registry-info',
+        'uses' => 'Auth\VerificationController@saveRegistryInfo'
+    ]
+);
+
+$router->get(
+    'user/create-password/{code}',
+    [
+        'as'   => 'show-create-password',
+        'uses' => 'Auth\PasswordController@showCreatePasswordForm'
+    ]
+);
+
+$router->post(
+    'user/create-password/{code}',
+    [
+        'as'   => 'create-password',
+        'uses' => 'Auth\PasswordController@createPassword'
+    ]
+);

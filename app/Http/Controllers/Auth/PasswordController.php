@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\RequestManager\Password as PasswordRequestManager;
+use App\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Mail\Message;
@@ -76,6 +78,25 @@ class PasswordController extends Controller
             $this->logger->error($e, ['email' => $request->email]);
 
             return redirect()->back()->withErrors(['email' => 'Failed to send email.']);
+        }
+    }
+
+    public function showCreatePasswordForm($code)
+    {
+        $this->resetView = 'auth.createPassword';
+
+        return $this->showResetForm(request(), session()->token())->with('verification_code', $code);
+    }
+
+    public function createPassword($code, PasswordRequestManager $request)
+    {
+        $password       = request('password');
+        $user           = User::where('verification_code', $code)->first();
+        $user->password = bcrypt($password);
+        if ($user->save()) {
+            return redirect()->to('/auth/login')->withMessage('Your password has been set. You can now login to your account. Thank you!');
+        } else {
+            return redirect()->to('/auth/login')->withErrors(['Failed to save Password.']);
         }
     }
 
