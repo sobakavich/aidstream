@@ -56,17 +56,18 @@ class BaseForm extends Form
 
     /**
      * adds add more button to form
-     * @param $buttonId
-     * @param $formClass
+     * @param        $buttonId
+     * @param        $formClass
+     * @param string $label
      * @return $this
      */
-    protected function addAddMoreButton($buttonId, $formClass)
+    protected function addAddMoreButton($buttonId, $formClass, $label = 'Add More')
     {
         return $this->add(
             $buttonId,
             'button',
             [
-                'label' => 'Add More',
+                'label' => $label,
                 'attr'  => [
                     'class'           => 'add_to_collection',
                     'data-collection' => $formClass,

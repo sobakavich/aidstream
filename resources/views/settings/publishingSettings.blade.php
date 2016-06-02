@@ -4,6 +4,9 @@
         <div class="panel-content-heading">Registry Information</div>
         <div class="create-form settings-form">
             {!! form_start($form) !!}
+            <div class="modal-content" style="display:none" id="loading-img">
+                <img src="{{url('/images/ajax-loader.gif')}}">
+            </div>
             <div id="publishing_info1">
                 <div class="form-group">
                     {!! form_label($form->publisher_id, ['label' => 'Publisher ID']) !!}
@@ -19,10 +22,14 @@
                 {!! form_until($form,'verify') !!}
             </div>
             <div id="publishing_info2">
-                {!!  form_until($form,'publishing') !!}
+                <div class="col-md-12">
+                    {!!  form_until($form,'publishing') !!}
+                </div>
             </div>
             <div id="publishing_info3">
-                {!! form_until($form,'publish_files') !!}
+                <div class="col-md-12">
+                    {!! form_until($form,'publish_files') !!}
+                </div>
             </div>
             {!!  form_end($form) !!}
         </div>
@@ -36,8 +43,8 @@
             Chunk.verifyPublisherAndApi();
             @if(session('first_login'))
                 UserOnBoarding.settingsTour();
-            @endif
             UserOnBoarding.validatePublishingInfo();
+            @endif
         });
     </script>
 @endsection

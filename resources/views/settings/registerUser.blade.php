@@ -7,42 +7,23 @@
     <div class="create-form create-user-form">
         {{ Form::model(old(),['route' => 'admin.signup-user', 'method' => 'POST']) }}
         <div class="panel-body">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    {{ Form::label(null,'First Name*') }}
-                    {{ Form::text('first_name',null,['class' => 'form-control','required']) }}
-                </div>
-                <div class="col-xs-12 col-sm-6">
-                    {{ Form::label(null,'Last Name*') }}
-                    {{ Form::text('last_name',null,['class' => 'form-control','required']) }}
-                </div>
+            <div class="col-md-12">
+                {!! AsForm::text(['name' => 'first_name', 'parent' => 'col-md-6', 'required' => true]) !!}
+                {!! AsForm::text(['name' => 'last_name','parent' => 'col-md-6', 'required'=> true]) !!}
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    {{ Form::label(null,'E-Mail Address*') }}
-                    {{ FOrm::email('email',null,['class' => 'form-control','required']) }}
-                </div>
+            <div class="col-md-12">
+                {!! AsForm::text(['name' => 'email','parent' => 'col-md-6','required'=> true]) !!}
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 ">
-                    {{ Form::label(null,'Username*') }}
-                    <span>{{$organizationIdentifier}}</span>
-                    {{ Form::text('username',null,['class'=>'form-control','id'=>'username']) }}
-                </div>
+            <div class="col-md-12">
+                <span>{{$organizationIdentifier}}</span>
+                {!! AsForm::text(['name' => 'username', 'parent' => 'col-md-6', 'required' => true]) !!}
             </div>
-            <div class="col-xs-12 col-sm-6">
-                {{ Form::label(null,'Password*') }}
-                {{ Form::password('password'.null,['class' => 'form-control','required']) }}
+            <div class="col-md-12">
+                {!! AsForm::password(['name' => 'password','parent' => 'col-md-6', 'required' => true]) !!}
+                {!! AsForm::password(['name' => 'password_confirmation', 'parent' => 'col-md-6', 'required' => true]) !!}
             </div>
-            <div class="col-xs-12 col-sm-6">
-                {{ Form::label(null,'Confirm Password*') }}
-                {{ Form::password('password_confirmation',null,['class' => 'form-control']) }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                {{ Form::label(null,'Permission Level*') }}
-                {{ Form::select('permissions',['2'=>'Publisher','7'=>'Viewer','6'=>'Editor','5'=>'Administrator'],['class'=>'form-control']) }}
+            <div class="col-md-12">
+                {!! AsForm::select(['name' => 'permissions', 'data' => $roles, 'empty_value' => 'Please select a permission',null, 'parent' => 'col-md-6' , 'required' => true]) !!}
             </div>
         </div>
         {{ Form::submit('Create',['class'=>'btn btn-primary btn-form btn-submit']) }}

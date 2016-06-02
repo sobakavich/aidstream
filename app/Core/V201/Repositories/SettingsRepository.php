@@ -3,7 +3,6 @@
 use App\Core\Repositories\SettingsRepositoryInterface;
 use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
-use App\User;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Session\SessionManager;
@@ -29,25 +28,19 @@ class SettingsRepository implements SettingsRepositoryInterface
      * @var Settings
      */
     protected $settings;
-    /**
-     * @var User
-     */
-    protected $user;
 
     /**
      * @param Settings         $settings
      * @param OrganizationData $organizationData
      * @param SessionManager   $sessionManager
      * @param DatabaseManager  $databaseManager
-     * @param User             $user
      */
-    function __construct(Settings $settings, OrganizationData $organizationData, SessionManager $sessionManager, DatabaseManager $databaseManager, User $user)
+    function __construct(Settings $settings, OrganizationData $organizationData, SessionManager $sessionManager, DatabaseManager $databaseManager)
     {
         $this->databaseManager  = $databaseManager;
         $this->organizationData = $organizationData;
         $this->sessionManager   = $sessionManager;
         $this->settings         = $settings;
-        $this->user             = $user;
     }
 
     /**
@@ -58,17 +51,6 @@ class SettingsRepository implements SettingsRepositoryInterface
     {
         return $this->settings->where('organization_id', $organization_id)->first();
     }
-
-    /**
-     * return settings
-     * @param $code
-     * @return mixed
-     */
-    public function getSettingsByCode($code)
-    {
-        return $this->user->where('verification_code', $code)->first()->organization->settings()->firstOrNew([]);
-    }
-
 
     /**
      * @param $input
@@ -122,8 +104,12 @@ class SettingsRepository implements SettingsRepositoryInterface
      */
     public function saveActivityElementsChecklist($default_field_groups, $settings)
     {
-        $settings->default_field_groups = $default_field_groups;
-        $settings->save();
+        if ($settings) {
+            $settings->default_field_groups = $default_field_groups;
+            $settings->save();
+        } else {
+            $this->settings->create(['default_field_groups' => $default_field_groups, 'organization_id' => session('org_id')]);
+        }
     }
 
     /**
@@ -133,8 +119,12 @@ class SettingsRepository implements SettingsRepositoryInterface
      */
     public function saveDefaultValues($defaultValues, $settings)
     {
-        $settings->default_field_values = [$defaultValues];
-        $settings->save();
+        if ($settings) {
+            $settings->default_field_values = [$defaultValues];
+            $settings->save();
+        } else {
+            $this->settings->create(['default_field_values' => $defaultValues, 'organization_id' => session('org_id')]);
+        }
     }
 
     /**
@@ -144,8 +134,7 @@ class SettingsRepository implements SettingsRepositoryInterface
      */
     public function savePublishingInfo($publishing_info, $settings)
     {
-        $settings->publishing_type = $publishing_info['publishing'];
-        $registry_info             = [
+        $registry_info = [
             0 => [
                 'publisher_id'        => $publishing_info['publisher_id'],
                 'api_id'              => $publishing_info['api_id'],
@@ -154,9 +143,14 @@ class SettingsRepository implements SettingsRepositoryInterface
                 'api_id_status'       => $publishing_info['api_id_status']
             ]
         ];
+        if ($settings) {
+            $settings->publishing_type = $publishing_info['publishing'];
+            $settings->registry_info   = $registry_info;
+            $settings->save();
+        } else {
+            $this->settings->create(['registry_info' => $registry_info, 'publishing' => $publishing_info['publishing'], 'organization_id' => session('org_id')]);
+        }
 
-        $settings->registry_info = $registry_info;
-        $settings->save();
     }
 
 }

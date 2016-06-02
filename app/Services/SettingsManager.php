@@ -184,22 +184,21 @@ class SettingsManager
 
     /**
      * save publishing information.
-     * @param          $publishing_info
-     * @param Settings $settings
+     * @param $publishing_info
+     * @param $settings
      * @return bool
      */
-    public function savePublishingInfo($publishing_info, Settings $settings)
+    public function savePublishingInfo($publishing_info, $settings)
     {
         try {
             $result = $this->repo->savePublishingInfo($publishing_info, $settings);
             $this->logger->info('Settings Updated Successfully.');
             $this->dbLogger->activity(
-                "activity.settings_updated",
+                "activity.publishing_settings_updated",
                 [
-                    'organization'    => $settings->organization->name,
-                    'organization_id' => $settings->organization->id
-                ],
-                ['user_id' => $settings->organization->users->where('role_id', 1)->first()->id]
+                    'organization'    => $this->auth->user()->organization->name,
+                    'organization_id' => $this->auth->user()->organization->id
+                ]
             );
 
             return true;
@@ -233,7 +232,7 @@ class SettingsManager
             $result = $this->repo->saveDefaultValues($default_values, $settings);
             $this->logger->info('Settings Updated Successfully.');
             $this->dbLogger->activity(
-                "activity.settings_updated",
+                "activity.default_values_settings_updated",
                 [
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id
@@ -268,10 +267,10 @@ class SettingsManager
     public function saveActivityElementsChecklist($default_field_groups, $settings)
     {
         try {
-            $result = $this->repo->saveActivityElementsChecklist($default_field_groups, $settings);
+            $this->repo->saveActivityElementsChecklist($default_field_groups, $settings);
             $this->logger->info('Settings Updated Successfully.');
             $this->dbLogger->activity(
-                "activity.settings_updated",
+                "activity.activity_elements_checklist_settings_updated",
                 [
                     'organization'    => $this->auth->user()->organization->name,
                     'organization_id' => $this->auth->user()->organization->id

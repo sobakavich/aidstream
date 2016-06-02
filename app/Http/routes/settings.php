@@ -82,6 +82,7 @@ $router->get(
         'uses' => 'Complete\SettingsController@viewPublishingInfo'
     ]
 );
+
 $router->post(
     'publishing-settings/update',
     [
@@ -89,6 +90,7 @@ $router->post(
         'uses' => 'Complete\SettingsController@savePublishingInfo'
     ]
 );
+
 $router->get(
     'default-values',
     [
@@ -96,6 +98,7 @@ $router->get(
         'uses' => 'Complete\SettingsController@viewDefaultValues'
     ]
 );
+
 $router->post(
     'default-values/update',
     [
@@ -103,6 +106,7 @@ $router->post(
         'uses' => 'Complete\SettingsController@saveDefaultValues'
     ]
 );
+
 $router->get(
     'activity-elements-checklist',
     [
@@ -110,6 +114,7 @@ $router->get(
         'uses' => 'Complete\SettingsController@viewActivityElementsChecklist'
     ]
 );
+
 $router->post(
     'activity-elements-checklist/update',
     [
@@ -117,13 +122,7 @@ $router->post(
         'uses' => 'Complete\SettingsController@saveActivityElementsChecklist'
     ]
 );
-$router->get(
-    'organization-information',
-    [
-        'as'   => 'organization-information',
-        'uses' => 'Complete\Organization\OrganizationController@viewOrganizationInformation'
-    ]
-);
+
 $router->post(
     'organization-information/update',
     [
@@ -131,6 +130,7 @@ $router->post(
         'uses' => 'Complete\Organization\OrganizationController@saveOrganizationInformation'
     ]
 );
+
 $router->get(
     'organization-information/username-updated',
     [
@@ -146,6 +146,7 @@ $router->get(
         'uses' => 'Complete\Organization\OrganizationController@notifyUser'
     ]
 );
+
 $router->post(
     'publishing-settings/verifyPublisherAndApi',
     [

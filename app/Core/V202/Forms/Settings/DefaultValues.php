@@ -18,19 +18,38 @@ class DefaultValues extends BaseForm
 
     public function buildForm()
     {
-        $this
-            ->addSelect('default_currency', $this->getCodeList('Currency', 'Organization'), 'Default Currency', $this->addHelpText('activity_defaults-default_currency', false), null, true)
-            ->addSelect(
-                'default_language',
-                $this->getCodeList('Language', 'Organization'),
-                'Default Language',
-                $this->addHelpText('activity_defaults-default_language', false),
-                config('app.default_language'),
-                true
-            )
-            ->add('default_hierarchy', 'text', ['help_block' => $this->addHelpText('activity_defaults-hierarchy', false)])
-            ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default']);
+        $this->addSelect(
+            'default_currency',
+            $this->getCodeList('Currency', 'Organization'),
+            'Default Currency',
+            $this->addHelpText('activity_defaults-default_currency', false),
+            null,
+            true,
+            [
+                'wrapper' => ['class' => 'form-group col-md-6']
+            ]
+        )
+             ->addSelect(
+                 'default_language',
+                 $this->getCodeList('Language', 'Organization'),
+                 'Default Language',
+                 $this->addHelpText('activity_defaults-default_language', false),
+                 config('app.default_language'),
+                 true,
+                 [
+                     'wrapper' => ['class' => 'form-group col-md-6']
+                 ]
 
+             )
+             ->add(
+                 'default_hierarchy',
+                 'text',
+                 [
+                     'help_block' => $this->addHelpText('activity_defaults-hierarchy', false),
+                     'wrapper'    => ['class' => 'form-group col-md-6']
+                 ]
+             )
+             ->add('linked_data_uri', 'text', ['label' => 'Linked Data Default', 'wrapper' => ['class' => 'form-group col-md-6']]);
         $this->addSelect(
             'default_collaboration_type',
             $this->getCodeList('CollaborationType', 'Organization'),
@@ -38,7 +57,9 @@ class DefaultValues extends BaseForm
             $this->addHelpText('activity_defaults-default_collaboration_type', false),
             null,
             false,
-            getVal($this->defaultFieldGroups, [0, 'Classifications', 'collaboration_type']) == "" ? ['wrapper' => ['class' => 'form-group hidden']] : []
+            getVal($this->defaultFieldGroups, [0, 'Classifications', 'collaboration_type']) == ""
+                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
+                : ['wrapper' => ['class' => 'from-group col-md-6']]
         );
         $this->addSelect(
             'default_flow_type',
@@ -47,7 +68,9 @@ class DefaultValues extends BaseForm
             $this->addHelpText('activity_defaults-default_flow_type', false),
             null,
             false,
-            (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_flow_type']) == "") ? ['wrapper' => ['class' => 'form-group hidden']] : []
+            (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_flow_type']) == "")
+                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-md-6']]
         );
         $this->addSelect(
             'default_finance_type',
@@ -56,7 +79,9 @@ class DefaultValues extends BaseForm
             $this->addHelpText('activity_defaults-default_finance_type', false),
             null,
             false,
-            (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_finance_type']) == "") ? ['wrapper' => ['class' => 'form-group hidden']] : []
+            (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_finance_type']) == "")
+                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-md-6']]
         );
         $this->addSelect(
             'default_aid_type',
@@ -65,7 +90,9 @@ class DefaultValues extends BaseForm
             $this->addHelpText('activity_defaults-default_aid_type', false),
             null,
             false,
-            (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_aid_type']) == "") ? ['wrapper' => ['class' => 'form-group hidden']] : []
+            (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_aid_type']) == "")
+                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-md-6']]
         );
         $this->addSelect(
             'default_tied_status',
@@ -74,9 +101,11 @@ class DefaultValues extends BaseForm
             $this->addHelpText('activity_defaults-default_tied_status', false),
             null,
             false,
-            (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_tied_status']) == "") ? ['wrapper' => ['class' => 'form-group hidden']] : []
+            (getVal($this->defaultFieldGroups, [0, 'Classifications', 'default_tied_status']) == "")
+                ? ['wrapper' => ['class' => 'form-group col-md-6 hidden']]
+                : ['wrapper' => ['class' => 'form-group col-md-6']]
         );
-        $this->addSelect('humanitarian', ['1' => 'Yes', '0' => 'No'])
+        $this->addSelect('humanitarian', ['1' => 'Yes', '0' => 'No'], null, null, null, false, ['wrapper' => ['class' => 'form-group col-md-6']])
              ->add(
                  'save',
                  'submit',

@@ -222,6 +222,7 @@
                 $('form button[type="submit"]').trigger('click');
             });
 
+            $('form button[type="submit"]').hide();
             $('body').delegate('#btnInfo5', 'click', function () {
                 $('#default_values form').valid();
                 $('form').attr('action', '/saveDefaultValues');

@@ -8,6 +8,6 @@ class OrganizationInformation extends BaseForm
     public function buildForm()
     {
         $this->addCollection('narrative', 'Settings\Narrative', 'narrative', ['label' => 'Text'], 'Organisation Name')
-             ->addAddMoreButton('add_narrative', 'narrative');
+             ->addAddMoreButton('add_narrative', 'narrative','Add organisation name in another language');
     }
 }

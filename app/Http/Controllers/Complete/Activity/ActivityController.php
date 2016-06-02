@@ -168,8 +168,6 @@ class ActivityController extends Controller
             }
         }
 
-        Session::forget('first_login');
-
         return view('Activity.index', compact('activities', 'filenames', 'activityPublishedStats', 'messages'));
     }
 
@@ -184,8 +182,15 @@ class ActivityController extends Controller
         $this->authorize('add_activity', $organization);
         $settings           = $this->settingsManager->getSettings($this->organization_id);
         $defaultFieldValues = $settings->default_field_values;
-        $input              = $request->all();
-        $result             = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
+
+        if (!$defaultFieldValues) {
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
+
+            return redirect('/default-values')->withResponse($response);
+        }
+
+        $input  = $request->all();
+        $result = $this->activityManager->store($input, $this->organization_id, $defaultFieldValues);
 
         if (!$result) {
             $response = ['type' => 'danger', 'code' => ['save_failed', ['name' => 'activity']]];
@@ -592,9 +597,9 @@ class ActivityController extends Controller
 
             return redirect('/settings')->withResponse($response);
         } elseif ($settings == null) {
-            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+            $response = ['type' => 'warning', 'code' => ['default_values', ['name' => 'activity']]];
 
-            return redirect('/publishing-settings')->withResponse($response);
+            return redirect('/default-values')->withResponse($response);
         }
 
         $defaultFieldValues    = $settings->default_field_values;

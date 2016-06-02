@@ -290,14 +290,16 @@ class OrganizationController extends Controller
         $countries          = $this->baseForm->getCodeList('Country', 'Organization');
         $registrationAgency = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization');
         $url                = route('organization-information.update');
-        $formOptions        = [
+        $settings           = $this->settingsManager->getSettings(session('org_id'));
+
+        $formOptions = [
             'method' => 'PUT',
             'url'    => $url,
             'model'  => ['narrative' => $organization->reporting_org[0]['narrative']]
         ];
-        $form               = $this->organizationManager->viewOrganizationInformation($formOptions);
+        $form        = $this->organizationManager->viewOrganizationInformation($formOptions);
 
-        return view('settings.organizationInformation', compact('form', 'organizationTypes', 'countries', 'organization', 'registrationAgency'));
+        return view('settings.organizationInformation', compact('form', 'organizationTypes', 'countries', 'organization', 'registrationAgency', 'settings'));
     }
 
     /** save organization information
@@ -427,9 +429,9 @@ class OrganizationController extends Controller
      */
     public function downloadOrganizationXml($orgId)
     {
-        $orgElem = $this->organizationManager->getOrganizationElement();
+        $orgElem    = $this->organizationManager->getOrganizationElement();
         $xmlService = $orgElem->getOrgXmlService();
-        $xml = $xmlService->generateTemporaryOrganizationXml(
+        $xml        = $xmlService->generateTemporaryOrganizationXml(
             $this->organizationManager->getOrganization($orgId),
             $this->organizationManager->getOrganizationData($orgId),
             $this->settingsManager->getSettings($orgId),
@@ -440,7 +442,7 @@ class OrganizationController extends Controller
             $xml,
             200,
             [
-                'Content-type' => 'text/xml',
+                'Content-type'        => 'text/xml',
                 'Content-Disposition' => sprintf('attachment; filename=orgXmlFile.xml')
             ]
         );

@@ -85,8 +85,10 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     type: 'POST',
                     success: function (data) {
                         if (data == 'success') {
-                            $('#response').removeClass('hidden').html(permission_text + ' level permission has been given to ' + username);
+                            $('.alert-success').addClass('hidden');
+                            $('#success').removeClass('hidden').html(permission_text + ' level permission has been given to ' + username);
                         } else {
+                            $('.alert-danger').addClass('hidden');
                             $('#error').removeClass('hidden').html('Failed to update permission for ' + username);
                         }
 
@@ -104,21 +106,19 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     url: '/publishing-settings/verifyPublisherAndApi',
                     data: {publisherId: publisherId, apiKey: apiKey},
                     type: 'POST',
+                    beforeSend: function () {
+                        $('#loading-img').show();
+                    },
+                    complete: function () {
+                        $('#loading-img').hide();
+                    },
                     success: function (data) {
                         var publisher_response = data['publisher_id'];
                         var api_key = data['api_key'];
-                        var publisher_status = (publisher_response) ? "Verified" : "Not Verified";
-                        var api_status = (api_key) ? "Correct" : "Incorrect";
-                        $('#publisher_id_status').val(publisher_status);
-                        $('#publisher_id_status_display').addClass(publisher_response ? 'text-success' : 'text-error').html(publisher_status);
-                        $('#api_id_status').val(api_status);
-                        $('#api_id_status_display').addClass(api_key ? 'text-success' : 'text-error').html(api_status);
-                    },
-                    error: function (data) {
-                        var response = data.responseJSON.publisher_id;
-                        $('#error').removeClass('hidden');
-                        $('#error').focus();
-                        $('#error').html(response);
+                        publisher_response = (publisher_response) ? "Verified" : "Not Verified";
+                        api_key = (api_key) ? "Correct" : "Incorrect";
+                        $("#publisher_id_status").val(publisher_response);
+                        $("#api_id_status").val(api_key);
                     }
                 });
             });
