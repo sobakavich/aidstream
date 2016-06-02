@@ -92,22 +92,49 @@
                     <div class="panel-body">
                         @include('includes.response')
 
-                        {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
+                        {{--*/ $orgInfo = (array) (old() ? old() : session('org_info')); /*--}}
 
-                        {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
+                        {{ Form::model($orgInfo, ['url' => route('registration.save-organization'), 'method' => 'post', 'id' => 'organization-form']) }}
 
-                        <ul class="nav nav-tabs hidden" role="tablist">
-                            <li role="presentation" class="active"><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organization</a></li>
-                            <li role="presentation"><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Users</a></li>
-                        </ul>
+                        <div class="input-wrapper">
+                            <p>Please provide the information below about the organisation you want to create an account for on AidStream.</p>
+                        </div>
 
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane clearfix active" id="tab-organization">
-                                @include('auth.organization')
+                        <div class="input-wrapper">
+                            <div class="col-xs-12 col-md-12">
+                                {!! AsForm::text(['name' => 'organization_name', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+                                {!! AsForm::text(['name' => 'organization_name_abbr', 'label' => 'Organization Name Abbreviation', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!}
                             </div>
-                            <div role="tabpanel" class="tab-pane clearfix" id="tab-users">
-                                @include('auth.users')
+                            <div class="col-xs-12 col-md-12">
+                                {!! AsForm::select(['name' => 'organization_type', 'data' => $orgType, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => 'Select a Type']) !!}
                             </div>
+                            <div class="col-xs-12 col-md-12">
+                                {!! AsForm::text(['name' => 'organization_address', 'label' => 'Address', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+                                {!! AsForm::select(['name' => 'country', 'data' => $countries, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => 'Select a Country']) !!}
+                            </div>
+                            <div class="col-xs-12 col-md-12{{ $errors->get('organization_identifier') ? ' has-error' : '' }}">
+                                {!! AsForm::select(['name' => 'organization_registration_agency', 'data' => $orgRegAgency, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => 'Select an Agency']) !!}
+                                {!! AsForm::text(['name' => 'registration_number', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+                                <p>
+                                    <button type="button" class="btn-xs btn-link add_agency">Add Agency</button>
+                                    {{ Form::hidden('agencies', ($agencies = getVal($orgInfo, ['agencies'], [])) ? $agencies : json_encode($orgRegAgency), ['class' => 'form-control', 'id' => 'agencies', 'data-agency' => getVal($orgInfo, ['organization_registration_agency'])]) }}
+                                    {{ Form::hidden('new_agencies', null, ['class' => 'form-control', 'id' => 'new_agencies']) }}
+                                    {{ Form::hidden('agency_name', null, ['class' => 'form-control', 'id' => 'agency_name']) }}
+                                    {{ Form::hidden('agency_website', null, ['class' => 'form-control', 'id' => 'agency_website']) }}
+                                </p>
+                            </div>
+                            <div class="text-center">
+                                IATI Organizational Identifier: <span id="org_identifier">[Registration Agency]-[Registration Number]</span>
+                                {{ Form::hidden('organization_identifier', null, ['class' => 'form-control', 'id' => 'organization_identifier']) }}
+
+                                @foreach($errors->get('organization_identifier') as $message)
+                                    <div class="text-danger">{{ $message }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            {{ Form::button('Continue Registration', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit', 'disabled' => 'disabled']) }}
                         </div>
 
                         {{ Form::close() }}
@@ -120,6 +147,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="reg_agency" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -180,12 +208,6 @@
         </div>
     </div>
 </div>
-
-<div id="user_template" class="hidden">
-    {{--*/ $userIndex = '_index_'; /*--}}
-    @include('auth.partUsers')
-</div>
-
 @include('includes.footer')
 
 @if(env('APP_ENV') == 'local')
@@ -199,22 +221,16 @@
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
 <script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/additional-methods.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
 <script type="text/javascript">
-    var agencies = JSON.parse($('.agencies').val());
+    var agencies = JSON.parse($('#agencies').val());
     $(document).ready(function () {
         Registration.abbrGenerator();
         Registration.checkAbbrAvailability();
         Registration.changeCountry();
         Registration.regNumber();
+        Registration.disableOrgSubmitButton();
         Registration.addRegAgency();
-        Registration.addUser();
-        Registration.removeUser();
-        Registration.usernameGenerator();
-        Registration.tabs();
-//        Registration.disableOrgSubmitButton();
-//        Registration.disableUsersSubmitButton();
     });
 </script>
 </body>

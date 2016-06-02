@@ -92,22 +92,51 @@
                     <div class="panel-body">
                         @include('includes.response')
 
-                        {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
+                        {{--*/ $users = (array) (old() ? old() : session('org_users')); /*--}}
 
-                        {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
+                        {{ Form::model($users, ['url' => route('registration.complete'), 'method' => 'post', 'id' => 'users-form']) }}
 
-                        <ul class="nav nav-tabs hidden" role="tablist">
-                            <li role="presentation" class="active"><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organization</a></li>
-                            <li role="presentation"><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Users</a></li>
-                        </ul>
+                        <div class="input-wrapper">
+                            <p>Please provide the information below for the administrator of your organization’s account on AidStream.</p>
+                        </div>
 
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane clearfix active" id="tab-organization">
-                                @include('auth.organization')
+                        <div class="input-wrapper">
+                            <div class="col-xs-12 col-md-12">
+                                {{--*/ $identifier = session('org_info')['organization_name_abbr'] /*--}}
+                                <span class="hidden" id="user-identifier" data-id="{{ $identifier }}"></span>
+
+                                <p>Username: <span id="username">{{ $identifier }}_admin</span> This username was generated using Organisation Name Abbreviation you provided earlier.</p>
                             </div>
-                            <div role="tabpanel" class="tab-pane clearfix" id="tab-users">
-                                @include('auth.users')
+                            <div class="col-xs-12 col-md-12">
+                                {!! AsForm::text(['name' => 'first_name', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+                                {!! AsForm::text(['name' => 'last_name', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
                             </div>
+                            <div class="col-xs-12 col-md-12">
+                                {!! AsForm::email(['name' => 'email', 'label' => 'E-mail Address', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+                            </div>
+                            <div class="col-xs-12 col-md-12">
+                                {!! AsForm::password(['name' => 'password', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+                                {!! AsForm::password(['name' => 'confirm_password', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+                            </div>
+                            <div class="col-xs-12 col-md-12">
+                                {!! AsForm::email(['name' => 'secondary_contact', 'label' => 'Secondary Contact at Organisation', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<p class="help-block">Example: example@email.com</p>']) !!}
+                            </div>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <p>AidStream supports multiple user accounts for an organisation.</p>
+
+                            <div class="user-blocks">
+                                {{--*/ $users = getVal($users, ['user'], []); /*--}}
+                                @foreach($users as $userIndex => $user)
+                                    @include('auth.partUsers')
+                                @endforeach
+                            </div>
+                            {{ Form::button('Add a User', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'button', 'id' => 'add-user']) }}
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            {{ Form::button('Complete Registration', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
                         </div>
 
                         {{ Form::close() }}
@@ -120,73 +149,12 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="reg_agency" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add Agency</h4>
-            </div>
-            {{ Form::open(['url' => route('agency.store'), 'method' => 'post', 'id' => 'reg-agency-form']) }}
-            <div class="modal-body clearfix">
-
-                <div class="messages hidden"></div>
-                <div class="form-container hidden">
-                    {{--*/
-                    $messages = $errors->get('name');
-                    /*--}}
-                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
-                        {{ Form::label('name', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
-                        <div class="col-xs-12 col-sm-8">
-                            {{ Form::text('name') }}
-                            @foreach($messages as $message)
-                                <div class="text-danger">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-                    {{--*/
-                    $messages = $errors->get('short_form');
-                    /*--}}
-                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
-                        {{ Form::label('short_form', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
-                        <div class="col-xs-12 col-sm-8">
-                            {{ Form::text('short_form') }}
-                            @foreach($messages as $message)
-                                <div class="text-danger">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-                    {{--*/
-                    $messages = $errors->get('website');
-                    /*--}}
-                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
-                        {{ Form::label('website', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
-                        <div class="col-xs-12 col-sm-8">
-                            {{ Form::url('website') }}
-                            <p class="help-block">eg: http://www.example.com</p>
-                            @foreach($messages as $message)
-                                <div class="text-danger">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add</button>
-            </div>
-            {{ Form::close() }}
-        </div>
-    </div>
-</div>
+@include('includes.footer')
 
 <div id="user_template" class="hidden">
     {{--*/ $userIndex = '_index_'; /*--}}
     @include('auth.partUsers')
 </div>
-
-@include('includes.footer')
 
 @if(env('APP_ENV') == 'local')
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
@@ -194,27 +162,18 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+    <!-- End Google Analytics -->
 @endif
-<!-- Google Analytics -->
-<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-<!-- End Google Analytics -->
-<script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/additional-methods.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
 <script type="text/javascript">
-    var agencies = JSON.parse($('.agencies').val());
+    var userIdentifier = '{{ $identifier }}_';
     $(document).ready(function () {
-        Registration.abbrGenerator();
-        Registration.checkAbbrAvailability();
-        Registration.changeCountry();
-        Registration.regNumber();
-        Registration.addRegAgency();
         Registration.addUser();
         Registration.removeUser();
         Registration.usernameGenerator();
-        Registration.tabs();
-//        Registration.disableOrgSubmitButton();
-//        Registration.disableUsersSubmitButton();
+        Registration.disableUsersSubmitButton();
     });
 </script>
 </body>

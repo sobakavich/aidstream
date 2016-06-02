@@ -26,7 +26,6 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('form select').select2();
@@ -90,27 +89,32 @@
                         <div class="panel-title">Register</div>
                     </div>
                     <div class="panel-body">
-                        @include('includes.response')
 
-                        {{--*/ $regInfo = (array) (old() ? old() : session('reg_info')); /*--}}
+                        {{ Form::open(['url' => route('registration.submit-similar-organization'), 'method' => 'post']) }}
 
-                        {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
+                        <div class="input-wrapper text-center">
+                            <p>
+                                There is an existing organisation on AidStream with the same/a similar name. If any of the names displayed below match your organisation, please select that name and
+                                click ‘Continue’ to avoid creating a duplicate account. If none of the names displayed match your organisation, simply click ‘Continue’ without selecting a name. Please
+                                be aware that creating duplicate accounts will cause errors in your IATI data. In the case that you have lost your existing account information and need access, you can
+                                contact us immediately at <a href="mailto:support@aidstream.org">support@aidstream.org</a>
+                            </p>
+                        </div>
 
-                        <ul class="nav nav-tabs hidden" role="tablist">
-                            <li role="presentation" class="active"><a href="#tab-organization" aria-controls="tab-organization" role="tab" data-toggle="tab">Organization</a></li>
-                            <li role="presentation"><a href="#tab-users" aria-controls="tab-users" role="tab" data-toggle="tab">Users</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane clearfix active" id="tab-organization">
-                                @include('auth.organization')
-                            </div>
-                            <div role="tabpanel" class="tab-pane clearfix" id="tab-users">
-                                @include('auth.users')
+                        <div class="input-wrapper">
+                            {!! AsForm::select(['name' => 'organizations', 'data' => $organizations, 'empty_value' => 'select your organization']) !!}
+                            <div class="col-xs-12 col-md-12">
+                                <ul class="organization-list">
+                                </ul>
                             </div>
                         </div>
 
+                        <div class="col-md-12 text-center">
+                            {{ Form::button('Continue Registration', ['class' => 'btn btn-primary btn-submit btn-register', 'type' => 'submit']) }}
+                        </div>
+
                         {{ Form::close() }}
+
                     </div>
                 </div>
             </div>
@@ -120,102 +124,60 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="reg_agency" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add Agency</h4>
-            </div>
-            {{ Form::open(['url' => route('agency.store'), 'method' => 'post', 'id' => 'reg-agency-form']) }}
-            <div class="modal-body clearfix">
-
-                <div class="messages hidden"></div>
-                <div class="form-container hidden">
-                    {{--*/
-                    $messages = $errors->get('name');
-                    /*--}}
-                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
-                        {{ Form::label('name', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
-                        <div class="col-xs-12 col-sm-8">
-                            {{ Form::text('name') }}
-                            @foreach($messages as $message)
-                                <div class="text-danger">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-                    {{--*/
-                    $messages = $errors->get('short_form');
-                    /*--}}
-                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
-                        {{ Form::label('short_form', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
-                        <div class="col-xs-12 col-sm-8">
-                            {{ Form::text('short_form') }}
-                            @foreach($messages as $message)
-                                <div class="text-danger">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-                    {{--*/
-                    $messages = $errors->get('website');
-                    /*--}}
-                    <div class="form-group {{ $messages ? ' has-error' : '' }}">
-                        {{ Form::label('website', null, ['class' => 'control-label required col-xs-12 col-sm-4']) }}
-                        <div class="col-xs-12 col-sm-8">
-                            {{ Form::url('website') }}
-                            <p class="help-block">eg: http://www.example.com</p>
-                            @foreach($messages as $message)
-                                <div class="text-danger">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add</button>
-            </div>
-            {{ Form::close() }}
-        </div>
-    </div>
-</div>
-
-<div id="user_template" class="hidden">
-    {{--*/ $userIndex = '_index_'; /*--}}
-    @include('auth.partUsers')
-</div>
-
 @include('includes.footer')
 
 @if(env('APP_ENV') == 'local')
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
+<script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
-<script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/additional-methods.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
-<script type="text/javascript">
-    var agencies = JSON.parse($('.agencies').val());
-    $(document).ready(function () {
-        Registration.abbrGenerator();
-        Registration.checkAbbrAvailability();
-        Registration.changeCountry();
-        Registration.regNumber();
-        Registration.addRegAgency();
-        Registration.addUser();
-        Registration.removeUser();
-        Registration.usernameGenerator();
-        Registration.tabs();
-//        Registration.disableOrgSubmitButton();
-//        Registration.disableUsersSubmitButton();
-    });
+<script>
+    Registration.filterSimilarOrg();
 </script>
+<style type="text/css">
+    .loader {
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 60px;
+        letter-spacing: -16px;
+        -webkit-animation: mymove 1s infinite; /* Chrome, Safari, Opera */
+        -webkit-animation-direction: alternate;
+        animation: loading 1s infinite;
+        animation-direction: alternate;
+    }
+
+    /* Chrome, Safari, Opera */
+    @-webkit-keyframes loading {
+        from {
+            letter-spacing: -16px;
+        }
+        to {
+            letter-spacing: 16px;
+        }
+    }
+
+    @keyframes loading {
+        from {
+            letter-spacing: -16px;
+        }
+        to {
+            letter-spacing: 16px;
+        }
+    }
+</style>
 </body>
 </html>
