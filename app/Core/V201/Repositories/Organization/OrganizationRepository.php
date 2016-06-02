@@ -7,6 +7,7 @@ use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Models\Settings;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -57,25 +58,20 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     }
 
     /**
-     * write brief description
+     * creates new organization
      * @param array $input
+     * @return Organization
      */
     public function createOrganization(array $input)
     {
-        $org                  = new Organization();
-        $org->name            = json_encode($input['name']);
-        $org->user_identifier = $input['user_identifier'];
-        $org->address         = $input['address'];
-        $org->telephone       = $input['telephone'];
-        $org->reporting_org   = json_encode($input['reporting_org']);
-        $org->save();
+        return $this->org->create($input);
     }
 
     /**
      * @param $select
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getOrganizations($select)
+    public function getOrganizations($select = '*')
     {
         return $this->org->select($select)->get();
     }
@@ -336,6 +332,16 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                               ->whereRaw("reporting_org #>> '{0, reporting_organization_identifier}' = '" . $reportOrg['reporting_organization_identifier'] . "'");
 
         return $result->first();
+    }
+
+    /**
+     * returns collection of similar organizations
+     * @param $keywords
+     * @return Collection
+     */
+    public function getSimilarOrg($keywords)
+    {
+        return $this->org->whereRaw("lower(reporting_org #>> '{0,narrative,0,narrative}') similar to ?", ['%(' . implode('|', $keywords) . ')%'])->get();
     }
 
     /**
