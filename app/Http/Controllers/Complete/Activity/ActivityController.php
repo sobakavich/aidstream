@@ -168,8 +168,6 @@ class ActivityController extends Controller
             }
         }
 
-        Session::forget('first_login');
-
         return view('Activity.index', compact('activities', 'filenames', 'activityPublishedStats', 'messages'));
     }
 

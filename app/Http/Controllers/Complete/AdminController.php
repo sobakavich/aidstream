@@ -220,49 +220,10 @@ class AdminController extends Controller
         return redirect()->route('admin.list-users')->withResponse($response);
     }
 
-//    /**
-//     * @param $userId
-//     * @return \Illuminate\View\View
-//     */
-//    public function editUserPermission($userId)
-//    {
-//        $user = $this->user->findOrFail($userId);
-//
-//        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
-//            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-//        }
-//
-//        return view('admin.editUserPermission', compact('user'));
-//    }
-
-//    /**
-//     * update user permission
-//     * @param $userId
-//     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-//     */
-//    public function updateUserPermission($userId)
-//    {
-//        if (!in_array($userId, $this->organizationManager->getOrganizationUsers($this->org_id))) {
-//            return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
-//        }
-//
-//        $input                 = Input::all();
-//        $user                  = $this->user->findOrFail($userId);
-//        $user->user_permission = isset($input['user_permission']) ? $input['user_permission'] : [];
-//        $response              = ($user->save()) ? ['type' => 'success', 'code' => ['updated', ['name' => 'User Permission']]] : [
-//            'type' => 'danger',
-//            'code' => ['update_failed', ['name' => 'User Permission']]
-//        ];
-//        $this->dbLogger->activity("admin.permission_updated", ['orgId' => $this->org_id, 'userId' => $userId]);
-//
-//        return redirect()->route('admin.list-users')->withResponse($response);
-//
-//    }
-
     /**
      * Update permission of user through ajax
-     * @param Request                $request
-     * @param                        $userId
+     * @param Request $request
+     * @param         $userId
      * @return mixed
      */
     public function updateUserPermission(Request $request, $userId)
