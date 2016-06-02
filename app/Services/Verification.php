@@ -192,7 +192,7 @@ class Verification
      * sends verification email to secondary contact
      * @param $organization
      */
-    protected function sendSecondaryVerificationEmail($organization)
+    public function sendSecondaryVerificationEmail($organization)
     {
         $secondary                            = $organization->secondary_contact;
         $secondary['verification_code']       = hash_hmac('sha256', str_random(40), config('app.key'));
