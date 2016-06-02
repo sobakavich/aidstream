@@ -1,5 +1,7 @@
 <?php namespace App\Core\V201\Repositories;
 
+use App\Models\Organization\Organization;
+use App\Services\Verification;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -17,10 +19,13 @@ class UserRepository
 
     protected $user;
 
-    public function __construct(User $user)
+    protected $verification;
+
+    public function __construct(User $user, Verification $verification)
     {
         $this->current_user = Auth::user();
         $this->user         = $user;
+        $this->verification = $verification;
     }
 
     /** Update profile of the user
@@ -67,39 +72,31 @@ class UserRepository
      */
     public function updateSecondaryContactInfo($input, $orgId)
     {
-        $user = $this->user->where('role_id', 7)->where('org_id', $orgId)->first();
+        $organization = Organization::where('id', $orgId)->first();
 
-        if ($user) {
-            $user->first_name = $input['secondary_first_name'];
-            $user->last_name  = $input['secondary_last_name'];
-            $user->email      = $input['secondary_email'];
-            $user->role_id    = 7;
-            $user->org_id     = $orgId;
-            $user->username   = $input['secondary_email'];
-            $user->password   = "";
+        $secondary = $organization->secondary_contact;
 
-            $user->save();
+        if (getVal((array) $organization->secondary_contact, ['email']) != $input['secondary_email']) {
+            $secondary['first_name']         = $input['secondary_first_name'];
+            $secondary['last_name']          = $input['secondary_last_name'];
+            $secondary['email']              = $input['secondary_email'];
+            $organization->secondary_contact = $secondary;
+            $organization->save();
+
+            $this->verification->sendSecondaryVerificationEmail($organization);
         } else {
-            User::create(
-                [
-                    'first_name' => $input['secondary_first_name'],
-                    'last_name'  => $input['secondary_last_name'],
-                    'email'      => $input['secondary_email'],
-                    'role_id'    => 7,
-                    'username'   => $input['secondary_email'],
-                    'password'   => '',
-                    'org_id'     => $orgId
-                ]
-            );
-        }
-    }
+            $secondaryContact = [
+                'first_name'              => $input['secondary_first_name'],
+                'last_name'               => $input['secondary_last_name'],
+                'email'                   => $input['secondary_email'],
+                'verification_code'       => getVal((array) $secondary, ['verification_code']),
+                'verification_created_at' => getVal((array) $secondary, ['verification_created_at']),
+                'verified'                => getVal((array) $secondary, ['verified'])
+            ];
 
-    /** returns secondary contacts of the organization.
-     * @return mixed
-     */
-    public function getSecondaryContactInfo()
-    {
-        return $this->user->where('org_id', session('org_id'))->where('role_id', 7)->first();
+            $organization->secondary_contact = $secondaryContact;
+            $organization->save();
+        }
     }
 
     /** returns details of the given user.
@@ -127,12 +124,10 @@ class UserRepository
     {
         $users = $this->getAllUsersOfOrganization();
         foreach ($users as $user) {
-            if ($user->role_id != 7) {
-                $old_username   = $user->username;
-                $nameOnly       = substr($old_username, strlen($old_user_identifier) + 1);
-                $user->username = $new_user_identifier . '_' . $nameOnly;
-                $user->save();
-            }
+            $old_username   = $user->username;
+            $nameOnly       = substr($old_username, strlen($old_user_identifier) + 1);
+            $user->username = $new_user_identifier . '_' . $nameOnly;
+            $user->save();
         }
     }
 }

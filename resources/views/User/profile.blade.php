@@ -32,24 +32,22 @@
                                 {{--<div class=""><a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit Profile</a></div>--}}
                                 <div><a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit
                                         Profile</a> |
-                                    {{--<a href="{{route('user.change-username', Auth::user()->id)}}">Change--}}
-                                    {{--Username</a> |--}}
-                                    <a
-                                            href="{{route('user.reset-user-password', Auth::user()->id)}}">Change
+
+                                    <a href="{{route('user.reset-user-password', Auth::user()->id)}}">Change
                                         Password</a></div>
                             </div>
                             <div class="profile-info">
                                 <div>TimeZone: {{Auth::user()->time_zone}}</div>
-                                <div>Permission: Administrator Level</div>
+                                <div>Permission: {{Auth::user()->role->role}}</div>
                             </div>
                         </div>
                     </div>
-                    @if((Auth::user()->isAdmin()) && $secondaryContact)
+                    @if((Auth::user()->isAdmin()) && $organization->secondary_contact)
                         <div class="pane panel-default">
                             <span>Secondary Contact</span> <span>Not Verified</span>
                             <div>
-                                {{ $secondaryContact->first_name}} {{$secondaryContact->last_name}}
-                                <a href="mailto:{{ $secondaryContact->email }}"> {{$secondaryContact->email}} </a>
+                                {{ getVal((array)$organization->secondary_contact,['first_name']) }} {{getVal((array)$organization->secondary_contact,['last_name'])}}
+                                <a href="mailto:{{ getVal((array)$organization->secondary_contact,['email']) }}"> {{getVal((array)$organization->secondary_contact,['email'])}} </a>
                             </div>
                         </div>
                         <hr/>

@@ -71,19 +71,25 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
             }
             $('#registration_agency').html(filteredAgencies).select2();
         },
-        updatePermission: function (user_id) {
-            $('#permission').on('change', function (e) {
+        updatePermission: function () {
+            $('table tbody tr td').delegate('#permission', 'change', function (e) {
+                var user_id = $(this).closest('tr').find('#user_id').val();
+                var username = $(this).closest('tr').find('#name').html();
                 var permission = $(this).val();
                 var permission_text = $(':selected', this).text();
-                $('#response').addClass('hidden');
+                $('#response').addClass('hidden')
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-                    url: 'organization-user/update-permission/' + user_id,
+                    url: '/organization-user/update-permission/' + user_id,
                     data: {permission: permission},
                     type: 'POST',
                     success: function (data) {
-                        $('#response').removeClass('hidden');
-                        $('#response').html(permission_text + ' level permission has been given to ' + username);
+                        if (data == 'success') {
+                            $('#response').removeClass('hidden').html(permission_text + ' level permission has been given to ' + username);
+                        } else {
+                            $('#error').removeClass('hidden').html('Failed to update permission for ' + username);
+                        }
+
                     }
                 });
             });

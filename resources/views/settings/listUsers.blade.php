@@ -22,10 +22,11 @@
                         </td>
                         <td>
                             @if($value->role_id == 1)
-                                {{ Form::select('permission',['1' => 'Administrator'],$user_role[$value->id],['disabled']) }}
+                                {{ Form::select('permission',['1' => 'Administrator'],$value->role_id,['disabled']) }}
                             @else
-                                {{ Form::select('permission',['1' => 'Administrator', '2' => 'Publisher', '5' => 'Viewer', '6' => 'Editor'],$user_role[$value->id],['id' => 'permission']) }}
+                                {{ Form::select('permission',$roles,$value->role_id,['id' => 'permission']) }}
                             @endif
+
                             {{ Form::hidden('user_id',$value->id, ['id' => 'user_id']) }}
                             <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                         </td>
@@ -59,8 +60,6 @@
 @section('foot')
     <script src="{{url('/js/chunk.js')}}"></script>
     <script>
-        var user_id = $('#user_id').val();
-        var username = $('#name').html();
         Chunk.updatePermission(user_id);
     </script>
 @endsection

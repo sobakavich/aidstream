@@ -64,10 +64,9 @@ class UserController extends Controller
      */
     public function viewProfile()
     {
-        $organization      = $this->organizationManager->getOrganization($this->orgId);
-        $secondaryContact = $this->userManager->getSecondaryContactInfo();
+        $organization = $this->organizationManager->getOrganization($this->orgId);
 
-        return view('User.profile', compact('user', 'organization', 'secondaryContact'));
+        return view('User.profile', compact('user', 'organization'));
     }
 
     /**
@@ -166,7 +165,7 @@ class UserController extends Controller
      */
     public function editProfile($userId)
     {
-        $user_details = $this->userManager->getUser($userId);
+        $user_details    = $this->userManager->getUser($userId);
         $user_permission = Auth::user()->role->role;
 
         if (Gate::denies('isValidUser', $user_details)) {

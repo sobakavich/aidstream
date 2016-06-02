@@ -591,6 +591,10 @@ class ActivityController extends Controller
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
 
             return redirect('/settings')->withResponse($response);
+        } elseif ($settings == null) {
+            $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
+
+            return redirect('/publishing-settings')->withResponse($response);
         }
 
         $defaultFieldValues    = $settings->default_field_values;

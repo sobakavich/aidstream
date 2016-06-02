@@ -56,8 +56,7 @@ class UserManager
 
     public function getUserDetails($userId)
     {
-        $secondaryContact = $this->getSecondaryContactInfo();
-        $user             = $this->getUser($userId);
+        $user = $this->getUser($userId);
 
         $userDetails = [
             'id'              => $user->id,
@@ -72,27 +71,7 @@ class UserManager
             'profile_url'     => $user->profile_url
         ];
 
-        if ($secondaryContact && isUserOrAdmin(Auth::user())) {
-            $userDetails = array_merge(
-                $userDetails,
-                [
-                    'secondary_email'      => $secondaryContact->email,
-                    'secondary_first_name' => $secondaryContact->first_name,
-                    'secondary_last_name'  => $secondaryContact->last_name
-                ]
-            );
-        }
-
         return $userDetails;
-
-    }
-
-    /** returns secondary contacts of the organization.
-     * @return mixed
-     */
-    public function getSecondaryContactInfo()
-    {
-        return $this->userRepository->getSecondaryContactInfo();
 
     }
 

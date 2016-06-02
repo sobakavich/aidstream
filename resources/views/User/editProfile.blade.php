@@ -66,14 +66,14 @@
                                 <div>Organisation Secondary Contact</div>
                                 <div class="form-group">
                                     {{ Form::label(null,'First Name') }}
-                                    {{ Form::text('secondary_first_name',null,['form-control']) }}
+                                    {{ Form::text('secondary_first_name',getVal((array)$organization->secondary_contact,['first_name']),['form-control']) }}
                                 </div>
                                 <div class="form-group">
                                     {{ Form::label(null,'Last Name') }}
-                                    {{ Form::text('secondary_last_name',null,['form-control']) }}
+                                    {{ Form::text('secondary_last_name',getVal((array)$organization->secondary_contact,['last_name']),['form-control']) }}
                                 </div>
                                 <div class="col-xs-12 col-md-12">
-                                    {!! AsForm::text(['name' => 'secondary_email', 'label' => 'E-mail Address','parent' => 'col-sm-6 col-md-6 col-xs-12', 'required' => true]) !!}
+                                    {!! AsForm::text(['name' => 'secondary_email', 'label' => 'E-mail Address','value'=>getVal((array)$organization->secondary_contact,['email']),'parent' => 'col-sm-6 col-md-6 col-xs-12', 'required' => true]) !!}
                                 </div>
                             @endif
                             <button type="submit" class="btn btn-primary btn-form btn-submit">Save</button>

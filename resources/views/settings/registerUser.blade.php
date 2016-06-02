@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 {{ Form::label(null,'Permission Level*') }}
-                {{ Form::select('permissions',['Viewer','Editor','Publisher','Administrator'],['class'=>'form-control']) }}
+                {{ Form::select('permissions',['2'=>'Publisher','7'=>'Viewer','6'=>'Editor','5'=>'Administrator'],['class'=>'form-control']) }}
             </div>
         </div>
         {{ Form::submit('Create',['class'=>'btn btn-primary btn-form btn-submit']) }}
