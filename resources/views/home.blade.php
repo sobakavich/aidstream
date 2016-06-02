@@ -123,6 +123,24 @@
         </div>
     </div>
 </section>
+
+@if(session('verification_message'))
+    <div class="modal verification-modal" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Email Verification</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    {!! session('verification_message') !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop in"></div>
+@endif
+
 @include('includes.footer')
 <script src="js/jquery.js"></script>
 <script src="js/modernizr.js"></script>
@@ -137,6 +155,12 @@
         }
 
         hamburgerMenu();
+
+        var verificationModel = $('.verification-modal');
+        $('.close', verificationModel).click(function () {
+            verificationModel.next('.modal-backdrop').remove();
+            verificationModel.remove();
+        });
     });
 </script>
 </body>
