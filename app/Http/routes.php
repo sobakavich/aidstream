@@ -1,3 +1,4 @@
+
 <?php
 
 $language = Cookie::get('language');
@@ -52,13 +53,10 @@ $router->post(
     ]
 );
 
-$router->post(
-    'activity/{activity}/publish',
-    [
-        'as'   => 'activity.publish',
-        'uses' => 'Complete\WorkflowController@publish'
-    ]
-);
+$router->post('activity/{activity}/publish', [
+    'as'   => 'activity.publish',
+    'uses' => 'Complete\WorkflowController@publish'
+]);
 
 $router->get('who-is-using/{organization_id}', 'WhoIsUsingController@getDataForOrganization');
 
