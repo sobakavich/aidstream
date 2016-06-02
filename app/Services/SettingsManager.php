@@ -217,7 +217,6 @@ class SettingsManager
     public function viewDefaultValues($formOptions)
     {
         return $this->formBuilder->create($this->formPath->getDefaultValues(), $formOptions);
-
     }
 
     /**
@@ -255,7 +254,6 @@ class SettingsManager
     public function viewActivityElementsChecklist($formOptions)
     {
         return $this->formBuilder->create($this->formPath->getActivityElementsChecklist(), $formOptions);
-
     }
 
     /**
@@ -283,7 +281,6 @@ class SettingsManager
         }
 
         return false;
-
     }
 
     /**
