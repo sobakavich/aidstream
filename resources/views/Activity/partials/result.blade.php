@@ -33,76 +33,63 @@
                             <div class="element-info">
                                 <div class="activity-element-label">@lang('activityView.indicators')</div>
                                 @foreach($result['indicator'] as $indicator)
-                                    <div class="activity-element-info">
-                                        <strong>{!! getFirstNarrative($indicator['title'][0]) !!}</strong>
-                                        @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($indicator['title'][0]['narrative'])])
-                                    </div>
-                                    @if(session('version') != 'V201')
-                                        <div class="activity-element-info">
-                                            @lang('activityView.indicator_reference')
-                                            @if(array_key_exists('reference' , $indicator))
-                                                @foreach($indicator['reference'] as $reference)
-                                                    <li>{!! getIndicatorReference($reference) !!}</li>
+                                    <div class="indicator-info">
+                                        <div class="indicator-label">
+                                            <strong>{!! getFirstNarrative($indicator['title'][0]) !!}</strong>
+                                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($indicator['title'][0]['narrative'])])
+                                        </div>
+                                        <div class="expanded show-expanded">
+                                            @if(session('version') != 'V201')
+                                                <div class="element-info">
+                                                    <div class="activity-element-label">@lang('activityView.indicator_reference')</div>
+                                                    <div class="activity-element-info">
+                                                        @if(array_key_exists('reference' , $indicator))
+                                                            @foreach($indicator['reference'] as $reference)
+                                                                <li>{!! getIndicatorReference($reference) !!}</li>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            <div class="element-info">
+                                                <div class="activity-element-label">@lang('activityView.measure')</div>
+                                                <div class="activity-element-info">{!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}</div>
+                                            </div>
+                                            <div class="element-info">
+                                                <div class="activity-element-label">@lang('activityView.ascending')</div>
+                                                @if($indicator['ascending'] == 1)
+                                                    <div class="activity-element-info">Yes</div>
+                                                @elseif($indicator['ascending'] == 0)
+                                                    <div class="activity-element-info">No</div>
+                                                @else
+                                                    <div class="activity-element-info"><em>Not Available</em></div>
+                                                @endif
+                                            </div>
+                                            <div class="element-info baseline">
+                                                <div class="activity-element-label">@lang('activityView.baseline_value')</div>
+                                                <div class="activity-element-info">{!! getResultsBaseLine($indicator['measure'] , $indicator['baseline'][0]) !!}
+                                                    {!! getFirstNarrative($indicator['baseline'][0]['comment'][0]) !!}
+                                                </div>
+                                            </div>
+                                            <div class="element-info">
+                                                <div class="period-label">
+                                                    <span>Period</span>
+                                                    <span> Target Value </span>
+                                                    <span> Actual Value </span>
+                                                </div>
+                                                @foreach(getIndicatorPeriod($indicator['measure'] , $indicator['period']) as $period)
+                                                    <div class="period-value">
+                                                        <span>{!!$period['period'] !!}</span>
+                                                            <span><a href="#" class="show-more-value">{!!  $period['target_value'] !!}
+                                                                @include('Activity.partials.resultPartials.target' , ['type' => 'target'])</a></span>
+                                                            <span><a href="#" class="show-more-value"> {!!  checkIfEmpty($period['actual_value'])  !!}
+                                                                @include('Activity.partials.resultPartials.target' , ['type' => 'actual'])</a></span>
+                                                    </div>
                                                 @endforeach
-                                            @endif
+                                            </div>
                                         </div>
-                                    @endif
-                                    <div class="element-info">
-                                        <div class="activity-element-label">@lang('activityView.measure')</div>
-                                        <div class="activity-element-info">{!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}</div>
                                     </div>
-                                    <div class="element-info">
-                                        <div class="activity-element-label">@lang('activityView.ascending')</div>
-                                        @if($indicator['ascending'] == 1)
-                                            <div class="activity-element-info">Yes</div>
-                                        @elseif($indicator['ascending'] == 0)
-                                            <div class="activity-element-info">No</div>
-                                        @else
-                                            <div class="activity-element-info"><em>Not Available</em></div>
-                                        @endif
-                                        <hr>
-                                        <div class="element-info">@lang('activityView.measure')
-                                            : {!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}
-                                        </div>
-
-                                        <div class="element-info">@lang('activityView.ascending')
-                                            : @if($indicator['ascending'] == 1)
-                                                Yes
-                                            @elseif($indicator['ascending'] == 0)
-                                                No
-                                            @else
-                                                <em>Not Available</em>
-                                            @endif
-                                        </div>
-                                        <div class="element-info">@lang('activityView.baseline_value')
-                                            : {!! getResultsBaseLine($indicator['measure'] , $indicator['baseline'][0]) !!}
-                                            <br>
-                                            {!! getFirstNarrative($indicator['baseline'][0]['comment'][0]) !!}
-                                        </div>
-                                        <div class="element-info">
-                                            <span style="margin-right: 160px">Period</span> <span
-                                                    style="margin-right: 40px"> Target Value </span>
-                                            <span> Actual Vaule </span>
-                                            : @foreach(getIndicatorPeriod($indicator['measure'] , $indicator['period']) as $period)
-                                                <br>
-
-                                                <span style="margin-right: 40px">{!!   $period['period'] !!}</span>
-                                                <a href="#"
-                                                   style="margin-right: 40px" data-toggle="tooltip"
-                                                   title="So i will add here" class="show-more-info">
-                                                    {!!  $period['target_value'] !!}
-                                                </a>
-                                                @include('Activity.partials.resultPartials.target' , ['type' => 'target'])
-                                                <br>
-
-                                                <a href="#"
-                                                   class="show-more-info"> {!!  checkIfEmpty($period['actual_value'])  !!} </a>
-                                                @include('Activity.partials.resultPartials.target' , ['type' => 'actual'])
-                                            @endforeach
-                                            <hr>
-                                        </div>
-                                        @endforeach
-                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     @endforeach

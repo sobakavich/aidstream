@@ -12,7 +12,7 @@
                     <div class="more-info hidden">
                         <div class="element-info">
                             <div class="activity-element-label">@lang('activityView.description')</div>
-                            <div class="activity-element-info">
+                            <div class="activity-element-info document-info">
                                 {!! checkIfEmpty(getFirstNarrative($recipientCountry)) !!}
                                 @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($recipientCountry['narrative'])])
                             </div>

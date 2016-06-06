@@ -4,9 +4,10 @@
             <div class="activity-element-label">@lang('activityView.legacy_data')</div>
             <div class="activity-element-info">
                 @foreach($legacyDatas as $legacyData)
-                    <li>{{ $legacyData['name'] . ': '. $legacyData['value'] }}</li>
-                    <em>@lang('activityView.iati_equivalent')
-                        : {!!   checkIfEmpty($legacyData['iati_equivalent']) !!}</em>
+                    <li>{{ $legacyData['name'] . ': '. $legacyData['value'] }}
+                        <em>@lang('activityView.iati_equivalent')
+                            : {!!   checkIfEmpty($legacyData['iati_equivalent']) !!}</em>
+                    </li>
                 @endforeach
             </div>
         </div>

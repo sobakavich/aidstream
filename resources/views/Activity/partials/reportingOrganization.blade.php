@@ -3,8 +3,9 @@
         <div class="activity-element-list">
             <div class="activity-element-label">@lang('activityView.reporting_organization')</div>
             <div class="activity-element-info">
-                <li>{!! checkIfEmpty(getFirstNarrative($reportingOrganization)) !!}</li>
-                @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($reportingOrganization['narrative'])])
+                <li>{!! checkIfEmpty(getFirstNarrative($reportingOrganization)) !!}
+                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($reportingOrganization['narrative'])])
+                </li>
                 <div class="toggle-btn">
                     <span class="show-more-info">Show more info</span>
                     <span class="hide-more-info hidden">Hide more info</span>
