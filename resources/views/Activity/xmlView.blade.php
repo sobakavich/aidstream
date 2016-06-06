@@ -62,8 +62,8 @@
                             <span class="last-updated-date">Last Updated on: {{changeTimeZone($activityDataList['updated_at'], 'M d, Y H:i')}}</span>
                         </div>
                         <div class="panel-action-btn panel-xml-btn">
-                            <span><a href="{{ route('activity.show', $activityId) }}" class="back-to-activity">Back to Activity View</a></span>
-                            <span><a href="{{route('download.activityXml', ['activityId' => $activityId])}}" class="btn btn-primary">Download Xml</a></span>
+                            <span><a href="{{ route('activity.show', $activityId) }}" class="back-to-activity">Back to activity view</a></span>
+                            <span><a href="{{route('download.activityXml', ['activityId' => $activityId])}}" class="btn btn-primary">Download XML file</a></span>
                         </div>
                     </div>
                 </div>
