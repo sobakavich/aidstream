@@ -61,19 +61,6 @@
                                             <div class="activity-element-info"><em>Not Available</em></div>
                                         @endif
                                         <hr>
-                                        <div class="element-info">@lang('activityView.measure')
-                                            : {!! $getCode->getCodeNameOnly('IndicatorMeasure',$indicator['measure']) !!}
-                                        </div>
-
-                                        <div class="element-info">@lang('activityView.ascending')
-                                            : @if($indicator['ascending'] == 1)
-                                                Yes
-                                            @elseif($indicator['ascending'] == 0)
-                                                No
-                                            @else
-                                                <em>Not Available</em>
-                                            @endif
-                                        </div>
                                         <div class="element-info">@lang('activityView.baseline_value')
                                             : {!! getResultsBaseLine($indicator['measure'] , $indicator['baseline'][0]) !!}
                                             <br>
