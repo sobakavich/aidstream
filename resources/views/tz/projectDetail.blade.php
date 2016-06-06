@@ -86,6 +86,10 @@
                 <dd class="col-md-9 col-sm-8 col-xs-8">{{ $getCode->getCodeListName('Activity','ActivityStatus', $project->activity_status) }}</dd>
             </dl>
 
+            <dl class="clearfix">
+                <dt class="col-md-3 col-sm-4 col-xs-4">Project Sector</dt>
+                <dd class="col-md-9 col-sm-8 col-xs-8">{{ $getCode->getActivityCodeName('SectorCategory', getVal($project->sector, [0, 'sector_category_code'])) }}</dd>
+            </dl>
             @foreach($project->activity_date as $date)
                 @if($date['type'] == 2)
                     <dl class="clearfix">
@@ -161,7 +165,8 @@
                     @if ($project->budget)
                         @foreach($project->budget as $budget)
                             <div>
-                                {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }} &nbsp; {{ formatDate(getVal($budget, ['period_start', 0, 'date']), 'Y/m/d') }} - {{ formatDate(getVal($budget, ['period_end', 0, 'date']), 'Y/m/d') }}
+                                {{ number_format(getVal($budget, ['value', 0, 'amount'])) }} {{ getVal($budget, ['value', 0, 'currency']) }}
+                                &nbsp; {{ formatDate(getVal($budget, ['period_start', 0, 'date']), 'Y/m/d') }} - {{ formatDate(getVal($budget, ['period_end', 0, 'date']), 'Y/m/d') }}
                             </div>
                         @endforeach
                     @endif
@@ -325,7 +330,7 @@
             "Kusini Pemba": [-5.32, 39.705]
         };
 
-        if(tz_regions_center[regionname]) {
+        if (tz_regions_center[regionname]) {
             map.setView(tz_regions_center[regionname], 5);
             L.marker(tz_regions_center[regionname]).addTo(map).bindPopup("Project in " + regionname);
         }
