@@ -1,5 +1,5 @@
 @if(! empty($otherLanguages))
-    <a href="#" class="view-other-language">
+    <span class="view-other-language">
         @if(count($otherLanguages) == 1 && empty($otherLanguages[0]['narrative']))
         @else
             @lang('activityView.view_in_other_languages')
@@ -14,5 +14,5 @@
                 </ul>
             @endforeach
         </div>
-    </a>
+    </span>
 @endif

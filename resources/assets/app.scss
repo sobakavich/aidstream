@@ -37,6 +37,7 @@ $color_mabel_approx: #d9f1fe;
 $color_black_approx: #262626;
 $color_hawkes_blue_approx: #cbe9f7;
 $color_aqua_squeeze_approx: #e4f1f7;
+$color_mountain_mist_approx: #969696;
 
 //fonts
 $font_0: Open-Sans-Regular;
@@ -3282,6 +3283,11 @@ table.dataTable thead .sorting_desc {
   padding-bottom: 0;
 }
 
+.view-other-language {
+  color: $color_dodger_blue_approx;
+  cursor: pointer;
+}
+
 .view-other-language:hover .hidden {
   display: block !important;
 }
@@ -3348,13 +3354,29 @@ table.dataTable thead .sorting_desc {
 }
 
 .show-more-info, .hide-more-info {
-  font-size: 12px;
+  font-size: 11px;
   margin-top: 3px;
-  color: $color_dodger_blue_approx;
+  text-decoration: underline;
+  color: $color_mountain_mist_approx;
+  position: relative;
+  padding-left: 12px;
   &:hover {
     text-decoration: underline;
     cursor: pointer;
   }
+  &:before {
+    @include position(absolute, 3px auto auto 0);
+    content: '';
+    @include size(6px);
+    transform: rotate(45deg);
+    border-bottom: 1px solid $color_mountain_mist_approx;
+    border-right: 1px solid $color_mountain_mist_approx;
+  }
+}
+
+.hide-more-info:before {
+  transform: rotate(225deg);
+  top: 7px;
 }
 
 .more-info {
@@ -3403,6 +3425,7 @@ table.dataTable thead .sorting_desc {
 
 .activity-element-info {
   width: calc(100% - 240px);
+  line-height: 22px;
   li {
     padding-left: 10px;
   }
@@ -3552,10 +3575,6 @@ table.dataTable thead .sorting_desc {
   .activity-element-info {
     color: $color_gravel_approx;
   }
-}
-
-.document-info a {
-  text-decoration: underline;
 }
 
 @media all and (max-width: 1030px) {

@@ -2,7 +2,7 @@
     <div class="activity-element-wrapper">
         <div class="activity-element-list">
             <div class="activity-element-label">@lang('activityView.document_link')</div>
-            <div class="activity-element-info document-info">
+            <div class="activity-element-info">
                 @foreach($documentLinks as $documentLink)
                     <li>{!! getClickableLink($documentLink['document_link']['url']) !!}</li>
                     <div class="toggle-btn">

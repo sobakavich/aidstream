@@ -6,12 +6,14 @@
                 <div class="activity-element-label">@lang('activityView.condition_not_attached')</div>
             @else
                 @foreach(groupConditionElements($conditions) as $key => $conditions)
-                    <div class="activity-element-label">{{ $getCode->getCodeNameOnly('ConditionType',$key) }}</div>
-                    <div class="activity-element-info">
-                        <li>
-                            {!! getFirstNarrative($conditions) !!}
-                            @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($conditions['narrative'])])
-                        </li>
+                    <div class="activity-element-list">
+                        <div class="activity-element-label">{{ $getCode->getCodeNameOnly('ConditionType',$key) }}</div>
+                        <div class="activity-element-info">
+                            <li>
+                                {!! getFirstNarrative($conditions) !!}
+                                @include('Activity.partials.viewInOtherLanguage', ['otherLanguages' => getOtherLanguages($conditions['narrative'])])
+                            </li>
+                        </div>
                     </div>
                 @endforeach
             @endif

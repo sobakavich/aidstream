@@ -5666,6 +5666,10 @@ table.dataTable thead .sorting_desc {
 .logs-container .create-form {
   padding-bottom: 0; }
 
+.view-other-language {
+  color: #00A8FF;
+  cursor: pointer; }
+
 .view-other-language:hover .hidden {
   display: block !important; }
 
@@ -5724,12 +5728,39 @@ table.dataTable thead .sorting_desc {
   margin-bottom: 8px; }
 
 .show-more-info, .hide-more-info {
-  font-size: 12px;
+  font-size: 11px;
   margin-top: 3px;
-  color: #00A8FF; }
+  text-decoration: underline;
+  color: #969696;
+  position: relative;
+  padding-left: 12px; }
   .show-more-info:hover, .hide-more-info:hover {
     text-decoration: underline;
     cursor: pointer; }
+  .show-more-info:before, .hide-more-info:before {
+    position: absolute;
+    top: 3px;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    content: '';
+    height: 6px;
+    width: 6px;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+    border-bottom: 1px solid #969696;
+    border-right: 1px solid #969696; }
+
+.hide-more-info:before {
+  -webkit-transform: rotate(225deg);
+     -moz-transform: rotate(225deg);
+      -ms-transform: rotate(225deg);
+       -o-transform: rotate(225deg);
+          transform: rotate(225deg);
+  top: 7px; }
 
 .more-info {
   background: #e4f1f7;
@@ -5774,7 +5805,8 @@ table.dataTable thead .sorting_desc {
 .activity-element-info {
   width: -webkit-calc(100% - 240px);
   width: -moz-calc(100% - 240px);
-  width: calc(100% - 240px); }
+  width: calc(100% - 240px);
+  line-height: 22px; }
   .activity-element-info li {
     padding-left: 10px; }
   .activity-element-info li {
@@ -5903,9 +5935,6 @@ table.dataTable thead .sorting_desc {
       border-bottom: 0; }
   .view-period-info .activity-element-info {
     color: #484848; }
-
-.document-info a {
-  text-decoration: underline; }
 
 @media all and (max-width: 1030px) {
   .activity-status {

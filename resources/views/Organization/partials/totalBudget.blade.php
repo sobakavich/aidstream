@@ -34,8 +34,9 @@
                                             </div>
                                             <div>
                                                 <div class="activity-element-label">@lang('activityView.narrative')</div>
-                                                <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative($budgetLine)) !!}</div>
-                                                @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($budgetLine['narrative'])])
+                                                <div class="activity-element-info">{!! checkIfEmpty(getFirstNarrative($budgetLine)) !!}
+                                                    @include('Activity.partials.viewInOtherLanguage' ,['otherLanguages' => getOtherLanguages($budgetLine['narrative'])])
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
@@ -46,6 +47,6 @@
                 </div>
             </div>
         @endforeach
-            <a href="{{ url('/organization/' . $orgId . '/total-budget') }}" class="edit-element">edit</a>
+        <a href="{{ url('/organization/' . $orgId . '/total-budget') }}" class="edit-element">edit</a>
     </div>
 @endif
