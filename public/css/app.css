@@ -2875,6 +2875,8 @@ table.dataTable thead .sorting_desc {
   margin-bottom: 20px;
   margin-top: 0 !important;
   border-collapse: separate; }
+  .panel-changelog table td span {
+    margin-bottom: 0; }
 
 .panel-changelog form .btn {
   width: 100px;
