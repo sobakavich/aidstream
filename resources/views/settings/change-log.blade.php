@@ -71,11 +71,11 @@
                         </table>
                         @if (getVal($settings, ['registry_info', 0, 'publish_files']) == 'yes')
                             <div class="changelog-message">
-                                In your settings page, you have selected {{ ucfirst(getVal($settings, ['registry_info', 0, 'publish_files'])) }} to ‘Automatically Update to IATI Registry when publishing files’. AidStream will publish you newly generated activities file(s) to the IATI registry.
+                                In your settings page, you have selected {{ ucfirst(getVal($settings, ['registry_info', 0, 'publish_files'])) }} to ‘Automatically Update to IATI Registry when publishing files’. AidStream will publish your newly generated activities file(s) to the IATI registry.
                             </div>
                         @else
                             <div class="changelog-message">
-                                In your settings page, you have selected {{ ucfirst(getVal($settings, ['registry_info', 0, 'publish_files'])) }} to ‘Automatically Update to IATI Registry when publishing files’. AidStream will not automatically publish you newly generated activities file(s) to the IATI registry. Please go to the
+                                In your settings page, you have selected {{ ucfirst(getVal($settings, ['registry_info', 0, 'publish_files'])) }} to ‘Automatically Update to IATI Registry when publishing files’. AidStream will not automatically publish your newly generated activities file(s) to the IATI registry. Please go to the
                                 <a href="{{ route('list-published-files') }}">Published Files</a> page and publish your Activity file(s).
                             </div>
                         @endif
