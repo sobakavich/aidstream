@@ -59,10 +59,6 @@
                         <dt> Total Incoming Funds</dt>
                         <dd class="amount">${{ number_format($transactionCount['incoming_fund']) }}</dd>
                     </dl>
-                    <dl class="col-md-3 col-sm-6 col-xs-6">
-                        <dt> Total Budget</dt>
-                        <dd class="amount">${{ number_format($totalBudget) }}</dd>
-                    </dl>
                 </div>
             </div> {{--  row close--}}
         </div>

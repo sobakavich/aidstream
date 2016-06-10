@@ -77,7 +77,7 @@
                         if (organization.logo_url) {
                             logo = $('.has-image-logo').clone();
                             $('a', logo).attr({href: link}).children('img').attr({src: organization.logo_url, alt: organization.name});
-                            $('span', logo).html(organization.name);
+//                            $('span', logo).html(organization.name);
                         } else {
                             logo = $('.no-image-logo').clone();
                             $('span a', logo).attr({href: link}).html(organization.name);
