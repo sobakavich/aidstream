@@ -216,5 +216,8 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         return $this->where('org_id', null)->get();
     }
 
-
+    public function getAllUsers()
+    {
+        return $this->all();
+    }
 }
