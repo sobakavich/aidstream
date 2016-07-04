@@ -81,7 +81,7 @@ return [
      */
     'iati_registry_api_base_url' => env('REGISTRY_URL', 'test'),
     'iati_registry_dummy_url'    => '',
-    'languages' => [
+    'languages'                  => [
         'v201' => [
             'activity' => [
                 'language_codelist_path' => '/Core/V201/Codelist/en/Activity/Language.json'
@@ -92,6 +92,7 @@ return [
                 'language_codelist_path' => '/Core/V201/Codelist/en/Activity/Language.json'
             ]
         ]
-    ]
-
+    ],
+    'queuedFilePath'             => public_path('uploads/queue/csv/'),
+    'queuedFileMetaDataPath'     => public_path('uploads/queue/csv/metadata/')
 ];

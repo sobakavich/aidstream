@@ -40,7 +40,8 @@
       "app/Helpers/TimeZone.php",
       "app/Helpers/linkHelpers.php",
       "app/Helpers/helper.php",
-      "app/Helpers/HideEmptyArray.php"
+      "app/Helpers/HideEmptyArray.php",
+      "app/Helpers/Import/TransactionCsvImporter.php"
     ],
     "classmap": [
       "database"
