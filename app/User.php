@@ -1,5 +1,6 @@
 <?php namespace App;
 
+use App\Models\Role;
 use DB;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -8,8 +9,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Support\Facades\Auth;
-use Session;
+use \Session;
 
 /**
  * Class User
@@ -200,10 +200,21 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->organization->status);
     }
 
+    /**
+     * Get lists of all Super Admins 
+     * @return mixed
+     */
     public function getSuperAdmins()
     {
         return $this->where('org_id', null)->get();
     }
 
-
+    /**
+     * A User has one Role.
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function role()
+    {
+        return $this->hasOne(Role::class);
+    }
 }

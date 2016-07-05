@@ -38,6 +38,7 @@ class ActivityStatusController extends Controller
         ActivityManager $activityManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityStatusForm    = $activityStatusForm;
         $this->activityStatusManager = $activityStatusManager;
         $this->activityManager       = $activityManager;

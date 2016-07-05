@@ -35,6 +35,7 @@ class OrgReportingOrgController extends Controller
         OrgNameManager $nameManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgManager     = $orgReportingOrgManager;

@@ -38,6 +38,7 @@ class TitleController extends Controller
     function __construct(TitleManager $titleManager, Title $title, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->title           = $title;
         $this->titleManager    = $titleManager;
         $this->activityManager = $activityManager;

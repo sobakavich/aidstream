@@ -49,6 +49,7 @@ class TotalExpenditureController extends Controller
         OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->totalExpenditureForm    = $formBuilder;
         $this->organizationManager     = $organizationManager;
         $this->totalExpenditureManager = $totalExpenditureManager;

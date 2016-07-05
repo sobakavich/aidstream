@@ -23,6 +23,7 @@ class PolicyMarkerController extends Controller
     function __construct(PolicyMarkerManager $policyMarkerManager, PolicyMarkerForm $policyMarkerForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager     = $activityManager;
         $this->policyMarkerForm    = $policyMarkerForm;
         $this->policyMarkerManager = $policyMarkerManager;

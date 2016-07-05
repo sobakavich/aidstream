@@ -79,6 +79,7 @@ class SettingsController extends Controller
         LoggerInterface $loggerInterface
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->settingsManager        = $settingsManager;
         $org_id                       = Session::get('org_id');
         $this->settings               = $settingsManager->getSettings($org_id);

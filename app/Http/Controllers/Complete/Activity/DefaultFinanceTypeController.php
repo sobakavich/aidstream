@@ -35,6 +35,7 @@ class DefaultFinanceTypeController extends Controller
     function __construct(DefaultFinanceTypeManager $defaultFinanceTypeManager, DefaultFinanceTypeForm $defaultFinanceTypeForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager           = $activityManager;
         $this->defaultFinanceTypeManager = $defaultFinanceTypeManager;
         $this->defaultFinanceTypeForm    = $defaultFinanceTypeForm;

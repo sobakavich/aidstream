@@ -34,6 +34,7 @@ class DocumentController extends Controller
     function __construct(DocumentManager $documentManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->documentManager = $documentManager;
         $this->orgId           = session('org_id');
     }

@@ -32,6 +32,7 @@ class ImportActivityController extends Controller
      */
     public function __construct(ImportActivity $importActivityManager, OrganizationManager $organizationManager, FormCreator $formCreator)
     {
+        $this->middleware('role');
         $this->organizationId        = session('org_id');
         $this->organizationManager   = $organizationManager;
         $this->formCreator           = $formCreator;

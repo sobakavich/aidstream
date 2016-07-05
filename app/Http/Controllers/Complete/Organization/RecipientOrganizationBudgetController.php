@@ -28,6 +28,7 @@ class RecipientOrganizationBudgetController extends Controller
         OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->recipientOrgBudgetFormCreator = $recipientOrgBudgetFormCreator;
         $this->recipientOrgBudgetManager     = $recipientOrgBudgetManager;
         $this->organizationManager           = $organizationManager;

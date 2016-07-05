@@ -36,6 +36,7 @@ class ResultController extends Controller
     function __construct(ResultManager $resultManager, ResultForm $resultForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager = $activityManager;
         $this->resultManager   = $resultManager;
         $this->resultForm      = $resultForm;

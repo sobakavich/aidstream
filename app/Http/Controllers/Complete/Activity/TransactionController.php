@@ -41,6 +41,7 @@ class TransactionController extends Controller
     function __construct(ActivityManager $activityManager, Transaction $transactionForm, TransactionManager $transactionManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager    = $activityManager;
         $this->transactionForm    = $transactionForm;
         $this->transactionManager = $transactionManager;

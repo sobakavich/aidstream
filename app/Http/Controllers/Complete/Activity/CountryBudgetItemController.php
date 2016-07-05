@@ -38,6 +38,7 @@ class CountryBudgetItemController extends Controller
         ActivityManager $activityManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager          = $activityManager;
         $this->countryBudgetItemForm    = $countryBudgetItemForm;
         $this->countryBudgetItemManager = $countryBudgetItemManager;

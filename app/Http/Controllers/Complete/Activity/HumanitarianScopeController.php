@@ -36,6 +36,7 @@ class HumanitarianScopeController extends Controller
     function __construct(HumanitarianScopeManager $humanitarianScopeManager, HumanitarianScope $humanitarianScopeForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager          = $activityManager;
         $this->humanitarianScopeForm    = $humanitarianScopeForm;
         $this->humanitarianScopeManager = $humanitarianScopeManager;

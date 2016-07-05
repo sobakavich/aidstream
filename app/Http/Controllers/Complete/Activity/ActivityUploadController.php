@@ -72,6 +72,7 @@ class ActivityUploadController extends Controller
         SettingsManager $settingsManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager       = $activityManager;
         $this->uploadActivity        = $uploadActivity;
         $this->uploadActivityManager = $uploadActivityManager;

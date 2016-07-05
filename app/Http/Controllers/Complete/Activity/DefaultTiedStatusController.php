@@ -35,6 +35,7 @@ class DefaultTiedStatusController extends Controller
     function __construct(DefaultTiedStatusManager $defaultTiedStatusManager, DefaultTiedStatusForm $defaultTiedStatusForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager          = $activityManager;
         $this->defaultTiedStatusManager = $defaultTiedStatusManager;
         $this->defaultTiedStatusForm    = $defaultTiedStatusForm;

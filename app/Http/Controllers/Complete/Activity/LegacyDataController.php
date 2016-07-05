@@ -39,6 +39,7 @@ class LegacyDataController extends Controller
     function __construct(LegacyDataManager $legacyDataManager, LegacyDataForm $legacyDataForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->legacyDataManager = $legacyDataManager;
         $this->legacyDataForm    = $legacyDataForm;
         $this->activityManager   = $activityManager;

@@ -56,7 +56,7 @@ class IatiIdentifierController extends Controller
         ActivityManager $activityManager
     ) {
         $this->middleware('auth');
-
+        $this->middleware('role');
         $this->activity              = $activity;
         $this->iatiIdentifierManager = $iatiIdentifierManager;
         $this->identifier            = $identifier;

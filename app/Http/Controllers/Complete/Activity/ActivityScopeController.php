@@ -38,6 +38,7 @@ class ActivityScopeController extends Controller
         ActivityManager $activityManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager      = $activityManager;
         $this->activityScopeForm    = $activityScopeForm;
         $this->activityScopeManager = $activityScopeManager;

@@ -27,6 +27,7 @@ class BudgetController extends Controller
     function __construct(BudgetManager $budgetManager, BudgetForm $budgetForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->budgetManager   = $budgetManager;
         $this->budgetForm      = $budgetForm;
         $this->activityManager = $activityManager;

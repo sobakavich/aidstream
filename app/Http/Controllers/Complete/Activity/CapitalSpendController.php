@@ -35,6 +35,7 @@ class CapitalSpendController extends Controller
     function __construct(CapitalSpendManager $capitalSpendManager, CapitalSpendForm $capitalSpendForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager     = $activityManager;
         $this->capitalSpendManager = $capitalSpendManager;
         $this->capitalSpendForm    = $capitalSpendForm;

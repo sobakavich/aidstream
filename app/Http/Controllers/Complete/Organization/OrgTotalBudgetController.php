@@ -27,6 +27,7 @@ class OrgTotalBudgetController extends Controller
         OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->totalBudgetForm     = $formBuilder;
         $this->totalBudgetManager  = $totalBudgetManager;
         $this->organizationManager = $organizationManager;
@@ -43,8 +44,6 @@ class OrgTotalBudgetController extends Controller
         if (Gate::denies('belongsToOrganization', $organization)) {
             return redirect()->back()->withResponse($this->getNoPrivilegesMessage());
         }
-
-        $this->authorize('edit_activity', $organization);
 
         $totalBudget = $this->totalBudgetManager->getOrganizationTotalBudgetData($orgId);
         $form        = $this->totalBudgetForm->editForm($totalBudget, $orgId);

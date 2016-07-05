@@ -22,6 +22,7 @@ class ConditionController extends Controller
     function __construct(ConditionManager $conditionManager, ConditionForm $conditionForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->conditionManager = $conditionManager;
         $this->conditionForm    = $conditionForm;
         $this->activityManager  = $activityManager;

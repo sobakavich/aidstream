@@ -35,6 +35,7 @@ class CollaborationTypeController extends Controller
     function __construct(CollaborationTypeManager $collaborationTypeManager, CollaborationTypeForm $collaborationTypeForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager          = $activityManager;
         $this->collaborationTypeManager = $collaborationTypeManager;
         $this->collaborationTypeForm    = $collaborationTypeForm;

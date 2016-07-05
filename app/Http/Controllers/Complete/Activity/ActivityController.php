@@ -133,6 +133,7 @@ class ActivityController extends Controller
         TwitterAPI $twitterAPI
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->settingsManager              = $settingsManager;
         $this->sessionManager               = $sessionManager;
         $this->organizationManager          = $organizationManager;

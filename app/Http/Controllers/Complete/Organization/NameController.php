@@ -27,6 +27,7 @@ class NameController extends Controller
         OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->nameForm            = $formBuilder;
         $this->nameManager         = $nameManager;
         $this->organizationManager = $organizationManager;

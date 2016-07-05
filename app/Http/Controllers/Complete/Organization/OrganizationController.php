@@ -44,13 +44,14 @@ class OrganizationController extends Controller
         Request $request,
         ActivityManager $activityManager
     ) {
+        $this->middleware('auth');
+        $this->middleware('role');
         $this->settingsManager            = $settingsManager;
         $this->organizationManager        = $organizationManager;
         $this->orgReportingOrgFormCreator = $orgReportingOrgFormCreator;
         $this->nameManager                = $nameManager;
         $this->request                    = $request;
         $this->activityManager            = $activityManager;
-        $this->middleware('auth');
     }
 
     /**

@@ -38,6 +38,7 @@ class ContactInfoController extends Controller
         ActivityManager $activityManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager    = $activityManager;
         $this->contactInfoForm    = $contactInfoForm;
         $this->contactInfoManager = $contactInfoManager;

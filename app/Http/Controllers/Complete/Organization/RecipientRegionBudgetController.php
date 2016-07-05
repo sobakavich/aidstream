@@ -35,6 +35,7 @@ class RecipientRegionBudgetController extends Controller
     public function __construct(RecipientRegionBudget $recipientRegionBudget, RecipientRegionBudgetManager $recipientRegionBudgetManager, OrganizationManager $organizationManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->recipientRegionBudget        = $recipientRegionBudget;
         $this->recipientRegionBudgetManager = $recipientRegionBudgetManager;
         $this->organizationManager          = $organizationManager;

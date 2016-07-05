@@ -27,6 +27,7 @@ class UserLogController extends Controller
     function __construct(ActivityManager $userLogManager)
     {
         $this->middleware('auth.organizationAdmin');
+        $this->middleware('role');
         $this->userLogManager = $userLogManager;
     }
 

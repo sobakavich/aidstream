@@ -36,6 +36,7 @@ class OtherIdentifierController extends Controller
     public function __construct(OtherIdentifierManager $otherIdentifierManager, OtherIdentifierForm $otherIdentifierForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->otherIdentifierManager = $otherIdentifierManager;
         $this->otherIdentifierForm    = $otherIdentifierForm;
         $this->activityManager        = $activityManager;

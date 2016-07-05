@@ -39,6 +39,7 @@ class UpgradeController extends Controller
     function __construct(DatabaseManager $databaseManager, SettingsManager $settingsManager, UpgradeManager $upgradeManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->orgId = session('org_id');
         $db_organization = $databaseManager->table('organizations')->select('name')->where('id','=',$this->orgId)->first();
         $this->orgName = $db_organization->name;

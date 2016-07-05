@@ -38,6 +38,7 @@ class DocumentLinkController extends Controller
     function __construct(DocumentLinkManager $documentLinkManager, DocumentLinkForm $documentLinkForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager     = $activityManager;
         $this->documentLinkForm    = $documentLinkForm;
         $this->documentLinkManager = $documentLinkManager;

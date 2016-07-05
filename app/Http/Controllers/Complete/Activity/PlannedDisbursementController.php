@@ -24,6 +24,7 @@ class PlannedDisbursementController extends Controller
     function __construct(PlannedDisbursementManager $plannedDisbursementManager, PlannedDisbursementForm $plannedDisbursementForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->plannedDisbursementManager = $plannedDisbursementManager;
         $this->plannedDisbursementForm    = $plannedDisbursementForm;
         $this->activityManager            = $activityManager;

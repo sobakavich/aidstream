@@ -35,6 +35,7 @@ class DefaultAidTypeController extends Controller
     function __construct(DefaultAidTypeManager $defaultAidTypeManager, DefaultAidTypeForm $defaultAidTypeForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager       = $activityManager;
         $this->defaultAidTypeManager = $defaultAidTypeManager;
         $this->defaultAidTypeForm    = $defaultAidTypeForm;

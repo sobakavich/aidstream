@@ -44,6 +44,7 @@ class RecipientRegionController extends Controller
         TransactionManager $transactionManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager        = $activityManager;
         $this->recipientRegionForm    = $recipientRegionForm;
         $this->recipientRegionManager = $recipientRegionManager;

@@ -29,6 +29,7 @@ class DocumentLinkController extends Controller
         OrganizationManager $organizationManager
     ) {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->documentLinkForm    = $formBuilder;
         $this->documentLinkManager = $documentLinkManager;
         $this->organizationManager = $organizationManager;

@@ -26,6 +26,7 @@ class RecipientCountryBudgetController extends Controller
     public function __construct(FormBuilder $formBuilder, RecipientCountryBudgetManager $recipientCountryBudgetManager, OrganizationManager $organizationManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->recipientCountryBudgetForm    = $formBuilder;
         $this->recipientCountryBudgetManager = $recipientCountryBudgetManager;
         $this->organizationManager           = $organizationManager;

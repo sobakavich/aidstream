@@ -50,6 +50,7 @@ class AdminController extends Controller
     function __construct(User $user, OrganizationManager $organizationManager, DbLogger $dbLogger, ActivityManager $userActivityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->org_id              = session('org_id');
         $this->user                = $user;
         $this->organizationManager = $organizationManager;

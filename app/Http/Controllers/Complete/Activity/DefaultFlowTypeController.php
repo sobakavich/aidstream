@@ -35,6 +35,7 @@ class DefaultFlowTypeController extends Controller
     function __construct(DefaultFlowTypeManager $defaultFlowTypeManager, DefaultFlowTypeForm $defaultFlowTypeForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager        = $activityManager;
         $this->defaultFlowTypeManager = $defaultFlowTypeManager;
         $this->defaultFlowTypeForm    = $defaultFlowTypeForm;

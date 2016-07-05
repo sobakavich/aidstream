@@ -23,6 +23,7 @@ class RelatedActivityController extends Controller
     function __construct(RelatedActivityManager $relatedActivityManager, RelatedActivityForm $relatedActivityForm, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->relatedActivityManager = $relatedActivityManager;
         $this->relatedActivityForm    = $relatedActivityForm;
         $this->activityManager        = $activityManager;

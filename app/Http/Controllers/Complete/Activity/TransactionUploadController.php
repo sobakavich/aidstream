@@ -34,6 +34,7 @@ class TransactionUploadController extends Controller
     function __construct(ActivityManager $activityManager, UploadTransaction $uploadTransaction, UploadTransactionManager $uploadTransactionManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->activityManager          = $activityManager;
         $this->uploadTransaction        = $uploadTransaction;
         $this->uploadTransactionManager = $uploadTransactionManager;

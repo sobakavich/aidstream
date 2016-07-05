@@ -30,6 +30,7 @@ class DownloadController extends Controller
     function __construct(DownloadCsvManager $downloadCsvManager, CsvGenerator $generator)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->downloadCsvManager = $downloadCsvManager;
         $this->generator          = $generator;
     }

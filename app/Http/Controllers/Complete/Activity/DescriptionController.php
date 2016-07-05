@@ -36,6 +36,7 @@ class DescriptionController extends Controller
     function __construct(DescriptionForm $description, DescriptionManager $descriptionManager, ActivityManager $activityManager)
     {
         $this->middleware('auth');
+        $this->middleware('role');
         $this->description        = $description;
         $this->descriptionManager = $descriptionManager;
         $this->activityManager    = $activityManager;
