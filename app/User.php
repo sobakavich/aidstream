@@ -44,6 +44,9 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         'user_permission',
         'time_zone_id',
         'time_zone',
+        'profile_url',
+        'profile_picture',
+        'time_zone',
         'verification_code',
         'verification_created_at',
         'verified'
@@ -230,6 +233,11 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     public function role()
     {
         return $this->belongsTo('App\Models\Role', 'role_id');
+    }
+
+    public function userOnBoarding()
+    {
+        return $this->hasOne('App\Models\UserOnBoarding', 'user_id');
     }
 
 }
