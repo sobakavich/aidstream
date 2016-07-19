@@ -11,7 +11,7 @@
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,12 +26,6 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery-ui-1.10.4.tooltip.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/main.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('form select').select2();
-        });
-    </script>
 
     @yield('head')
 </head>
@@ -245,12 +239,14 @@
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <!-- End Google Analytics -->
+<script type="text/javascript" src="{{url('/js/select2.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/additional-methods.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/registration.js')}}"></script>
 <script type="text/javascript">
     var agencies = JSON.parse($('.agencies').val());
     $(document).ready(function () {
+        $('form select').select2();
         Registration.abbrGenerator();
         Registration.checkAbbrAvailability();
         Registration.changeCountry();

@@ -137,7 +137,7 @@ class Registration
         $users['role']     = '1';
         $users['username'] = sprintf('%s_admin', $organization->user_identifier);
         $admin             = $this->prepareUser($users);
-        $users             = $this->getUsers(getVal($users, ['user'], []), $organization->user_identifier);
+        $users             = $this->getUsers(getVal($users, ['user'], []));
         $allUsers          = array_merge([$admin], $users);
 
         return $organization->users()->createMany($allUsers);
@@ -146,15 +146,13 @@ class Registration
     /**
      * returns prepared users
      * @param $users
-     * @param $userIdentifier
      * @return array
      */
-    protected function getUsers($users, $userIdentifier)
+    protected function getUsers($users)
     {
         $orgUsers = [];
         foreach ($users as $user) {
-            $user['username'] = sprintf('%s_%s', $userIdentifier, $user['username']);
-            $orgUsers[]       = $this->prepareUser($user);
+            $orgUsers[] = $this->prepareUser($user);
         }
 
         return $orgUsers;

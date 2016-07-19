@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Services\RequestManager\Password;
+use App\Services\SettingsManager;
 use App\Services\Verification;
 use Illuminate\Http\RedirectResponse;
 
@@ -15,14 +16,20 @@ class VerificationController extends Controller
      * @var Verification
      */
     protected $verificationManager;
+    /**
+     * @var SettingsManager
+     */
+    protected $settingsManager;
 
     /**
      * VerificationController constructor.
-     * @param Verification $verificationManager
+     * @param Verification    $verificationManager
+     * @param SettingsManager $settingsManager
      */
-    public function __construct(Verification $verificationManager)
+    public function __construct(Verification $verificationManager, SettingsManager $settingsManager)
     {
         $this->verificationManager = $verificationManager;
+        $this->settingsManager     = $settingsManager;
     }
 
     /**
@@ -53,7 +60,7 @@ class VerificationController extends Controller
     public function saveRegistryInfo($code)
     {
         $registryInfo = request()->all();
-        if ($this->verificationManager->saveRegistryInfo($code, $registryInfo)) {
+        if ($this->verificationManager->saveRegistryInfo($code, $registryInfo, $this->settingsManager)) {
             return redirect()->to('/auth/login')->withMessage('Registry Info Saved Successfully.');
         } else {
             return redirect()->to('/auth/login')->withErrors(['Failed to save Registry Info.']);

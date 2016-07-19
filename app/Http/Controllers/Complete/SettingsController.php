@@ -87,7 +87,6 @@ class SettingsController extends Controller
         OrganizationManager $organizationManager,
         ActivityManager $activityManager,
         OtherIdentifierManager $otherIdentifierManager,
-        LoggerInterface $loggerInterface,
         BaseForm $baseForm,
         FormBuilder $formBuilder,
         SettingsService $settingsService,

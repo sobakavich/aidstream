@@ -16,7 +16,7 @@
 
 <div class="col-xs-12 col-md-12">
     {!! AsForm::text(['name' => 'publisher_id', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-    {!! AsForm::text(['name' => 'api_id', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+    {!! AsForm::text(['name' => 'api_id', 'label' => 'API Key', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
 </div>
 
 <div class="col-md-12 text-center">

@@ -9,7 +9,6 @@ function slash(value) {
     Registration = {
         // ajax request handler
         request: function (url, data, callback, type) {
-            $('body').append('<div class="loader">.....</div>');
             type = type || 'POST';
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
@@ -18,9 +17,6 @@ function slash(value) {
                 data: data,
                 success: function (data) {
                     if (typeof callback == 'function') callback(data);
-                },
-                complete: function () {
-                    $('body > .loader').addClass('hidden').remove();
                 }
             });
         },
@@ -99,16 +95,17 @@ function slash(value) {
         regNumber: function () {
             $('.country, .organization_registration_agency, .registration_number').on('keyup change', function () {
                 var identifier = '';
-                var value = '';
                 if ($('.country').val() == '' || $('.organization_registration_agency').val() == '' || $('.registration_number').val() == '') {
-                    identifier = '[Registration Agency]-[Registration Number]';
-                    value = "";
+                    $('.identifier-text').removeClass('hidden');
+                    $('#org-identifier').addClass('hidden');
                 } else {
-                    identifier = value = $('.organization_registration_agency').val() + '-' + $('.registration_number').val();
+                    identifier = $('.organization_registration_agency').val() + '-' + $('.registration_number').val();
+                    $('.identifier-text').addClass('hidden');
+                    $('#org-identifier').removeClass('hidden');
                 }
 
-                $('#org_identifier').html(identifier);
-                $('.organization_identifier').val(value);
+                $('#org-identifier').html(identifier);
+                $('.organization_identifier').val(identifier);
             });
             $('.registration_number').trigger('change');
         },
@@ -117,12 +114,12 @@ function slash(value) {
             $('.user-blocks').delegate('.username', 'change keyup', function (e) {
                 var userIdentifier = $('.organization_name_abbr').val() + '_';
                 var username = $(this).val();
-                if (userIdentifier.indexOf(username) == 0 && username.length <= userIdentifier.length) {
-                    username = "";
-                } else if (username.indexOf(userIdentifier) != 0) {
-                    username = userIdentifier + username;
+                if (userIdentifier === username && (e.keyCode === 8 || e.keyCode === 46)) {
+                    $(this).val('');
+                } else if (userIdentifier.indexOf(username) === 0) {
+                } else if (username.indexOf(userIdentifier) !== 0) {
+                    $(this).val(userIdentifier + username);
                 }
-                $(this).siblings('.login_username').val(username);
             });
         },
         // adds more user block
@@ -477,10 +474,7 @@ function slash(value) {
                 }
             });
             function setIdentifier() {
-                var userIdentifier = $('.organization_name_abbr').val();
-                $('#user-identifier').attr('data-id', userIdentifier);
-                $('#username').html(userIdentifier + '_admin');
-                $('.username').trigger('change').prev('.input-group-addon').html(userIdentifier + '_');
+                $('#username').val($('.organization_name_abbr').val() + '_admin');
             }
 
             setIdentifier();

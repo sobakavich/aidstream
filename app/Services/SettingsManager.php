@@ -4,6 +4,7 @@ use App\Core\Version;
 use App;
 use App\Http\API\CKAN\CkanClient;
 use App\Models\Activity\Activity;
+use App\Models\Settings;
 use App\Services\Activity\ActivityManager;
 use App\Services\Organization\OrganizationManager;
 use Exception;
@@ -101,6 +102,16 @@ class SettingsManager
     }
 
     /**
+     * return settings
+     * @param $code
+     * @return mixed
+     */
+    public function getSettingsByCode($code)
+    {
+        return $this->repo->getSettingsByCode($code);
+    }
+
+    /**
      * store settings
      * @param $input
      * @param $organization
@@ -173,11 +184,11 @@ class SettingsManager
 
     /**
      * save publishing information.
-     * @param $publishing_info
-     * @param $settings
+     * @param          $publishing_info
+     * @param Settings $settings
      * @return bool
      */
-    public function savePublishingInfo($publishing_info, $settings)
+    public function savePublishingInfo($publishing_info, Settings $settings)
     {
         try {
             $result = $this->repo->savePublishingInfo($publishing_info, $settings);
@@ -185,9 +196,10 @@ class SettingsManager
             $this->dbLogger->activity(
                 "activity.settings_updated",
                 [
-                    'organization'    => $this->auth->user()->organization->name,
-                    'organization_id' => $this->auth->user()->organization->id
-                ]
+                    'organization'    => $settings->organization->name,
+                    'organization_id' => $settings->organization->id
+                ],
+                ['user_id' => $settings->organization->users->where('role_id', 1)->first()->id]
             );
 
             return true;

@@ -89,12 +89,12 @@ class SuperAdmin implements SuperAdminInterface
      */
     public function getOrganizationUserById($orgId)
     {
-        return $organization = Organization::join('users', 'users.org_id', '=', 'organizations.id')
-                                           ->where('organizations.id', '333')
-                                           ->where('role_id', '1')
-                                           ->select('organizations.*', 'users.first_name', 'users.last_name', 'users.email', 'users.username')
-                                           ->get()
-                                           ->toArray();
+        return $this->organization->join('users', 'users.org_id', '=', 'organizations.id')
+                                  ->where('organizations.id', '333')
+                                  ->where('role_id', '1')
+                                  ->select('organizations.*', 'users.first_name', 'users.last_name', 'users.email', 'users.username')
+                                  ->get()
+                                  ->toArray();
     }
 
     /**
@@ -130,10 +130,14 @@ class SuperAdmin implements SuperAdminInterface
                     'organization_id' => $orgId
                 ]
             );
+
+            return true;
         } catch (Exception $exception) {
             $this->database->rollback();
             $this->logger->error($exception, ['settings' => $orgDetails]);
         }
+
+        return false;
     }
 
     protected function makeOrganizationData(array $orgDetails)

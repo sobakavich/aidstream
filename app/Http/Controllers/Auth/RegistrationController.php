@@ -165,7 +165,9 @@ class RegistrationController extends Controller
         } else {
             $orgInfo = $this->registrationManager->checkOrgIdentifier(request('org_identifier'));
         }
-        session()->put('admin_email', $orgInfo['admin_email']);
+        if ($orgInfo && ($adminEmail = getVal($orgInfo, ['admin_email']))) {
+            session()->put('admin_email', $adminEmail);
+        }
 
         return $orgInfo;
     }

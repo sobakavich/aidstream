@@ -1,7 +1,7 @@
 <div class="user-block clearfix" style="background-color: #EBF8FF; margin-bottom: 10px;">
     <a href="#delete" class="delete pull-right">remove</a>
     <div class="col-xs-12 col-md-12">
-        {!! AsForm::username(['name' => 'users[user][' . $userIndex . '][username]', 'hiddenName' => 'users[user][' . $userIndex . '][login_username]', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'class' => 'username']) !!}
+        {!! AsForm::text(['name' => 'users[user][' . $userIndex . '][username]', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'class' => 'username']) !!}
         {!! AsForm::email(['name' => 'users[user][' . $userIndex . '][email]', 'class' => 'email', 'label' => 'E-mail Address', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
     </div>
     <div class="col-xs-12 col-md-12">

@@ -25,8 +25,10 @@
             {{ Form::hidden('organization[agency_website]', null, ['class' => 'form-control agency_website', 'id' => 'organization[agency_website]']) }}
         </p>
     </div>
-    <div class="text-center">
-        IATI Organizational Identifier: <span id="org_identifier">[Registration Agency]-[Registration Number]</span>
+    <div class="col-xs-12 col-md-12">
+        <div>IATI Organizational Identifier</div>
+        <div class="identifier-text">This will be auto-generated as you fill the fields above.</div>
+        <div id="org-identifier" class="hidden">[Registration Agency]-[Registration Number]</div>
         {{ Form::hidden('organization[organization_identifier]', null, ['class' => 'form-control organization_identifier', 'id' => 'organization[organization_identifier]']) }}
 
         @foreach($errors->get('organization.organization_identifier') as $message)

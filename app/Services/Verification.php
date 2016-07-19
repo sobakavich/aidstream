@@ -157,14 +157,19 @@ class Verification
      */
     public function verifySecondary($code)
     {
-        $organization                    = $this->organization->whereRaw("secondary_contact ->> 'verification_code' = ?", [$code])->first();
-        $user                            = $organization->secondary_contact;
-        $user['verified']                = true;
-        $organization->secondary_contact = $user;
-        $message                         = view('verification.secondary');
-        $organization->save();
+        $organization = $this->organization->whereRaw("secondary_contact ->> 'verification_code' = ?", [$code])->first();
+        if ($organization) {
+            $user                            = $organization->secondary_contact;
+            $user['verified']                = true;
+            $organization->secondary_contact = $user;
+            $message                         = view('verification.secondary');
+            $message                         = $message->__toString();
+            $organization->save();
+        } else {
+            $message = 'Invalid Verification Code.';
+        }
 
-        return redirect()->to('/')->withVerificationMessage($message->__toString());
+        return redirect()->to('/')->withVerificationMessage($message);
     }
 
     /**
@@ -179,13 +184,25 @@ class Verification
 
     /**
      * saves Registry Information
-     * @param $code
-     * @param $registryInfo
+     * @param                 $code
+     * @param                 $registryInfo
+     * @param SettingsManager $settingsManager
      * @return bool
      */
-    public function saveRegistryInfo($code, $registryInfo)
+    public function saveRegistryInfo($code, $registryInfo, SettingsManager $settingsManager)
     {
-        return false;
+        $publishingInfo =
+            [
+                "publisher_id"        => $registryInfo['publisher_id'],
+                "api_id"              => $registryInfo['api_id'],
+                "publish_files"       => "no",
+                "publishing"          => "unsegmented",
+                "publisher_id_status" => "Not Verified",
+                "api_id_status"       => "Incorrect"
+            ];
+        $settings       = $settingsManager->getSettingsByCode($code);
+
+        return $settingsManager->savePublishingInfo($publishingInfo, $settings);
     }
 
     /**

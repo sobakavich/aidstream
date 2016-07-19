@@ -4,9 +4,7 @@
 
 <div class="input-wrapper">
     <div class="col-xs-12 col-md-12">
-        <span class="hidden" id="user-identifier" data-id=""></span>
-
-        <p>Username: <span id="username"></span> This username was generated using Organisation Name Abbreviation you provided earlier.</p>
+        {!! AsForm::text(['name' => 'users[username]', 'class' => 'username', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<div class="help-block">This was auto-generated using organization name abbreviation you provided earlier.</div>', 'attr' => ['readonly' => 'readonly', 'id' => 'username']]) !!}
     </div>
     <div class="col-xs-12 col-md-12">
         {!! AsForm::text(['name' => 'users[first_name]', 'class' => 'first_name', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}

@@ -153,6 +153,7 @@ class Register extends Request
         $formBase = 'users';
         $rules    = [];
 
+        $rules[sprintf('%s.username', $formBase)]          = 'required|unique:users,username';
         $rules[sprintf('%s.first_name', $formBase)]        = 'required';
         $rules[sprintf('%s.last_name', $formBase)]         = 'required';
         $rules[sprintf('%s.email', $formBase)]             = 'required|email|unique_email';
@@ -174,6 +175,8 @@ class Register extends Request
         $formBase = 'users';
         $messages = [];
 
+        $messages[sprintf('%s.username.required', $formBase)]              = 'Username is required.';
+        $messages[sprintf('%s.username.unique', $formBase)]                = 'Username has already been taken.';
         $messages[sprintf('%s.first_name.required', $formBase)]            = 'First Name is required.';
         $messages[sprintf('%s.last_name.required', $formBase)]             = 'Last Name is required.';
         $messages[sprintf('%s.email.required', $formBase)]                 = 'Email is required.';
@@ -210,12 +213,12 @@ class Register extends Request
         $roles = implode(',', $roles);
 
         foreach ($users as $userIndex => $user) {
-            $formBase                                       = sprintf('users.user.%s', $userIndex);
-            $rules[sprintf('%s.login_username', $formBase)] = 'required|unique:users,username';
-            $rules[sprintf('%s.email', $formBase)]          = 'required|email|unique_email';
-            $rules[sprintf('%s.first_name', $formBase)]     = 'required';
-            $rules[sprintf('%s.last_name', $formBase)]      = 'required';
-            $rules[sprintf('%s.role', $formBase)]           = 'required|in:' . $roles;
+            $formBase                                   = sprintf('users.user.%s', $userIndex);
+            $rules[sprintf('%s.username', $formBase)]   = 'required|unique:users,username';
+            $rules[sprintf('%s.email', $formBase)]      = 'required|email|unique_email';
+            $rules[sprintf('%s.first_name', $formBase)] = 'required';
+            $rules[sprintf('%s.last_name', $formBase)]  = 'required';
+            $rules[sprintf('%s.role', $formBase)]       = 'required|in:' . $roles;
         }
 
         return $rules;
@@ -231,16 +234,16 @@ class Register extends Request
         $messages = [];
 
         foreach ($users as $userIndex => $user) {
-            $formBase                                                   = sprintf('users.user.%s', $userIndex);
-            $messages[sprintf('%s.login_username.required', $formBase)] = 'Username is required.';
-            $messages[sprintf('%s.login_username.unique', $formBase)]   = 'Username has already been taken.';
-            $messages[sprintf('%s.email.required', $formBase)]          = 'Email is required.';
-            $messages[sprintf('%s.email.email', $formBase)]             = 'Email is not valid.';
-            $messages[sprintf('%s.email.unique_email', $formBase)]      = 'Email has already been taken.';
-            $messages[sprintf('%s.first_name.required', $formBase)]     = 'First Name is required.';
-            $messages[sprintf('%s.last_name.required', $formBase)]      = 'Last Name is required.';
-            $messages[sprintf('%s.role.required', $formBase)]           = 'Role is required.';
-            $messages[sprintf('%s.role.in', $formBase)]                 = 'Role is not valid.';
+            $formBase                                               = sprintf('users.user.%s', $userIndex);
+            $messages[sprintf('%s.username.required', $formBase)]   = 'Username is required.';
+            $messages[sprintf('%s.username.unique', $formBase)]     = 'Username has already been taken.';
+            $messages[sprintf('%s.email.required', $formBase)]      = 'Email is required.';
+            $messages[sprintf('%s.email.email', $formBase)]         = 'Email is not valid.';
+            $messages[sprintf('%s.email.unique_email', $formBase)]  = 'Email has already been taken.';
+            $messages[sprintf('%s.first_name.required', $formBase)] = 'First Name is required.';
+            $messages[sprintf('%s.last_name.required', $formBase)]  = 'Last Name is required.';
+            $messages[sprintf('%s.role.required', $formBase)]       = 'Role is required.';
+            $messages[sprintf('%s.role.in', $formBase)]             = 'Role is not valid.';
         }
 
         return $messages;
