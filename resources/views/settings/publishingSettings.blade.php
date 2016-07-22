@@ -5,6 +5,17 @@
         <div class="create-form settings-form">
             {!! form_start($form) !!}
             <div id="publishing_info1">
+                <div class="form-group">
+                    {!! form_label($form->publisher_id, ['label' => 'Publisher ID']) !!}
+                    {!! form_widget($form->publisher_id) !!}
+                    <div id="publisher_id_status_display" class="{{ ($status = $form->getModel()['publisher_id_status']) == 'Verified' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
+                </div>
+                {!! form_until($form,'publisher_id_status') !!}
+                <div class="form-group">
+                    {!! form_label($form->api_id, ['label' => 'API ID']) !!}
+                    {!! form_widget($form->api_id) !!}
+                    <div id="api_id_status_display" class="{{ ($status = $form->getModel()['api_id_status']) == 'Correct' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
+                </div>
                 {!! form_until($form,'verify') !!}
             </div>
             <div id="publishing_info2">

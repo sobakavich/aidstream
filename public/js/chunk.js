@@ -107,10 +107,12 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                     success: function (data) {
                         var publisher_response = data['publisher_id'];
                         var api_key = data['api_key'];
-                        publisher_response = (publisher_response) ? "Verified" : "Not Verified";
-                        api_key = (api_key) ? "Correct" : "Incorrect";
-                        $('#publisher_id_status').val(publisher_response);
-                        $('#api_id_status').val(api_key);
+                        var publisher_status = (publisher_response) ? "Verified" : "Not Verified";
+                        var api_status = (api_key) ? "Correct" : "Incorrect";
+                        $('#publisher_id_status').val(publisher_status);
+                        $('#publisher_id_status_display').addClass(publisher_response ? 'text-success' : 'text-error').html(publisher_status);
+                        $('#api_id_status').val(api_status);
+                        $('#api_id_status_display').addClass(api_key ? 'text-success' : 'text-error').html(api_status);
                     },
                     error: function (data) {
                         var response = data.responseJSON.publisher_id;
