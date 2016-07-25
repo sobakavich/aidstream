@@ -413,10 +413,8 @@ $(document).ready(function () {
     });
 
     $(document).mouseup(function (e) {
-        var container = $('.language-flag-wrap');
-        if (!container.is(e.target)
-            && container.has(e.target).length === 0) {
-            container.hide();
+        if (!$('.language-select-wrapper').has(e.target).length) {
+            $('.language-flag-wrap').hide();
         }
     });
 

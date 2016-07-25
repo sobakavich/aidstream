@@ -15,3 +15,8 @@ function message($response)
 
     return trans($code, $result);
 }
+
+function label($code) {
+    $code = sprintf('label.%s', $code);
+    return trans($code);
+}

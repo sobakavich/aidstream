@@ -140,6 +140,7 @@
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/script.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
 @endif
