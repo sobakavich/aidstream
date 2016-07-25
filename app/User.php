@@ -43,7 +43,13 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         'role_id',
         'user_permission',
         'time_zone_id',
-        'time_zone'
+        'time_zone',
+        'profile_url',
+        'profile_picture',
+        'time_zone',
+        'verification_code',
+        'verification_created_at',
+        'verified'
     ];
     /**
      * @var array
@@ -116,6 +122,10 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
      */
     public function hasPermission($permission)
     {
+        if (!$this->user_permission) {
+            return $this->doesUserHave($permission);
+        }
+
         return in_array($permission, $this->user_permission);
     }
 
@@ -200,10 +210,89 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
         return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->organization->status);
     }
 
+    /**
+     * @return bool
+     */
+    public function getVerifiedStatusAttribute()
+    {
+        return ($this->isGroupAdmin() || $this->isSuperAdmin() || $this->verified);
+    }
+
     public function getSuperAdmins()
     {
         return $this->where('org_id', null)->get();
     }
 
+    public function getRolesByOrgAndUser($orgId, $userId)
+    {
+        $roles = DB::table($this->table)
+                   ->join('role', 'role.id', '=', 'users.role_id')
+                   ->where('users.org_id', '=', $orgId)
+                   ->where('users.id', '=', $userId)
+                   ->first();
 
+        return $roles;
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role', 'role_id');
+    }
+
+    public function userOnBoarding()
+    {
+        return $this->hasOne('App\Models\UserOnBoarding', 'user_id');
+    }
+
+    /**
+     * Check if the User has any specific permission.
+     * @param $permission
+     * @return bool
+     */
+    protected function doesUserHave($permission)
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        $userPermissions = json_decode($this->role->permissions, true);
+
+        if (!empty($userPermissions)) {
+            return in_array($this->extractPermission($permission), $this->breakPermissionsIntoActions($userPermissions));
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Break down user permissions into actions.
+     * @param $userPermissions
+     * @return array
+     */
+    protected function breakPermissionsIntoActions($userPermissions)
+    {
+        $actions = [];
+
+        if (is_array($userPermissions)) {
+            foreach ($userPermissions as $permission) {
+                $actions[] = $this->extractPermission($permission);
+            }
+        }
+
+        return $actions;
+    }
+
+    /**
+     * Extract action from permission.
+     * @param $permission
+     * @return mixed
+     */
+    protected function extractPermission($permission)
+    {
+        $action    = explode('_', $permission);
+
+        return array_first($action, function () {
+            return true;
+        });
+    }
 }
