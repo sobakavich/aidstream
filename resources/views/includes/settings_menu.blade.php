@@ -1,7 +1,4 @@
-<div class="element-menu-wrapper">
-    <div class="element-sidebar-dropdown">
-        <div class="edit-element">edit<span class="caret"></span></div>
-    </div>
+<div class="settings-tab-wrapper">
     <div class="element-wrapper">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -36,7 +33,7 @@
                         <a href="{{route('default-values')}}">Default Values
                         </a>
                     </li>
-                    <li @if(request()->path() == 'admin.list-users') class="active" @endif>
+                    <li @if(request()->path() == 'organization-user' || request()->path() == 'organization-user/register') class="active" @endif>
                         <a href="{{route('admin.list-users')}}">Users
                         </a>
                     </li>
