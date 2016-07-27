@@ -397,7 +397,7 @@ class SettingsController extends Controller
         $settings      = $this->settings;
         $defaultValues = $this->settingsManager->saveDefaultValues($request->except('_token'), $settings);
 
-        if (is_null($settings->default_field_groups)) {
+        if (!$settings->default_field_groups) {
             $response = ['type' => 'warning', 'code' => ['default_field_groups_required', ['name' => 'activity']]];
 
             return redirect('activity-elements-checklist')->withResponse($response);
@@ -470,7 +470,6 @@ class SettingsController extends Controller
      */
     public function verifyPublisherAndApi(Request $request)
     {
-
         $apiKey      = $request->get('apiKey');
         $publisherId = $request->get('publisherId');
 
@@ -480,7 +479,6 @@ class SettingsController extends Controller
         $response = ['api_key' => $apiKeyResponse, 'publisher_id' => $publisherId];
 
         return $response;
-
     }
 
     /**

@@ -23,15 +23,16 @@
                         <td>
                             @if($value->role_id == 1)
                                 {{ Form::select('permission',['1' => 'Administrator'],$value->role_id,['disabled']) }}
-                            @else
+                            @elseif(auth()->user()->role_id == 5 || auth()->user()->role_id == 1)
                                 {{ Form::select('permission',$roles,$value->role_id,['id' => 'permission']) }}
+                            @else
+                                {{ Form::select('permission',$roles,$value->role_id,['id' => 'permission', 'disabled']) }}
                             @endif
-
                             {{ Form::hidden('user_id',$value->id, ['id' => 'user_id']) }}
                             <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                         </td>
                         <td>
-                            @if (auth()->user()->isAdmin())
+                            @if (auth()->user()->isAdmin() || auth()->user()->role_id == 5)
                                 @if($value->role_id != 1)
                                     <a href="{{ url(sprintf('organization-user/%s/delete', $value->id)) }}" class="delete">Delete</a>
                                 @endif

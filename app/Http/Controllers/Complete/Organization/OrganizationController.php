@@ -291,6 +291,7 @@ class OrganizationController extends Controller
         $registrationAgency = $this->baseForm->getCodeList('OrganisationRegistrationAgency', 'Organization');
         $url                = route('organization-information.update');
         $settings           = $this->settingsManager->getSettings(session('org_id'));
+        $users              = $this->userManager->getAllUsersOfOrganization();
 
         $formOptions = [
             'method' => 'PUT',
@@ -299,7 +300,7 @@ class OrganizationController extends Controller
         ];
         $form        = $this->organizationManager->viewOrganizationInformation($formOptions);
 
-        return view('settings.organizationInformation', compact('form', 'organizationTypes', 'countries', 'organization', 'registrationAgency', 'settings'));
+        return view('settings.organizationInformation', compact('form', 'organizationTypes', 'countries', 'organization', 'registrationAgency', 'settings', 'users'));
     }
 
     /** save organization information
@@ -310,8 +311,9 @@ class OrganizationController extends Controller
     {
         $organization             = $this->organizationManager->getOrganization(session('org_id'));
         $organizationInfoResponse = $this->organizationManager->saveOrganizationInformation($request->all(), $organization);
+
         if ($organizationInfoResponse === "Username updated") {
-            return redirect()->route('organization-information.username-updated');
+            return redirect()->route('settings')->with('status', 'changed');
         }
         $response = $this->getResponse($organizationInfoResponse, 'Organization Information');
 
@@ -338,16 +340,6 @@ class OrganizationController extends Controller
         ];
 
         return $response;
-    }
-
-    /** update username of all users of the organization
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function updateUsername()
-    {
-        $users = $this->userManager->getAllUsersOfOrganization();
-
-        return view('settings.usernameUpdated', compact('users'));
     }
 
     /** Send email to the user notifying username changed.

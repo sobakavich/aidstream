@@ -128,7 +128,7 @@ class AdminController extends Controller
 
         $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['created', ['name' => 'User']]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
 
-        UserOnBoarding::create(['has_logged_in_once' => false, 'user_id' => $this->user->id]);
+//        UserOnBoarding::create(['has_logged_in_once' => false, 'user_id' => $this->user->id]);
         $this->dbLogger->activity("admin.user_created", ['orgId' => $this->org_id, 'userId' => $this->user->id]);
 
         return redirect()->route('admin.list-users')->withResponse($response);

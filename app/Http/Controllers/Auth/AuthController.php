@@ -177,21 +177,15 @@ class AuthController extends Controller
             }
 
             if (Auth::attempt($credentials, $request->has('remember'))) {
-                $user = Auth::user();
-                if (!$user->enabled) {
+                if (!Auth::user()->enabled) {
                     Auth::logout();
 
                     return redirect('/auth/login')->withErrors("Your account has been disabled. Please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> ");
-                } elseif (!$user->verified_status) {
-                    Auth::logout();
-
-                    return redirect('/auth/login')->withErrors(
-                        "Your account has not be verified yet. Please click connect me link in registration confirmation email. If you are still having problem, please contact us at <a href='mailto:support@aidstream.org'>support@aidstream.org</a> "
-                    );
                 }
+                $user = Auth::user();
                 Session::put('role_id', $user->role_id);
                 Session::put('org_id', $user->org_id);
-                Session::put('admin_id', $user->id);
+                Session::put('admin_id',$user->id);
                 $settings       = Settings::where('organization_id', $user->org_id)->first();
                 $settings_check = isset($settings);
                 $version        = ($settings_check) ? $settings->version : config('app.default_version');
@@ -207,23 +201,23 @@ class AuthController extends Controller
                 Session::put('next_version', $next_version);
                 $version = 'V' . str_replace('.', '', $version);
                 Session::put('version', $version);
+                $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
+                $intendedUrl  = Session::get('url.intended');
 
-                if (isset(Auth::user()->userOnBoarding->has_logged_in_once)) {
-                    if (Auth::user()->userOnBoarding->has_logged_in_once) {
-                        $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
-                    } else {
-                        Session::put('first_login', true);
-                        $redirectPath = 'welcome';
-                    }
-                } elseif ($user->role_id == 3 || $user->role_id == 4) {
-                    $redirectPath = config('app.super_admin_dashboard');
-                } else {
-                    Auth::user()->userOnBoarding()->create(['has_logged_in_once' => false]);
-                    Session::put('first_login', true);
-                    $redirectPath = 'welcome';
-                }
-
-                $intendedUrl = Session::get('url.intended');
+//                if (isset(Auth::user()->userOnBoarding->has_logged_in_once)) {
+//                    if (Auth::user()->userOnBoarding->has_logged_in_once) {
+//                        $redirectPath = ($user->role_id == 1 || $user->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard');
+//                    } else {
+//                        Session::put('first_login', true);
+//                        $redirectPath = 'welcome';
+//                    }
+//                } elseif ($user->role_id == 3 || $user->role_id == 4) {
+//                    $redirectPath = config('app.super_admin_dashboard');
+//                } else {
+//                    Auth::user()->userOnBoarding()->create(['has_logged_in_once' => false]);
+//                    Session::put('first_login', true);
+//                    $redirectPath = 'welcome';
+//                }
 
                 !(($user->role_id == 3 || $user->role_id == 4) && strpos($intendedUrl, '/admin') === false) ?: $intendedUrl = url('/');
                 !($intendedUrl == url('/')) ?: Session::set('url.intended', $redirectPath);
@@ -294,10 +288,10 @@ class AuthController extends Controller
      */
     public function getLogout()
     {
-        if (isset(Auth::user()->userOnBoarding->has_logged_in_once)) {
-            Auth::user()->userOnBoarding->has_logged_in_once = true;
-            Auth::user()->userOnBoarding->save();
-        }
+//        if (isset(Auth::user()->userOnBoarding->has_logged_in_once)) {
+//            Auth::user()->userOnBoarding->has_logged_in_once = true;
+//            Auth::user()->userOnBoarding->save();
+//        }
         Auth::logout();
         Session::flush();
 

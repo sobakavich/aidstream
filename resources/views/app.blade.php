@@ -114,11 +114,11 @@
         </div>
         <div class="navbar-right version-wrap">
 
-            @if(isset(auth()->user()->userOnBoarding->completed_tour) && session('role_id') != 3)
-                @if(!auth()->user()->userOnBoarding->completed_tour)
-                    <a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>
-                @endif
-            @endif
+            {{--@if(isset(auth()->user()->userOnBoarding->completed_tour) && session('role_id') != 3)--}}
+                {{--@if(!auth()->user()->userOnBoarding->completed_tour)--}}
+                    {{--<a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>--}}
+                {{--@endif--}}
+            {{--@endif--}}
             @if(auth()->user() && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                     @if (session('next_version'))

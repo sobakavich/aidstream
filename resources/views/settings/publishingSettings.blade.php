@@ -11,13 +11,13 @@
                 <div class="form-group">
                     {!! form_label($form->publisher_id, ['label' => 'Publisher ID']) !!}
                     {!! form_widget($form->publisher_id) !!}
-                    <div id="publisher_id_status_display" class="{{ ($status = $form->getModel()['publisher_id_status']) == 'Verified' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
+                    <div id="publisher_id_status_display" class="{{ ($status = getVal($form->getModel(), ['publisher_id_status'])) == 'Verified' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
                 </div>
                 {!! form_until($form,'publisher_id_status') !!}
                 <div class="form-group">
                     {!! form_label($form->api_id, ['label' => 'API ID']) !!}
                     {!! form_widget($form->api_id) !!}
-                    <div id="api_id_status_display" class="{{ ($status = $form->getModel()['api_id_status']) == 'Correct' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
+                    <div id="api_id_status_display" class="{{ ($status = getVal($form->getModel(), ['api_id_status'])) == 'Correct' ? 'text-success' : 'text-danger' }}">{{ $status }}</div>
                 </div>
                 {!! form_until($form,'verify') !!}
             </div>
@@ -36,15 +36,15 @@
     </div>
 @endsection
 @section('foot')
-    <script src="{{url('js/chunk.js')}}"></script>
+{{--    <script src="{{url('js/chunk.js')}}"></script>--}}
     <script src="{{url('js/userOnBoarding.js')}}"></script>
     <script>
         $(window).load(function () {
             Chunk.verifyPublisherAndApi();
-            @if(session('first_login'))
-                UserOnBoarding.settingsTour();
-                UserOnBoarding.validatePublishingInfo();
-            @endif
+            {{--@if(session('first_login'))--}}
+                {{--UserOnBoarding.settingsTour();--}}
+            {{--UserOnBoarding.validatePublishingInfo();--}}
+            {{--@endif--}}
         });
     </script>
 @endsection

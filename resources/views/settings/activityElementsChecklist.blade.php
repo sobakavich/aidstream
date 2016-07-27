@@ -21,12 +21,12 @@
     </div>
 @stop
 @section('foot')
-    @if(session('first_login'))
-        <script src="/js/userOnBoarding.js"></script>
-        <script>
-            $(window).load(function () {
-                UserOnBoarding.settingsTour();
-            });
-        </script>
-    @endif
+    {{--@if(session('first_login'))--}}
+        {{--<script src="/js/userOnBoarding.js"></script>--}}
+        {{--<script>--}}
+            {{--$(window).load(function () {--}}
+                {{--UserOnBoarding.settingsTour();--}}
+            {{--});--}}
+        {{--</script>--}}
+    {{--@endif--}}
 @endsection

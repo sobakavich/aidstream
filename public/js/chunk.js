@@ -97,7 +97,7 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
             });
         },
         verifyPublisherAndApi: function () {
-            $('#verify').on('click', function (e) {
+            function verify(source) {
                 var publisherId = $('#publisher_id').val();
                 var apiKey = $('#api_id').val();
                 $('#error').addClass('hidden');
@@ -117,10 +117,26 @@ if (typeof(Chunk) == "undefined") var Chunk = {};
                         var api_key = data['api_key'];
                         publisher_response = (publisher_response) ? "Verified" : "Not Verified";
                         api_key = (api_key) ? "Correct" : "Incorrect";
-                        $("#publisher_id_status").val(publisher_response);
-                        $("#api_id_status").val(api_key);
+                        if (source == "publisher") {
+                            $("#publisher_id_status").val(publisher_response);
+                        } else if (source == "api") {
+                            $("#api_id_status").val(api_key);
+                        } else {
+                            $("#publisher_id_status").val(publisher_response);
+                            $("#api_id_status").val(api_key);
+                        }
                     }
                 });
+            }
+
+            $('#verify').on('click', function () {
+                verify("both");
+            });
+            $('#publisher_id').on('blur', function () {
+                verify("publisher");
+            });
+            $('#api_id').on('blur', function () {
+                verify("api");
             });
         },
         checkImport: function () {

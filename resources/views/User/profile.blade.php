@@ -38,7 +38,7 @@
                             </div>
                             <div class="profile-info">
                                 <div>TimeZone: {{Auth::user()->time_zone}}</div>
-                                <div>Permission: {{Auth::user()->role->role}}</div>
+                                <div>Permission: {{ (Auth::user()->role) ? Auth::user()->role->role : 'No any permission'}}</div>
                             </div>
                         </div>
                     </div>

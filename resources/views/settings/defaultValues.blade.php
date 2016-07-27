@@ -23,9 +23,11 @@
                 <div class="col-md-12">
                     {!! form_until($form,'default_tied_status') !!}
                 </div>
-                <div class="col-md-12">
-                    {!! form_until($form, 'humanitarian') !!}
-                </div>
+                @if(Session::get('version') != 'V201')
+                    <div class="col-md-12">
+                        {!! form_until($form, 'humanitarian') !!}
+                    </div>
+                @endif
                 <div class="col-md-12">
                     {!!  form_end($form) !!}
                 </div>
@@ -34,13 +36,13 @@
     </div>
 @stop
 @section('foot')
-    <script src="/js/userOnBoarding.js"></script>
-    <script>
-        $(window).load(function () {
-            @if(session('first_login'))
-                UserOnBoarding.settingsTour();
-            @endif
-            UserOnBoarding.validateDefaultValues();
-        });
-    </script>
+    {{--<script src="/js/userOnBoarding.js"></script>--}}
+    {{--<script>--}}
+        {{--$(window).load(function () {--}}
+            {{--@if(session('first_login'))--}}
+                {{--UserOnBoarding.settingsTour();--}}
+            {{--@endif--}}
+            {{--UserOnBoarding.validateDefaultValues();--}}
+        {{--});--}}
+    {{--</script>--}}
 @endsection

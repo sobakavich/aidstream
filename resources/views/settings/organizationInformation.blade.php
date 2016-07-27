@@ -46,6 +46,9 @@
              data-prototype="{{ form_row($form->narrative->prototype()) }}"></div>
     </div>
     </div>
+    @if(session('status'))
+        @include('settings.usernameUpdated')
+    @endif
 @endsection
 @section('foot')
     <script src="{{ url('js/chunk.js') }}"></script>
@@ -54,6 +57,12 @@
         $('document').ready(function () {
             Chunk.displayPicture();
             Chunk.changeCountry();
+            @if(session('status'))
+                 $('#usernameChanged').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            @endif
         });
     </script>
 @endsection

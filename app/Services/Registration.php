@@ -59,9 +59,9 @@ class Registration
             $orgInfo['secondary_contact'] = $users['secondary_contact'];
             $organization                 = $this->saveOrganization($orgInfo);
             $users                        = $this->saveUsers($users, $organization);
-            foreach ($users as $user) {
-                ($user->userOnBoarding()->create(['has_logged_in_once' => false]));
-            }
+//            foreach ($users as $user) {
+//                ($user->userOnBoarding()->create(['has_logged_in_once' => false]));
+//            }
 
             $orgInfo['id'] = $organization->id;
             $this->saveRegAgency($orgInfo);
@@ -78,7 +78,7 @@ class Registration
 
     /**
      * saves organization and return organization model
-     * @param $orgInfo
+     * @param $orgInfo 
      * @return Organization
      */
     protected function saveOrganization($orgInfo)
@@ -86,6 +86,7 @@ class Registration
         $orgData      = $this->prepareOrganization($orgInfo);
         $organization = $this->orgRepo->createOrganization($orgData);
         $organization->orgData()->create(['name' => [["narrative" => $orgInfo['organization_name'], "language" => ""]]]);
+        $organization->settings()->create(['version' => '2.02']);
 
         return $organization;
     }
