@@ -71,6 +71,7 @@
                             <div class="text-center no-data no-activity-data">
                                 You haven’t added any activity yet.
                                 <a href="{{route('activity.create') }}" class="btn btn-primary">Add an activity</a>
+                                <a href="{{ route('import-activity.index') }}" class="btn btn-primary">Import Activities</a>
                             </div>
                         @endif
                     </div>
@@ -81,9 +82,9 @@
 @endsection
 @section('foot')
     {{--<script>--}}
-        {{--$(document).ready(function () {--}}
-            {{--$('[data-toggle="popover"]').popover({html: true});--}}
-        {{--});--}}
-        {{--g--}}
+    {{--$(document).ready(function () {--}}
+    {{--$('[data-toggle="popover"]').popover({html: true});--}}
+    {{--});--}}
+    {{--g--}}
     {{--</script>--}}
 @endsection

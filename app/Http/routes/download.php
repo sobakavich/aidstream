@@ -59,5 +59,12 @@ $router->group(
                 'uses' => 'DownloadController@downloadActivityTemplate2'
             ]
         );
+        $router->get(
+            '/download-result-template',
+            [
+                'as'   => 'download.result-template',
+                'uses' => 'DownloadController@downloadResultTemplate'
+            ]
+        );
     }
 );

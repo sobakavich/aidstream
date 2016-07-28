@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Import Activities')
+@section('title', 'Import Results')
 
 @section('content')
 
@@ -11,11 +11,11 @@
                 @include('includes.response')
                 <div class="element-panel-heading">
                     <div>
-                        Import Activities
+                        Import Results
                     </div>
                     <div>
-                        <a href="{{ route('activity.index') }}" class="pull-right back-to-list">
-                            <span class="glyphicon glyphicon-triangle-left"></span>Back to Activity List
+                        <a href="{{ route('activity.result.index', [$activityId]) }}" class="pull-right back-to-list">
+                            <span class="glyphicon glyphicon-triangle-left"></span>Back to Result List
                         </a>
                     </div>
                 </div>
@@ -26,11 +26,10 @@
                                 {!! form($form) !!}
                             </div>
                             <div class="download-transaction-wrap">
-                                <a href="{{route('download.activity-template')}}"
-                                   class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
+                                <a href="{{route('download.result-template')}}"
+                                   class="btn btn-primary btn-form btn-submit">Download Result Template</a>
                                 <div>
-                                    This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
-                                    For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
+                                    Result Template info.
                                 </div>
                             </div>
                         </div>

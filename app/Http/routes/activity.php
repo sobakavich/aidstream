@@ -158,6 +158,31 @@ $router->group(
         );
 
         $router->get(
+            '/activity/{activity}/import-result',
+            [
+                'as'   => 'import-result.index',
+                'uses' => 'ImportResultController@index'
+            ]
+        );
+
+        $router->match(
+            ['get', 'post'],
+            '/activity/{activity}/import-result/list-results',
+            [
+                'as'   => 'import-result.list-results',
+                'uses' => 'ImportResultController@listResults'
+            ]
+        );
+
+        $router->post(
+            '/activity/{activity}/import-result/import-results',
+            [
+                'as'   => 'import-result.import',
+                'uses' => 'ImportResultController@importResults'
+            ]
+        );
+
+        $router->get(
             '/activity/{activityId}/removeActivitySector',
             [
                 'as'   => 'remove.activitySector',

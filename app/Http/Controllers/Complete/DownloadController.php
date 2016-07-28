@@ -151,4 +151,18 @@ class DownloadController extends Controller
 
         return Response::download($pathToFile);
     }
+
+    /**
+     * download result template as 'iati_activity_result_template.csv'
+     * @return mixed
+     */
+    public function downloadResultTemplate()
+    {
+        $pathToFile = app_path("Core/" . session()->get('version') . "/Files/Csv/iati_activity_result_template.csv");
+        if (!File::exists($pathToFile)) {
+            $pathToFile = app_path("Core/" . config('app.default_version_name') . "/Files/Csv/iati_activity_result_template.csv");
+        }
+
+        return Response::download($pathToFile);
+    }
 }
