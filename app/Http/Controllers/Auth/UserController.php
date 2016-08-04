@@ -8,6 +8,7 @@ use App\Http\Requests\UsernameRequest;
 use App\Models\Organization\Organization;
 use App\User;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class UserController
@@ -35,18 +37,23 @@ class UserController extends Controller
      */
     protected $sessionManager;
     protected $orgId;
+    /**
+     * @var FilesystemManager
+     */
+    protected $filesystemManager;
 
     /**
      * @param Organization   $organization
      * @param User           $user
      * @param SessionManager $sessionManager
      */
-    function __construct(Organization $organization, User $user, SessionManager $sessionManager)
+    function __construct(Organization $organization, User $user, SessionManager $sessionManager, FilesystemManager $filesystemManager)
     {
         $this->organization   = $organization;
         $this->user           = $user;
         $this->sessionManager = $sessionManager;
         $this->orgId          = $this->sessionManager->get('org_id');
+        $this->filesystemManager = $filesystemManager;
     }
 
     /**
@@ -224,10 +231,15 @@ class UserController extends Controller
         $file         = Input::file('organization_logo');
 
         if ($file) {
-            $fileUrl  = url('files/logos/' . $this->orgId . '.' . $file->getClientOriginalExtension());
             $fileName = $this->orgId . '.' . $file->getClientOriginalExtension();
             $image    = Image::make(File::get($file))->resize(150, 150)->encode();
-            Storage::put('logos/' . $fileName, $image);
+
+            $key = sprintf('logos/%s/%s', session('org_id'), $fileName);
+            Storage::makeDirectory(sprintf('logos/%s', session('org_id')));
+            Storage::put($key, (string) $image, 'public');
+
+            $fileUrl = getS3Uri($key);
+
             $organization->logo_url = $fileUrl;
             $organization->logo     = $fileName;
         }

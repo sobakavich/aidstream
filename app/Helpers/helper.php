@@ -2,6 +2,8 @@
 use App\Models\Activity\Activity;
 use App\Models\Settings;
 use App\User;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * removes empty values
@@ -620,7 +622,7 @@ function getDisbursementOrganizationDetails(array  $disbursement, $type)
     $type         = getVal($organization, ['type']);
 
     $details = sprintf(
-            '<em>(Ref: %s , Activity id: %s , Type: %s)</em >;',
+        '<em>(Ref: %s , Activity id: %s , Type: %s)</em >;',
         checkIfEmpty($ref),
         checkIfEmpty($activity_id),
         checkIfEmpty($type)
@@ -1063,3 +1065,17 @@ function getSectorStructure($sector)
     ];
 }
 
+function getS3Uri($key)
+{
+    $s3      = Storage::disk('s3');
+    $client  = $s3->getDriver()->getAdapter()->getClient();
+    $bucket  = config('filesystems.disks.s3.bucket');
+    $command = $client->getCommand('GetObject', ['Bucket' => $bucket, 'Key' => $key]);
+    $request = $client->createPresignedRequest($command, '+20 minutes');
+    $host    = $request->getUri()->getScheme() . '://' . $request->getUri()->gethost();
+    $path    = $request->getUri()->getPath();
+
+    $url = $host . $path;
+
+    return $url;
+}

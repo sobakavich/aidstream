@@ -5,9 +5,8 @@ use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\Settings;
 use App\Models\OrganizationPublished;
+use App\Services\File\S3\FileManager;
 use App\Services\Organization\OrganizationManager;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * Class XmlGenerator
@@ -25,17 +24,23 @@ class XmlGenerator
     protected $documentLinkElem;
     protected $organizationManager;
     protected $organizationPublished;
+    /**
+     * @var FileManager
+     */
+    private $fileManager;
 
     /**
      * @param ArrayToXml            $arrayToXml
      * @param OrganizationPublished $organizationPublished
      * @param OrganizationManager   $organizationManager
+     * @param FileManager           $filemanager
      */
-    public function __construct(ArrayToXml $arrayToXml, OrganizationPublished $organizationPublished, OrganizationManager $organizationManager)
+    public function __construct(ArrayToXml $arrayToXml, OrganizationPublished $organizationPublished, OrganizationManager $organizationManager, FileManager $fileManager)
     {
         $this->arrayToXml            = $arrayToXml;
         $this->organizationPublished = $organizationPublished;
         $this->organizationManager   = $organizationManager;
+        $this->fileManager           = $fileManager;
     }
 
     /**
@@ -65,7 +70,13 @@ class XmlGenerator
         $xml      = $this->getXml($organization, $organizationData, $settings, $orgElem);
         $filename = $settings['registry_info'][0]['publisher_id'] . '-org.xml';
 
-        $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $filename), $xml->saveXML());
+//        $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $filename), $xml->saveXML());
+//        Storage::makeDirectory(sprintf('%s/%s', 'xml', session('org_id')));
+//        $result = Storage::put(sprintf('%s/%s/%s', 'xml', session('org_id'), $filename), $xml->saveXML());
+
+        $this->fileManager->makeDir(sprintf('%s/%s', 'xml', session('org_id')));
+        $filePath = $this->fileManager->getXmlFilePath($filename);
+        $result   = $this->fileManager->put($filePath, $xml->saveXML());
 
         if ($result) {
             $published = $this->organizationPublished->firstOrNew(['filename' => $filename, 'organization_id' => $organization->id]);

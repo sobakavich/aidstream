@@ -4,9 +4,9 @@ use App\Helpers\ArrayToXml;
 use App\Models\Activity\Activity;
 use App\Models\ActivityPublished;
 use App\Models\Settings;
+use App\Services\File\S3\FileManager;
 use DOMDocument;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * Class XmlGenerator
@@ -50,15 +50,18 @@ class XmlGenerator
      */
     protected $settings;
 
+    protected $fileManager;
+
     /**
      * @param ArrayToXml        $arrayToXml
      * @param ActivityPublished $activityPublished
      * @param Settings          $settings
      */
-    public function __construct(ArrayToXml $arrayToXml, ActivityPublished $activityPublished, Settings $settings)
+    public function __construct(ArrayToXml $arrayToXml, ActivityPublished $activityPublished, Settings $settings, FileManager $fileManager)
     {
         $this->arrayToXml        = $arrayToXml;
         $this->activityPublished = $activityPublished;
+        $this->fileManager       = $fileManager;
     }
 
     /**
@@ -115,14 +118,14 @@ class XmlGenerator
         $publishedActivity = sprintf('%s-%s.xml', $publisherId, $activity->id);
         $xml               = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
 
-        $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $publishedActivity), $xml->saveXML());
+        $result = $this->fileManager->put(sprintf('%s%s', config('filesystems.xml'), $publishedActivity), $xml->saveXML());
 
         if ($result) {
             $publishedFiles = ($settings->publishing_type != "segmented")
                 ? $this->savePublishedFiles($filename, $activity->organization_id, $publishedActivity)
                 : $this->saveSegmentedPublishedFiles($filename, $activity, $publishedActivity);
-
-            $this->getMergeXml($publishedFiles, $filename);
+            $filePath       = $this->fileManager->getXmlFilePath($filename);
+            $this->getMergeXml($publishedFiles, $filename, $filePath);
         }
     }
 
@@ -204,8 +207,9 @@ class XmlGenerator
     /**
      * @param $published
      * @param $filename
+     * @param $key
      */
-    public function getMergeXml($published, $filename)
+    public function getMergeXml($published, $filename, $key)
     {
         $dom            = new DOMDocument();
         $iatiActivities = $dom->appendChild($dom->createElement('iati-activities'));
@@ -216,7 +220,9 @@ class XmlGenerator
 
         foreach ($published as $xml) {
             $addDom = new DOMDocument();
-            $file   = sprintf("%s%s", public_path('files') . config('filesystems.xml'), $xml);
+//            $file   = sprintf("%s%s", public_path('files') . config('filesystems.xml'), $xml);
+            $filePath = $this->fileManager->getActivityXmlFilePath($xml);
+            $file     = $this->fileManager->get($filePath);
             $addDom->load($file);
             if ($addDom->documentElement) {
                 foreach ($addDom->documentElement->childNodes as $node) {
@@ -226,10 +232,9 @@ class XmlGenerator
                 }
             }
         }
-
-        $filePath = sprintf('%s%s%s', public_path('files'), config('filesystems.xml'), $filename);
-
-        $this->saveXMLFile($filePath, $dom);
+//        $filePath = sprintf('%s%s%s', public_path('files'), config('filesystems.xml'), $filename);
+        $activityFilePath = $this->fileManager->getXmlFilePath($filename);
+        $this->saveXMLFile($activityFilePath, $dom);
     }
 
     /**
@@ -352,12 +357,22 @@ class XmlGenerator
 
     protected function saveXMLFile($filePath, $dom)
     {
-        if (file_exists($filePath)) {
-            unlink($filePath);
+//        if (file_exists($filePath)) {
+//            unlink($filePath);
+//        }
+
+        if ($this->fileManager->has($filePath)) {
+            $this->fileManager->delete($filePath);
         }
 
-        file_put_contents($filePath, $dom->saveXML());
-        chmod($filePath, 00777);
+//        if (Storage::has($filePath)) {
+//            Storage::delete($filePath);
+//        }
+
+//        file_put_contents($filePath, $dom->saveXML());
+//        chmod($filePath, 00777);
+//        Storage::put($filePath, $dom->saveXml());
+        $this->fileManager->put($filePath, $dom->saveXml(), 'public');
     }
 
     /**
@@ -377,14 +392,20 @@ class XmlGenerator
         $publishedActivity = sprintf('%s-%s.xml', $publisherId, $activity->id);
         $xml               = $this->getXml($activity, $transaction, $result, $settings, $activityElement, $orgElem, $organization);
 
-        $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $publishedActivity), $xml->saveXML());
+//        $result = Storage::put(sprintf('%s%s', config('filesystems.xml'), $publishedActivity), $xml->saveXML());
 
+        $key = sprintf('%s/%s/%s/%s', 'xml', session('org_id'), 'activities', $publishedActivity);
+
+//        Storage::makeDirectory(sprintf('%s/%s/%s', 'xml', session('org_id'), 'activities'));
+//        $result = Storage::put($key, $xml->saveXML(), 'public');
+
+        $this->fileManager->makeDir(sprintf('%s/%s/%s', 'xml', session('org_id'), 'activities'));
+        $result = $this->fileManager->put($key, $xml->saveXML(), 'public');
         if ($result) {
             $publishedFiles = ($settings->publishing_type != "segmented")
                 ? $this->savePublishedFiles($filename, $activity->organization_id, $publishedActivity)
                 : $this->saveSegmentedPublishedFiles($filename, $activity, $publishedActivity);
-
-            $this->getMergeXml($publishedFiles, $filename);
+            $this->getMergeXml($publishedFiles, $filename, $key);
         }
     }
 }

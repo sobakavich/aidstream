@@ -6,6 +6,7 @@ use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationData;
 use App\Models\OrganizationPublished;
 use App\Models\Settings;
+use App\Services\File\S3\FileManager;
 use App\User;
 use Psr\Log\LoggerInterface;
 
@@ -39,6 +40,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      * @var Organization
      */
     private $org;
+    /**
+     * @var FileManager
+     */
+    private $fileManager;
 
     /**
      * @param Organization          $org
@@ -46,14 +51,16 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      * @param OrganizationPublished $orgPublished
      * @param LoggerInterface       $loggerInterface
      * @param User                  $user
+     * @param FileManager           $fileManager
      */
-    function __construct(Organization $org, OrganizationData $orgData, OrganizationPublished $orgPublished, LoggerInterface $loggerInterface, User $user)
+    function __construct(Organization $org, OrganizationData $orgData, OrganizationPublished $orgPublished, LoggerInterface $loggerInterface, User $user, FileManager $fileManager)
     {
         $this->org             = $org;
         $this->orgData         = $orgData;
         $this->orgPublished    = $orgPublished;
         $this->loggerInterface = $loggerInterface;
         $this->user            = $user;
+        $this->fileManager     = $fileManager;
     }
 
     /**
@@ -175,10 +182,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     {
         $result = $this->orgPublished->find($id);
         if ($result) {
-            $file   = sprintf('%s%s', public_path('files') . config('filesystems.xml'), $result->filename);
-            $result = $result->delete();
-            if ($result && file_exists($file)) {
-                unlink($file);
+//            $file   = sprintf('%s%s', public_path('files') . config('filesystems.xml'), $result->filename);
+            $filePath = $this->fileManager->getXmlFilePath($result->filename);
+            $result   = $result->delete();
+            if ($result && $this->fileManager->has($filePath)) {
+//                unlink($file);
+                $this->fileManager->delete($filePath);
             }
         }
 

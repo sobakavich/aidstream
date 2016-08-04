@@ -1,9 +1,8 @@
 <?php namespace App\Http\Controllers\Complete;
 
 use App\Http\Requests\Request;
-use Illuminate\Support\Facades\File;
+use App\Services\File\S3\FileManager;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Services\DocumentManager;
 
@@ -27,15 +26,21 @@ class DocumentController extends Controller
      * @var array
      */
     protected $allowedExtensions = ['doc', 'docx', 'pdf', 'jpeg', 'jpg', 'ppt', 'pptx', 'png', 'xls', 'bmp'];
+    /**
+     * @var FileManager
+     */
+    private $fileManager;
 
     /**
      * @param DocumentManager $documentManager
+     * @param FileManager     $fileManager
      */
-    function __construct(DocumentManager $documentManager)
+    function __construct(DocumentManager $documentManager, FileManager $fileManager)
     {
         $this->middleware('auth');
         $this->documentManager = $documentManager;
         $this->orgId           = session('org_id');
+        $this->fileManager     = $fileManager;
     }
 
     /**
@@ -67,12 +72,20 @@ class DocumentController extends Controller
             $filename  = str_replace(' ', '-', preg_replace('/\s+/', ' ', $file->getClientOriginalName()));
             $extension = substr($filename, stripos($filename, '.'));
             $filename  = sprintf('%s-%s%s', substr($filename, 0, stripos($filename, '.')), date('Ymdhms'), $extension);
-            $url       = url(sprintf('files/documents/%s', $filename));
-            $document  = $this->documentManager->getDocument($this->orgId, $url, $filename);
+//            $url       = url(sprintf('files/documents/%s', $filename));
+//            Storage::put(sprintf('%s/%s', 'documents', $filename), File::get($file));
+
+            $this->fileManager->makeDir(sprintf('%s/%s', 'documents', session('org_id')));
+            $filePath = $this->fileManager->getDocumentFilePath($filename);
+            $this->fileManager->put($filePath, file_get_contents($file), 'public');
+            $url = $this->fileManager->get($filePath);
+
+            $document = $this->documentManager->getDocument($this->orgId, $url, $filename);
+
             if ($document->exists) {
                 return ['status' => 'danger', 'message' => 'Document already exists.'];
             }
-            Storage::put(sprintf('%s/%s', 'documents', $filename), File::get($file));
+
             $this->documentManager->store($document);
         } catch (\Exception $e) {
             return ['status' => 'danger', 'message' => 'Failed to upload Document. Error: ' . $e->getMessage()];

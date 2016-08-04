@@ -3,6 +3,7 @@
 use App\Models\Activity\Activity;
 use App\Models\Activity\ActivityInRegistry;
 use App\Models\ActivityPublished;
+use App\Services\File\S3\FileManager;
 
 /**
  * Class ActivityRepository
@@ -11,17 +12,23 @@ use App\Models\ActivityPublished;
 class ActivityRepository
 {
     protected $activity;
+    /**
+     * @var FileManager
+     */
+    private $fileManager;
 
     /**
      * @param Activity           $activity
      * @param ActivityPublished  $activityPublished
      * @param ActivityInRegistry $activityInRegistry
+     * @param FileManager        $fileManager
      */
-    public function __construct(Activity $activity, ActivityPublished $activityPublished, ActivityInRegistry $activityInRegistry)
+    public function __construct(Activity $activity, ActivityPublished $activityPublished, ActivityInRegistry $activityInRegistry, FileManager $fileManager)
     {
         $this->activity           = $activity;
         $this->activityPublished  = $activityPublished;
         $this->activityInRegistry = $activityInRegistry;
+        $this->fileManager        = $fileManager;
     }
 
     /**
@@ -99,10 +106,12 @@ class ActivityRepository
     {
         $result = $this->activityPublished->find($id);
         if ($result) {
-            $file   = public_path('uploads/files/activity/' . $result->filename);
-            $result = $result->delete();
-            if ($result && file_exists($file)) {
-                unlink($file);
+//            $file   = public_path('uploads/files/activity/' . $result->filename);
+            $filePath = $this->fileManager->getXmlFilePath($result->filename);
+            $result   = $result->delete();
+            if ($result && $this->fileManager->has($filePath)) {
+                $this->fileManager->delete($filePath);
+//                unlink($file);
             }
         }
 

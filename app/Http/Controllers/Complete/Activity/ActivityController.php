@@ -155,6 +155,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
+
         $activities = $this->activityManager->getActivities($this->organization_id);
         foreach ($activities as $key => $activity) {
             if ($activity->activity_workflow == 3) {

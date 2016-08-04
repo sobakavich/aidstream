@@ -1,0 +1,3144 @@
+{
+    "5": [
+        {
+            "docId": 9,
+            "filename": "150922%2520DFID%2520Zim%2520Annual%2520Progress%2520report%25202015%2520GPAF%2520IMP%2520088%2520Annual%2520Report%2520Update%2520.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/150922%2520DFID%2520Zim%2520Annual%2520Progress%2520report%25202015%2520GPAF%2520IMP%2520088%2520Annual%2520Report%2520Update%2520.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/5\/150922%2520DFID%2520Zim%2520Annual%2520Progress%2520report%25202015%2520GPAF%2520IMP%2520088%2520Annual%2520Report%2520Update%2520.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "12": [
+        {
+            "docId": 10,
+            "filename": "CSCF%20532%20MOST%20RECENT%20LOGFRAME-%202014.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CSCF%20532%20MOST%20RECENT%20LOGFRAME-%202014.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/12\/CSCF%20532%20MOST%20RECENT%20LOGFRAME-%202014.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 12,
+            "filename": "UK%2520Aid%2520Direct%2520Impact%2520Proposal.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/UK%2520Aid%2520Direct%2520Impact%2520Proposal.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/12\/UK%2520Aid%2520Direct%2520Impact%2520Proposal.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "18": [
+        {
+            "docId": 20,
+            "filename": "GEC%2520IW%2520-%2520Proposal%2520SUBMITTED.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GEC%2520IW%2520-%2520Proposal%2520SUBMITTED.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/18\/GEC%2520IW%2520-%2520Proposal%2520SUBMITTED.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 21,
+            "filename": "GEC%2520IW%2520-%2520Logframe%2520%255BExtension%255D%25202014.07.14.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GEC%2520IW%2520-%2520Logframe%2520%255BExtension%255D%25202014.07.14.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/18\/GEC%2520IW%2520-%2520Logframe%2520%255BExtension%255D%25202014.07.14.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "42": [
+        {
+            "docId": 22,
+            "filename": "FYF%20GPAF-INN-036%20Proposal.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/FYF%20GPAF-INN-036%20Proposal.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/42\/FYF%20GPAF-INN-036%20Proposal.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "45": [
+        {
+            "docId": 24,
+            "filename": "13-12-16%20GPAF-IMP-012%20logical-framework%20-%20APPROVED.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/13-12-16%20GPAF-IMP-012%20logical-framework%20-%20APPROVED.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/45\/13-12-16%20GPAF-IMP-012%20logical-framework%20-%20APPROVED.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 25,
+            "filename": "12-10-31%20GPAF%20IMP-012%20Interim%20report%20FINAL.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/12-10-31%20GPAF%20IMP-012%20Interim%20report%20FINAL.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/45\/12-10-31%20GPAF%20IMP-012%20Interim%20report%20FINAL.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 27,
+            "filename": "GPAF-IMP-012%20Annual%20narrative%20report%20Yr%202%20inc.%20Annexures%20A%2C%20B%2C%20and%20C.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-012%20Annual%20narrative%20report%20Yr%202%20inc.%20Annexures%20A%2C%20B%2C%20and%20C.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/45\/GPAF-IMP-012%20Annual%20narrative%20report%20Yr%202%20inc.%20Annexures%20A%2C%20B%2C%20and%20C.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 30,
+            "filename": "GPAF-IMP-012%20Narrative%20report%20and%20annexes%2030-04-2014.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-012%20Narrative%20report%20and%20annexes%2030-04-2014.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/45\/GPAF-IMP-012%20Narrative%20report%20and%20annexes%2030-04-2014.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 35,
+            "filename": "2015-04-23%2520UKAM%2520Proposal%2520Narrative.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/2015-04-23%2520UKAM%2520Proposal%2520Narrative.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/45\/2015-04-23%2520UKAM%2520Proposal%2520Narrative.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 36,
+            "filename": "2015-04-23%2520UKAM%2520%2520Logframe%2520%2520Final.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/2015-04-23%2520UKAM%2520%2520Logframe%2520%2520Final.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/45\/2015-04-23%2520UKAM%2520%2520Logframe%2520%2520Final.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "48": [
+        {
+            "docId": 41,
+            "filename": "CSCF%2520543%2520Claim%2520Y4Q12014-2015.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CSCF%2520543%2520Claim%2520Y4Q12014-2015.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/48\/CSCF%2520543%2520Claim%2520Y4Q12014-2015.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 42,
+            "filename": "CSCF%2520542%2520CLAIM%2520Y4Q1%25202014-2015.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CSCF%2520542%2520CLAIM%2520Y4Q1%25202014-2015.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/48\/CSCF%2520542%2520CLAIM%2520Y4Q1%25202014-2015.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "50": [
+        {
+            "docId": 80,
+            "filename": "GEC_IW_OI8980_Q8_project_%26_Yr2_annual_report.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GEC_IW_OI8980_Q8_project_%26_Yr2_annual_report.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/50\/GEC_IW_OI8980_Q8_project_%26_Yr2_annual_report.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 85,
+            "filename": "Summary%2520of%2520DFID%2520GPAF%2520funded%2520Rwanda%2520project.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Summary%2520of%2520DFID%2520GPAF%2520funded%2520Rwanda%2520project.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/50\/Summary%2520of%2520DFID%2520GPAF%2520funded%2520Rwanda%2520project.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "53": [
+        {
+            "docId": 196,
+            "filename": "DFID_PPA03_PPA03%25202011-2014_1st%2520Amendment_10052012.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID_PPA03_PPA03%25202011-2014_1st%2520Amendment_10052012.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID_PPA03_PPA03%25202011-2014_1st%2520Amendment_10052012.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 197,
+            "filename": "DFID_PPA03_PPA03%25202011-2014_13032012.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID_PPA03_PPA03%25202011-2014_13032012.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID_PPA03_PPA03%25202011-2014_13032012.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 198,
+            "filename": "111115%2520%2520IRW%2520PPA%2520LF.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/111115%2520%2520IRW%2520PPA%2520LF.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/111115%2520%2520IRW%2520PPA%2520LF.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 199,
+            "filename": "Islamic%2520Relief%2520PPA%2520BC%2520Nov%25202011.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Islamic%2520Relief%2520PPA%2520BC%2520Nov%25202011.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Islamic%2520Relief%2520PPA%2520BC%2520Nov%25202011.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 200,
+            "filename": "PPA%2520Annual%2520Report%252012-13%2520Sudan222.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/PPA%2520Annual%2520Report%252012-13%2520Sudan222.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/PPA%2520Annual%2520Report%252012-13%2520Sudan222.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 201,
+            "filename": "DFID_PPA03_PPA03%25202014-2016_2nd%2520Amendment_15052014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID_PPA03_PPA03%25202014-2016_2nd%2520Amendment_15052014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID_PPA03_PPA03%25202014-2016_2nd%2520Amendment_15052014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 202,
+            "filename": "Sudan%2520Blue%2520Nile%2520Income%2520Generation%2520for%2520Rural%2520Households%2520Proposal.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Sudan%2520Blue%2520Nile%2520Income%2520Generation%2520for%2520Rural%2520Households%2520Proposal.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Sudan%2520Blue%2520Nile%2520Income%2520Generation%2520for%2520Rural%2520Households%2520Proposal.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 203,
+            "filename": "PPA%2520Extension%25202014-2016%2520IRW.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/PPA%2520Extension%25202014-2016%2520IRW.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/PPA%2520Extension%25202014-2016%2520IRW.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 204,
+            "filename": "Sudan%2520Blue%2520Nile%2520Income%2520Generation%2520for%2520Rural%2520Households%2520Budget.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Sudan%2520Blue%2520Nile%2520Income%2520Generation%2520for%2520Rural%2520Households%2520Budget.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Sudan%2520Blue%2520Nile%2520Income%2520Generation%2520for%2520Rural%2520Households%2520Budget.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 205,
+            "filename": "DFID_020-000826_PPA03%2520SUDAN_09112012.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID_020-000826_PPA03%2520SUDAN_09112012.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID_020-000826_PPA03%2520SUDAN_09112012.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 206,
+            "filename": "Dadaab%2520Mentally%2520Challenged%2520Assessment.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Dadaab%2520Mentally%2520Challenged%2520Assessment.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Dadaab%2520Mentally%2520Challenged%2520Assessment.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 207,
+            "filename": "DFID_020-000878_PPA03%2520BANGLADESH_28012013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID_020-000878_PPA03%2520BANGLADESH_28012013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID_020-000878_PPA03%2520BANGLADESH_28012013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 208,
+            "filename": "Dadaab%2520Mentally%2520Challenged%2520-%2520Budget.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Dadaab%2520Mentally%2520Challenged%2520-%2520Budget.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Dadaab%2520Mentally%2520Challenged%2520-%2520Budget.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 209,
+            "filename": "DFID_020-001213-01_PPA03%2520KENYA_09052014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID_020-001213-01_PPA03%2520KENYA_09052014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID_020-001213-01_PPA03%2520KENYA_09052014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 210,
+            "filename": "IR-Kenya%2520PPA%2520Annual%2520Report%2520and%2520Strategic%2520Funding%252015%252005%252014.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR-Kenya%2520PPA%2520Annual%2520Report%2520and%2520Strategic%2520Funding%252015%252005%252014.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR-Kenya%2520PPA%2520Annual%2520Report%2520and%2520Strategic%2520Funding%252015%252005%252014.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 211,
+            "filename": "020_001213-01-%2520DFID-PPA.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/020_001213-01-%2520DFID-PPA.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/020_001213-01-%2520DFID-PPA.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 212,
+            "filename": "Bangladesh%2520PROVED%2520Project%2520Budget.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Bangladesh%2520PROVED%2520Project%2520Budget.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Bangladesh%2520PROVED%2520Project%2520Budget.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 213,
+            "filename": "Kenya%2520Interim%2520Narrative%2520Report%2520-%2520PPA%2520Project.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Kenya%2520Interim%2520Narrative%2520Report%2520-%2520PPA%2520Project.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Kenya%2520Interim%2520Narrative%2520Report%2520-%2520PPA%2520Project.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 214,
+            "filename": "IR-Kenya%2520FCB%2520Micro%2520Credit%2520Concept%252029%252001%252013.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR-Kenya%2520FCB%2520Micro%2520Credit%2520Concept%252029%252001%252013.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR-Kenya%2520FCB%2520Micro%2520Credit%2520Concept%252029%252001%252013.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 215,
+            "filename": "IRW%2520approved%2520budget.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IRW%2520approved%2520budget.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IRW%2520approved%2520budget.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 216,
+            "filename": "5%2520yr%2520strategic%2520business%2520plan%252010.08.14.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/5%2520yr%2520strategic%2520business%2520plan%252010.08.14.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/5%2520yr%2520strategic%2520business%2520plan%252010.08.14.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 217,
+            "filename": "Bangladesh%2520PROVED%2520Project%2520Proposal.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Bangladesh%2520PROVED%2520Project%2520Proposal.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Bangladesh%2520PROVED%2520Project%2520Proposal.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 218,
+            "filename": "IR%2520Kenya%2520PPA%2520Micro%2520Credit%2520Budget%252018%252002%252013.xlsm",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520Kenya%2520PPA%2520Micro%2520Credit%2520Budget%252018%252002%252013.xlsm",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520Kenya%2520PPA%2520Micro%2520Credit%2520Budget%252018%252002%252013.xlsm",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 219,
+            "filename": "DFID_020-001329_PPA03%2520BANGLADESH_29082014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID_020-001329_PPA03%2520BANGLADESH_29082014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID_020-001329_PPA03%2520BANGLADESH_29082014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 220,
+            "filename": "Narrative%2520Report%2520of%2520PROVED%2520Project.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Narrative%2520Report%2520of%2520PROVED%2520Project.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Narrative%2520Report%2520of%2520PROVED%2520Project.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 221,
+            "filename": "020_000878%2520PROVED%2520DFID%2520Bangladesh%2520Final%2520Report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/020_000878%2520PROVED%2520DFID%2520Bangladesh%2520Final%2520Report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/020_000878%2520PROVED%2520DFID%2520Bangladesh%2520Final%2520Report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 222,
+            "filename": "Bangladesh%2520Interim%2520Narrative%2520Report%2520-%2520PPA%2520Project.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Bangladesh%2520Interim%2520Narrative%2520Report%2520-%2520PPA%2520Project.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Bangladesh%2520Interim%2520Narrative%2520Report%2520-%2520PPA%2520Project.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 223,
+            "filename": "Bangladesh%2520Interim%2520Financial%2520Report%2520-%2520PPA%2520Project.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Bangladesh%2520Interim%2520Financial%2520Report%2520-%2520PPA%2520Project.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Bangladesh%2520Interim%2520Financial%2520Report%2520-%2520PPA%2520Project.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 224,
+            "filename": "DIFD_020-001458_Pakistan_31122014.pdf.",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DIFD_020-001458_Pakistan_31122014.pdf.",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DIFD_020-001458_Pakistan_31122014.pdf.",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 225,
+            "filename": "020_001213-01-DFID-PPA.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/020_001213-01-DFID-PPA.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/020_001213-01-DFID-PPA.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 226,
+            "filename": "IRK-LWF%2520Dadaab%2520Mentally%2520Impaired%2520Children%2520Assessment%2520Narrative%2520Report%252013%252011%252014.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IRK-LWF%2520Dadaab%2520Mentally%2520Impaired%2520Children%2520Assessment%2520Narrative%2520Report%252013%252011%252014.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IRK-LWF%2520Dadaab%2520Mentally%2520Impaired%2520Children%2520Assessment%2520Narrative%2520Report%252013%252011%252014.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 227,
+            "filename": "020_001329%2520DFID-PPA%2520EFB%2520Bangladesh%25201st%2520Interim%2520Report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/020_001329%2520DFID-PPA%2520EFB%2520Bangladesh%25201st%2520Interim%2520Report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/020_001329%2520DFID-PPA%2520EFB%2520Bangladesh%25201st%2520Interim%2520Report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 228,
+            "filename": "020_001458%2520DFID%2520IMED%2520II%2520Pakistan%25201st%2520Interim%2520Report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/020_001458%2520DFID%2520IMED%2520II%2520Pakistan%25201st%2520Interim%2520Report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/020_001458%2520DFID%2520IMED%2520II%2520Pakistan%25201st%2520Interim%2520Report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 229,
+            "filename": "IMED-II%25201st%2520Interim%2520Narrative%2520Report.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IMED-II%25201st%2520Interim%2520Narrative%2520Report.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IMED-II%25201st%2520Interim%2520Narrative%2520Report.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 230,
+            "filename": "UK%2520Aid%2520Match%2520Proposal%2520Final%2520-%2520Bangladesh.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/UK%2520Aid%2520Match%2520Proposal%2520Final%2520-%2520Bangladesh.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/UK%2520Aid%2520Match%2520Proposal%2520Final%2520-%2520Bangladesh.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 231,
+            "filename": "DfID_020-000941_40059365_Amendment%2520No.%25201_27032013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DfID_020-000941_40059365_Amendment%2520No.%25201_27032013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DfID_020-000941_40059365_Amendment%2520No.%25201_27032013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 233,
+            "filename": "IR%2520UK_020-000943-01_Enhancing%2520Climate_30052013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520UK_020-000943-01_Enhancing%2520Climate_30052013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520UK_020-000943-01_Enhancing%2520Climate_30052013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 234,
+            "filename": "Promoting%2520Climate%2520Resilient%2520Bangladesh%2520-%2520Budget.xlsm",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Promoting%2520Climate%2520Resilient%2520Bangladesh%2520-%2520Budget.xlsm",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Promoting%2520Climate%2520Resilient%2520Bangladesh%2520-%2520Budget.xlsm",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 235,
+            "filename": "Annual%2520Report%2520UKAMF%2520project%2520%25283%2529.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520UKAMF%2520project%2520%25283%2529.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Annual%2520Report%2520UKAMF%2520project%2520%25283%2529.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 237,
+            "filename": "Interim%2520Financial%2520Report%2520_UKAMF%2520Bangladesh.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Interim%2520Financial%2520Report%2520_UKAMF%2520Bangladesh.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Interim%2520Financial%2520Report%2520_UKAMF%2520Bangladesh.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 238,
+            "filename": "UK%2520Aid%2520Match%2520progress%2520report.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/UK%2520Aid%2520Match%2520progress%2520report.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/UK%2520Aid%2520Match%2520progress%2520report.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 239,
+            "filename": "IR%2520UK_020-000943-02_Climate%2520Resilient_31052013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520UK_020-000943-02_Climate%2520Resilient_31052013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520UK_020-000943-02_Climate%2520Resilient_31052013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 240,
+            "filename": "IR%2520Kenya%2520UKAM%2520IRUK%2520Budget.xlsm",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520Kenya%2520UKAM%2520IRUK%2520Budget.xlsm",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520Kenya%2520UKAM%2520IRUK%2520Budget.xlsm",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 241,
+            "filename": "IR-Kenya%2520DFID%2520Matching%2520Fund%2520Proposal.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR-Kenya%2520DFID%2520Matching%2520Fund%2520Proposal.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR-Kenya%2520DFID%2520Matching%2520Fund%2520Proposal.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 242,
+            "filename": "IR_Kenya_UKAID-Year_1-Interim_Financial_Report_April%252013-March-14-IRUK-020_00.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR_Kenya_UKAID-Year_1-Interim_Financial_Report_April%252013-March-14-IRUK-020_00.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR_Kenya_UKAID-Year_1-Interim_Financial_Report_April%252013-March-14-IRUK-020_00.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 243,
+            "filename": "IR-Kenya%2520%2520UK%2520Aid%2520Match%2520YR%25201%2520Annual%2520Report%2520AA%25202nd%2520Review.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR-Kenya%2520%2520UK%2520Aid%2520Match%2520YR%25201%2520Annual%2520Report%2520AA%25202nd%2520Review.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR-Kenya%2520%2520UK%2520Aid%2520Match%2520YR%25201%2520Annual%2520Report%2520AA%25202nd%2520Review.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 244,
+            "filename": "IR-Kenya%252018%2520Months%2520UKAM%2520Narrative%2520Report%252022.10.14.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR-Kenya%252018%2520Months%2520UKAM%2520Narrative%2520Report%252022.10.14.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR-Kenya%252018%2520Months%2520UKAM%2520Narrative%2520Report%252022.10.14.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 245,
+            "filename": "IR%2520UK_020-000943-03_Food%2520Security%2520and%2520Livelihood%2520Rehabilitation_11072013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520UK_020-000943-03_Food%2520Security%2520and%2520Livelihood%2520Rehabilitation_11072013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520UK_020-000943-03_Food%2520Security%2520and%2520Livelihood%2520Rehabilitation_11072013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 246,
+            "filename": "DFID%2520UK%2520Match%2520Niger%2520Final%2520and%2520Operational%2520Budget.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520UK%2520Match%2520Niger%2520Final%2520and%2520Operational%2520Budget.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520UK%2520Match%2520Niger%2520Final%2520and%2520Operational%2520Budget.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 247,
+            "filename": "DFID%2520UK%2520Match%2520Niger%2520Logframe%2520Revision%252008May2013.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520UK%2520Match%2520Niger%2520Logframe%2520Revision%252008May2013.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520UK%2520Match%2520Niger%2520Logframe%2520Revision%252008May2013.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 248,
+            "filename": "IR%2520Niger%2520UKAM%2520Proposal_FINAL.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520Niger%2520UKAM%2520Proposal_FINAL.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520Niger%2520UKAM%2520Proposal_FINAL.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 249,
+            "filename": "020_000943-03_Interim%2520Report_IR%2520UK.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/020_000943-03_Interim%2520Report_IR%2520UK.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/020_000943-03_Interim%2520Report_IR%2520UK.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 250,
+            "filename": "Niger%2520UKAM%2520Annual%2520Report%2520Apr%252014%2520FINAL.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Niger%2520UKAM%2520Annual%2520Report%2520Apr%252014%2520FINAL.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Niger%2520UKAM%2520Annual%2520Report%2520Apr%252014%2520FINAL.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 251,
+            "filename": "Donor%2520Report%2520for%2520%2520IRUK%2520020_000943-03%2520%252006.11.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Donor%2520Report%2520for%2520%2520IRUK%2520020_000943-03%2520%252006.11.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Donor%2520Report%2520for%2520%2520IRUK%2520020_000943-03%2520%252006.11.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 252,
+            "filename": "UKAM%2520Q2%2520Report%252027-10-2014.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/UKAM%2520Q2%2520Report%252027-10-2014.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/UKAM%2520Q2%2520Report%252027-10-2014.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 253,
+            "filename": "IR%2520UK_020-000943-04_Sustainable%2520Initiative%2520for%2520Resilience_08072013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520UK_020-000943-04_Sustainable%2520Initiative%2520for%2520Resilience_08072013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520UK_020-000943-04_Sustainable%2520Initiative%2520for%2520Resilience_08072013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 254,
+            "filename": "FINAL%2520Approved%2520UKAM%2520IRUK%2520Share%2520at%2520New%2520Budget%2520Format.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/FINAL%2520Approved%2520UKAM%2520IRUK%2520Share%2520at%2520New%2520Budget%2520Format.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/FINAL%2520Approved%2520UKAM%2520IRUK%2520Share%2520at%2520New%2520Budget%2520Format.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 255,
+            "filename": "IR%2520Pakistan%2520SIRAT%2520UKAM%2520Proposal%2520-CRM.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520Pakistan%2520SIRAT%2520UKAM%2520Proposal%2520-CRM.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520Pakistan%2520SIRAT%2520UKAM%2520Proposal%2520-CRM.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 256,
+            "filename": "020_000943%2520IRUK%2520Pakistan%2520Annual%2520Report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/020_000943%2520IRUK%2520Pakistan%2520Annual%2520Report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/020_000943%2520IRUK%2520Pakistan%2520Annual%2520Report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 257,
+            "filename": "DFID%25206th%2520Interim%2520Report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%25206th%2520Interim%2520Report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%25206th%2520Interim%2520Report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 258,
+            "filename": "SIRAT%2520-%2520Six%2520Month%2520Review.docx%2520NARRATIVE.DOCX",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/SIRAT%2520-%2520Six%2520Month%2520Review.docx%2520NARRATIVE.DOCX",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/SIRAT%2520-%2520Six%2520Month%2520Review.docx%2520NARRATIVE.DOCX",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 259,
+            "filename": "IR%2520UK_020_000943-05_Integrated%2520Soci%2520Economic%2520Recovery%2520Project_18072013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520UK_020_000943-05_Integrated%2520Soci%2520Economic%2520Recovery%2520Project_18072013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520UK_020_000943-05_Integrated%2520Soci%2520Economic%2520Recovery%2520Project_18072013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 260,
+            "filename": "IR%2520Yemen%2520UKAM%2520Proposal%2520v4.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IR%2520Yemen%2520UKAM%2520Proposal%2520v4.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IR%2520Yemen%2520UKAM%2520Proposal%2520v4.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 261,
+            "filename": "ISERP%2520IRUK%2520Project%2520Budget%25202013.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ISERP%2520IRUK%2520Project%2520Budget%25202013.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/ISERP%2520IRUK%2520Project%2520Budget%25202013.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 262,
+            "filename": "Yemen%2520Annual%2520Report%2520ISERP-UKAID%2520-%2520finals.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Yemen%2520Annual%2520Report%2520ISERP-UKAID%2520-%2520finals.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Yemen%2520Annual%2520Report%2520ISERP-UKAID%2520-%2520finals.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 263,
+            "filename": "020_000943-05_DFID_Financial%2520Report%2520Apr13-June14.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/020_000943-05_DFID_Financial%2520Report%2520Apr13-June14.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/020_000943-05_DFID_Financial%2520Report%2520Apr13-June14.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 264,
+            "filename": "Six%2520month%2520review%2520for%2520years%25202%2520%2528First%2520six%2520month%2529%2520Yemen%2520-%252025.09.2014.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Six%2520month%2520review%2520for%2520years%25202%2520%2528First%2520six%2520month%2529%2520Yemen%2520-%252025.09.2014.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Six%2520month%2520review%2520for%2520years%25202%2520%2528First%2520six%2520month%2529%2520Yemen%2520-%252025.09.2014.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 265,
+            "filename": "Conditional%2520Cash%2520Project%2520Proposal.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Conditional%2520Cash%2520Project%2520Proposal.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Conditional%2520Cash%2520Project%2520Proposal.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 266,
+            "filename": "DFID%2520budget%2520Syrian.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520budget%2520Syrian.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520budget%2520Syrian.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 267,
+            "filename": "DFID%2520Q1%2520Financial%2520Report.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Q1%2520Financial%2520Report.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520Q1%2520Financial%2520Report.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 268,
+            "filename": "IRJ%2520-%2520DFID%2520Q2%2520-%2520Conditional%2520Cash%2520Project%2520for%2520Vulnerable%2520Syrian%2520and%2520Jordanian%2520Children%2520in%2520Irbid%2520Jordan.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IRJ%2520-%2520DFID%2520Q2%2520-%2520Conditional%2520Cash%2520Project%2520for%2520Vulnerable%2520Syrian%2520and%2520Jordanian%2520Children%2520in%2520Irbid%2520Jordan.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IRJ%2520-%2520DFID%2520Q2%2520-%2520Conditional%2520Cash%2520Project%2520for%2520Vulnerable%2520Syrian%2520and%2520Jordanian%2520Children%2520in%2520Irbid%2520Jordan.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 269,
+            "filename": "Islamic%2520Relief%2520Jordan%2520-%2520DFID%2520Q1%2520Report%2520-%2520May%25202014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Islamic%2520Relief%2520Jordan%2520-%2520DFID%2520Q1%2520Report%2520-%2520May%25202014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Islamic%2520Relief%2520Jordan%2520-%2520DFID%2520Q1%2520Report%2520-%2520May%25202014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 270,
+            "filename": "IRJ%2520-%2520DFID%2520Q2%2520Financial%2520Report%2520-%252015%2520Jan%252015%2520July%25202014.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IRJ%2520-%2520DFID%2520Q2%2520Financial%2520Report%2520-%252015%2520Jan%252015%2520July%25202014.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/IRJ%2520-%2520DFID%2520Q2%2520Financial%2520Report%2520-%252015%2520Jan%252015%2520July%25202014.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 271,
+            "filename": "DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q3%2520report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q3%2520report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q3%2520report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 272,
+            "filename": "Annex%2520C%2520-%2520IR%2520Accountability%2520Study.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annex%2520C%2520-%2520IR%2520Accountability%2520Study.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Annex%2520C%2520-%2520IR%2520Accountability%2520Study.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 273,
+            "filename": "DFID%2520-%2520IR%2520Jordan%2520-%2520Q3%2520Financial%2520Report.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520IR%2520Jordan%2520-%2520Q3%2520Financial%2520Report.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520IR%2520Jordan%2520-%2520Q3%2520Financial%2520Report.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 274,
+            "filename": "Annex%2520B-TORs%2520Gender%2520study.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annex%2520B-TORs%2520Gender%2520study.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Annex%2520B-TORs%2520Gender%2520study.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 275,
+            "filename": "DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q4%2520Case%2520Study.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q4%2520Case%2520Study.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q4%2520Case%2520Study.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 276,
+            "filename": "DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q4%2520report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q4%2520report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520IR%2520Jordan%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q4%2520report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 277,
+            "filename": "DFID%2520-%2520IR%2520Jordan%2520-%2520Implementation%2520plan%2520-%2520Year%2520Two.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520IR%2520Jordan%2520-%2520Implementation%2520plan%2520-%2520Year%2520Two.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520IR%2520Jordan%2520-%2520Implementation%2520plan%2520-%2520Year%2520Two.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 278,
+            "filename": "DFID%2520-%2520IR%2520Jordan%2520-%2520Q4%2520Financial%2520Report.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520IR%2520Jordan%2520-%2520Q4%2520Financial%2520Report.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520IR%2520Jordan%2520-%2520Q4%2520Financial%2520Report.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 279,
+            "filename": "DFID%2520-%2520IR%2520Jordan%2520-%2520Quarterly%2520milestones%2520-%2520Year%2520Two.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520IR%2520Jordan%2520-%2520Quarterly%2520milestones%2520-%2520Year%2520Two.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520IR%2520Jordan%2520-%2520Quarterly%2520milestones%2520-%2520Year%2520Two.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 280,
+            "filename": "DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Financial%2520Report.xs.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Financial%2520Report.xs.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Financial%2520Report.xs.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 281,
+            "filename": "DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Logframe%2520Update.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Logframe%2520Update.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Logframe%2520Update.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 282,
+            "filename": "DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Narrative%2520Report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Narrative%2520Report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/DFID%2520-%2520Conditional%2520Cash%2520Project%2520-%2520Q5%2520Narrative%2520Report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 283,
+            "filename": "Conditional%2520Cash%2520Project%2520-%2520Narrative%2520Report%2520Q6.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Conditional%2520Cash%2520Project%2520-%2520Narrative%2520Report%2520Q6.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Conditional%2520Cash%2520Project%2520-%2520Narrative%2520Report%2520Q6.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 284,
+            "filename": "Conditional%2520Cash%2520project%2520-%2520Q6%2520Financial%2520report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Conditional%2520Cash%2520project%2520-%2520Q6%2520Financial%2520report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Conditional%2520Cash%2520project%2520-%2520Q6%2520Financial%2520report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 285,
+            "filename": "Conditional%2520Cash%2520Project%2520-%2520Q6%2520Logframe%2520Update.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Conditional%2520Cash%2520Project%2520-%2520Q6%2520Logframe%2520Update.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Conditional%2520Cash%2520Project%2520-%2520Q6%2520Logframe%2520Update.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 232,
+            "filename": "FINAL%25202013%2520Islamic%2520Relief%2520P1_UK_Aid_Match_Concept_Note_application_form_....doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/FINAL%25202013%2520Islamic%2520Relief%2520P1_UK_Aid_Match_Concept_Note_application_form_....doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/FINAL%25202013%2520Islamic%2520Relief%2520P1_UK_Aid_Match_Concept_Note_application_form_....doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 236,
+            "filename": "Pin%2520%2523%2520020_000943-01%2520IRUK%2520Aid%2520Match%2520Bangladesh%2520Six%2520month%2520Financial%2520Report....pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Pin%2520%2523%2520020_000943-01%2520IRUK%2520Aid%2520Match%2520Bangladesh%2520Six%2520month%2520Financial%2520Report....pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/53\/Pin%2520%2523%2520020_000943-01%2520IRUK%2520Aid%2520Match%2520Bangladesh%2520Six%2520month%2520Financial%2520Report....pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "71": [
+        {
+            "docId": 299,
+            "filename": "CSCF%20452%20Final%20Evaluation%20September%202012.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CSCF%20452%20Final%20Evaluation%20September%202012.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/71\/CSCF%20452%20Final%20Evaluation%20September%202012.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 298,
+            "filename": "CSCF%20537%20Logframe.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CSCF%20537%20Logframe.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/71\/CSCF%20537%20Logframe.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "64": [
+        {
+            "docId": 287,
+            "filename": "Strategy%20womankind%20%20-%20final%20for%20publication%20Feb%202014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Strategy%20womankind%20%20-%20final%20for%20publication%20Feb%202014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/64\/Strategy%20womankind%20%20-%20final%20for%20publication%20Feb%202014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 289,
+            "filename": "Womankind%20Annual%20Accounts.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Womankind%20Annual%20Accounts.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/64\/Womankind%20Annual%20Accounts.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "67": [
+        {
+            "docId": 291,
+            "filename": "CSCF%20546%20Annual%20Report%202013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CSCF%20546%20Annual%20Report%202013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/67\/CSCF%20546%20Annual%20Report%202013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "69": [
+        {
+            "docId": 293,
+            "filename": "05062014-GEC-%20Logframe%20-IATI.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/05062014-GEC-%20Logframe%20-IATI.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/69\/05062014-GEC-%20Logframe%20-IATI.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 294,
+            "filename": "05062014-GEC%20and%20Budget-IATI.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/05062014-GEC%20and%20Budget-IATI.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/69\/05062014-GEC%20and%20Budget-IATI.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "73": [
+        {
+            "docId": 300,
+            "filename": "2.%20Concern%20%20CSCF%20558%20Annual%20Report%20Year%203.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/2.%20Concern%20%20CSCF%20558%20Annual%20Report%20Year%203.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/2.%20Concern%20%20CSCF%20558%20Annual%20Report%20Year%203.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 302,
+            "filename": "2.%20Narrative%20report.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/2.%20Narrative%20report.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/2.%20Narrative%20report.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 303,
+            "filename": "5.%20Logframe%20REVISED%20300413.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/5.%20Logframe%20REVISED%20300413.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/5.%20Logframe%20REVISED%20300413.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 304,
+            "filename": "Yr1%20Report%20Aug11-Mar12%20submission%20300412.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Yr1%20Report%20Aug11-Mar12%20submission%20300412.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/Yr1%20Report%20Aug11-Mar12%20submission%20300412.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 305,
+            "filename": "1%20-%20GPAF%20IMP%20043%20Annual%20Report.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/1%20-%20GPAF%20IMP%20043%20Annual%20Report.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/1%20-%20GPAF%20IMP%20043%20Annual%20Report.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 306,
+            "filename": "2%20-%20GPAF%20IMP%20043%20Reporting%20Logframe%20%2828052014%29.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/2%20-%20GPAF%20IMP%20043%20Reporting%20Logframe%20%2828052014%29.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/2%20-%20GPAF%20IMP%20043%20Reporting%20Logframe%20%2828052014%29.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 307,
+            "filename": "Concern%20GPAF%20FINAL%2010%20Jan%2012.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Concern%20GPAF%20FINAL%2010%20Jan%2012.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/Concern%20GPAF%20FINAL%2010%20Jan%2012.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 312,
+            "filename": "IMP03CN1922_Proposal%20form_Pakistan.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IMP03CN1922_Proposal%20form_Pakistan.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/IMP03CN1922_Proposal%20form_Pakistan.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 313,
+            "filename": "GPAF-IMP-096%20Narrative%20Report%202013-14%20%28300414%29.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-096%20Narrative%20Report%202013-14%20%28300414%29.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/GPAF-IMP-096%20Narrative%20Report%202013-14%20%28300414%29.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 318,
+            "filename": "150414%2520narrative%2520Concern%2520UKAM%2520R1.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/150414%2520narrative%2520Concern%2520UKAM%2520R1.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/150414%2520narrative%2520Concern%2520UKAM%2520R1.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 319,
+            "filename": "150414%2520Concern%2520Logframe%2520UKAM%2520R1.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/150414%2520Concern%2520Logframe%2520UKAM%2520R1.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/150414%2520Concern%2520Logframe%2520UKAM%2520R1.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 320,
+            "filename": "150414%2520Concern%2520budget%2520UKAM%2520R1.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/150414%2520Concern%2520budget%2520UKAM%2520R1.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/150414%2520Concern%2520budget%2520UKAM%2520R1.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 321,
+            "filename": "1%2520-%2520UK%2520Aid%2520Direct%2520Concern%2520IMP-05-CN-2257%2520Full%2520Proposal.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/1%2520-%2520UK%2520Aid%2520Direct%2520Concern%2520IMP-05-CN-2257%2520Full%2520Proposal.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/73\/1%2520-%2520UK%2520Aid%2520Direct%2520Concern%2520IMP-05-CN-2257%2520Full%2520Proposal.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "78": [
+        {
+            "docId": 323,
+            "filename": "GPAF%20CP2%20HealthProm%20Budget.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%20CP2%20HealthProm%20Budget.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/78\/GPAF%20CP2%20HealthProm%20Budget.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "90": [
+        {
+            "docId": 324,
+            "filename": "GPAF%20CP1%20proposal%20form_INN-05-CN-1039.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%20CP1%20proposal%20form_INN-05-CN-1039.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/90\/GPAF%20CP1%20proposal%20form_INN-05-CN-1039.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 325,
+            "filename": "IATI%20implementation%20schedule_best%20practice%20DAPP.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IATI%20implementation%20schedule_best%20practice%20DAPP.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/90\/IATI%20implementation%20schedule_best%20practice%20DAPP.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "91": [
+        {
+            "docId": 328,
+            "filename": "GET%20FiT%20Logframe.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GET%20FiT%20Logframe.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/91\/GET%20FiT%20Logframe.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 330,
+            "filename": "ADB-ICF%20ResultFramework.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ADB-ICF%20ResultFramework.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/91\/ADB-ICF%20ResultFramework.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 331,
+            "filename": "2050 calculator annual review September 2012 \u2013 December 2013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/2050 calculator annual review September 2012 \u2013 December 2013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/91\/2050 calculator annual review September 2012 \u2013 December 2013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 332,
+            "filename": "2050-calculator-annual-review-September2012\u2013December2013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/2050-calculator-annual-review-September2012\u2013December2013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/91\/2050-calculator-annual-review-September2012\u2013December2013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "96": [
+        {
+            "docId": 386,
+            "filename": "documentsAfricanInitiativesLandAccessQAReport%28TripleLine%29.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/documentsAfricanInitiativesLandAccessQAReport%28TripleLine%29.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/96\/documentsAfricanInitiativesLandAccessQAReport%28TripleLine%29.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 387,
+            "filename": "GPAF%2520INN%2520007%2520Compiled%2520Financial%2520Reports.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520INN%2520007%2520Compiled%2520Financial%2520Reports.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/96\/GPAF%2520INN%2520007%2520Compiled%2520Financial%2520Reports.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "98": [
+        {
+            "docId": 390,
+            "filename": "What Works To Prevent Violence Against Women and Girls\u2019 Proposal Tearfund.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/What Works To Prevent Violence Against Women and Girls\u2019 Proposal Tearfund.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/98\/What Works To Prevent Violence Against Women and Girls\u2019 Proposal Tearfund.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 393,
+            "filename": "GPAF%2520Impact%2520Proposal%2520Form%2520Tearfund.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520Impact%2520Proposal%2520Form%2520Tearfund.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/98\/GPAF%2520Impact%2520Proposal%2520Form%2520Tearfund.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 394,
+            "filename": "GPAF%2520IMP-04-CN-2114%2520Budget%2520Final%2520Version%252031.03.2015.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520IMP-04-CN-2114%2520Budget%2520Final%2520Version%252031.03.2015.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/98\/GPAF%2520IMP-04-CN-2114%2520Budget%2520Final%2520Version%252031.03.2015.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 397,
+            "filename": "What%2520Works%2520Budget%2520IATI.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/What%2520Works%2520Budget%2520IATI.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/98\/What%2520Works%2520Budget%2520IATI.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 396,
+            "filename": "What%2520Works%2520_Indicators_Tearfund.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/What%2520Works%2520_Indicators_Tearfund.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/98\/What%2520Works%2520_Indicators_Tearfund.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 395,
+            "filename": "What%2520Works%2520To%2520Prevent%2520Violence%2520Against%2520Women%2520and%2520Girls%25E2%2580%2599%2520Proposal%2520Tearfund.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/What%2520Works%2520To%2520Prevent%2520Violence%2520Against%2520Women%2520and%2520Girls%25E2%2580%2599%2520Proposal%2520Tearfund.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/98\/What%2520Works%2520To%2520Prevent%2520Violence%2520Against%2520Women%2520and%2520Girls%25E2%2580%2599%2520Proposal%2520Tearfund.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "115": [
+        {
+            "docId": 399,
+            "filename": "LCD%20GEC%20Project%20summary.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/LCD%20GEC%20Project%20summary.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/115\/LCD%20GEC%20Project%20summary.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 398,
+            "filename": "GPAF-IMP-071-Photo%20Captions.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-071-Photo%20Captions.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/115\/GPAF-IMP-071-Photo%20Captions.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "137": [
+        {
+            "docId": 402,
+            "filename": "Revised%20Logframe.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Revised%20Logframe.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/137\/Revised%20Logframe.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "138": [
+        {
+            "docId": 403,
+            "filename": "Amended%20budget%20for%20GPAF-INN-017%20%20-%20approved.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Amended%20budget%20for%20GPAF-INN-017%20%20-%20approved.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/138\/Amended%20budget%20for%20GPAF-INN-017%20%20-%20approved.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "143": [
+        {
+            "docId": 413,
+            "filename": "FINAL%2520Updated%2520proposal%2520HHC%2520UKAM%2520July%25202015.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/FINAL%2520Updated%2520proposal%2520HHC%2520UKAM%2520July%25202015.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/143\/FINAL%2520Updated%2520proposal%2520HHC%2520UKAM%2520July%25202015.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 414,
+            "filename": "UK_Aid_Match_Concept_Note_Hope%2520and%2520Homes%2520for%2520Children.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/UK_Aid_Match_Concept_Note_Hope%2520and%2520Homes%2520for%2520Children.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/143\/UK_Aid_Match_Concept_Note_Hope%2520and%2520Homes%2520for%2520Children.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 415,
+            "filename": "DfID%2520P4_UK_Aid_Match_budget_template_P1%2520with%2520uplift%2520and%2520amendments%2520070415.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DfID%2520P4_UK_Aid_Match_budget_template_P1%2520with%2520uplift%2520and%2520amendments%2520070415.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/143\/DfID%2520P4_UK_Aid_Match_budget_template_P1%2520with%2520uplift%2520and%2520amendments%2520070415.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 416,
+            "filename": "GPAF%2520IMP-074%2520Annual%2520Report%2520FINAL%2520HHC.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520IMP-074%2520Annual%2520Report%2520FINAL%2520HHC.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/143\/GPAF%2520IMP-074%2520Annual%2520Report%2520FINAL%2520HHC.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 417,
+            "filename": "GPAF%2520IMP-074%2520%2528HHCIMP-02-CN-1468%2529%2520REVISED%2520LOGFRAME%2520-%2520PROPOSED.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520IMP-074%2520%2528HHCIMP-02-CN-1468%2529%2520REVISED%2520LOGFRAME%2520-%2520PROPOSED.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/143\/GPAF%2520IMP-074%2520%2528HHCIMP-02-CN-1468%2529%2520REVISED%2520LOGFRAME%2520-%2520PROPOSED.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "156": [
+        {
+            "docId": 419,
+            "filename": "Annual%2520Status_1415.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Status_1415.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/156\/Annual%2520Status_1415.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "162": [
+        {
+            "docId": 442,
+            "filename": "GPAF-IMP-067narrativeproposal.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067narrativeproposal.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067narrativeproposal.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 443,
+            "filename": "GPAF-IMP-067RevisedBudgetMarch2013.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067RevisedBudgetMarch2013.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067RevisedBudgetMarch2013.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 444,
+            "filename": "GPAF-IMP-067RevisedLogframeSept2013.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067RevisedLogframeSept2013.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067RevisedLogframeSept2013.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 445,
+            "filename": "GPAF-IMP-067%2520Narrative%2520Report%2520-%2520January%2520to%2520October%25202013.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067%2520Narrative%2520Report%2520-%2520January%2520to%2520October%25202013.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067%2520Narrative%2520Report%2520-%2520January%2520to%2520October%25202013.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 446,
+            "filename": "GPAF-IMP-067RevisedLogframeFeb2014.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067RevisedLogframeFeb2014.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067RevisedLogframeFeb2014.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 447,
+            "filename": "GPAF-IMP-067RevisedbudgetFeb2014.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067RevisedbudgetFeb2014.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067RevisedbudgetFeb2014.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 448,
+            "filename": "GPAF%2520IMP%2520067%2520Annual%2520Financial%2520Report%2520300414.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520IMP%2520067%2520Annual%2520Financial%2520Report%2520300414.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF%2520IMP%2520067%2520Annual%2520Financial%2520Report%2520300414.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 449,
+            "filename": "GPAF%2520%2528IMP-067%2529%2520Reporting%2520Logframe%2520%252830.04.2014%2529..xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520%2528IMP-067%2529%2520Reporting%2520Logframe%2520%252830.04.2014%2529..xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF%2520%2528IMP-067%2529%2520Reporting%2520Logframe%2520%252830.04.2014%2529..xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 450,
+            "filename": "GPAF-IMP-067.%2520Annual%2520Report.%2520April%25202013%2520to%2520March%25202014.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067.%2520Annual%2520Report.%2520April%25202013%2520to%2520March%25202014.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067.%2520Annual%2520Report.%2520April%25202013%2520to%2520March%25202014.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 451,
+            "filename": "GPAF-IMP-067RevisedLogframeAugust2014.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067RevisedLogframeAugust2014.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067RevisedLogframeAugust2014.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 452,
+            "filename": "GPA-IMP-067RevisedGAJuly2014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPA-IMP-067RevisedGAJuly2014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPA-IMP-067RevisedGAJuly2014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 453,
+            "filename": "DFID%2520GPAF%2520IMP%2520067%2520revised%2520budget%2520August%25202014.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520GPAF%2520IMP%2520067%2520revised%2520budget%2520August%25202014.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/DFID%2520GPAF%2520IMP%2520067%2520revised%2520budget%2520August%25202014.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 454,
+            "filename": "GPAF-IMP-067%2520Revised%2520grant%2520arrangement%2520March%25202013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067%2520Revised%2520grant%2520arrangement%2520March%25202013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067%2520Revised%2520grant%2520arrangement%2520March%25202013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 455,
+            "filename": "GPAF%2520%2528IMP-067%2529%2520Annual%2520Report.%2520April%252014%2520to%2520March%252015.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520%2528IMP-067%2529%2520Annual%2520Report.%2520April%252014%2520to%2520March%252015.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF%2520%2528IMP-067%2529%2520Annual%2520Report.%2520April%252014%2520to%2520March%252015.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 456,
+            "filename": "GPAFIMP067AnnualFinancialReport260615.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAFIMP067AnnualFinancialReport260615.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAFIMP067AnnualFinancialReport260615.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 457,
+            "filename": "GPAF%28IMP-067%29ReportingLogframe%2830.04.2015%29.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%28IMP-067%29ReportingLogframe%2830.04.2015%29.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF%28IMP-067%29ReportingLogframe%2830.04.2015%29.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 458,
+            "filename": "GPAF-IMP-067RiskMatrix.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067RiskMatrix.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067RiskMatrix.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 459,
+            "filename": "GPAF-IMP-067signedGAAug2015.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067signedGAAug2015.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067signedGAAug2015.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 460,
+            "filename": "GPAF-IMP-067signedVisibilityStatement.tif",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-067signedVisibilityStatement.tif",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-067signedVisibilityStatement.tif",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 461,
+            "filename": "GPAF-IMP-0067Mid-termReviewSept2015.odt",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-IMP-0067Mid-termReviewSept2015.odt",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/GPAF-IMP-0067Mid-termReviewSept2015.odt",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 462,
+            "filename": "DFID-SCIAFFinalVerificationReport.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID-SCIAFFinalVerificationReport.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/162\/DFID-SCIAFFinalVerificationReport.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "169": [
+        {
+            "docId": 471,
+            "filename": "DFID%2520KMCH%2520Annual%2520Report%2520%25282012-13%2529.zip",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520KMCH%2520Annual%2520Report%2520%25282012-13%2529.zip",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/169\/DFID%2520KMCH%2520Annual%2520Report%2520%25282012-13%2529.zip",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 472,
+            "filename": "DFID%2520KMCH%2520Annual%2520Report%2520%25282013-14%2529.zip",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520KMCH%2520Annual%2520Report%2520%25282013-14%2529.zip",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/169\/DFID%2520KMCH%2520Annual%2520Report%2520%25282013-14%2529.zip",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 473,
+            "filename": "DFID%2520GPAF%2520%2528IMP-023%2529%2520PCR%2520-%2520Final%2520Independent%2520Evaluation%2520Report.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520GPAF%2520%2528IMP-023%2529%2520PCR%2520-%2520Final%2520Independent%2520Evaluation%2520Report.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/169\/DFID%2520GPAF%2520%2528IMP-023%2529%2520PCR%2520-%2520Final%2520Independent%2520Evaluation%2520Report.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 474,
+            "filename": "DFID%2520GPAF%2520%2528IMP-023%2529%2520PCR.zip",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520GPAF%2520%2528IMP-023%2529%2520PCR.zip",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/169\/DFID%2520GPAF%2520%2528IMP-023%2529%2520PCR.zip",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 470,
+            "filename": "GPAF%2520%2528IMP-093%2529%25202014-15%2520Annual%2520Report.zip",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520%2528IMP-093%2529%25202014-15%2520Annual%2520Report.zip",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/169\/GPAF%2520%2528IMP-093%2529%25202014-15%2520Annual%2520Report.zip",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 469,
+            "filename": "DFID%2520GPAF%2520IMP-093%25202013-14%2520Annual%2520Report.zip",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520GPAF%2520IMP-093%25202013-14%2520Annual%2520Report.zip",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/169\/DFID%2520GPAF%2520IMP-093%25202013-14%2520Annual%2520Report.zip",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "171": [
+        {
+            "docId": 479,
+            "filename": "flow2_wfwi_appendix%25206_programme%2520proposal_aug2015.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/flow2_wfwi_appendix%25206_programme%2520proposal_aug2015.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/171\/flow2_wfwi_appendix%25206_programme%2520proposal_aug2015.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 478,
+            "filename": "flow2_wfwi_appendix%25205_toc_aug2015.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/flow2_wfwi_appendix%25205_toc_aug2015.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/171\/flow2_wfwi_appendix%25205_toc_aug2015.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "180": [
+        {
+            "docId": 511,
+            "filename": "IMP-04-PL-1819%2520-%2520Logframe%2520Annex%2520A%2520Final%2520020315.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IMP-04-PL-1819%2520-%2520Logframe%2520Annex%2520A%2520Final%2520020315.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/IMP-04-PL-1819%2520-%2520Logframe%2520Annex%2520A%2520Final%2520020315.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 512,
+            "filename": "IfE%2520HI%2520%2520VSO%2520logframe%2520191012.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IfE%2520HI%2520%2520VSO%2520logframe%2520191012.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/IfE%2520HI%2520%2520VSO%2520logframe%2520191012.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 513,
+            "filename": "A1%2520DEERF%2520Application_Handicap%2520International_SL_Feb2015%2520final.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/A1%2520DEERF%2520Application_Handicap%2520International_SL_Feb2015%2520final.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/A1%2520DEERF%2520Application_Handicap%2520International_SL_Feb2015%2520final.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 514,
+            "filename": "Jordan%2520FP%2520Annex%25204%2520-%2520Logical%2520Framework%2520submitted.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Jordan%2520FP%2520Annex%25204%2520-%2520Logical%2520Framework%2520submitted.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/Jordan%2520FP%2520Annex%25204%2520-%2520Logical%2520Framework%2520submitted.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 515,
+            "filename": "Annex%25201_HI-LB-DFID-Logframe%2520Year%25201%252B2_clean.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annex%25201_HI-LB-DFID-Logframe%2520Year%25201%252B2_clean.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/Annex%25201_HI-LB-DFID-Logframe%2520Year%25201%252B2_clean.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 516,
+            "filename": "RRF-prequal-proposal-HI-%2520Iraq-%2520June%25202014.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/RRF-prequal-proposal-HI-%2520Iraq-%2520June%25202014.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/RRF-prequal-proposal-HI-%2520Iraq-%2520June%25202014.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 517,
+            "filename": "20141127-%2520Handicap%2520International%2520Gaza%2520RRF%2520logframe.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/20141127-%2520Handicap%2520International%2520Gaza%2520RRF%2520logframe.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/20141127-%2520Handicap%2520International%2520Gaza%2520RRF%2520logframe.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 518,
+            "filename": "DFID%2520Inclusive%2520Elections%2520proposal%2520FINAL%2520VERSION.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Inclusive%2520Elections%2520proposal%2520FINAL%2520VERSION.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/DFID%2520Inclusive%2520Elections%2520proposal%2520FINAL%2520VERSION.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 519,
+            "filename": "Final%2520Rehab%2520budget%2520for%2520UK%2520Med%2520project.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Final%2520Rehab%2520budget%2520for%2520UK%2520Med%2520project.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/180\/Final%2520Rehab%2520budget%2520for%2520UK%2520Med%2520project.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "192": [
+        {
+            "docId": 535,
+            "filename": "DFID%2520Activities%2520log.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Activities%2520log.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/DFID%2520Activities%2520log.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 536,
+            "filename": "FINAL%2520_%2520PPA%2520Logical%2520Framework_by%2520Org_no%2520baseline_19Jul11.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/FINAL%2520_%2520PPA%2520Logical%2520Framework_by%2520Org_no%2520baseline_19Jul11.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/FINAL%2520_%2520PPA%2520Logical%2520Framework_by%2520Org_no%2520baseline_19Jul11.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 537,
+            "filename": "WCUK%2520logframe%2520%2520revised%252009%252004%252014.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/WCUK%2520logframe%2520%2520revised%252009%252004%252014.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/WCUK%2520logframe%2520%2520revised%252009%252004%252014.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 538,
+            "filename": "Projet%2520UGP-EDR_Cadre%2520logique_FINAL.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Projet%2520UGP-EDR_Cadre%2520logique_FINAL.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/Projet%2520UGP-EDR_Cadre%2520logique_FINAL.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 539,
+            "filename": "Copy%2520of%2520logframe%2520CR.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Copy%2520of%2520logframe%2520CR.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/Copy%2520of%2520logframe%2520CR.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 540,
+            "filename": "DFID-WCUK%2520Logframe_Phase%2520II.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID-WCUK%2520Logframe_Phase%2520II.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/DFID-WCUK%2520Logframe_Phase%2520II.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 541,
+            "filename": "DRC002%2520Translated%2520-%2520Logframe%2520EC%2520%25284%2529.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DRC002%2520Translated%2520-%2520Logframe%2520EC%2520%25284%2529.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/DRC002%2520Translated%2520-%2520Logframe%2520EC%2520%25284%2529.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 542,
+            "filename": "WCUK%2520Street%2520Children%2520Project%2520Logframe.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/WCUK%2520Street%2520Children%2520Project%2520Logframe.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/WCUK%2520Street%2520Children%2520Project%2520Logframe.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 543,
+            "filename": "Annex%2520C%2520-%2520DCI-HUM_2012_264.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annex%2520C%2520-%2520DCI-HUM_2012_264.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/Annex%2520C%2520-%2520DCI-HUM_2012_264.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 544,
+            "filename": "Approved%2520%2520copy%2520logframe_WCUK%2520UAM%2520Project.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Approved%2520%2520copy%2520logframe_WCUK%2520UAM%2520Project.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/Approved%2520%2520copy%2520logframe_WCUK%2520UAM%2520Project.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 545,
+            "filename": "WCH%2520Logframe%2520-%2520Updated%2520HG020315.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/WCH%2520Logframe%2520-%2520Updated%2520HG020315.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/WCH%2520Logframe%2520-%2520Updated%2520HG020315.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 546,
+            "filename": "WCUK-WCH%2520Dutch%2520MFA%2520Concept%2520Note%2520Draft%25203%2520RS%25208-October-2014.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/WCUK-WCH%2520Dutch%2520MFA%2520Concept%2520Note%2520Draft%25203%2520RS%25208-October-2014.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/192\/WCUK-WCH%2520Dutch%2520MFA%2520Concept%2520Note%2520Draft%25203%2520RS%25208-October-2014.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "228": [
+        {
+            "docId": 549,
+            "filename": "GPAF%20031%20%20Annual%20Report%2030.04.2014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%20031%20%20Annual%20Report%2030.04.2014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/228\/GPAF%20031%20%20Annual%20Report%2030.04.2014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 564,
+            "filename": "DAPP%2520GPAF%2520IMP%2520%2520031%2520Reporting%2520%2520logframe%2520_30.04.2015.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DAPP%2520GPAF%2520IMP%2520%2520031%2520Reporting%2520%2520logframe%2520_30.04.2015.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/228\/DAPP%2520GPAF%2520IMP%2520%2520031%2520Reporting%2520%2520logframe%2520_30.04.2015.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 565,
+            "filename": "DAPP%2520GPAF%2520IMP%2520031%2520Annual%2520Financial%2520Report%2520year%25203%2520_30.04.2015.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DAPP%2520GPAF%2520IMP%2520031%2520Annual%2520Financial%2520Report%2520year%25203%2520_30.04.2015.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/228\/DAPP%2520GPAF%2520IMP%2520031%2520Annual%2520Financial%2520Report%2520year%25203%2520_30.04.2015.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 566,
+            "filename": "Ahava%2520Ministries%2520Recommendation%2520letter.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Ahava%2520Ministries%2520Recommendation%2520letter.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/228\/Ahava%2520Ministries%2520Recommendation%2520letter.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 567,
+            "filename": "07-05-2015%2520Partnership%2520Communciation%2520Form%25201008.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/07-05-2015%2520Partnership%2520Communciation%2520Form%25201008.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/228\/07-05-2015%2520Partnership%2520Communciation%2520Form%25201008.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 568,
+            "filename": "DFID%2520BT%2520WOMEN%2520FC%2520INHOUSE%2520STATUS%2520as%2520at%252030%2520June%25202015%2520.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520BT%2520WOMEN%2520FC%2520INHOUSE%2520STATUS%2520as%2520at%252030%2520June%25202015%2520.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/228\/DFID%2520BT%2520WOMEN%2520FC%2520INHOUSE%2520STATUS%2520as%2520at%252030%2520June%25202015%2520.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 569,
+            "filename": "21-04-2015%2520IMP-04-CN-2165%2520PROJECT%2520BUDGET%2520DAPP%2520Malawi.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/21-04-2015%2520IMP-04-CN-2165%2520PROJECT%2520BUDGET%2520DAPP%2520Malawi.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/228\/21-04-2015%2520IMP-04-CN-2165%2520PROJECT%2520BUDGET%2520DAPP%2520Malawi.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "248": [
+        {
+            "docId": 610,
+            "filename": "ASF_FP_UG_ProBono%20DGD_2012-2014_EN.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ASF_FP_UG_ProBono%20DGD_2012-2014_EN.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/248\/ASF_FP_UG_ProBono%20DGD_2012-2014_EN.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 614,
+            "filename": "ASF%20PPA%20annual%20review%20year%201%20120531.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ASF%20PPA%20annual%20review%20year%201%20120531.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/248\/ASF%20PPA%20annual%20review%20year%201%20120531.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 615,
+            "filename": "additionnality%20report%20year%201%20ASF.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/additionnality%20report%20year%201%20ASF.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/248\/additionnality%20report%20year%201%20ASF.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 616,
+            "filename": "ASF%20APR%20year%202%2020130701doc.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ASF%20APR%20year%202%2020130701doc.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/248\/ASF%20APR%20year%202%2020130701doc.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "232": [
+        {
+            "docId": 570,
+            "filename": "13.01.23%20DFID%20MOU%20Aspire%20and%20N4A.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/13.01.23%20DFID%20MOU%20Aspire%20and%20N4A.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/232\/13.01.23%20DFID%20MOU%20Aspire%20and%20N4A.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 571,
+            "filename": "GPAF%20Interim%20Narrative%20Report%20V7%20-%20FINAL.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%20Interim%20Narrative%20Report%20V7%20-%20FINAL.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/232\/GPAF%20Interim%20Narrative%20Report%20V7%20-%20FINAL.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "237": [
+        {
+            "docId": 573,
+            "filename": "GPAF%2520INN%2520009%2520-%2520Log%2520Frame%2520-%2520updatedbaselineinfo%2520-%2520updated21July13-Approvedon23July13.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520INN%2520009%2520-%2520Log%2520Frame%2520-%2520updatedbaselineinfo%2520-%2520updated21July13-Approvedon23July13.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/237\/GPAF%2520INN%2520009%2520-%2520Log%2520Frame%2520-%2520updatedbaselineinfo%2520-%2520updated21July13-Approvedon23July13.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "241": [
+        {
+            "docId": 580,
+            "filename": "GPAF%2520Annual%2520Report%2520Template%25202015%2520complete.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520Annual%2520Report%2520Template%25202015%2520complete.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/241\/GPAF%2520Annual%2520Report%2520Template%25202015%2520complete.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 581,
+            "filename": "CUAMM-DFID%2520-%2520Annual%2520Financial%2520Report%2520FY%25202014-15%25281%2529.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CUAMM-DFID%2520-%2520Annual%2520Financial%2520Report%2520FY%25202014-15%25281%2529.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/241\/CUAMM-DFID%2520-%2520Annual%2520Financial%2520Report%2520FY%25202014-15%25281%2529.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 582,
+            "filename": "GPAF%2520Grantholder%2520Annual%2520Report%2520Template.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520Grantholder%2520Annual%2520Report%2520Template.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/241\/GPAF%2520Grantholder%2520Annual%2520Report%2520Template.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 583,
+            "filename": "DFID-CUAMM%2520-%2520Annual%2520Financial%2520Report%25202013-14.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID-CUAMM%2520-%2520Annual%2520Financial%2520Report%25202013-14.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/241\/DFID-CUAMM%2520-%2520Annual%2520Financial%2520Report%25202013-14.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "244": [
+        {
+            "docId": 595,
+            "filename": "DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3_Q3.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3_Q3.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/244\/DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3_Q3.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 596,
+            "filename": "DFID%2520Quarterly%2520Activity%2520Reporting%2520complete.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Quarterly%2520Activity%2520Reporting%2520complete.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/244\/DFID%2520Quarterly%2520Activity%2520Reporting%2520complete.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 597,
+            "filename": "DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/244\/DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 598,
+            "filename": "DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3_10.02.16.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3_10.02.16.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/244\/DFID%2520Quarterly%2520Activity%2520Reporting%2520PY3_10.02.16.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "253": [
+        {
+            "docId": 618,
+            "filename": "LEPRA%2520Bangladesh%2520GPAF%2520Proposal%2520Form%2520final.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/LEPRA%2520Bangladesh%2520GPAF%2520Proposal%2520Form%2520final.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/253\/LEPRA%2520Bangladesh%2520GPAF%2520Proposal%2520Form%2520final.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "258": [
+        {
+            "docId": 620,
+            "filename": "IDEVREAN09076GH_Annual%20Report_V2_Final_Jul13.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/IDEVREAN09076GH_Annual%20Report_V2_Final_Jul13.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/258\/IDEVREAN09076GH_Annual%20Report_V2_Final_Jul13.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "259": [
+        {
+            "docId": 621,
+            "filename": "URA%20Business%20Case.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/URA%20Business%20Case.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/259\/URA%20Business%20Case.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "286": [
+        {
+            "docId": 625,
+            "filename": "UKAM%2520Logframe%2520Street%2520Child%2520Revised%252009.01.15.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/UKAM%2520Logframe%2520Street%2520Child%2520Revised%252009.01.15.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/286\/UKAM%2520Logframe%2520Street%2520Child%2520Revised%252009.01.15.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 623,
+            "filename": "GPAF%20INN%20032%20Logframe%20SC.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%20INN%20032%20Logframe%20SC.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/286\/GPAF%20INN%20032%20Logframe%20SC.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "290": [
+        {
+            "docId": 627,
+            "filename": "KEEP%20Budget%20Summary.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/KEEP%20Budget%20Summary.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/290\/KEEP%20Budget%20Summary.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "298": [
+        {
+            "docId": 628,
+            "filename": "Annex%201%20-%20TfaC%20Theory%20of%20Change.pptx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annex%201%20-%20TfaC%20Theory%20of%20Change.pptx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/298\/Annex%201%20-%20TfaC%20Theory%20of%20Change.pptx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "303": [
+        {
+            "docId": 647,
+            "filename": "GB-CHC-1043843-EU%20Kosovo-DGD.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GB-CHC-1043843-EU%20Kosovo-DGD.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/303\/GB-CHC-1043843-EU%20Kosovo-DGD.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 651,
+            "filename": "GB-CHC-1043843-USAID%20Nepal-ICP.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GB-CHC-1043843-USAID%20Nepal-ICP.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/303\/GB-CHC-1043843-USAID%20Nepal-ICP.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "309": [
+        {
+            "docId": 674,
+            "filename": "Annex%25201%2520-%2520TfaC%2520Theory%2520of%2520Change%252006.11.2013.pptx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annex%25201%2520-%2520TfaC%2520Theory%2520of%2520Change%252006.11.2013.pptx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/309\/Annex%25201%2520-%2520TfaC%2520Theory%2520of%2520Change%252006.11.2013.pptx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "347": [
+        {
+            "docId": 682,
+            "filename": "MGCubed%20Log%20Frame%20GEMS%20Education%20Solutions%20GEC%20DfID.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/MGCubed%20Log%20Frame%20GEMS%20Education%20Solutions%20GEC%20DfID.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/347\/MGCubed%20Log%20Frame%20GEMS%20Education%20Solutions%20GEC%20DfID.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "353": [
+        {
+            "docId": 685,
+            "filename": "GPAFINN037_%2520Logframe_Y1_v3.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAFINN037_%2520Logframe_Y1_v3.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/353\/GPAFINN037_%2520Logframe_Y1_v3.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "364": [
+        {
+            "docId": 686,
+            "filename": "Pump%20Aid%20DFID%20GPAF%20100%20Revised%20Log%20Frame%2009%2007%202014.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Pump%20Aid%20DFID%20GPAF%20100%20Revised%20Log%20Frame%2009%2007%202014.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/364\/Pump%20Aid%20DFID%20GPAF%20100%20Revised%20Log%20Frame%2009%2007%202014.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "367": [
+        {
+            "docId": 688,
+            "filename": "GPAF-INN-055%2520Approved%2520Logframe%252019-12-14.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-INN-055%2520Approved%2520Logframe%252019-12-14.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/367\/GPAF-INN-055%2520Approved%2520Logframe%252019-12-14.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "369": [
+        {
+            "docId": 689,
+            "filename": "60.%20GPAF%20CP2%20PHASE%20Logframe%20INN-06-CN-1374.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/60.%20GPAF%20CP2%20PHASE%20Logframe%20INN-06-CN-1374.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/369\/60.%20GPAF%20CP2%20PHASE%20Logframe%20INN-06-CN-1374.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "371": [
+        {
+            "docId": 690,
+            "filename": "GEC%20IW%20Full%20Application%20form%20PEAS%20%287374%29%20revised%20%2829%20April%202013%29.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GEC%20IW%20Full%20Application%20form%20PEAS%20%287374%29%20revised%20%2829%20April%202013%29.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/371\/GEC%20IW%20Full%20Application%20form%20PEAS%20%287374%29%20revised%20%2829%20April%202013%29.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 691,
+            "filename": "7374%20PEAS%20logframe%20with%20targets%20%28March%2017%2C%202014%29.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/7374%20PEAS%20logframe%20with%20targets%20%28March%2017%2C%202014%29.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/371\/7374%20PEAS%20logframe%20with%20targets%20%28March%2017%2C%202014%29.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "380": [
+        {
+            "docId": 693,
+            "filename": "Copy%2520of%252003%2520EiE%2520Redesigned%2520Logframe%2520120615.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Copy%2520of%252003%2520EiE%2520Redesigned%2520Logframe%2520120615.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/380\/Copy%2520of%252003%2520EiE%2520Redesigned%2520Logframe%2520120615.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "384": [
+        {
+            "docId": 694,
+            "filename": "GPAF%20PROPOSAL%20FORM.%20AF%20final.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%20PROPOSAL%20FORM.%20AF%20final.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/384\/GPAF%20PROPOSAL%20FORM.%20AF%20final.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "385": [
+        {
+            "docId": 695,
+            "filename": "END-AIDS%20PORTAL%20Project%20Logframe.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/END-AIDS%20PORTAL%20Project%20Logframe.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/385\/END-AIDS%20PORTAL%20Project%20Logframe.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "389": [
+        {
+            "docId": 696,
+            "filename": "GPAF-INN-030%20Annual%20Report%20Apr%202014.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-INN-030%20Annual%20Report%20Apr%202014.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/389\/GPAF-INN-030%20Annual%20Report%20Apr%202014.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 698,
+            "filename": "GPAF-INN-030%20Logframe%20Apr%202014.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-INN-030%20Logframe%20Apr%202014.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/389\/GPAF-INN-030%20Logframe%20Apr%202014.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "396": [
+        {
+            "docId": 700,
+            "filename": "GPAF%2520CP1%2520proposal%2520form%2520-INN-05-PL-1031%2520.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520CP1%2520proposal%2520form%2520-INN-05-PL-1031%2520.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/396\/GPAF%2520CP1%2520proposal%2520form%2520-INN-05-PL-1031%2520.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "409": [
+        {
+            "docId": 708,
+            "filename": "GPAFINN-06-CN-1207-ProjBgtRevisedApr-2014.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAFINN-06-CN-1207-ProjBgtRevisedApr-2014.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/409\/GPAFINN-06-CN-1207-ProjBgtRevisedApr-2014.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 709,
+            "filename": "GPAFINN-06-CN-1207ProjectLogframeandActivitySchedule.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAFINN-06-CN-1207ProjectLogframeandActivitySchedule.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/409\/GPAFINN-06-CN-1207ProjectLogframeandActivitySchedule.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 710,
+            "filename": "GPAFINN-06-CN-1207-GanntChart.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAFINN-06-CN-1207-GanntChart.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/409\/GPAFINN-06-CN-1207-GanntChart.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 711,
+            "filename": "MemorandumofUnderstanding-HCBHFINAL.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/MemorandumofUnderstanding-HCBHFINAL.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/409\/MemorandumofUnderstanding-HCBHFINAL.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 712,
+            "filename": "MemorandumofUnderstanding-KSFINAL.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/MemorandumofUnderstanding-KSFINAL.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/409\/MemorandumofUnderstanding-KSFINAL.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 713,
+            "filename": "MemorandumofUnderstanding-ULSFINAL.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/MemorandumofUnderstanding-ULSFINAL.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/409\/MemorandumofUnderstanding-ULSFINAL.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "411": [
+        {
+            "docId": 716,
+            "filename": "GPAF%2520CP2%2520Carers%2520Worldwide%2520Budget%2520final.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520CP2%2520Carers%2520Worldwide%2520Budget%2520final.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/411\/GPAF%2520CP2%2520Carers%2520Worldwide%2520Budget%2520final.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 717,
+            "filename": "INN-058%2520Logical%2520framework%2520Carers%2520Worldwide%2520FINAL.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/INN-058%2520Logical%2520framework%2520Carers%2520Worldwide%2520FINAL.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/411\/INN-058%2520Logical%2520framework%2520Carers%2520Worldwide%2520FINAL.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "412": [
+        {
+            "docId": 720,
+            "filename": "Programme%2520Document%2520HSA4A%2520FINAL.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Programme%2520Document%2520HSA4A%2520FINAL.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/412\/Programme%2520Document%2520HSA4A%2520FINAL.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "415": [
+        {
+            "docId": 722,
+            "filename": "HAU%2520reviewed%2520Logframe%2520_September_2014%25281%2529.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/HAU%2520reviewed%2520Logframe%2520_September_2014%25281%2529.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/415\/HAU%2520reviewed%2520Logframe%2520_September_2014%25281%2529.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "426": [
+        {
+            "docId": 741,
+            "filename": "DFID%2520Financial%2520Report%2520January%2520to%2520March%25202015%25202%2520SF.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Financial%2520Report%2520January%2520to%2520March%25202015%25202%2520SF.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/DFID%2520Financial%2520Report%2520January%2520to%2520March%25202015%25202%2520SF.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 742,
+            "filename": "DFID%2520Financial%2520Report%2520Apr%2520to%2520Jun%25202015.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520Financial%2520Report%2520Apr%2520to%2520Jun%25202015.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/DFID%2520Financial%2520Report%2520Apr%2520to%2520Jun%25202015.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 743,
+            "filename": "DFID%2520GPAF%2520Annual%2520Financial%2520Report%2520Template%2520v2015-Final.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520GPAF%2520Annual%2520Financial%2520Report%2520Template%2520v2015-Final.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/DFID%2520GPAF%2520Annual%2520Financial%2520Report%2520Template%2520v2015-Final.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 744,
+            "filename": "DFID%2520-%2520Financial%2520Report%2520September%2520%2520GPAF%2520Interim%2520Financial%2520Report%2520Template%25202014%2520ARs.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520-%2520Financial%2520Report%2520September%2520%2520GPAF%2520Interim%2520Financial%2520Report%2520Template%25202014%2520ARs.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/DFID%2520-%2520Financial%2520Report%2520September%2520%2520GPAF%2520Interim%2520Financial%2520Report%2520Template%25202014%2520ARs.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 745,
+            "filename": "DFID%2520GPAF%2520Annual%2520Financial%2520Summary%25202015-Final.csv",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520GPAF%2520Annual%2520Financial%2520Summary%25202015-Final.csv",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/DFID%2520GPAF%2520Annual%2520Financial%2520Summary%25202015-Final.csv",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 746,
+            "filename": "Pictorials%2520-%2520DFID%2520INTERIM%2520REPORT-GPAF-IMP-097.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Pictorials%2520-%2520DFID%2520INTERIM%2520REPORT-GPAF-IMP-097.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/Pictorials%2520-%2520DFID%2520INTERIM%2520REPORT-GPAF-IMP-097.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 747,
+            "filename": "Pictorials%2520-%2520DFID%2520INTERIM%2520REPORT%2520-GPAF-IMP-097.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Pictorials%2520-%2520DFID%2520INTERIM%2520REPORT%2520-GPAF-IMP-097.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/Pictorials%2520-%2520DFID%2520INTERIM%2520REPORT%2520-GPAF-IMP-097.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 748,
+            "filename": "GPAF%2520Interim%2520Report%2520Template%2520v2015-%25203.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520Interim%2520Report%2520Template%2520v2015-%25203.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/GPAF%2520Interim%2520Report%2520Template%2520v2015-%25203.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 749,
+            "filename": "DFID%2520GPAF-IMP-097-Audit%2520report-2014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/DFID%2520GPAF-IMP-097-Audit%2520report-2014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/426\/DFID%2520GPAF-IMP-097-Audit%2520report-2014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "431": [
+        {
+            "docId": 751,
+            "filename": "8100%2520GEC%2520%2520Milestones.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/8100%2520GEC%2520%2520Milestones.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/431\/8100%2520GEC%2520%2520Milestones.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "447": [
+        {
+            "docId": 753,
+            "filename": "Interburns%2520Standards%2520Report%25202013.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Interburns%2520Standards%2520Report%25202013.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/447\/Interburns%2520Standards%2520Report%25202013.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "448": [
+        {
+            "docId": 759,
+            "filename": "Feed%2520the%2520Minds%2520GPAF%2520CP2%2520logical-framework%2520INN-06-CN-1284%252003.10.13.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Feed%2520the%2520Minds%2520GPAF%2520CP2%2520logical-framework%2520INN-06-CN-1284%252003.10.13.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/448\/Feed%2520the%2520Minds%2520GPAF%2520CP2%2520logical-framework%2520INN-06-CN-1284%252003.10.13.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 760,
+            "filename": "Feed%2520the%2520Minds%2520GPAF%2520CP2%2520PL%2520form%2520INN-06-CN-1284.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Feed%2520the%2520Minds%2520GPAF%2520CP2%2520PL%2520form%2520INN-06-CN-1284.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/448\/Feed%2520the%2520Minds%2520GPAF%2520CP2%2520PL%2520form%2520INN-06-CN-1284.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 761,
+            "filename": "FTM-NRDP%2520Partnership%2520Agreement%2520%2528final%2529.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/FTM-NRDP%2520Partnership%2520Agreement%2520%2528final%2529.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/448\/FTM-NRDP%2520Partnership%2520Agreement%2520%2528final%2529.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "452": [
+        {
+            "docId": 763,
+            "filename": "20131112%2520Overzicht%2520aandachtsgebieden%2520afd%2520B%2526P.XLSX",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/20131112%2520Overzicht%2520aandachtsgebieden%2520afd%2520B%2526P.XLSX",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/452\/20131112%2520Overzicht%2520aandachtsgebieden%2520afd%2520B%2526P.XLSX",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "454": [
+        {
+            "docId": 766,
+            "filename": "Final-%2520Revised%2520LFA-%2520%252013-10-2014%2520-%2520Copy.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Final-%2520Revised%2520LFA-%2520%252013-10-2014%2520-%2520Copy.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/454\/Final-%2520Revised%2520LFA-%2520%252013-10-2014%2520-%2520Copy.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 767,
+            "filename": "GPAF%2520%2528IMP-059%2529%2520Reporting%2520Logframe-%2520Prepared%2520%252828th%2520October%252C%25202014%2529.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF%2520%2528IMP-059%2529%2520Reporting%2520Logframe-%2520Prepared%2520%252828th%2520October%252C%25202014%2529.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/454\/GPAF%2520%2528IMP-059%2529%2520Reporting%2520Logframe-%2520Prepared%2520%252828th%2520October%252C%25202014%2529.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "456": [
+        {
+            "docId": 773,
+            "filename": "ITT%2520Volume%25203.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ITT%2520Volume%25203.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/456\/ITT%2520Volume%25203.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 774,
+            "filename": "Mini-Competition%2520ITT%2520Volume%25202%2520Terms%2520of%2520Reference%2520for%2520Evaluation%2520of%2520Arab%2520Partnership%2520Fund%2520.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Mini-Competition%2520ITT%2520Volume%25202%2520Terms%2520of%2520Reference%2520for%2520Evaluation%2520of%2520Arab%2520Partnership%2520Fund%2520.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/456\/Mini-Competition%2520ITT%2520Volume%25202%2520Terms%2520of%2520Reference%2520for%2520Evaluation%2520of%2520Arab%2520Partnership%2520Fund%2520.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 775,
+            "filename": "CSCF%2520Evaluation%2520ITT%2520Volume%25202%2520-%2520Terms%2520of%2520Reference.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CSCF%2520Evaluation%2520ITT%2520Volume%25202%2520-%2520Terms%2520of%2520Reference.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/456\/CSCF%2520Evaluation%2520ITT%2520Volume%25202%2520-%2520Terms%2520of%2520Reference.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 776,
+            "filename": "Terms%2520of%2520Reference%2520-%2520Independent%2520Advisory%2520Group%2520for%2520ICF%2520Monitoring%252C%2520Eval....docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Terms%2520of%2520Reference%2520-%2520Independent%2520Advisory%2520Group%2520for%2520ICF%2520Monitoring%252C%2520Eval....docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/456\/Terms%2520of%2520Reference%2520-%2520Independent%2520Advisory%2520Group%2520for%2520ICF%2520Monitoring%252C%2520Eval....docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 777,
+            "filename": "ITT%2520Volume%25202.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ITT%2520Volume%25202.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/456\/ITT%2520Volume%25202.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "460": [
+        {
+            "docId": 779,
+            "filename": "BFPB%2520Folder%2520290115%2520F.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/BFPB%2520Folder%2520290115%2520F.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/460\/BFPB%2520Folder%2520290115%2520F.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "470": [
+        {
+            "docId": 785,
+            "filename": "20141205%2520AGR%2520DiV%2520Programma-overeenkomst%2520Zuid-Afrika%2520%2528Signed%2529.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/20141205%2520AGR%2520DiV%2520Programma-overeenkomst%2520Zuid-Afrika%2520%2528Signed%2529.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/470\/20141205%2520AGR%2520DiV%2520Programma-overeenkomst%2520Zuid-Afrika%2520%2528Signed%2529.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 786,
+            "filename": "Annex%25204%2520-%2520EH%2520budget%2520VAIS.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annex%25204%2520-%2520EH%2520budget%2520VAIS.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/470\/Annex%25204%2520-%2520EH%2520budget%2520VAIS.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 787,
+            "filename": "140314%2520-%2520revised%2520FA%2520proposal%2520VAIS.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/140314%2520-%2520revised%2520FA%2520proposal%2520VAIS.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/470\/140314%2520-%2520revised%2520FA%2520proposal%2520VAIS.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "472": [
+        {
+            "docId": 789,
+            "filename": "CD_2013_%2520CRS%2520VAS-Y%2520Fille%2520Proposal%2520_%25200197.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CD_2013_%2520CRS%2520VAS-Y%2520Fille%2520Proposal%2520_%25200197.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/472\/CD_2013_%2520CRS%2520VAS-Y%2520Fille%2520Proposal%2520_%25200197.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "484": [
+        {
+            "docId": 794,
+            "filename": "International%2520Conditions%2520of%2520Grant%2520ASI%2520Cycle%25207.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/International%2520Conditions%2520of%2520Grant%2520ASI%2520Cycle%25207.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/484\/International%2520Conditions%2520of%2520Grant%2520ASI%2520Cycle%25207.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 795,
+            "filename": "Notification%2520Letter%2520ASI%2520-%2520Jan%252013%2520%25281%2529.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Notification%2520Letter%2520ASI%2520-%2520Jan%252013%2520%25281%2529.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/484\/Notification%2520Letter%2520ASI%2520-%2520Jan%252013%2520%25281%2529.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 796,
+            "filename": "Cycle%25206%2520Notification%2520letter%2520FINAL.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Cycle%25206%2520Notification%2520letter%2520FINAL.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/484\/Cycle%25206%2520Notification%2520letter%2520FINAL.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "531": [
+        {
+            "docId": 800,
+            "filename": "1%2520GPAF-IMP-115%2520Accountable%2520Grant%2520Arrangement.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/1%2520GPAF-IMP-115%2520Accountable%2520Grant%2520Arrangement.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/531\/1%2520GPAF-IMP-115%2520Accountable%2520Grant%2520Arrangement.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "556": [
+        {
+            "docId": 809,
+            "filename": "QTR-%2520EXPENSE-%2520GPAF%2520INN%25202nd%2520quarter-detailed.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/QTR-%2520EXPENSE-%2520GPAF%2520INN%25202nd%2520quarter-detailed.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/556\/QTR-%2520EXPENSE-%2520GPAF%2520INN%25202nd%2520quarter-detailed.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 810,
+            "filename": "11-8-GPAF-INN-073%2520Logframe%2520V4%252022072015%2520%252B%2520%2528AB%2520changes%2529.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/11-8-GPAF-INN-073%2520Logframe%2520V4%252022072015%2520%252B%2520%2528AB%2520changes%2529.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/556\/11-8-GPAF-INN-073%2520Logframe%2520V4%252022072015%2520%252B%2520%2528AB%2520changes%2529.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 811,
+            "filename": "3rd%2520quarter%2528Oct-Dec%252015%2529-Final.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/3rd%2520quarter%2528Oct-Dec%252015%2529-Final.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/556\/3rd%2520quarter%2528Oct-Dec%252015%2529-Final.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 812,
+            "filename": "Copy%2520of%2520GPAF-INN-073-%2520quarterly%2520Reeporting%2520Variance%2520%25281st%2520Oct%2520to%252031st%2520Dec.%2520%25202015%2529.xls.%25281%2529.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Copy%2520of%2520GPAF-INN-073-%2520quarterly%2520Reeporting%2520Variance%2520%25281st%2520Oct%2520to%252031st%2520Dec.%2520%25202015%2529.xls.%25281%2529.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/556\/Copy%2520of%2520GPAF-INN-073-%2520quarterly%2520Reeporting%2520Variance%2520%25281st%2520Oct%2520to%252031st%2520Dec.%2520%25202015%2529.xls.%25281%2529.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 808,
+            "filename": "GPAF-INN-073-1st%2520QTR-GPAF%2520INN%2520Arrears%2520Claim%2520%25281%2520May%2520-%252030%2520June%25202015%2529%2520%2520Form.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/GPAF-INN-073-1st%2520QTR-GPAF%2520INN%2520Arrears%2520Claim%2520%25281%2520May%2520-%252030%2520June%25202015%2529%2520%2520Form.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/556\/GPAF-INN-073-1st%2520QTR-GPAF%2520INN%2520Arrears%2520Claim%2520%25281%2520May%2520-%252030%2520June%25202015%2529%2520%2520Form.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 807,
+            "filename": "Final%2520Revise%2520budget%2520for%2520Nuwkot%2520programme%2520as%2520of%252012-4-15.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Final%2520Revise%2520budget%2520for%2520Nuwkot%2520programme%2520as%2520of%252012-4-15.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/556\/Final%2520Revise%2520budget%2520for%2520Nuwkot%2520programme%2520as%2520of%252012-4-15.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "560": [
+        {
+            "docId": 856,
+            "filename": "7922-140401%2520-%2520Burundi%2520Consortium%2520Agreement.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/7922-140401%2520-%2520Burundi%2520Consortium%2520Agreement.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/7922-140401%2520-%2520Burundi%2520Consortium%2520Agreement.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 857,
+            "filename": "7978-annual%2520report%2520ARF%25201%25200%2520BFG%2520ZOA%2520S1.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/7978-annual%2520report%2520ARF%25201%25200%2520BFG%2520ZOA%2520S1.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/7978-annual%2520report%2520ARF%25201%25200%2520BFG%2520ZOA%2520S1.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 858,
+            "filename": "7989-Contract%2520IFDC%2520ZOA%2520final%2520version.doc",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/7989-Contract%2520IFDC%2520ZOA%2520final%2520version.doc",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/7989-Contract%2520IFDC%2520ZOA%2520final%2520version.doc",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 859,
+            "filename": "Annual%2520Report%2520BDI-DRC%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520BDI-DRC%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520Report%2520BDI-DRC%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 860,
+            "filename": "Annual%2520Report%2520BDI-DRC%25202013%2520-%2520including%2520annexes.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520BDI-DRC%25202013%2520-%2520including%2520annexes.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520Report%2520BDI-DRC%25202013%2520-%2520including%2520annexes.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 861,
+            "filename": "Annual%2520report%2520BDI-DRC%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520report%2520BDI-DRC%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520report%2520BDI-DRC%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 862,
+            "filename": "ZOA%2520-%2520Burundi-DRCongo%2520-%2520Reconstruction%2520proposal%2520-%2520September%25202012.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ZOA%2520-%2520Burundi-DRCongo%2520-%2520Reconstruction%2520proposal%2520-%2520September%25202012.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/ZOA%2520-%2520Burundi-DRCongo%2520-%2520Reconstruction%2520proposal%2520-%2520September%25202012.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 863,
+            "filename": "ZOA%2520-%2520South%2520Sudan%2520-%2520Reconstruction%2520proposal%2520-%2520revision%2520July%25202014%2520%252827%2520Aug%252014%2529.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ZOA%2520-%2520South%2520Sudan%2520-%2520Reconstruction%2520proposal%2520-%2520revision%2520July%25202014%2520%252827%2520Aug%252014%2529.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/ZOA%2520-%2520South%2520Sudan%2520-%2520Reconstruction%2520proposal%2520-%2520revision%2520July%25202014%2520%252827%2520Aug%252014%2529.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 864,
+            "filename": "Phase%2520II%2520Protracted%2520Crises%2520Call%2520final%2520version%252028-2-2014.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Phase%2520II%2520Protracted%2520Crises%2520Call%2520final%2520version%252028-2-2014.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Phase%2520II%2520Protracted%2520Crises%2520Call%2520final%2520version%252028-2-2014.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 865,
+            "filename": "CONCEPT%2520NOTE%2520Joint%2520Humanitarian%2520Response%2520Ebola.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/CONCEPT%2520NOTE%2520Joint%2520Humanitarian%2520Response%2520Ebola.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/CONCEPT%2520NOTE%2520Joint%2520Humanitarian%2520Response%2520Ebola.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 866,
+            "filename": "SJR%2520Consolidated%2520logframe%2520150325.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/SJR%2520Consolidated%2520logframe%2520150325.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/SJR%2520Consolidated%2520logframe%2520150325.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 867,
+            "filename": "SJR%2520Consolidated%2520donor%2520budget%2520150325.xlsx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/SJR%2520Consolidated%2520donor%2520budget%2520150325.xlsx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/SJR%2520Consolidated%2520donor%2520budget%2520150325.xlsx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 868,
+            "filename": "ZOA%252015-01-22%2520CN%2520Syria_FINAL%2520corrected.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ZOA%252015-01-22%2520CN%2520Syria_FINAL%2520corrected.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/ZOA%252015-01-22%2520CN%2520Syria_FINAL%2520corrected.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 869,
+            "filename": "ZOA%252015-01-22%2520CN%2520Jordan_FINAL.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ZOA%252015-01-22%2520CN%2520Jordan_FINAL.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/ZOA%252015-01-22%2520CN%2520Jordan_FINAL.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 870,
+            "filename": "Annual%2520Report%2520AFG%252C%2520NSU%252C%2520UGD%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520AFG%252C%2520NSU%252C%2520UGD%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520Report%2520AFG%252C%2520NSU%252C%2520UGD%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 871,
+            "filename": "Annual%2520report%2520AFG-NSU-UGD%25202013%2520-%2520including%2520annexes.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520report%2520AFG-NSU-UGD%25202013%2520-%2520including%2520annexes.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520report%2520AFG-NSU-UGD%25202013%2520-%2520including%2520annexes.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 872,
+            "filename": "Annual%2520report%2520AFG-NSU-UGD%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520report%2520AFG-NSU-UGD%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520report%2520AFG-NSU-UGD%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 873,
+            "filename": "Annual%2520Report%2520ETH-SUD%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520ETH-SUD%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520Report%2520ETH-SUD%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 874,
+            "filename": "Annual%2520Report%2520ETH-SUD%25202013%2520-%2520including%2520annexes.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520ETH-SUD%25202013%2520-%2520including%2520annexes.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520Report%2520ETH-SUD%25202013%2520-%2520including%2520annexes.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 875,
+            "filename": "Annual%2520report%2520ETH-SDN%25202014%2520-%2520including%2520annex%2520A%252C%2520B%252C%2520C%2520%2526%2520D.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520report%2520ETH-SDN%25202014%2520-%2520including%2520annex%2520A%252C%2520B%252C%2520C%2520%2526%2520D.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520report%2520ETH-SDN%25202014%2520-%2520including%2520annex%2520A%252C%2520B%252C%2520C%2520%2526%2520D.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 876,
+            "filename": "Annual%2520Report%2520SUD%2520only%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520SUD%2520only%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520Report%2520SUD%2520only%25202014%2520-%2520including%2520annex%2520A%252C%2520B%2520%2526%2520C.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 877,
+            "filename": "Annual%2520Report%2520SUD%2520only%25202013%2520-%2520including%2520annexes.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520SUD%2520only%25202013%2520-%2520including%2520annexes.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520Report%2520SUD%2520only%25202013%2520-%2520including%2520annexes.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 878,
+            "filename": "Annual%2520Report%2520SDN%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520Report%2520SDN%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520Report%2520SDN%2520July%2520-%2520December%25202012%2520-%2520including%2520annexes.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 879,
+            "filename": "6237-Final%2520Report_Ebola%2520Emergency%2520Response_Project%25201.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/6237-Final%2520Report_Ebola%2520Emergency%2520Response_Project%25201.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/6237-Final%2520Report_Ebola%2520Emergency%2520Response_Project%25201.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 880,
+            "filename": "Ebola%2520Emergency%2520Response%2520Liberia%2520Project%2520Proposal%25202014%2520%2520%2528Part%2520II%2529%252802.10..2014%2529.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Ebola%2520Emergency%2520Response%2520Liberia%2520Project%2520Proposal%25202014%2520%2520%2528Part%2520II%2529%252802.10..2014%2529.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Ebola%2520Emergency%2520Response%2520Liberia%2520Project%2520Proposal%25202014%2520%2520%2528Part%2520II%2529%252802.10..2014%2529.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 881,
+            "filename": "9591-ZOA%2520Final%2520Narrative%2520Report%2520Ebola%2520Emergency%2520Response%2520Dutch%2520Embassy%25202%2520%252805.08.2015%2529.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/9591-ZOA%2520Final%2520Narrative%2520Report%2520Ebola%2520Emergency%2520Response%2520Dutch%2520Embassy%25202%2520%252805.08.2015%2529.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/9591-ZOA%2520Final%2520Narrative%2520Report%2520Ebola%2520Emergency%2520Response%2520Dutch%2520Embassy%25202%2520%252805.08.2015%2529.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 882,
+            "filename": "Annual%2520report%2520Protracted%2520Crises%25202014%2520-%2520final%2520version%2520010515%2520incl%2520financial%2520outcome%2520per%2520country.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Annual%2520report%2520Protracted%2520Crises%25202014%2520-%2520final%2520version%2520010515%2520incl%2520financial%2520outcome%2520per%2520country.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Annual%2520report%2520Protracted%2520Crises%25202014%2520-%2520final%2520version%2520010515%2520incl%2520financial%2520outcome%2520per%2520country.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 883,
+            "filename": "20160106%2520SSJR2%2520-%2520CN%2520ZOA%2520final.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/20160106%2520SSJR2%2520-%2520CN%2520ZOA%2520final.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/20160106%2520SSJR2%2520-%2520CN%2520ZOA%2520final.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 884,
+            "filename": "Concept%2520Note%2520Joint%2520Response%2520Yemen%2520-%2520ZOA.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Concept%2520Note%2520Joint%2520Response%2520Yemen%2520-%2520ZOA.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Concept%2520Note%2520Joint%2520Response%2520Yemen%2520-%2520ZOA.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 885,
+            "filename": "Yemen%2520YACJR%25202%2520-%2520Final%2520ZOA%2520CN%2520for%2520submission%2520to%2520CARE%2520%2528932%252C039%2529.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Yemen%2520YACJR%25202%2520-%2520Final%2520ZOA%2520CN%2520for%2520submission%2520to%2520CARE%2520%2528932%252C039%2529.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/Yemen%2520YACJR%25202%2520-%2520Final%2520ZOA%2520CN%2520for%2520submission%2520to%2520CARE%2520%2528932%252C039%2529.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 886,
+            "filename": "9809-NIJR2%2520Concept%2520Note%2520submitted%2520to%2520CEO%2520FINAL%2520020915.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/9809-NIJR2%2520Concept%2520Note%2520submitted%2520to%2520CEO%2520FINAL%2520020915.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/9809-NIJR2%2520Concept%2520Note%2520submitted%2520to%2520CEO%2520FINAL%2520020915.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 887,
+            "filename": "ETJR%2520Concept%2520Note%2520-%2520ZOA.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/ETJR%2520Concept%2520Note%2520-%2520ZOA.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/560\/ETJR%2520Concept%2520Note%2520-%2520ZOA.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "605": [
+        {
+            "docId": 893,
+            "filename": "TGVCI%2520TOR.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/TGVCI%2520TOR.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/605\/TGVCI%2520TOR.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "561": [
+        {
+            "docId": 929,
+            "filename": "MinBuZa%2520IATI%2520publication%2520guidelines-v09.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/MinBuZa%2520IATI%2520publication%2520guidelines-v09.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/561\/MinBuZa%2520IATI%2520publication%2520guidelines-v09.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "575": [
+        {
+            "docId": 932,
+            "filename": "Copy%2520of%2520UK%2520Aid%2520Direct-logical-framework%2520v3%2520approved-2.xls",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Copy%2520of%2520UK%2520Aid%2520Direct-logical-framework%2520v3%2520approved-2.xls",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/575\/Copy%2520of%2520UK%2520Aid%2520Direct-logical-framework%2520v3%2520approved-2.xls",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "622": [
+        {
+            "docId": 934,
+            "filename": "Bsk%2520ActionAid.pdf",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Bsk%2520ActionAid.pdf",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/622\/Bsk%2520ActionAid.pdf",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "336": [
+        {
+            "docId": 681,
+            "filename": "Summary_Dev_4%2520African%2520countries_Healthcare_DFID.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Summary_Dev_4%2520African%2520countries_Healthcare_DFID.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/336\/Summary_Dev_4%2520African%2520countries_Healthcare_DFID.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        },
+        {
+            "docId": 680,
+            "filename": "Summary_Dev_Kenya_Cash%2520transfers_DFID.docx",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/Summary_Dev_Kenya_Cash%2520transfers_DFID.docx",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/336\/Summary_Dev_Kenya_Cash%2520transfers_DFID.docx",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ],
+    "294": [
+        {
+            "docId": 1126,
+            "filename": "test-20160630020600.php",
+            "size": 0,
+            "localFilePath": "\/var\/www\/html\/aidstream-new\/public\/files\/documents\/test-20160630020600.php",
+            "toMigratePath": "https:\/\/s3-us-west-2.amazonaws.com\/aidstream-demo\/documents\/294\/test-20160630020600.php",
+            "fileStatus": false,
+            "s3MigrationStatus": false
+        }
+    ]
+}

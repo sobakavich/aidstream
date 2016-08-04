@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Organization\Organization;
+//use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Filesystem\Factory as Filesystem;
 
 /**
  * Class HomeController
@@ -21,7 +23,7 @@ class HomeController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Filesystem $filesystem)
     {
         $organizationCount = $this->organizationCount->initializeOrganizationQueryBuilder()->get()->count();
 

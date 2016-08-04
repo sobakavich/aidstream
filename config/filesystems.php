@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default' => 's3',
     /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
@@ -47,16 +47,16 @@ return [
         ],
         's3'        => [
             'driver' => 's3',
-            'key'    => 'your-key',
-            'secret' => 'your-secret',
-            'region' => 'your-region',
-            'bucket' => 'your-bucket',
+            'key'    => env('S3_KEY'),
+            'secret' => env('S3_SECRET'),
+            'region' => env('S3_REGION'),
+            'bucket' => env('S3_BUCKET'),
         ],
         'rackspace' => [
             'driver'    => 'rackspace',
-            'username'  => 'your-username',
-            'key'       => 'your-key',
-            'container' => 'your-container',
+            'username'  => 'your - username',
+            'key'       => 'your - key',
+            'container' => 'your - container',
             'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
             'region'    => 'IAD',
             'url_type'  => 'publicURL'
@@ -81,7 +81,7 @@ return [
      */
     'iati_registry_api_base_url' => env('REGISTRY_URL', 'test'),
     'iati_registry_dummy_url'    => '',
-    'languages' => [
+    'languages'                  => [
         'v201' => [
             'activity' => [
                 'language_codelist_path' => '/Core/V201/Codelist/en/Activity/Language.json'
