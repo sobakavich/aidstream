@@ -42,7 +42,10 @@ class UserPermissions extends Command
     public function handle()
     {
         $method = $this->argument('method');
-        $this->$method();
+
+        if (method_exists($this, $method)) {
+            $this->$method();
+        }
     }
 
     protected function userPermissionExcel()
@@ -98,14 +101,17 @@ class UserPermissions extends Command
         $users = $this->user->getAllUsers();
 
         foreach ($users as $user) {
-            if (!is_null($user->user_permission)) {
-                $userDetails = $this->user->find($user->id);
-                if (array_key_exists('publish', $user->user_permission) && $user->user_permission['publish'] != "") {
-                    $userDetails->role_id = 2;
+            $permission = $user->user_permission;
+            if (!is_null($permission)) {
+                if (array_key_exists('publish', $permission) && $permission['publish'] != "") {
+                    $user->role_id = 2;
+                } elseif (!array_key_exists('publish', $permission) && !isEmpty($permission)) {
+                    $user->role_id = 6;
                 } else {
-                    $userDetails->role_id = 6;
+                    $user->role_id = 7;
                 }
-                $userDetails->save();
+
+                $user->save();
             }
         }
     }
