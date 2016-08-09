@@ -402,9 +402,9 @@ class OrganizationRepository implements OrganizationRepositoryInterface
     {
         $organization                      = $this->getOrganization($orgId);
         $organization->registration_number = $registrationNumber;
-        $organization->registration_agency = $registrationAgency;
+        $organization->registration_agency = $country . '-' . $registrationAgency;
         $organization->country             = $country;
 
-        return $organization->save();
+            return $organization->save();
     }
 }

@@ -49,6 +49,7 @@ class ReportingOrganizations extends Command
     public function handle()
     {
         $method = $this->argument('method');
+
         if (method_exists($this, $method)) {
             $this->$method();
         }
@@ -79,24 +80,33 @@ class ReportingOrganizations extends Command
     {
         $organizations = $this->organization->all();
         $orgInfo       = [];
+
         foreach ($organizations as $organization) {
-            $orgIdentifier         = getVal($organization->reporting_org, [0, 'reporting_organization_identifier']);
-            $registrationSeparator = strrpos($orgIdentifier, '-');
-            $registrationNumber    = substr($orgIdentifier, $registrationSeparator + 1);
-            $registrationAgency    = substr($orgIdentifier, 0, $registrationSeparator);
-            $country               = substr($orgIdentifier, 0, strpos($orgIdentifier, '-'));
-            $dbCountry             = $organization->country;
+            if ($organization->reporting_org) {
+                $orgIdentifier         = getVal($organization->reporting_org, [0, 'reporting_organization_identifier']);
+                $registrationSeparator = strrpos($orgIdentifier, '-');
+
+                if ($registrationSeparator) {
+                    $registrationNumber    = substr($orgIdentifier, $registrationSeparator + 1);
+                } else {
+                    $registrationNumber    = substr($orgIdentifier, $registrationSeparator);
+                }
+
+                $registrationAgency    = substr($orgIdentifier, 0, $registrationSeparator);
+                $country               = substr($orgIdentifier, 0, strpos($orgIdentifier, '-'));
+                $dbCountry             = $organization->country;
 
 
-            $orgInfo[] = [
-                'Org ID'         => $organization->id,
-                'Org Name'       => $organization->name,
-                'Org Identifier' => $orgIdentifier,
-                'Reg Number'     => $registrationNumber,
-                'Reg Agency'     => $registrationAgency,
-                'Country'        => $country,
-                'DB Country'     => $dbCountry
-            ];
+                $orgInfo[] = [
+                    'Org ID'         => $organization->id,
+                    'Org Name'       => $organization->name,
+                    'Org Identifier' => $orgIdentifier,
+                    'Reg Number'     => $registrationNumber,
+                    'Reg Agency'     => $registrationAgency,
+                    'Country'        => $country,
+                    'DB Country'     => $dbCountry
+                ];
+            }
         }
 
         return $orgInfo;
