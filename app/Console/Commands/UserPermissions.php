@@ -103,16 +103,52 @@ class UserPermissions extends Command
         foreach ($users as $user) {
             $permission = $user->user_permission;
             if (!is_null($permission)) {
-                if (array_key_exists('publish', $permission) && $permission['publish'] != "") {
+                if ($this->userShouldBePublisher($permission)) {
                     $user->role_id = 2;
-                } elseif (!array_key_exists('publish', $permission) && !isEmpty($permission)) {
-                    $user->role_id = 6;
                 } else {
-                    $user->role_id = 7;
+                    $user->role_id = $this->getRoleIdByCurrentPermission($user);
                 }
 
                 $user->save();
             }
         }
+    }
+
+    /**
+     * Get the RoleId by the previous User Permissions.
+     * @param User $user
+     * @return int
+     */
+    protected function getRoleIdByCurrentPermission(User $user)
+    {
+        if ($this->userShouldBeViewer($user->user_permission)) {
+            return 7;
+        }
+
+        return 6;
+    }
+
+    /**
+     * Check if the User should have the Viewer role according to the previous designated permissions.
+     * @param $currentPermissions
+     * @return bool
+     */
+    protected function userShouldBeViewer($currentPermissions)
+    {
+        if (empty(array_filter($currentPermissions))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the User needs to have Publisher Role according to the previously assigned permissions.
+     * @param $currentPermission
+     * @return bool
+     */
+    protected function userShouldBePublisher($currentPermission)
+    {
+        return (array_key_exists('publish', $currentPermission) && $currentPermission['publish'] != "");
     }
 }
