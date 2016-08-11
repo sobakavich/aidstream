@@ -123,7 +123,7 @@ class SettingsRepository implements SettingsRepositoryInterface
             $settings->default_field_values = [$defaultValues];
             $settings->save();
         } else {
-            $this->settings->create(['default_field_values' => $defaultValues, 'organization_id' => session('org_id')]);
+            $this->settings->create(['default_field_values' => [$defaultValues], 'organization_id' => session('org_id')]);
         }
     }
 
@@ -152,5 +152,4 @@ class SettingsRepository implements SettingsRepositoryInterface
         }
 
     }
-
 }

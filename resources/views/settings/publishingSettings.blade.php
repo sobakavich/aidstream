@@ -1,12 +1,9 @@
 @extends('settings.settings')
 @section('panel-body')
     <div class="panel-body">
-        <div class="panel-content-heading">Registry Information</div>
         <div class="create-form settings-form">
             {!! form_start($form) !!}
-            <div class="modal-content" style="display:none" id="loading-img">
-                <img src="{{url('/images/ajax-loader.gif')}}">
-            </div>
+            <h2>Registry Information</h2>
             <div id="publishing_info1">
                 <div class="form-group">
                     {!! form_label($form->publisher_id, ['label' => 'Publisher ID']) !!}
@@ -36,7 +33,7 @@
     </div>
 @endsection
 @section('foot')
-{{--    <script src="{{url('js/chunk.js')}}"></script>--}}
+    <script src="{{url('js/chunk.js')}}"></script>
     <script src="{{url('js/userOnBoarding.js')}}"></script>
     <script>
         $(window).load(function () {
