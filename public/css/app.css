@@ -1918,8 +1918,7 @@ form > .add_to_collection[data-collection="legacy_data"] {
   left: 36px; }
 
 .create-form .btn-cancel {
-  position: absolute;
-  bottom: 0; }
+  position: absolute; }
 
 .modal {
   z-index: 10001 !important; }
