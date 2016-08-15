@@ -127,7 +127,9 @@ class WorkflowController extends Controller
             return redirect()->back()->withResponse(['type' => 'success', 'code' => ['publish_registry_publish', ['name' => '']]]);
         }
 
-        return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Could not publish to registry. (Publisher not found. <a href="/settings">Please check you publisher Id.</a>)']]]);
+        return redirect()->back()->withResponse(
+            ['type' => 'warning', 'code' => ['message', ['message' => 'Could not publish to registry. (Publisher not found. <a href="/settings">Please check you publisher Id.</a>)']]]
+        );
     }
 
     /**
@@ -137,7 +139,11 @@ class WorkflowController extends Controller
      */
     protected function hasNoPublisherInfo(Settings $settings)
     {
-        return (empty(getVal($settings->registry_info, [0, 'publisher_id'])) || empty(getVal($settings->registry_info, [0, 'api_id'])));
+        if ($settings->registry_info) {
+            return (empty(getVal($settings->registry_info, [0, 'publisher_id'])) || empty(getVal($settings->registry_info, [0, 'api_id'])));
+        }
+
+        return false;
     }
 
     /**
