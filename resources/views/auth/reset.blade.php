@@ -77,7 +77,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <img src="{{url('images/logo.png')}}" alt="">
-
                         <div class="panel-title">Reset password</div>
                         <p>This will reset your password and log you into AidStream.</p>
                     </div>
@@ -128,11 +127,9 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-submit">
-                                        Reset Password
-                                    </button>
-                                </div>
+                                <button type="submit" class="btn btn-primary btn-submit">
+                                    Reset Password
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -142,7 +139,7 @@
     </div>
 </div>
 @include('includes.footer')
-<!-- Scripts -->
+        <!-- Scripts -->
 @if(env('APP_ENV') == 'local')
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>

@@ -65,7 +65,7 @@
     </nav>
 </header>
 
-<div class="login-wrapper">
+<div class="register-wrapper">
     {{--    <div class="language-select-wrapper">
             <label for="" class="pull-left">Language</label>
 
@@ -79,38 +79,39 @@
                 @endforeach
             </ul>
         </div>--}}
-    <div class="container-fluid register-container">
+    <div class="container-fluid register-container same-identifier-container">
         <div class="row">
             <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                     </div>
-                    <div class="panel-body text-center">
+                    <div class="panel-body text-center same-identifier">
+                        <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
                         <h1>IATI Organisational Identifier Error</h1>
                         <p>
                             The IATI organisational identifier you entered <strong>"{{ $orgIdentifier }}"</strong> is being used by another organisation on AidStream.
                         </p>
-                        <h2>{{ $orgName }}</h2>
-                        <div class="col-md-12">
+                        <h2>"{{ $orgName }}"</h2>
+                        <div class="col-md-12 identifier-information">
                             <p>If this is your organisation you may do one of the followings</p>
-                            <div class="col-md-6">
-                                <h2>Administrator Information</h2>
-                                <p>
-                                    The administrator of the organisation name is
-                                </p>
-                                <h2>"{{ $adminName }}"</h2>
-                                <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Administrator</a>
-                            </div>
-                            <div class="col-md-6">
-                                <h2>Retrieve Login Credentials</h2>
+                            <div class="col-sm-6">
+                                <h3>Retrieve Login Credentials</h3>
                                 <p>
                                     I already have an account but forgotten my login credentials.
                                 </p>
                                 <a href="/password/email" class="btn btn-primary">Retrieve Login Credentials</a>
                             </div>
+                            <div class="col-sm-6">
+                                <h3>Administrator Information</h3>
+                                <p>
+                                    The administrator of the organisation name is
+                                </p>
+                                <span class="admin-name">{{ $adminName }}</span>
+                                <a href="{{ route('contact', ['need-new-user']) }}" class="btn btn-primary">Contact Administrator</a>
+                            </div>
                         </div>
                         <p>
-                            No, this is not my organisation. <a href="{{ route('contact', ['not-my-organization']) }}">Contact Support at support@aidstream.org</a>
+                            No, this is not my organisation. <a href="{{ route('contact', ['not-my-organization']) }}">Contact support@aidstream.org</a>
                         </p>
                     </div>
                 </div>
@@ -134,6 +135,18 @@
     <!-- Google Analytics -->
     <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
     <!-- End Google Analytics -->
+    <script>
+        $(document).ready(function () {
+            function hamburgerMenu() {
+                $('.navbar-toggle.collapsed').click(function () {
+                    $('.navbar-collapse').toggleClass('out');
+                    $(this).toggleClass('collapsed');
+                });
+            }
+
+            hamburgerMenu();
+        });
+    </script>
 @endif
 </body>
 </html>

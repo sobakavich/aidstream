@@ -249,7 +249,7 @@ function slash(value) {
                         type: 'get',
                         url: '/similar-organizations/' + value,
                         success: function (data) {
-                            var list = '<p>Please click on the organisation name if it is your organisation.</p>';
+                            var list = '<p class="text-center">Please click on the organisation name if it is your organisation.</p>';
                             for (var i in data) {
                                 list += '<li><a data-value="' + i + '">' + data[i] + '</a></li>';
                             }

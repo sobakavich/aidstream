@@ -53,7 +53,7 @@
     </nav>
 </header>
 
-<div class="login-wrapper">
+<div class="register-wrapper">
     {{--		    <div class="language-select-wrapper">
                     <label for="" class="pull-left">Language</label>
                 <div class="language-selector pull-left">
@@ -66,19 +66,18 @@
                             @endforeach
                         </ul>
                 </div>--}}
-    <div class="container-fluid login-container reset-container">
+    <div class="container-fluid register-container contact-admin-container">
         <div class="row">
-            <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
+            <h2 class="text-center">{{ $contactTitle }}</h2>
+            <div class="col-xs-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"></div>
                     <div class="panel-body">
-                        <h2>{{ $contactTitle }}</h2>
                         <div class="text-danger">{{ session('error_message') }}</div>
                         {{ Form::open(['method' => 'post', 'id' => 'form-contact']) }}
-                        {!! AsForm::text(['name' => 'full_name', 'required' => true]) !!}
-                        {!! AsForm::email(['name' => 'email', 'label' => 'E-mail Address', 'required' => true]) !!}
+                        {!! AsForm::text(['name' => 'full_name', 'label' => 'Your Name','required' => true]) !!}
+                        {!! AsForm::email(['name' => 'email', 'label' => 'Your E-mail Address', 'required' => true]) !!}
                         {!! AsForm::textarea(['name' => 'message', 'required' => true]) !!}
-                        {{ Form::button('Send', ['class' => 'btn btn-primary btn-submit', 'type' => 'submit']) }}
+                        {{ Form::button('Submit', ['class' => 'btn btn-primary btn-submit btn-form-default', 'type' => 'submit']) }}
                         {{ Form::close() }}
                     </div>
                 </div>
@@ -103,6 +102,14 @@
 <script>
     $(document).ready(function () {
         Contact.load();
+        function hamburgerMenu() {
+            $('.navbar-toggle.collapsed').click(function () {
+                $('.navbar-collapse').toggleClass('out');
+                $(this).toggleClass('collapsed');
+            });
+        }
+
+        hamburgerMenu();
     });
 </script>
 </body>

@@ -85,8 +85,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                     </div>
-                    <div class="panel-body">
-
+                    <div class="panel-body same-identifier org-warning">
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <span>
@@ -98,9 +97,9 @@
                                 </span>
                             </div>
                         @endif
-
+                        <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
                         <h1 class="text-center">Organisation Name Warning</h1>
-                        <p>
+                        <p class="text-center">
                             It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
                         </p>
                         <div class="input-wrapper {{ $orgName ? 'hidden' : '' }}">
@@ -124,7 +123,7 @@
 
                         <div class="col-md-12 text-center">
                             <div class="col-md-6">My organisation is not in the list.</div>
-                            <div class="col-md-6 organization-list">
+                            <div class="col-md-6">
                                 <a data-value="">None of these are my organisation.</a>
                                 {{ Form::button('Continue', ['class' => 'btn btn-primary btn-submit btn-register prevent-disable hidden', 'type' => 'submit', 'disabled' => 'disabled']) }}
                             </div>

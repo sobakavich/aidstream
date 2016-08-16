@@ -1,4 +1,5 @@
-<div class="input-wrapper">
+<div class="registration-inner-wrapper">
+<div class="text-wrapper">
     <h2>Organisation Information</h2>
     <p>Information about the <strong>organisation</strong> you want to create an account for on AidStream</p>
 </div>
@@ -10,10 +11,10 @@
     </div>
     <div class="col-xs-12 col-md-12">
         {!! AsForm::select(['name' => 'organization[organization_type]', 'class' => 'organization_type', 'data' => $orgType, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => 'Select a Type']) !!}
-        {!! AsForm::select(['name' => 'organization[country]', 'class' => 'country', 'data' => $countries, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => 'Select a Country']) !!}
+        {!! AsForm::select(['name' => 'organization[country]', 'class' => 'country', 'label' => 'Organization Country', 'data' => $countries, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => 'Select a Country']) !!}
     </div>
     <div class="col-xs-12 col-md-12">
-        {!! AsForm::text(['name' => 'organization[organization_address]', 'class' => 'organization_address', 'label' => 'Address', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
+        {!! AsForm::text(['name' => 'organization[organization_address]', 'class' => 'organization_address', 'label' => 'Organization Address', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
         {!! AsForm::select(['name' => 'organization[organization_registration_agency]', 'class' => 'organization_registration_agency', 'data' => $orgRegAgency, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => 'Select an Agency']) !!}
         <p>
             <button type="button" class="btn-xs btn-link add_agency">Add Agency</button>
@@ -25,10 +26,8 @@
     </div>
     <div class="col-xs-12 col-md-12">
         {!! AsForm::text(['name' => 'organization[registration_number]', 'class' => 'registration_number', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
-        {!! AsForm::text(['name' => 'organization[organization_identifier]', 'help' => 'registration_org_identifier', 'label' => 'IATI Organizational Identifier', 'class' => 'organization_identifier', 'id' => 'organization[organization_identifier]', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'attr' => ['readonly' => 'readonly']]) !!}
+        {!! AsForm::text(['name' => 'organization[organization_identifier]', 'help' => 'registration_org_identifier', 'label' => 'Organizational IATI Identifier', 'class' => 'organization_identifier', 'id' => 'organization[organization_identifier]', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'attr' => ['readonly' => 'readonly']]) !!}
     </div>
 </div>
-
-<div class="col-md-12 text-center">
-    {{ Form::button('Continue Registration', ['class' => 'btn btn-primary btn-submit btn-register btn-tab', 'type' => 'button',  'data-tab-trigger' => '#tab-users']) }}
 </div>
+{{ Form::button('Continue Registration', ['class' => 'btn btn-primary btn-submit btn-register btn-tab pull-right', 'type' => 'button',  'data-tab-trigger' => '#tab-users']) }}

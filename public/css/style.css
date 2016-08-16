@@ -511,32 +511,7 @@ footer {
 
   .organisations-list ul li {
     width: 33%; }
-
-  .navbar-toggle {
-    display: none; }
-
-  .navbar-collapse.collapse {
-    display: block !important; }
-
-  .navbar-header {
-    float: left; }
-
-  .navbar-nav {
-    float: left;
-    margin: 0; }
-
-  .navbar-default .navbar-collapse {
-    border: none; }
-
-  .navbar-right {
-    float: right !important;
-    margin-right: -15px; }
-
-  .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a.active {
-    color: #038ED6; }
-
-  .navbar-nav > li {
-    float: left; } }
+ }
 @media all and (min-width: 768px) {
   h1 {
     font-size: 40px; }
@@ -695,7 +670,37 @@ footer {
     margin-right: auto; }
 
   .organisation-detail-container .contact-section .detail {
-    margin-top: 10px; } }
+    margin-top: 10px; }
+
+
+  .navbar-toggle {
+    display: none; }
+
+  .navbar-collapse.collapse {
+    display: block !important; }
+
+  .navbar-header {
+    float: left; }
+
+  .navbar-nav {
+    float: left;
+    margin: 0; }
+
+  .navbar-default .navbar-collapse {
+    border: none;
+    margin-right: 0;
+  }
+
+  .navbar-right {
+    float: right !important;
+    margin-right: -15px; }
+
+  .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a.active {
+    color: #038ED6; }
+
+  .navbar-nav > li {
+    float: left; }
+}
 .jspVerticalBar, .jspTrack {
   background: #f9f9f9 !important; }
 
@@ -743,7 +748,7 @@ text {
       min-height: 198px; }
   .organisation-detail-container .activities-detail-section .content-3 .content-item {
     padding: 35px; } }
-@media all and (max-width: 599px) {
+@media all and (max-width: 767px) {
   .navbar-default .navbar-toggle {
     background: transparent;
     border: none;
@@ -754,6 +759,10 @@ text {
       width: 25px;
       height: 3px;
       background: #00A8FF; }
+
+    .navbar-header {
+      float: none;
+    }
 
   /*
    * Support for: Chrome 36+, IE9+, Firefox, 16+, Safari 3.2+
