@@ -37,13 +37,16 @@
         <div class="navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
                 <li><a class="{{ Request::is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's Using</a></li>
-                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User Guide</a></li>
+                <li><a class="{{ Request::is('who-is-using') ? 'active' : '' }}" href="{{ url('/who-is-using') }}">Who's
+                        Using</a></li>
+                <li><a href="https://github.com/younginnovations/aidstream-new/wiki/User-Guide" target="_blank">User
+                        Guide</a></li>
                 <!--<li><a href="#">Snapshot</a></li>-->
             </ul>
             <div class="action-btn pull-left">
                 @if(auth()->check())
-                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}" class="btn btn-primary">Go
+                    <a href="{{ url((auth()->user()->role_id == 1 || auth()->user()->role_id == 2) ? config('app.admin_dashboard') : config('app.super_admin_dashboard'))}}"
+                       class="btn btn-primary">Go
                         to Dashboard</a>
                 @else
                     <a href="{{ url('/auth/login')}}" class="btn btn-primary">Login/Register</a>
@@ -68,13 +71,10 @@
                 </div>--}}
     <div class="container-fluid login-container reset-container">
         <div class="row">
-            <div class="col-lg-4 col-md-8 col-md-offset-2 form-body">
+            <h1 class="text-center">Reset password</h1>
+            <p class="text-center">Please enter your email address to reset your account's password.</p>
+            <div class="col-lg-4 col-md-8 reset-block">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src="{{url('images/logo.svg')}}" alt="">
-
-                        <div class="panel-title">Reset password</div>
-                    </div>
                     <div class="panel-body">
                         @if (session('status'))
                             <div class="alert alert-success">
@@ -97,34 +97,37 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                            <div class="input-wrapper">
+                            <div class="input-wrapper reset-input-wrapper">
                                 <div class="form-group">
-                                    <label class="control-label">E-Mail Address</label>
+                                    <label class="control-label">Your E-Mail Address</label>
 
                                     <div class="col-md-12">
-                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                        <input type="email" class="form-control" name="email"
+                                               value="{{ old('email') }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-submit">
-                                            Send Password Reset Link
-                                        </button>
-                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-submit">
+                                        Send Password Reset Link
+                                    </button>
                                 </div>
                             </div>
-                            <p>
-                                If you have forgotten your email address, please select your account type to continue.
-                            </p>
-                            <p>
-                                <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'user') : route('similar-organizations', 'user') }}" class="btn btn-primary btn-submit">
-                                    Organisation user account
-                                </a>
-                                <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'admin') : route('similar-organizations', 'admin') }}" class="btn btn-primary btn-submit">
-                                    Organisation admin account
-                                </a>
-                            </p>
+                            <div class="organisation-account-wrapper">
+                                <p class="text-center">
+                                    If you have forgotten your email address, please select your account type to continue.
+                                </p>
+                                <p>
+                                    <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'user') : route('similar-organizations', 'user') }}"
+                                       class="btn btn-primary btn-submit">
+                                        Organisation user account
+                                    </a>
+                                    <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'admin') : route('similar-organizations', 'admin') }}"
+                                       class="btn btn-primary btn-submit">
+                                        Organisation admin account
+                                    </a>
+                                </p>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -133,7 +136,7 @@
     </div>
 </div>
 @include('includes.footer')
-<!-- Scripts -->
+        <!-- Scripts -->
 @if(env('APP_ENV') == 'local')
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>

@@ -705,41 +705,6 @@ footer {
   .organisations-list ul li {
     width: 33%;
   }
-
-  .navbar-toggle {
-    display: none;
-  }
-
-  .navbar-collapse.collapse {
-    display: block !important;
-  }
-
-  .navbar-header {
-    float: left;
-  }
-
-  .navbar-nav {
-    float: left;
-    margin: 0;
-  }
-
-  .navbar-default .navbar-collapse {
-    border: none;
-  }
-
-  .navbar-right {
-    float: right !important;
-    margin-right: -15px;
-  }
-
-  .navbar-default .navbar-nav > li > a {
-    &:focus, &:hover, &.active {
-      color: $color_lochmara_approx;
-    }
-  }
-  .navbar-nav > li {
-    float: left;
-  }
 }
 
 @media all and (min-width: 768px) {
@@ -950,6 +915,42 @@ footer {
   .organisation-detail-container .contact-section .detail {
     margin-top: 10px;
   }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-collapse.collapse {
+    display: block !important;
+  }
+
+  .navbar-header {
+    float: left;
+  }
+
+  .navbar-nav {
+    float: left;
+    margin: 0;
+  }
+
+  .navbar-default .navbar-collapse {
+    border: none;
+    margin-right: 0;
+  }
+
+  .navbar-right {
+    float: right !important;
+    margin-right: -15px;
+  }
+
+  .navbar-default .navbar-nav > li > a {
+    &:focus, &:hover, &.active {
+      color: $color_lochmara_approx;
+    }
+  }
+  .navbar-nav > li {
+    float: left;
+  }
 }
 
 .jspVerticalBar, .jspTrack {
@@ -1019,7 +1020,7 @@ text {
   }
 }
 
-@media all and (max-width: 599px) {
+@media all and (max-width: 767px) {
   .navbar-default .navbar-toggle {
     background: transparent;
     border: none;
@@ -1037,6 +1038,11 @@ text {
   /*
    * Support for: Chrome 36+, IE9+, Firefox, 16+, Safari 3.2+
   */
+
+  .navbar-header {
+    float: none;
+  }
+
   .navbar-toggle {
     margin-top: 13px;
     z-index: 3;

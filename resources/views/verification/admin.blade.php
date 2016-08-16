@@ -19,12 +19,6 @@
     {!! AsForm::text(['name' => 'api_id', 'label' => 'API Key', 'parent' => 'col-xs-12 col-sm-6 col-md-6']) !!}
 </div>
 
-<div class="col-md-12 text-center">
-    {{ Form::button('Save and Continue', ['class' => 'btn btn-primary', 'type' => 'submit']) }}
-    {{ Form::button('I will add this later', ['class' => 'btn btn-primary', 'type' => 'button', 'data-dismiss' => 'modal']) }}
-</div>
-
-{{ Form::close() }}
 <p>
     You can also add this information via your Settings page, after you login.
 </p>
@@ -32,3 +26,10 @@
     Thank you for choosing AidStream to help you publish your data to the IATI Registry. Please login to learn more about using AidStream.If you need any help, you can contact us at
     <a href="mailto:support@aidstream">support@aidstream.org</a>
 </p>
+
+<div class="col-md-12">
+    {{ Form::button('I will add this later', ['class' => 'btn btn-primary pull-left', 'type' => 'button', 'data-dismiss' => 'modal']) }}
+    {{ Form::button('Save and Continue', ['class' => 'btn btn-primary pull-right', 'type' => 'submit']) }}
+</div>
+
+{{ Form::close() }}
