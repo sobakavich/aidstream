@@ -14,7 +14,7 @@ class ReportingOrganizations extends Command
      *
      * @var string
      */
-    protected $signature = 'migrate:reporting-organizations  {method} {pageNo=1} {--verify}';
+    protected $signature = 'migrate:reporting-organizations {method} {pageNo=1} {--verify}';
 
     /**
      * The console command description.
@@ -87,14 +87,14 @@ class ReportingOrganizations extends Command
                 $registrationSeparator = strrpos($orgIdentifier, '-');
 
                 if ($registrationSeparator) {
-                    $registrationNumber    = substr($orgIdentifier, $registrationSeparator + 1);
+                    $registrationNumber = substr($orgIdentifier, $registrationSeparator + 1);
                 } else {
-                    $registrationNumber    = substr($orgIdentifier, $registrationSeparator);
+                    $registrationNumber = substr($orgIdentifier, $registrationSeparator);
                 }
 
-                $registrationAgency    = substr($orgIdentifier, 0, $registrationSeparator);
-                $country               = substr($orgIdentifier, 0, strpos($orgIdentifier, '-'));
-                $dbCountry             = $organization->country;
+                $registrationAgency = substr($orgIdentifier, 0, $registrationSeparator);
+                $country            = substr($orgIdentifier, 0, strpos($orgIdentifier, '-'));
+                $dbCountry          = $organization->country;
 
 
                 $orgInfo[] = [
@@ -189,20 +189,46 @@ class ReportingOrganizations extends Command
 
     protected function orgName()
     {
-        $organizations = $this->organization->all();
+        $organizations                = $this->organization->all();
+        $organizationsWithDescription = [649, 655, 667, 692, 662, 701, 714];
+
         foreach ($organizations as $organization) {
+            if ($organization->reporting_org) {
+                $orgNarrative = getVal($organization->reporting_org, [0, 'narrative'], []);
 
-            $orgNarrative = getVal($organization->reporting_org, [0, 'narrative']);
-
-            if ($orgNarrative == []) {
-                $orgName = [
-                    "narrative" => $organization->name,
-                    "language"  => ""
-                ];
-                $this->orgRepository->insertNarrativeBlock($organization->id, $orgName);
+                if ($orgNarrative == []) {
+                    $orgName = [
+                        "narrative" => $organization->name,
+                        "language"  => ""
+                    ];
+                    $this->orgRepository->insertNarrativeBlock($organization->id, $orgName);
+                } else {
+                    ($organization->reporting_org[0]['narrative'][0]['narrative']) ?: $this->orgRepository->insertOrgName($organization->id, $organization->name);
+                }
             } else {
-                $orgName = ($organization->reporting_org[0]['narrative'][0]['narrative']) ?: $this->orgRepository->insertOrgName($organization->id, $organization->name);
+                $organization->reporting_org = [
+                    [
+                        "reporting_organization_identifier" => "",
+                        "reporting_organization_type"       => "",
+                        "narrative"                         => [["narrative" => $organization->name, "language" => ""]]
+                    ]
+                ];
+
+                $organization->save();
             }
+
+            $this->saveOrganizationNameInPlaceOfDescription($organization, $organizationsWithDescription);
+        }
+    }
+
+    protected function saveOrganizationNameInPlaceOfDescription($organization, $organizationsWithDescription)
+    {
+        if (in_array($organization->id, $organizationsWithDescription)) {
+            $reportingOrganization                                 = $organization->reporting_org;
+            $reportingOrganization[0]['narrative'][0]['narrative'] = $organization->name;
+            $organization->reporting_org                           = $reportingOrganization;
+
+            $organization->save();
         }
     }
 }
