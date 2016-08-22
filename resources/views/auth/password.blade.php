@@ -71,7 +71,7 @@
                 </div>--}}
     <div class="container-fluid login-container reset-container">
         <div class="row">
-            <h1 class="text-center">Reset password</h1>
+            <h1 class="text-center">Reset Password</h1>
             <p class="text-center">Please enter your email address to reset your account's password.</p>
             <div class="col-lg-4 col-md-8 reset-block">
                 <div class="panel panel-default">
@@ -120,11 +120,11 @@
                                 <p>
                                     <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'user') : route('similar-organizations', 'user') }}"
                                        class="btn btn-primary btn-submit">
-                                        Organisation user account
+                                        Organisation User Account
                                     </a>
                                     <a href="{{ session('same_identifier_org_id') ? route('submit-similar-organization', 'admin') : route('similar-organizations', 'admin') }}"
                                        class="btn btn-primary btn-submit">
-                                        Organisation admin account
+                                        Organisation Admin Account
                                     </a>
                                 </p>
                             </div>
@@ -136,7 +136,7 @@
     </div>
 </div>
 @include('includes.footer')
-        <!-- Scripts -->
+<!-- Scripts -->
 @if(env('APP_ENV') == 'local')
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
