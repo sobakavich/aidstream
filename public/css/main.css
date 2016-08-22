@@ -3097,9 +3097,6 @@ select.form-control, form .select2-container {
   border: 1px solid #BFDFEC;
   margin-bottom: 0.75em; }
 
-.select2-container {
-  height: auto !important; }
-
 form .select2-container {
   width: 100% !important;
   margin-bottom: 0; }
@@ -3113,6 +3110,9 @@ form .select2-container {
 .select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
   border: 0 !important;
   background: none !important; }
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: 0 !important; }
 
 .has-error {
   font-style: normal; }
@@ -7243,8 +7243,26 @@ body > .skiptranslate iframe {
   display: block;
   margin-top: -8px; }
 
+.modal-body {
+  padding: 20px 20px 0; }
+  .modal-body .form-control {
+    margin-bottom: 0; }
+  .modal-body .form-container > .form-group {
+    margin-bottom: 30px;
+    overflow: hidden; }
+    .modal-body .form-container > .form-group label {
+      padding-left: 0; }
+    .modal-body .form-container > .form-group .col-xs-12 {
+      padding: 0; }
+    .modal-body .form-container > .form-group:last-child {
+      margin-bottom: 0; }
+
+.modal-header {
+  padding: 20px; }
+
 .modal-footer {
-  border: 0; }
+  border: 0;
+  padding: 20px; }
 
 .verification-modal .modal-body p {
   margin-bottom: 24px;
@@ -7294,7 +7312,12 @@ body > .skiptranslate iframe {
       display: block;
       -webkit-border-radius: 4px;
               border-radius: 4px;
-      background: #f5f5f5; }
+      background: #f5f5f5;
+      line-height: 22px;
+      -o-text-overflow: ellipsis;
+         text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
       .organization-list li a:hover {
         text-decoration: none;
         background: #DEF1FB; }
@@ -7328,7 +7351,29 @@ body > .skiptranslate iframe {
   padding: 8px; }
 
 .help-text + .tooltip > .tooltip-arrow {
-  border-top-color: #fff; }
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: -5px;
+  left: 50%;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 6px solid black;
+  border-color: transparent transparent #fff #fff;
+  -webkit-transform-origin: 0 0;
+     -moz-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
+       -o-transform-origin: 0 0;
+          transform-origin: 0 0;
+  -webkit-transform: rotate(-45deg);
+     -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+       -o-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  -webkit-box-shadow: -3px 3px 3px 0 rgba(204, 204, 204, 0.6);
+          box-shadow: -3px 3px 3px 0 rgba(204, 204, 204, 0.6); }
 
 @media all and (max-width: 1030px) {
   .activity-status {
@@ -7854,7 +7899,9 @@ body > .skiptranslate iframe {
   .verification-modal .modal-dialog {
     width: 700px; }
     .verification-modal .modal-dialog .modal-content {
-      padding: 30px 50px; } }
+      padding: 30px 50px; }
+  .modal-body .form-container > .form-group label {
+    margin: 12px 0; } }
 
 @media all and (min-width: 1001px) {
   .element-sidebar-wrapper {

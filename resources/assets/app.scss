@@ -151,9 +151,9 @@ select.form-control, form .select2-container {
   margin-bottom: 0.75em;
 }
 
-.select2-container {
-  height: auto !important;
-}
+//.select2-container {
+//  height: auto !important;
+//}
 
 form .select2-container {
   width: 100% !important;
@@ -171,6 +171,10 @@ form .select2-container {
 .select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
   border: 0 !important;
   background: none !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: 0!important;
 }
 
 .has-error {
@@ -5131,8 +5135,33 @@ body > .skiptranslate iframe {
   margin-top: -8px;
 }
 
+.modal-body {
+  padding: 20px 20px 0;
+  .form-control {
+    margin-bottom: 0;
+  }
+  .form-container > .form-group {
+    margin-bottom: 30px;
+    overflow: hidden;
+    label {
+      padding-left: 0;
+    }
+    .col-xs-12 {
+      padding: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.modal-header {
+  padding: 20px;
+}
+
 .modal-footer {
   border: 0;
+  padding: 20px;
 }
 
 .verification-modal {
@@ -5193,6 +5222,10 @@ body > .skiptranslate iframe {
       display: block;
       border-radius: 4px;
       background: #f5f5f5;
+      line-height: 22px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
       &:hover {
         text-decoration: none;
         background: #DEF1FB;
@@ -5234,7 +5267,18 @@ body > .skiptranslate iframe {
     padding: 8px;
   }
   > .tooltip-arrow {
-    border-top-color: #fff;
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: -5px;
+    left: 50%;
+    box-sizing: border-box;
+    border: 6px solid black;
+    border-color: transparent transparent #fff #fff;
+    transform-origin: 0 0;
+    transform: rotate(-45deg);
+    box-shadow: -3px 3px 3px 0 rgba(204,204,204,0.6);
   }
 }
 
@@ -6096,6 +6140,9 @@ body > .skiptranslate iframe {
     .modal-content {
       padding: 30px 50px;
     }
+  }
+  .modal-body .form-container>.form-group label {
+    margin: 12px 0;
   }
 }
 
