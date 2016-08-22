@@ -99,7 +99,7 @@
 
                             <div class="input-wrapper reset-input-wrapper">
                                 <div class="form-group">
-                                    <label class="control-label">Your E-Mail Address</label>
+                                    <label class="control-label required">Your E-Mail Address</label>
 
                                     <div class="col-md-12">
                                         <input type="email" class="form-control" name="email"
