@@ -89,7 +89,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         @include('includes.response')
-                        {{--*/ $regInfo = (array) (old() ? old() : session()->pull('reg_info')); /*--}}
+                        {{--*/ $regInfo = (array) (old() ? old() : $regInfo); /*--}}
                         {{ Form::model($regInfo, ['url' => route('registration.register'), 'method' => 'post', 'id' => 'from-registration']) }}
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane clearfix active" id="tab-organization">
