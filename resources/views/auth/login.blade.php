@@ -134,55 +134,54 @@
         </div>
     </div>
 
-    @if(session('verification_message'))
-        <div class="modal verification-modal" tabindex="-1" role="dialog" style="display: block;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        <img src="{{ url('/images/ic-verified.svg') }}" alt="verified" width="66" height="66">
-                        <h4 class="modal-title text-center">Email Verified</h4>
-                    </div>
-                    <div class="modal-body clearfix">
-                        {!! session('verification_message') !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-backdrop in"></div>
-    @endif
-
 </div>
 @include('includes.footer')
-        <!-- Scripts -->
+<!-- Scripts -->
 @if(env('APP_ENV') == 'local')
     <script type="text/javascript" src="{{url('/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
-    @endif
-            <!-- Google Analytics -->
-    <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
-    <!-- End Google Analytics -->
-    <script>
-        $(document).ready(function () {
-            function hamburgerMenu() {
-                $('.navbar-toggle.collapsed').click(function () {
-                    $('.navbar-collapse').toggleClass('out');
-                    $(this).toggleClass('collapsed');
-                });
-            }
-
-            hamburgerMenu();
-
-            var verificationModel = $('.verification-modal');
-            $('[data-dismiss="modal"]', verificationModel).click(function () {
-                verificationModel.next('.modal-backdrop').remove();
-                verificationModel.remove();
+@endif
+<!-- Google Analytics -->
+<script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
+<!-- End Google Analytics -->
+<script>
+    $(document).ready(function () {
+        function hamburgerMenu() {
+            $('.navbar-toggle.collapsed').click(function () {
+                $('.navbar-collapse').toggleClass('out');
+                $(this).toggleClass('collapsed');
             });
+        }
+
+        hamburgerMenu();
+    });
+</script>
+
+
+@if(session('verification_message'))
+    <div class="modal fade verification-modal" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <img src="{{ url('/images/ic-verified.svg') }}" alt="verified" width="66" height="66">
+                    <h4 class="modal-title text-center">Email Verified</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    {!! session('verification_message') !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.verification-modal').modal('show');
         });
     </script>
+@endif
 </body>
 </html>
