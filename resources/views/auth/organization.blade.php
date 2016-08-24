@@ -7,7 +7,7 @@
     <div class="input-wrapper">
         <div class="col-xs-12 col-md-12">
             {!! AsForm::text(['name' => 'organization[organization_name]', 'label' => 'Organisation Name', 'class' => 'organization_name', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!}
-            {!! AsForm::text(['name' => 'organization[organization_name_abbr]', 'class' => 'organization_name_abbr', 'label' => 'Organisation Name Abbreviation', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!}
+            {!! AsForm::text(['name' => 'organization[organization_name_abbr]', 'class' => 'organization_name_abbr', 'label' => 'Organisation Name Abbreviation', 'help' => 'registration_org_name_abbr', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<span class="availability-check hidden"></span>']) !!}
         </div>
         <div class="col-xs-12 col-md-12">
             {!! AsForm::select(['name' => 'organization[organization_type]', 'label' => 'Organisation Type', 'class' => 'organization_type', 'data' => $orgType, 'required' => true , 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'empty_value' => 'Select a Type']) !!}
