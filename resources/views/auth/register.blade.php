@@ -99,9 +99,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-12 create-account-wrapper">
-                <a href="{{ url('/auth/login') }}">I already have an account</a>
-            </div>
+            @if(session('tab') != '#tab-verification')
+                <div class="col-xs-12 col-md-12 create-account-wrapper">
+                    <a href="{{ url('/auth/login') }}">I already have an account</a>
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -312,7 +314,6 @@
     var checkOrgIdentifier = true;
     var agencies = JSON.parse($('.agencies').val());
     $(document).ready(function () {
-        $('form select').select2();
         Registration.abbrGenerator();
         Registration.checkAbbrAvailability();
         Registration.changeCountry();
@@ -331,6 +332,11 @@
         $('a[href="{{ $tab }}"]').tab('show');
         @endif
         @endif
+
+        $('form select').select2();
+        $('form select').on('select2:close', function (e) {
+            $(this).valid();
+        });
 
         //        Registration.similarOrgs();
         //        Registration.sameIdentifier();
