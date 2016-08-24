@@ -1,7 +1,7 @@
 <div class="registration-inner-wrapper">
     <div class="text-wrapper">
         <h2>Administrator Information</h2>
-        <p>Information for the <strong>administrator</strong> of your organisation's account on AidStream</p>
+        <p>Please provide details for your <strong>Administrator</strong> account.</p>
     </div>
 
     <div class="input-wrapper">
@@ -30,7 +30,7 @@
     </div>
     <div class="auth-info-wrapper">
         <p>AidStream supports <strong>multiple user accounts</strong> for an organisation.</p>
-        <span id="add-user">Add a user</span>
+        <span class="multi-user-info">You can add multiple users once your account is set up, or you can </span><span id="add-user">add additional users now.</span>
     </div>
 </div>
 {{ Form::button('Back to Organisation Information', ['class' => 'btn btn-primary btn-back btn-tab pull-left', 'type' => 'button',  'data-tab-trigger' => '#tab-organization']) }}

@@ -1,7 +1,7 @@
 <div class="registration-inner-wrapper">
     <div class="text-wrapper">
         <h2>Organisation Information</h2>
-        <p>Information about the <strong>organisation</strong> you want to create an account for on AidStream</p>
+        <p>Information about the <strong>organisation</strong> you want to create an account for on AidStream.</p>
     </div>
 
     <div class="input-wrapper">
