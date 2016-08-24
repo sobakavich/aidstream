@@ -33,6 +33,6 @@
         <span id="add-user">Add a user</span>
     </div>
 </div>
-{{ Form::button('Back to Organization Information', ['class' => 'btn btn-primary btn-back btn-tab pull-left', 'type' => 'button',  'data-tab-trigger' => '#tab-organization']) }}
+{{ Form::button('Back to Organisation Information', ['class' => 'btn btn-primary btn-back btn-tab pull-left', 'type' => 'button',  'data-tab-trigger' => '#tab-organization']) }}
 {{ Form::button('Complete Registration', ['class' => 'btn btn-primary btn-submit btn-register pull-right', 'type' => 'submit']) }}
 
