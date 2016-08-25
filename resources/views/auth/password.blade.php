@@ -106,13 +106,12 @@
                                                value="{{ old('email') }}">
                                     </div>
                                 </div>
-
-                                <div class="form-group">
+                            </div>
+                                <div class="form-group text-center">
                                     <button type="submit" class="btn btn-primary btn-submit">
                                         Send Password Reset Link
                                     </button>
                                 </div>
-                            </div>
                             <div class="organisation-account-wrapper">
                                 <p class="text-center">
                                     If you have forgotten your email address, please select your account type to continue.

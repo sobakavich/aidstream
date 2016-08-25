@@ -85,8 +85,7 @@
                                 </span>
                             </div>
                         @endif
-                        <img src="{{ url('/images/ic-warning.svg') }}" alt="warning" width="81" height="66">
-                        <h1 class="text-center">Organisation Name Warning</h1>
+                        <h1 class="text-center">Find your organization</h1>
                         <p class="text-center">
                             It seems there are account(s) on AidStream with same/similar organisation name you have entered during registration.
                         </p>

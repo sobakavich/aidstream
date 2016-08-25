@@ -785,7 +785,7 @@ label {
     margin: 0;
   }
   .col-md-12 {
-    margin-bottom: 20px;
+    margin-bottom: 0;
   }
 }
 
@@ -5127,6 +5127,9 @@ body > .skiptranslate iframe {
 }
 
 .organisation-account-wrapper {
+  border-top: 1px solid #ccc;
+  margin-top: 30px;
+  padding-top: 30px;
   > p:first-child {
     margin-bottom: 20px;
   }
