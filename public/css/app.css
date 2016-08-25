@@ -814,7 +814,7 @@ label {
   .reset-input-wrapper .form-group {
     margin: 0; }
   .reset-input-wrapper .col-md-12 {
-    margin-bottom: 20px; }
+    margin-bottom: 0; }
 
 .register-container .input-wrapper .has-error input[readonly] {
   -webkit-box-shadow: 0 0 0 1000px #FFF7F7 inset !important;
@@ -4429,23 +4429,26 @@ body > .skiptranslate iframe {
     background: #00A8FF url(../../images/ic-left-arrow.svg) no-repeat 20px -39px !important;
     border: 1px solid #00A8FF !important; }
 
-.organisation-account-wrapper > p:first-child {
-  margin-bottom: 20px; }
-
-.organisation-account-wrapper p > a {
-  width: 210px !important;
-  margin: 0 auto;
-  display: inherit;
-  line-height: 46px !important;
-  padding: 0 !important;
-  background: transparent;
-  color: #00A8FF;
-  border: 1px solid #00A8FF; }
-  .organisation-account-wrapper p > a:first-child {
+.organisation-account-wrapper {
+  border-top: 1px solid #ccc;
+  margin-top: 30px;
+  padding-top: 30px; }
+  .organisation-account-wrapper > p:first-child {
     margin-bottom: 20px; }
-  .organisation-account-wrapper p > a:hover {
-    background: #00A8FF;
+  .organisation-account-wrapper p > a {
+    width: 210px !important;
+    margin: 0 auto;
+    display: inherit;
+    line-height: 46px !important;
+    padding: 0 !important;
+    background: transparent;
+    color: #00A8FF;
     border: 1px solid #00A8FF; }
+    .organisation-account-wrapper p > a:first-child {
+      margin-bottom: 20px; }
+    .organisation-account-wrapper p > a:hover {
+      background: #00A8FF;
+      border: 1px solid #00A8FF; }
 
 .modal-header .close span {
   color: #00A8FF;
