@@ -26,7 +26,7 @@
                                 {!! form($form) !!}
                             </div>
                             <div class="download-transaction-wrap">
-                                <a href="{{route('download.activity-template')}}"
+                                <a href="{{route('activity.download-template')}}"
                                    class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
                                 <div>
                                     This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
