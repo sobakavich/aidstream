@@ -663,6 +663,41 @@ footer ul li {
     max-width: 100% !important;
 }
 
+.verification-wrapper {
+    padding: 30px 0;
+}
+
+.verification-wrapper h1 {
+    font: 48px/65px Open-Sans-Light;
+    margin-top: 15px;
+}
+
+.verification-wrapper p {
+    font-size: 16px !important;
+    line-height: 24px;
+    color: #777;
+}
+
+.verification-wrapper p strong {
+    color: #484848;
+}
+
+button.close {
+    opacity: 1;
+    font-weight: normal;
+}
+
+.modal-dialog .close span {
+    color: #00A8FF;
+    font-size: 40px;
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1;
+    cursor: pointer;
+}
+
 @media all and (min-width: 480px) {
     .organization-wrapper ul li {
         width: 32%;
