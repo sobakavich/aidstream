@@ -78,6 +78,6 @@ class ImportController extends Controller
     {
         $file = $request->file('activity');
 
-        $this->importManager->import($file);
+        $this->importManager->process($file);
     }
 }

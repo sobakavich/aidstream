@@ -3,5 +3,6 @@
 
 abstract class Csv
 {
+    public $row;
 
 }
