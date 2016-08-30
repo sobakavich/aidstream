@@ -42,7 +42,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
                             {{--<li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
-                            <li><a href="{{ route('import-activity.index') }}">Upload Activities</a></li>
+                            <li><a href="{{ route('activity.upload-csv') }}">Upload Activities</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -167,8 +167,8 @@
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <!-- End Google Analytics -->
-
 @yield('script')
+
 @yield('foot')
 
 </body>
