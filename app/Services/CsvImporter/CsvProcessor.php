@@ -7,14 +7,9 @@ class CsvProcessor
 {
     protected $csv;
 
-    protected $data;
+    protected $data = [];
 
     public $model;
-
-    /**
-     * @var array
-     */
-    protected $activityContainer = [];
 
     protected $csvIdentifier = 'activity_identifier';
 
@@ -25,12 +20,12 @@ class CsvProcessor
 
     public function handle()
     {
-        $this->make('App\Services\CsvImporter\Entities\Activity\Activity');
         $this->groupValues($this->csv);
-        $this->model->process()
-                    ->validate()
-                    ->keep();
 
+        $this->make('App\Services\CsvImporter\Entities\Activity\Activity');
+
+        $this->model->process();
+        dd($this);
     }
 
     protected function make($class)
@@ -59,17 +54,16 @@ class CsvProcessor
                 }
             }
         }
-        dd($this->activityContainer);
     }
 
     protected function setValue($index, $key, $value)
     {
-        if (!isset($this->activityContainer[$index][$key])) {
-            $this->activityContainer[$index][$key] = null;
+        if (!isset($this->data[$index][$key])) {
+            $this->data[$index][$key] = null;
         }
 
         if (!(is_null($value) || $value == "")) {
-            $this->activityContainer[$index][$key][] = $value;
+            $this->data[$index][$key][] = $value;
         }
     }
 

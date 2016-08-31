@@ -5,6 +5,14 @@ abstract class Row
 {
     protected $fields;
 
+    abstract public function init();
+
+    abstract public function process();
+
+    abstract public function validate();
+
+    abstract public function keep();
+
     public function fields()
     {
         return $this->fields;

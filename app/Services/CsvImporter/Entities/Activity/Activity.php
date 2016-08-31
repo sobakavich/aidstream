@@ -13,22 +13,9 @@ class Activity extends Csv
     public function process()
     {
         foreach ($this->rows() as $row) {
-
+            $row->process()->validate()->keep();
         }
 
         return $this;
-    }
-
-    public function validate()
-    {
-        // TODO: Validate each row.
-
-        return $this;
-    }
-
-    public function keep()
-    {
-        // TODO: Implement keep() method.
-        // TODO: Write validated activity into JSON.
     }
 }

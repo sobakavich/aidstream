@@ -5,10 +5,6 @@ abstract class Csv
 {
     protected $rows;
 
-    abstract public function validate();
-
-    abstract public function keep();
-
     protected function make($rows, $class)
     {
         array_walk($rows, function ($row) use ($class) {
