@@ -7,16 +7,29 @@ class CsvProcessor
 {
     protected $csv;
 
-    protected $activity;
+    protected $data;
+
+    public $model;
 
     public function __construct($csv)
     {
-        $this->csv      = $csv;
-//        $this->activity = new Activity(new ActivityRow($csv));
+        $this->csv = $csv;
     }
 
     public function handle()
     {
+        $this->make('App\Services\CsvImporter\Entities\Activity\Activity');
 
+        $this->model->process()
+                    ->validate()
+                    ->keep();
+
+    }
+
+    protected function make($class)
+    {
+        if (class_exists($class)) {
+            $this->model = app()->make($class, [$this->data]);
+        }
     }
 }

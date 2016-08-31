@@ -48,11 +48,10 @@ class ImportManager
         try {
             $csv = $this->excel->load($file)->toArray();
 
-            $csvProcessor = new CsvProcessor($csv);
+//            $csvProcessor = new CsvProcessor($csv);
+//            $csvProcessor->handle();
 
-            $csvProcessor->handle();
-
-//            $this->processor->pushIntoQueue($csv);
+            $this->processor->pushIntoQueue($csv);
         } catch (Exception $exception) {
 
         }
