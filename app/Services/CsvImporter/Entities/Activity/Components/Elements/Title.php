@@ -13,28 +13,39 @@ class Title
 
     protected $data = [];
 
-    const CSV_HEADER = 'activity_title';
+    const CSV_HEADER = ['activity_title'];
 
     public function __construct($fields)
     {
-        if (array_key_exists(self::CSV_HEADER, $fields)) {
-            $this->narratives = $fields[self::CSV_HEADER];
+        $this->prepare($fields);
+    }
+
+    public function prepare($fields)
+    {
+        foreach ($fields as $key => $values) {
+            if (!is_null($values)) {
+                foreach ($values as $value) {
+                    $this->fillValues($key, $value);
+                }
+            }
         }
     }
 
-    public function prepare()
+    public function fillValues($key, $value)
     {
-        foreach ($this->narratives() as $narrative) {
-            $this->data[] = $this->fillValues($narrative);
+        if (array_key_exists($key, array_flip(self::CSV_HEADER))) {
+            $this->data[] = $this->setNarrative($value);
         }
-
-        return $this;
     }
 
-    public function narratives()
+    public function setNarrative($value)
     {
-        return $this->narratives;
+        $narrative          = ['narrative' => $value, 'language' => ''];
+        $this->narratives[] = $narrative;
+
+        return $narrative;
     }
+
 
     public function language()
     {
@@ -46,17 +57,8 @@ class Title
         return $this->template;
     }
 
-    protected function fillValues($narrative)
-    {
-//        $data = $this->template();
-
-//        $data['narrative'] = $narrative;
-
-        return ['narrative' => $narrative, 'language' => ''];
-    }
-
     public function data()
     {
-        return json_encode($this->data);
+        return $this->data;
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Services\CsvImporter\Entities\Activity\Activity;
 use App\Services\CsvImporter\Entities\Activity\Components\ActivityRow;
+use Exception;
 
 class CsvProcessor
 {
@@ -21,11 +22,14 @@ class CsvProcessor
     public function handle()
     {
         $this->groupValues($this->csv);
+        try {
+            $this->make('App\Services\CsvImporter\Entities\Activity\Activity');
+        } catch (Exception $exception) {
+            dd($exception);
+        }
 
-        $this->make('App\Services\CsvImporter\Entities\Activity\Activity');
-
-        $this->model->process();
-        dd($this);
+//        dd($this);
+//        $this->model->process();
     }
 
     protected function make($class)

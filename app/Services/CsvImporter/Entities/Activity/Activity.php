@@ -2,12 +2,18 @@
 
 use App\Services\CsvImporter\Entities\Csv;
 use App\Services\CsvImporter\Entities\Activity\Components\ActivityRow;
+use Exception;
 
 class Activity extends Csv
 {
     public function __construct($rows)
     {
-        $this->make($rows, 'App\Services\CsvImporter\Entities\Activity\Components\ActivityRow');
+        try {
+            $this->make($rows, 'App\Services\CsvImporter\Entities\Activity\Components\ActivityRow');
+        } catch (Exception $exception) {
+            dd($exception);
+        }
+
     }
 
     public function process()

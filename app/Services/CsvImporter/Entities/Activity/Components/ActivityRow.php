@@ -4,11 +4,17 @@ use App\Services\CsvImporter\Entities\Row;
 
 class ActivityRow extends Row
 {
-    protected $elements = ['title'];
+    protected $elements = ['identifier', 'title', 'description', 'activityStatus', 'activityDate'];
+
+    protected $identifier;
 
     protected $title;
 
     protected $description;
+
+    protected $activityStatus;
+
+    protected $activityDate;
 
     const BASE_NAMESPACE = 'App\Services\CsvImporter\Entities\Activity\Components\Elements';
 
@@ -16,6 +22,7 @@ class ActivityRow extends Row
     {
         $this->fields = $data;
         $this->init();
+        dd($this);
     }
 
     public function init()
@@ -37,6 +44,7 @@ class ActivityRow extends Row
         foreach ($this->elements as $element) {
             $this->$element->prepare();
         }
+
         // TODO: Implement process() method.
 
         return $this;
