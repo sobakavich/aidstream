@@ -1,11 +1,18 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\IatiElement;
+
 /**
  * Class Description
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
  */
-class Description
+class Description extends IatiElement
 {
+    /**
+     * CSV Header of Description with their code.
+     */
+    private $_csvHeaders = ['activity_description_general' => 1, 'activity_description_objectives' => 2, 'activity_description_target_groups' => 3, 'activity_description_others' => 4];
+
     /**
      * @var array
      */
@@ -27,16 +34,6 @@ class Description
     protected $template = [['type' => '', 'narrative' => ['narrative' => '', 'language' => '']]];
 
     /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
-     * CSV Header of Description with their code
-     */
-    private $_csvHeaders = ['activity_description_general' => 1, 'activity_description_objectives' => 2, 'activity_description_target_groups' => 3, 'activity_description_others' => 4];
-
-    /**
      * Description constructor.
      * @param $fields
      */
@@ -46,7 +43,7 @@ class Description
     }
 
     /**
-     * Prepare Description Element.
+     * Prepare the Description element.
      * @param $fields
      */
     public function prepare($fields)
@@ -75,15 +72,7 @@ class Description
     }
 
     /**
-     *
-     */
-    public function data()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Set type of Description.
+     * Set the type for the Description element.
      * @param $key
      * @return mixed
      */
@@ -96,7 +85,7 @@ class Description
     }
 
     /**
-     * Set narrative of Description.N
+     * Set the Narrative for the Description element.
      * @param $value
      * @return array
      */
@@ -106,5 +95,39 @@ class Description
         $this->narratives[] = $narrative;
 
         return $narrative;
+    }
+
+    /**
+     * Provides the rules for the IATI Element validation.
+     * @return array
+     */
+    public function rules()
+    {
+        // TODO: Implement rules() method.
+    }
+
+    /**
+     * Provides custom messages used for IATI Element Validation.
+     * @return array
+     */
+    public function messages()
+    {
+        // TODO: Implement messages() method.
+    }
+
+    /**
+     * Validate data for IATI Element.
+     */
+    public function validate()
+    {
+        // TODO: Implement validate() method.
+    }
+
+    /**
+     * Set the validity for the IATI Element data.
+     */
+    protected function setValidity()
+    {
+        // TODO: Implement setValidity() method.
     }
 }

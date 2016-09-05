@@ -1,12 +1,19 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\IatiElement;
 
 /**
  * Class Title
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
  */
-class Title
+class Title extends IatiElement
 {
+    /**
+     * Csv Header for Title element.
+     * @var array
+     */
+    private $_csvHeader = ['activity_title'];
+
     /**
      * @var
      */
@@ -18,19 +25,10 @@ class Title
     protected $languages;
 
     /**
+     * Template for Title element.
      * @var array
      */
     protected $template = [['narrative' => '', 'language' => '']];
-
-    /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
-     * @var array
-     */
-    private $csvHeader = ['activity_title'];
 
     /**
      * Title constructor.
@@ -42,13 +40,13 @@ class Title
     }
 
     /**
-     * Prepare Title Element.
+     * Prepare Title element.
      * @param $fields
      */
     public function prepare($fields)
     {
         foreach ($fields as $key => $values) {
-            if (!is_null($values) && array_key_exists($key, array_flip($this->csvHeader))) {
+            if (!is_null($values) && array_key_exists($key, array_flip($this->_csvHeader))) {
                 foreach ($values as $value) {
                     $this->map($value);
                 }
@@ -68,7 +66,7 @@ class Title
     }
 
     /**
-     * Set Narrative of Title.
+     * Set the Narrative for the Title element.
      * @param $value
      * @return array
      */
@@ -82,7 +80,7 @@ class Title
 
 
     /**
-     * Set Language of Title.
+     * Get the languages for the Title element.
      * @return mixed
      */
     public function language()
@@ -91,19 +89,36 @@ class Title
     }
 
     /**
-     * Set Template of Title.
+     * Provides the rules for the IATI Element validation.
      * @return array
      */
-    public function template()
+    public function rules()
     {
-        return $this->template;
+        // TODO: Implement rules() method.
     }
 
     /**
+     * Provides custom messages used for IATI Element Validation.
      * @return array
      */
-    public function data()
+    public function messages()
     {
-        return $this->data;
+        // TODO: Implement messages() method.
+    }
+
+    /**
+     * Validate data for IATI Element.
+     */
+    public function validate()
+    {
+        // TODO: Implement validate() method.
+    }
+
+    /**
+     * Set the validity for the IATI Element data.
+     */
+    protected function setValidity()
+    {
+        // TODO: Implement setValidity() method.
     }
 }

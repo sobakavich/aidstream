@@ -2,10 +2,22 @@
 
 use Exception;
 
+/**
+ * Class Csv
+ * @package App\Services\CsvImporter\Entities
+ */
 abstract class Csv
 {
+    /**
+     * @var
+     */
     protected $rows;
 
+    /**
+     * Initialize objects for the CSV class with the respective Row objects.
+     * @param $rows
+     * @param $class
+     */
     protected function make($rows, $class)
     {
         array_walk(
@@ -23,6 +35,10 @@ abstract class Csv
         );
     }
 
+    /**
+     * Get the rows in the CSV.
+     * @return mixed
+     */
     public function rows()
     {
         return $this->rows;

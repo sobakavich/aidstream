@@ -1,21 +1,24 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\IatiElement;
 
 /**
  * Class ActivityDate
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
  */
-class ActivityDate
+class ActivityDate extends IatiElement
 {
     /**
+     * Csv Headers for the ActivityDate element.
+     * @var array
+     */
+    private $_csvHeaders = ['actual_start_date' => 2, 'actual_end_date' => 4, 'planned_start_date' => 1, 'planned_end_date' => 3];
+
+    /**
+     * Template for the ActivityDate element.
      * @var array
      */
     protected $template = ['type' => '', 'date' => '', 'narrative' => ['narrative' => '', 'language' => '']];
-
-    /**
-     * @var array
-     */
-    protected $data = [];
 
     /**
      * @var array
@@ -33,11 +36,6 @@ class ActivityDate
     protected $dates;
 
     /**
-     * @var array
-     */
-    private $_csvHeaders = ['actual_start_date' => 2, 'actual_end_date' => 4, 'planned_start_date' => 1, 'planned_end_date' => 3];
-
-    /**
      * ActivityDate constructor.
      * @param $fields
      */
@@ -47,12 +45,13 @@ class ActivityDate
     }
 
     /**
-     * Prepare Activity Date Elements.
+     * Prepare ActivityDate element.
      * @param $fields
      */
     public function prepare($fields)
     {
         $index = 0;
+
         foreach ($fields as $key => $values) {
             if (!is_null($values) && array_key_exists($key, $this->_csvHeaders)) {
                 foreach ($values as $value) {
@@ -80,7 +79,7 @@ class ActivityDate
     }
 
     /**
-     * Set the type for ActivityDate.
+     * Set the type for ActivityDate element.
      * @param $key
      * @return mixed
      */
@@ -93,7 +92,7 @@ class ActivityDate
     }
 
     /**
-     * Set the date for ActivityDate.
+     * Set the Date for the ActivityDate element.
      * @param $value
      * @return mixed
      */
@@ -105,7 +104,7 @@ class ActivityDate
     }
 
     /**
-     * Set the narrative for ActivityDate.
+     * Set the Narrative for the ActivityDate element.
      * @param $value
      * @return array
      */
@@ -118,10 +117,36 @@ class ActivityDate
     }
 
     /**
+     * Provides the rules for the IATI Element validation.
      * @return array
      */
-    public function data()
+    public function rules()
     {
-        return $this->data;
+        // TODO: Implement rules() method.
+    }
+
+    /**
+     * Provides custom messages used for IATI Element Validation.
+     * @return array
+     */
+    public function messages()
+    {
+        // TODO: Implement messages() method.
+    }
+
+    /**
+     * Validate data for IATI Element.
+     */
+    public function validate()
+    {
+        // TODO: Implement validate() method.
+    }
+
+    /**
+     * Set the validity for the IATI Element data.
+     */
+    protected function setValidity()
+    {
+        // TODO: Implement setValidity() method.
     }
 }

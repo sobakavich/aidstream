@@ -1,21 +1,22 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\IatiElement;
 
 /**
  * Class ParticipatingOrganisation
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
  */
-class ParticipatingOrganisation
+class ParticipatingOrganisation extends IatiElement
 {
     /**
      * @var array
      */
-    protected $template = ['type' => '', 'date' => '', 'narrative' => ['narrative' => '', 'language' => '']];
+    private $_csvHeaders = ['participating_organisation_role', 'participating_organisation_type', 'participating_organisation_name', 'participating_organisation_identifier'];
 
     /**
      * @var array
      */
-    protected $data = [];
+    protected $template = ['type' => '', 'date' => '', 'narrative' => ['narrative' => '', 'language' => '']];
 
     /**
      * @var array
@@ -31,11 +32,6 @@ class ParticipatingOrganisation
      * @var array
      */
     protected $orgRoles = [];
-
-    /**
-     * @var array
-     */
-    private $_csvHeaders = ['participating_organisation_role', 'participating_organisation_type', 'participating_organisation_name', 'participating_organisation_identifier'];
 
     /**
      * ParticipatingOrganisation constructor.
@@ -155,5 +151,39 @@ class ParticipatingOrganisation
 
             $this->data[$index]['narrative'] = $narrative;
         }
+    }
+
+    /**
+     * Provides the rules for the IATI Element validation.
+     * @return array
+     */
+    public function rules()
+    {
+        // TODO: Implement rules() method.
+    }
+
+    /**
+     * Provides custom messages used for IATI Element Validation.
+     * @return array
+     */
+    public function messages()
+    {
+        // TODO: Implement messages() method.
+    }
+
+    /**
+     * Validate data for IATI Element.
+     */
+    public function validate()
+    {
+        // TODO: Implement validate() method.
+    }
+
+    /**
+     * Set the validity for the IATI Element data.
+     */
+    protected function setValidity()
+    {
+        // TODO: Implement setValidity() method.
     }
 }

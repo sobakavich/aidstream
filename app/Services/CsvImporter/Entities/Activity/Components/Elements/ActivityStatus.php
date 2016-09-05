@@ -1,23 +1,15 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\IatiElement;
+
 /**
  * Class ActivityStatus
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
  */
-class ActivityStatus
+class ActivityStatus extends IatiElement
 {
     /**
-     * @var array
-     */
-    protected $template = [];
-
-    /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
-     * CSV Header of Description with their code
+     * CSV Header of Description with their code.
      */
     private $_csvHeader = ['activity_status'];
 
@@ -31,7 +23,7 @@ class ActivityStatus
     }
 
     /**
-     * Prepare ActivityStatus Element.
+     * Prepare the ActivityStatus element.
      * @param $fields
      */
     public function prepare($fields)
@@ -57,10 +49,36 @@ class ActivityStatus
     }
 
     /**
-     *
+     * Provides the rules for the IATI Element validation.
+     * @return array
      */
-    public function data()
+    public function rules()
     {
-        return $this->data;
+        // TODO: Implement rules() method.
+    }
+
+    /**
+     * Provides custom messages used for IATI Element Validation.
+     * @return array
+     */
+    public function messages()
+    {
+        // TODO: Implement messages() method.
+    }
+
+    /**
+     * Validate data for IATI Element.
+     */
+    public function validate()
+    {
+        // TODO: Implement validate() method.
+    }
+
+    /**
+     * Set the validity for the IATI Element data.
+     */
+    protected function setValidity()
+    {
+        // TODO: Implement setValidity() method.
     }
 }

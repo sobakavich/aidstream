@@ -1,36 +1,41 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
-class Identifier
+use App\Models\Activity\Activity;
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\IatiElement;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
+
+/**
+ * Class Identifier
+ * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
+ */
+class Identifier extends IatiElement
 {
-    /**
-     * @var array
-     */
-    protected $template = [['activity_identifier' => '', 'iati_identifier_text' => '']];
-
-    /**
-     * @var array
-     */
-    protected $data = [];
-
     /**
      * CSV Header of Description with their code
      */
     private $_csvHeader = ['activity_identifier'];
 
     /**
-     * Description constructor.
-     * @param $fields
+     * @var array
      */
-    public function __construct($fields)
+    protected $template = [['activity_identifier' => '', 'iati_identifier_text' => '']];
+
+    /**
+     * Description constructor.
+     * @param                   $fields
+     * @param Validation        $factory
+     */
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
     }
 
     /**
-     * Prepare Identifier Element.
+     * Prepare the Identifier element.
      * @param $fields
      */
-    public function prepare($fields)
+    protected function prepare($fields)
     {
         foreach ($fields as $key => $values) {
             if (!is_null($values) && array_key_exists($key, array_flip($this->_csvHeader))) {
@@ -48,16 +53,75 @@ class Identifier
     public function map($value)
     {
         if (!is_null($value)) {
-            $this->data['activity_identifier']  = $value;
+            $this->data[end($this->_csvHeader)] = $value;
             $this->data['iati_identifier_text'] = '';
         }
     }
 
     /**
-     *
+     * Validate data for Identifier.
      */
-    public function data()
+    public function validate()
     {
-        $this->data = json_encode($this->data);
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
+
+        $this->setValidity();
+    }
+
+    /**
+     * Set the validity for the Identifier data.
+     */
+    protected function setValidity()
+    {
+        $this->isValid = $this->validator->passes();
+    }
+
+    /**
+     * Provides the rules for the Identifier validation.
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'activity_identifier' => sprintf('required|not_in:%s', implode(',', $this->activityIdentifiers()))
+        ];
+    }
+
+    /**
+     * Provides custom messages used for Identifier Validation.
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'activity_identifier.required' => 'Activity Identifier is required.',
+            'activity_identifier.not_in'   => 'Activity Identifier should be unique.'
+        ];
+    }
+
+    /**
+     * Get all Activity Identifiers present until now.
+     * @return array
+     */
+    protected function activityIdentifiers()
+    {
+        $identifiers = [];
+
+        foreach ($this->activities() as $activity) {
+            $identifiers[] = getVal($activity->identifier, ['activity_identifier']);
+        }
+
+        return $identifiers;
+    }
+
+    /**
+     * Get all the Activities.
+     * @return mixed
+     */
+    protected function activities()
+    {
+        return app()->make(Activity::class)->query()->get(['identifier']);
     }
 }

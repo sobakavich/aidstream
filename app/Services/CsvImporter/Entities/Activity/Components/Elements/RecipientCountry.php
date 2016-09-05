@@ -1,12 +1,18 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\IatiElement;
 
 /**
  * Class RecipientCountry
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
  */
-class RecipientCountry
+class RecipientCountry extends IatiElement
 {
+    /**
+     * CSV Header of Description with their code
+     */
+    private $_csvHeaders = ['recipient_country_code', 'recipient_country_percentage'];
+
     /**
      * @var array
      */
@@ -21,16 +27,6 @@ class RecipientCountry
      * @var array
      */
     protected $template = [['country_code' => '', 'percentage' => '', 'narrative' => ['narrative' => '', 'language' => '']]];
-
-    /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
-     * CSV Header of Description with their code
-     */
-    private $_csvHeaders = ['recipient_country_code', 'recipient_country_percentage'];
 
     /**
      * Description constructor.
@@ -69,14 +65,6 @@ class RecipientCountry
             $this->setPercentage($key, $value, $index);
             $this->setNarrative($index);
         }
-    }
-
-    /**
-     *
-     */
-    public function data()
-    {
-        return $this->data;
     }
 
     /**
@@ -131,5 +119,39 @@ class RecipientCountry
         $narrative = ['narrative' => '', 'language' => ''];
 
         $this->data[$index]['narrative'] = $narrative;
+    }
+
+    /**
+     * Provides the rules for the IATI Element validation.
+     * @return array
+     */
+    public function rules()
+    {
+        // TODO: Implement rules() method.
+    }
+
+    /**
+     * Provides custom messages used for IATI Element Validation.
+     * @return array
+     */
+    public function messages()
+    {
+        // TODO: Implement messages() method.
+    }
+
+    /**
+     * Validate data for IATI Element.
+     */
+    public function validate()
+    {
+        // TODO: Implement validate() method.
+    }
+
+    /**
+     * Set the validity for the IATI Element data.
+     */
+    protected function setValidity()
+    {
+        // TODO: Implement setValidity() method.
     }
 }

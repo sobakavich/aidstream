@@ -41,6 +41,7 @@ class ImportManager
     }
 
     /**
+     * Process the uploaded CSV file.
      * @param UploadedFile $file
      */
     public function process(UploadedFile $file)
@@ -53,7 +54,7 @@ class ImportManager
 
 //            $this->processor->pushIntoQueue($csv);
         } catch (Exception $exception) {
-
+            dd($exception);
         }
     }
 }

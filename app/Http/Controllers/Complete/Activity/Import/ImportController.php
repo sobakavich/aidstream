@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Complete\Activity\Import;
 
+use App\Core\V201\Requests\Activity\ImportActivity;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Request;
 use App\Services\CsvImporter\ImportManager;
 use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
 use App\Services\Organization\OrganizationManager;
@@ -74,7 +74,11 @@ class ImportController extends Controller
         return view('Activity.uploader', compact('form'));
     }
 
-    public function activities(Request $request)
+    /**
+     * Import Activities into the database.
+     * @param ImportActivity $request
+     */
+    public function activities(ImportActivity $request)
     {
         $file = $request->file('activity');
 
