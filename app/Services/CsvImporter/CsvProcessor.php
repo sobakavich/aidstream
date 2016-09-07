@@ -30,8 +30,6 @@ class CsvProcessor
         } catch (Exception $exception) {
             dd($exception);
         }
-
-//        dd($this);
     }
 
     protected function make($class)
@@ -55,26 +53,16 @@ class CsvProcessor
             $sameElement = $this->isSameElement($row);
             if (!$sameElement) {
                 $index ++;
-                foreach ($row as $key => $value) {
-                    $this->setValue($index, $key, $value);
-                }
-            } else {
-                foreach ($row as $key => $value) {
-                    $this->setValue($index, $key, $value);
-                }
+            }
+            foreach ($row as $key => $value) {
+                $this->setValue($index, $key, $value);
             }
         }
     }
 
     protected function setValue($index, $key, $value)
     {
-        if (!isset($this->data[$index][$key])) {
-            $this->data[$index][$key] = null;
-        }
-
-        if (!(is_null($value) || $value == "")) {
-            $this->data[$index][$key][] = $value;
-        }
+        $this->data[$index][$key][] = $value;
     }
 
     /**

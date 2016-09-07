@@ -4,7 +4,7 @@ use App\Services\CsvImporter\Entities\Row;
 
 class ActivityRow extends Row
 {
-    protected $elements = ['identifier', 'title', 'description', 'activityStatus', 'activityDate'];
+    protected $elements = ['identifier', 'title', 'description', 'activityStatus', 'activityDate', 'participatingOrganisation', 'recipientCountry', 'recipientRegion', 'sector'];
 
     protected $identifier;
 
@@ -15,6 +15,14 @@ class ActivityRow extends Row
     protected $activityStatus;
 
     protected $activityDate;
+
+    protected $participatingOrganisation;
+
+    protected $recipientCountry;
+
+    protected $recipientRegion;
+
+    protected $sector;
 
     const BASE_NAMESPACE = 'App\Services\CsvImporter\Entities\Activity\Components\Elements';
 

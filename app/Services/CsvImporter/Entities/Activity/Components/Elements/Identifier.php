@@ -1,7 +1,5 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
-use Exception;
-
 class Identifier
 {
     /**
@@ -29,29 +27,30 @@ class Identifier
     }
 
     /**
+     * Prepare Identifier Element.
      * @param $fields
      */
     public function prepare($fields)
     {
-        try {
-            foreach ($fields as $key => $values) {
-                if (!is_null($values) || is_array($values)) {
-                    foreach ($values as $value) {
-                        if (array_key_exists($key, array_flip($this->_csvHeader))) {
-                            $this->fillValue($value);
-                        }
-                    }
+        foreach ($fields as $key => $values) {
+            if (!is_null($values) && array_key_exists($key, array_flip($this->_csvHeader))) {
+                foreach ($values as $value) {
+                    $this->map($value);
                 }
             }
-        } catch (Exception $exception) {
-            dd($exception);
         }
     }
 
-    public function fillValue($value)
+    /**
+     * Map data from CSV file into Identifier data format.
+     * @param $value
+     */
+    public function map($value)
     {
-        $this->data['activity_identifier']  = $value;
-        $this->data['iati_identifier_text'] = '';
+        if (!is_null($value)) {
+            $this->data['activity_identifier']  = $value;
+            $this->data['iati_identifier_text'] = '';
+        }
     }
 
     /**

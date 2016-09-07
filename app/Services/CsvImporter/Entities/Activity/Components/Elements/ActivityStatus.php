@@ -1,7 +1,5 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
-
-
 /**
  * Class ActivityStatus
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
@@ -33,24 +31,29 @@ class ActivityStatus
     }
 
     /**
+     * Prepare ActivityStatus Element.
      * @param $fields
      */
     public function prepare($fields)
     {
         foreach ($fields as $key => $values) {
-            if (!is_null($values)) {
+            if (!is_null($values) && array_key_exists($key, array_flip($this->_csvHeader))) {
                 foreach ($values as $value) {
-                    if (array_key_exists($key, array_flip($this->_csvHeader))) {
-                        $this->fillValues($value);
-                    }
+                    $this->map($value);
                 }
             }
         }
     }
 
-    public function fillValues($value)
+    /**
+     * Map data from CSV into ActivityStatus data format.
+     * @param $value
+     */
+    public function map($value)
     {
-        $this->data[] = $value;
+        if (!(is_null($value) || $value == "")) {
+            $this->data[] = $value;
+        }
     }
 
     /**
@@ -58,6 +61,6 @@ class ActivityStatus
      */
     public function data()
     {
-        $this->data = json_encode($this->data);
+        return $this->data;
     }
 }
