@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
  * Class ActivityDate
@@ -37,11 +38,13 @@ class ActivityDate extends Element
 
     /**
      * ActivityDate constructor.
-     * @param $fields
+     * @param            $fields
+     * @param Validation $factory
      */
-    public function __construct($fields)
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
     }
 
     /**
@@ -71,10 +74,10 @@ class ActivityDate extends Element
     public function map($key, $value, &$index)
     {
         if (!(is_null($value) || $value == "")) {
-            $type                             = $this->setType($key);
-            $this->data[$index]['date']       = $this->setDate($value);
-            $this->data[$index]['type']       = $type;
-            $this->data[$index]['narratives'] = $this->setNarrative($value);
+            $type                                                = $this->setType($key);
+            $this->data['activity_date'][$index]['date']         = $this->setDate($value);
+            $this->data['activity_date'][$index]['type']         = $type;
+            $this->data['activity_date'][$index]['narratives'][] = $this->setNarrative($value);
         }
     }
 
@@ -122,7 +125,9 @@ class ActivityDate extends Element
      */
     public function rules()
     {
-        // TODO: Implement rules() method.
+        return [
+            'activity_date' => 'required'
+        ];
     }
 
     /**
@@ -131,7 +136,7 @@ class ActivityDate extends Element
      */
     public function messages()
     {
-        // TODO: Implement messages() method.
+        return ['activity_date.required' => 'Activity Date is required.'];
     }
 
     /**
@@ -139,14 +144,10 @@ class ActivityDate extends Element
      */
     public function validate()
     {
-        // TODO: Implement validate() method.
-    }
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
 
-    /**
-     * Set the validity for the IATI Element data.
-     */
-    protected function setValidity()
-    {
-        // TODO: Implement setValidity() method.
+        $this->setValidity();
     }
 }

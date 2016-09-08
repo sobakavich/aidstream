@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
  * Class ActivityStatus
@@ -15,11 +16,13 @@ class ActivityStatus extends Element
 
     /**
      * Description constructor.
-     * @param $fields
+     * @param            $fields
+     * @param Validation $factory
      */
-    public function __construct($fields)
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
     }
 
     /**
@@ -44,7 +47,7 @@ class ActivityStatus extends Element
     public function map($value)
     {
         if (!(is_null($value) || $value == "")) {
-            $this->data[] = $value;
+            $this->data[$this->csvHeader()][] = $value;
         }
     }
 
@@ -54,7 +57,10 @@ class ActivityStatus extends Element
      */
     public function rules()
     {
-        // TODO: Implement rules() method.
+        return [
+            $this->csvHeader()                  => 'required|size:1',
+            sprintf('%s.*', $this->csvHeader()) => sprintf('in:%s', $this->validActivityStatus())
+        ];
     }
 
     /**
@@ -63,7 +69,13 @@ class ActivityStatus extends Element
      */
     public function messages()
     {
-        // TODO: Implement messages() method.
+        $key = $this->csvHeader();
+
+        return [
+            sprintf('%s.required', $key) => 'Activity Status is required.',
+            sprintf('%s.size', $key)     => 'Multiple Activity Statuses are not allowed.',
+            sprintf('%s.in', $key)       => 'Only valid Activity Status codes are allowed.'
+        ];
     }
 
     /**
@@ -71,14 +83,38 @@ class ActivityStatus extends Element
      */
     public function validate()
     {
-        // TODO: Implement validate() method.
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
+
+        $this->setValidity();
     }
 
     /**
-     * Set the validity for the IATI Element data.
+     * Get the Csv header for ActivityStatus.
+     * @return mixed
      */
-    protected function setValidity()
+    protected function csvHeader()
     {
-        // TODO: Implement setValidity() method.
+        return end($this->_csvHeader);
+    }
+
+    /**
+     * Get the valid ActivityStatus from the ActivityStatus codelist as a string.
+     * @return string
+     */
+    protected function validActivityStatus()
+    {
+        list($activityStatusCodeList, $codes) = [$this->loadCodeList('ActivityStatus', 'V201'), []];
+
+        array_walk(
+            $activityStatusCodeList['ActivityStatus'],
+            function ($activityStatus) use (&$codes) {
+                $codes[] = $activityStatus['name'];
+                $codes[] = $activityStatus['code'];
+            }
+        );
+
+        return implode(',', array_keys(array_flip($codes)));
     }
 }

@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
  * Class RecipientRegion
@@ -29,12 +30,30 @@ class RecipientRegion extends Element
     protected $template = [['region_code' => '', 'region_vocabulary' => '', 'vocabulary_uri' => '', 'percentage' => '', 'narrative' => ['narrative' => '', 'language' => '']]];
 
     /**
-     * Description constructor.
-     * @param $fields
+     * @var
      */
-    public function __construct($fields)
+    protected $recipientCountry;
+
+    /**
+     * @var int
+     */
+    protected $totalPercentage = 0;
+
+    /**
+     * @var
+     */
+    protected $validator;
+
+    /**
+     * Description constructor.
+     * @param            $fields
+     * @param Validation $factory
+     */
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
+        $this->recipientCountry($fields);
     }
 
     /**
@@ -78,15 +97,15 @@ class RecipientRegion extends Element
      */
     protected function setRegion($key, $value, $index)
     {
-        if (!isset($this->data[$index]['region_code'])) {
-            $this->data[$index]['region_code'] = '';
+        if (!isset($this->data['recipient_region'][$index]['region_code'])) {
+            $this->data['recipient_region'][$index]['region_code'] = '';
         }
 
         if ($key == $this->_csvHeaders[0] && (!is_null($value))) {
             $this->regions[] = $value;
             $this->regions   = array_unique($this->regions);
 
-            $this->data[$index]['region_code'] = $value;
+            $this->data['recipient_region'][$index]['region_code'] = $value;
         }
     }
 
@@ -98,14 +117,14 @@ class RecipientRegion extends Element
      */
     protected function setPercentage($key, $value, $index)
     {
-        if (!isset($this->data[$index]['percentage'])) {
-            $this->data[$index]['percentage'] = '';
+        if (!isset($this->data['recipient_region'][$index]['percentage'])) {
+            $this->data['recipient_region'][$index]['percentage'] = '';
         }
 
         if ($key == $this->_csvHeaders[1] && (!is_null($value))) {
             $this->percentage[] = $value;
 
-            $this->data[$index]['percentage'] = $value;
+            $this->data['recipient_region'][$index]['percentage'] = $value;
         }
     }
 
@@ -118,7 +137,7 @@ class RecipientRegion extends Element
     {
         $narrative = ['narrative' => '', 'language' => ''];
 
-        $this->data[$index]['narrative'] = $narrative;
+        $this->data['recipient_region'][$index]['narrative'][] = $narrative;
     }
 
     /**
@@ -127,7 +146,7 @@ class RecipientRegion extends Element
      */
     protected function setVocabularyUri($index)
     {
-        $this->data[$index]['vocabulary_uri'] = '';
+        $this->data['recipient_region'][$index]['vocabulary_uri'] = '';
     }
 
     /**
@@ -136,7 +155,29 @@ class RecipientRegion extends Element
      */
     protected function setRegionVocabulary($index)
     {
-        $this->data[$index]['region_vocabulary'] = '';
+        $this->data['recipient_region'][$index]['region_vocabulary'] = '';
+    }
+
+
+    /**
+     * Validate data for IATI Element.
+     */
+    public function validate()
+    {
+        $recipientCountry = $this->recipientCountry->data;
+
+        $this->totalPercentage += $this->recipientCountry->totalPercentage();
+        $this->data['total_percentage']  = $this->totalPercentage();
+        $this->data['recipient_country'] = (empty($recipientCountry)) ? '' : $recipientCountry;
+
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
+
+        $this->setValidity();
+        unset($this->data['total_percentage']);
+        unset($this->data['recipient_country']);
+
     }
 
     /**
@@ -145,7 +186,20 @@ class RecipientRegion extends Element
      */
     public function rules()
     {
-        // TODO: Implement rules() method.
+        $codes = $this->validRecipientRegion();
+
+        $rules = [
+            'recipient_region' => sprintf('required_if:recipient_country,%s', ''),
+            'total_percentage' => 'percentageSum'
+        ];
+
+        foreach (getVal($this->data(), ['recipient_region'], []) as $key => $value) {
+            $rules['recipient_region.' . $key . '.region_code'] = sprintf('required_with:recipient_region.%s.percentage|in:%s', $key, $codes);
+            $rules['recipient_region.' . $key . '.percentage']  = sprintf('required_with:recipient_region.%s.region_code', $key);
+            $rules['recipient_region.' . $key . '.percentage']  = 'numeric|max:100';
+        }
+
+        return $rules;
     }
 
     /**
@@ -154,22 +208,61 @@ class RecipientRegion extends Element
      */
     public function messages()
     {
-        // TODO: Implement messages() method.
+        $messages = [
+            'recipient_region.required_unless' => 'Recipient Region is required if Recipient Country is not present.',
+            'percentage_sum'                   => 'Sum of percentage of Recipient Country and Recipient Region must be 100.'
+        ];
+
+        foreach (getVal($this->data(), ['recipient_region'], []) as $key => $value) {
+            $messages['recipient_region.' . $key . '.region_code.required_with'] = 'Recipient region code is required with Percentage.';
+            $messages['recipient_region.' . $key . '.region_code.in']            = 'Entered Recipient region code is invalid.';
+            $messages['recipient_region.' . $key . '.percentage.required_with']  = 'Percentage is required with Recipient Region Code.';
+            $messages['recipient_region.' . $key . '.percentage.numeric']        = 'Percentage must be numeric.';
+            $messages['recipient_region.' . $key . '.percentage.max']            = 'Percentage cannot be more than 100';
+
+        }
+
+        return $messages;
     }
 
     /**
-     * Validate data for IATI Element.
+     * Return Valid Recipient Region Codes.
+     * @return string
      */
-    public function validate()
+    protected function validRecipientRegion()
     {
-        // TODO: Implement validate() method.
+        $recipientRegionCodeList = $this->loadCodeList('Region', 'V201');
+        $codes                   = [];
+
+        array_walk(
+            $recipientRegionCodeList['Region'],
+            function ($regionCode) use (&$codes) {
+                $codes[] = $regionCode['code'];
+            }
+        );
+
+        return implode(',', $codes);
     }
 
     /**
-     * Set the validity for the IATI Element data.
+     * Store Recipient Country Object.
+     * @param $fields
      */
-    protected function setValidity()
+    protected function recipientCountry($fields)
     {
-        // TODO: Implement setValidity() method.
+        $this->recipientCountry = app()->make(RecipientCountry::class, [$fields]);
+    }
+
+    /**
+     * Calculate Total Percentage of Recipient Region.
+     * @return int
+     */
+    public function totalPercentage()
+    {
+        foreach ($this->percentage as $percentage) {
+            $this->totalPercentage += $percentage;
+        }
+
+        return $this->totalPercentage;
     }
 }

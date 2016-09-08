@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
  * Class Sector
@@ -50,11 +51,13 @@ class Sector extends Element
 
     /**
      * Description constructor.
-     * @param $fields
+     * @param            $fields
+     * @param Validation $factory
      */
-    public function __construct($fields)
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
     }
 
     /**
@@ -98,9 +101,9 @@ class Sector extends Element
     protected function setSectorVocabulary($key, $value, $index)
     {
         if ($key == $this->_csvHeaders[0]) {
-            $value                                   = (!$value) ? '' : $value;
-            $this->vocabularies[]                    = $value;
-            $this->data[$index]['sector_vocabulary'] = $value;
+            $value                                             = (!$value) ? '' : $value;
+            $this->vocabularies[]                              = $value;
+            $this->data['sector'][$index]['sector_vocabulary'] = $value;
         }
     }
 
@@ -114,15 +117,15 @@ class Sector extends Element
     protected function setSectorCode($key, $value, $index)
     {
         if ($key == $this->_csvHeaders[1]) {
-            $sectorVocabulary         = $this->data[$index]['sector_vocabulary'];
+            $sectorVocabulary         = $this->data['sector'][$index]['sector_vocabulary'];
             $sectorVocabularyResponse = $this->isValidSectorVocabulary($sectorVocabulary);
 
             if ($sectorVocabularyResponse == 1) {
                 ($value) ?: $value = '';
-                $this->codes[]                     = $value;
-                $this->data[$index]['sector_code'] = $value;
+                $this->codes[]                               = $value;
+                $this->data['sector'][$index]['sector_code'] = $value;
             } else {
-                $this->data[$index]['sector_code'] = '';
+                $this->data['sector'][$index]['sector_code'] = '';
             }
         }
     }
@@ -133,7 +136,7 @@ class Sector extends Element
      */
     protected function setVocabularyUri($index)
     {
-        $this->data[$index]['vocabulary_uri'] = '';
+        $this->data['sector'][$index]['vocabulary_uri'] = '';
     }
 
     /**
@@ -145,15 +148,15 @@ class Sector extends Element
     protected function setSectorCategoryCode($key, $value, $index)
     {
         if ($key == $this->_csvHeaders[1]) {
-            $sectorVocabulary         = $this->data[$index]['sector_vocabulary'];
+            $sectorVocabulary         = $this->data['sector'][$index]['sector_vocabulary'];
             $sectorVocabularyResponse = $this->isValidSectorVocabulary($sectorVocabulary);
 
             if ($sectorVocabularyResponse == 2) {
                 ($value) ?: $value = '';
-                $this->codes[]                              = $value;
-                $this->data[$index]['sector_category_code'] = $value;
+                $this->codes[]                                        = $value;
+                $this->data['sector'][$index]['sector_category_code'] = $value;
             } else {
-                $this->data[$index]['sector_category_code'] = '';
+                $this->data['sector'][$index]['sector_category_code'] = '';
             }
         }
     }
@@ -167,15 +170,15 @@ class Sector extends Element
     protected function setSectorText($key, $value, $index)
     {
         if ($key == $this->_csvHeaders[1]) {
-            $sectorVocabulary         = $this->data[$index]['sector_vocabulary'];
+            $sectorVocabulary         = $this->data['sector'][$index]['sector_vocabulary'];
             $sectorVocabularyResponse = $this->isValidSectorVocabulary($sectorVocabulary);
 
             if (!$sectorVocabularyResponse || ($sectorVocabularyResponse != 1 && $sectorVocabularyResponse != 2)) {
                 ($value) ?: $value = '';
-                $this->codes[]                     = $value;
-                $this->data[$index]['sector_text'] = $value;
+                $this->codes[]                               = $value;
+                $this->data['sector'][$index]['sector_text'] = $value;
             } else {
-                $this->data[$index]['sector_text'] = '';
+                $this->data['sector'][$index]['sector_text'] = '';
             }
         }
     }
@@ -190,8 +193,8 @@ class Sector extends Element
     {
         if ($key == $this->_csvHeaders[2]) {
             ($value) ?: $value = '';
-            $this->percentage[]               = $value;
-            $this->data[$index]['percentage'] = $value;
+            $this->percentage[]                         = $value;
+            $this->data['sector'][$index]['percentage'] = $value;
         }
     }
 
@@ -201,9 +204,9 @@ class Sector extends Element
      */
     protected function setNarrative($index)
     {
-        if (array_key_exists('percentage', $this->data[$index])) {
-            $narrative                       = ['narrative' => '', 'language' => ''];
-            $this->data[$index]['narrative'] = $narrative;
+        if (array_key_exists('percentage', $this->data['sector'][$index])) {
+            $narrative                                   = ['narrative' => '', 'language' => ''];
+            $this->data['sector'][$index]['narrative'][] = $narrative;
             $this->isEmptySector($index);
         }
     }
@@ -214,13 +217,13 @@ class Sector extends Element
      */
     protected function isEmptySector($index)
     {
-        if ($this->data[$index]['sector_vocabulary'] == ""
-            && $this->data[$index]['sector_code'] == ""
-            && $this->data[$index]['sector_category_code'] == ""
-            && $this->data[$index]['sector_text'] == ""
-            && $this->data[$index]['percentage'] == ""
+        if ($this->data['sector'][$index]['sector_vocabulary'] == ""
+            && $this->data['sector'][$index]['sector_code'] == ""
+            && $this->data['sector'][$index]['sector_category_code'] == ""
+            && $this->data['sector'][$index]['sector_text'] == ""
+            && $this->data['sector'][$index]['percentage'] == ""
         ) {
-            unset($this->data[$index]);
+            unset($this->data['sector'][$index]);
         }
     }
 
@@ -231,10 +234,10 @@ class Sector extends Element
      */
     protected function isValidSectorVocabulary($value)
     {
-        $sectorVocabularyCodelist = $this->codeList('SectorVocabulary.json');
+        $sectorVocabularyCodelist = $this->validSectorCodelist('SectorVocabulary','V201');
 
-        foreach ($sectorVocabularyCodelist['SectorVocabulary'] as $vocabulary) {
-            if ($value == $vocabulary['code']) {
+        foreach ($sectorVocabularyCodelist as $key => $code) {
+            if ($value == $code) {
                 return $value;
             }
         }
@@ -243,15 +246,14 @@ class Sector extends Element
     }
 
     /**
-     * Load codelist of Sector.
-     * @param $filename
-     * @return mixed
+     * Validate data for IATI Element.
      */
-    protected function codeList($filename)
+    public function validate()
     {
-        $sectorVocabularyCodelistFile = file_get_contents(sprintf('%s%s/%s', app_path(), self::CODE_LIST_PATH, $filename));
-
-        return json_decode($sectorVocabularyCodelistFile, true);
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
+        $this->setValidity();
     }
 
     /**
@@ -260,7 +262,33 @@ class Sector extends Element
      */
     public function rules()
     {
-        // TODO: Implement rules() method.
+
+        $sectorVocabulary   = implode(",", $this->validSectorCodelist('SectorVocabulary', 'V201'));
+        $sectorCode         = implode(",", $this->validSectorCodelist('Sector', 'V201'));
+        $sectorCategoryCode = implode(",", $this->validSectorCodelist('SectorCategory', 'V201'));
+
+        $rules = [
+            'sector'                     => 'required|sector_percentage_sum',
+            'sector.*.sector_vocabulary' => sprintf('required|in:%s', $sectorVocabulary),
+            'sector.*.percentage'        => 'required'
+        ];
+
+        foreach (getVal($this->data(), ['sector']) as $key => $value) {
+            $rules['sector.' . $key . '.sector_code']          = sprintf('required_if:sector.%s.sector_vocabulary,1|in:%s', $key, $sectorCode);
+            $rules['sector.' . $key . '.sector_category_code'] = sprintf('required_if:sector.%s.sector_vocabulary,2|in:%s', $key, $sectorCategoryCode);
+            $rules['sector.' . $key . '.sector_text']          = sprintf(
+                'required_unless:sector.%s.sector_vocabulary,1,required_unless:sector.%s.sector_vocabulary,2',
+                $key,
+                $key
+            );
+            $rules['sector.' . $key . '.percentage']           = 'numeric';
+        }
+
+        foreach (getVal($this->data(), ['sector']) as $key => $value) {
+
+        }
+
+        return $rules;
     }
 
     /**
@@ -269,22 +297,43 @@ class Sector extends Element
      */
     public function messages()
     {
-        // TODO: Implement messages() method.
+        $messages = [
+            'sector.required'                     => 'At least one sector is required.',
+            'sector.sector_percentage_sum'        => 'Sum of percentage under same vocabulary must be 100',
+            'sector.*.sector_vocabulary.required' => 'Sector Vocabulary is required.',
+            'sector.*.sector_vocabulary.in'       => 'Entered sector vocabulary is invalid.',
+            'sector.*.percentage'                 => 'Percentage is required'
+        ];
+
+        foreach (getVal($this->data(), ['sector']) as $key => $value) {
+            $messages['sector.' . $key . '.sector_code.required_if']          = "Sector code is required when sector vocabulary is 1";
+            $messages['sector.' . $key . '.sector_code.in']                   = "Entered sector code for sector vocabulary 1 is invalid";
+            $messages['sector.' . $key . '.sector_category_code.required_if'] = "Sector code is required when sector category code is 2";
+            $messages['sector.' . $key . '.sector_category_code.in']          = "Entered sector code for sector vocabulary 2 is invalid";
+            $messages['sector.' . $key . '.sector_text.required_unless']      = "Sector code is required.";
+        }
+
+        return $messages;
     }
 
     /**
-     * Validate data for IATI Element.
+     * Return Valid Sector Vocabulary Code.
+     * @param $name
+     * @param $version
+     * @return array
      */
-    public function validate()
+    protected function validSectorCodelist($name, $version)
     {
-        // TODO: Implement validate() method.
-    }
+        $sectorVocabulary = $this->loadCodeList($name, $version);
+        $vocabularies     = [];
 
-    /**
-     * Set the validity for the IATI Element data.
-     */
-    protected function setValidity()
-    {
-        // TODO: Implement setValidity() method.
+        array_walk(
+            $sectorVocabulary[$name],
+            function ($vocabulary) use (&$vocabularies) {
+                $vocabularies[] = $vocabulary['code'];
+            }
+        );
+
+        return $vocabularies;
     }
 }

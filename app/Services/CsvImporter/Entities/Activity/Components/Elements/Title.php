@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
  * Class Title
@@ -32,11 +33,13 @@ class Title extends Element
 
     /**
      * Title constructor.
-     * @param $fields
+     * @param            $fields
+     * @param Validation $factory
      */
-    public function __construct($fields)
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
     }
 
     /**
@@ -61,7 +64,7 @@ class Title extends Element
     public function map($value)
     {
         if (!(is_null($value) || $value == "")) {
-            $this->data[] = $this->setNarrative($value);
+            $this->data[end($this->_csvHeader)][] = $this->setNarrative($value);
         }
     }
 
@@ -94,7 +97,10 @@ class Title extends Element
      */
     public function rules()
     {
-        // TODO: Implement rules() method.
+        return [
+            'activity_title'             => 'size:1',
+            'activity_title.0.narrative' => 'required'
+        ];
     }
 
     /**
@@ -103,7 +109,10 @@ class Title extends Element
      */
     public function messages()
     {
-        // TODO: Implement messages() method.
+        return [
+            'activity_title.size'                 => 'Only one title is allowed.',
+            'activity_title.0.narrative.required' => 'Title is required.'
+        ];
     }
 
     /**
@@ -111,14 +120,10 @@ class Title extends Element
      */
     public function validate()
     {
-        // TODO: Implement validate() method.
-    }
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
 
-    /**
-     * Set the validity for the IATI Element data.
-     */
-    protected function setValidity()
-    {
-        // TODO: Implement setValidity() method.
+        $this->setValidity();
     }
 }

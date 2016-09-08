@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
  * Class ParticipatingOrganisation
@@ -35,11 +36,13 @@ class ParticipatingOrganisation extends Element
 
     /**
      * ParticipatingOrganisation constructor.
-     * @param $fields
+     * @param            $fields
+     * @param Validation $factory
      */
-    public function __construct($fields)
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
     }
 
     /**
@@ -69,7 +72,7 @@ class ParticipatingOrganisation extends Element
             $this->setOrganisationRole($key, $value, $index);
             $this->setIdentifier($key, $value, $index);
             $this->setOrganisationType($key, $value, $index);
-            $this->data[$index]['activity_id'] = '';
+            $this->data['participating_organization'][$index]['activity_id'] = '';
             $this->setNarrative($key, $value, $index);
         }
 
@@ -83,15 +86,15 @@ class ParticipatingOrganisation extends Element
      */
     protected function setOrganisationRole($key, $value, $index)
     {
-        if (!isset($this->data[$index]['organization_role'])) {
-            $this->data[$index]['organization_role'] = '';
+        if (!isset($this->data['participating_organization'][$index]['organization_role'])) {
+            $this->data['participating_organization'][$index]['organization_role'] = '';
         }
 
         if ($key == $this->_csvHeaders[0] && (!is_null($value))) {
             $this->orgRoles[] = $value;
             $this->orgRoles   = array_unique($this->orgRoles);
 
-            $this->data[$index]['organization_role'] = $value;
+            $this->data['participating_organization'][$index]['organization_role'] = $value;
         }
     }
 
@@ -103,12 +106,12 @@ class ParticipatingOrganisation extends Element
      */
     protected function setIdentifier($key, $value, $index)
     {
-        if (!isset($this->data[$index]['identifier'])) {
-            $this->data[$index]['identifier'] = '';
+        if (!isset($this->data['participating_organization'][$index]['identifier'])) {
+            $this->data['participating_organization'][$index]['identifier'] = '';
         }
 
         if ($key == $this->_csvHeaders[3] && (!is_null($value))) {
-            $this->data[$index]['identifier'] = $value;
+            $this->data['participating_organization'][$index]['identifier'] = $value;
         }
 
     }
@@ -121,15 +124,15 @@ class ParticipatingOrganisation extends Element
      */
     protected function setOrganisationType($key, $value, $index)
     {
-        if (!isset($this->data[$index]['organization_type'])) {
-            $this->data[$index]['organization_type'] = '';
+        if (!isset($this->data['participating_organization'][$index]['organization_type'])) {
+            $this->data['participating_organization'][$index]['organization_type'] = '';
         }
 
         if ($key == $this->_csvHeaders[1] && (!is_null($value))) {
             $this->types[] = $value;
             $this->types   = array_unique($this->types);
 
-            $this->data[$index]['organization_type'] = $value;
+            $this->data['participating_organization'][$index]['organization_type'] = $value;
         }
     }
 
@@ -141,15 +144,19 @@ class ParticipatingOrganisation extends Element
      */
     protected function setNarrative($key, $value, $index)
     {
-        if (!isset($this->data[$index]['narrative'])) {
-            $this->data[$index]['narrative'] = ['narrative' => '', 'language' => ''];
-        }
+        if (!isset($this->data['participating_organization'][$index]['narrative'])) {
+            $this->data['participating_organization'][$index]['narrative'][] = ['narrative' => '', 'language' => ''];
+        } else {
+            if ($key == $this->_csvHeaders[2]) {
+                foreach ($this->data['participating_organization'][$index]['narrative'] as $d) {
+                    $this->data['participating_organization'][$index]['narrative'] = array_filter($d);
+                }
 
-        if ($key == $this->_csvHeaders[2]) {
-            $narrative          = ['narrative' => $value, 'language' => ''];
-            $this->narratives[] = $narrative;
+                $narrative          = ['narrative' => $value, 'language' => ''];
+                $this->narratives[] = $narrative;
 
-            $this->data[$index]['narrative'] = $narrative;
+                $this->data['participating_organization'][$index]['narrative'][] = $narrative;
+            }
         }
     }
 
@@ -159,7 +166,10 @@ class ParticipatingOrganisation extends Element
      */
     public function rules()
     {
-        // TODO: Implement rules() method.
+        return [
+            'participating_organization'                     => 'required|required_only_one_among:identifier,narrative',
+            'participating_organization.*.organization_role' => sprintf('required|in:%s', $this->validOrganizationRoles()),
+        ];
     }
 
     /**
@@ -168,7 +178,12 @@ class ParticipatingOrganisation extends Element
      */
     public function messages()
     {
-        // TODO: Implement messages() method.
+        return [
+            'participating_organization.required'                     => 'Participating Organisation is required.',
+            'participating_organization.*.organization_role.required' => 'Participating Organisation role is required.',
+            'participating_organization.required_only_one_among'      => 'Either Participating Organisation Identifier or Participating Organisation Name is required.',
+            'participating_organization.*.organization_role.in'       => 'Only valid Organisation Roles are allowed.'
+        ];
     }
 
     /**
@@ -176,14 +191,29 @@ class ParticipatingOrganisation extends Element
      */
     public function validate()
     {
-        // TODO: Implement validate() method.
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
+
+        $this->setValidity();
     }
 
     /**
-     * Set the validity for the IATI Element data.
+     * Get the valid OrganizationRole from the OrganizationRole codelist as a string.
+     * @return string
      */
-    protected function setValidity()
+    protected function validOrganizationRoles()
     {
-        // TODO: Implement setValidity() method.
+        list($organizationRoleCodeList, $organizationRoles) = [$this->loadCodeList('OrganisationRole', 'V201'), []];
+
+        array_walk(
+            $organizationRoleCodeList['OrganisationRole'],
+            function ($organizationRole) use (&$organizationRoles) {
+                $organizationRoles[] = $organizationRole['code'];
+                $organizationRoles[] = $organizationRole['name'];
+            }
+        );
+
+        return implode(',', array_keys(array_flip($organizationRoles)));
     }
 }
