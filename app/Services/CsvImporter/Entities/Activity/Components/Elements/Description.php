@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
  * Class Description
@@ -35,11 +36,13 @@ class Description extends Element
 
     /**
      * Description constructor.
-     * @param $fields
+     * @param            $fields
+     * @param Validation $factory
      */
-    public function __construct($fields)
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
     }
 
     /**
@@ -65,9 +68,9 @@ class Description extends Element
     public function map($key, $value)
     {
         if (!(is_null($value) || $value == "")) {
-            $type                              = $this->setType($key);
-            $this->data[$type]['type']         = $type;
-            $this->data[$type]['narratives'][] = $this->setNarrative($value);
+            $type                                            = $this->setType($key);
+            $this->data['description'][$type]['type']        = $type;
+            $this->data['description'][$type]['narrative'][] = $this->setNarrative($value);
         }
     }
 
@@ -103,7 +106,15 @@ class Description extends Element
      */
     public function rules()
     {
-        // TODO: Implement rules() method.
+        $rules = [
+            'description' => 'required|min:1'
+        ];
+
+        foreach (getVal($this->data(), ['description'], []) as $key => $value) {
+            $rules['description.' . $key . '.narrative'] = 'size:1';
+        }
+
+        return $rules;
     }
 
     /**
@@ -112,7 +123,15 @@ class Description extends Element
      */
     public function messages()
     {
-        // TODO: Implement messages() method.
+        $messages = [
+            'description.size' => 'At least one type of description is required.'
+        ];
+
+        foreach (getVal($this->data(), ['description'], []) as $key => $value) {
+            $messages['description.' . $key . '.narrative.size'] = 'Multiple narratives for Description with the same type is not allowed.';
+        }
+
+        return $messages;
     }
 
     /**
@@ -120,14 +139,10 @@ class Description extends Element
      */
     public function validate()
     {
-        // TODO: Implement validate() method.
-    }
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
 
-    /**
-     * Set the validity for the IATI Element data.
-     */
-    protected function setValidity()
-    {
-        // TODO: Implement setValidity() method.
+        $this->setValidity();
     }
 }

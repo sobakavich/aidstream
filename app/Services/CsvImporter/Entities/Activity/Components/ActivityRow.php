@@ -47,7 +47,6 @@ class ActivityRow extends Row
 
     protected $sector;
 
-
     /**
      * Base Namespace for the Element classes.
      */

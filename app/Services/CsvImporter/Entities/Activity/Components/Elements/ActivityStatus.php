@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
  * Class ActivityStatus
@@ -15,11 +16,13 @@ class ActivityStatus extends Element
 
     /**
      * Description constructor.
-     * @param $fields
+     * @param            $fields
+     * @param Validation $factory
      */
-    public function __construct($fields)
+    public function __construct($fields, Validation $factory)
     {
         $this->prepare($fields);
+        $this->factory = $factory;
     }
 
     /**
@@ -44,7 +47,7 @@ class ActivityStatus extends Element
     public function map($value)
     {
         if (!(is_null($value) || $value == "")) {
-            $this->data[] = $value;
+            $this->data[$this->csvHeader()][] = $value;
         }
     }
 
@@ -54,7 +57,7 @@ class ActivityStatus extends Element
      */
     public function rules()
     {
-        // TODO: Implement rules() method.
+        return [$this->csvHeader() => 'required|size:1'];
     }
 
     /**
@@ -63,7 +66,12 @@ class ActivityStatus extends Element
      */
     public function messages()
     {
-        // TODO: Implement messages() method.
+        $key = $this->csvHeader();
+
+        return [
+            sprintf('%s.required', $key) => 'Activity Status is required.',
+            sprintf('%s.size', $key) => 'Multiple Activity Statuses are not allowed.'
+        ];
     }
 
     /**
@@ -71,14 +79,15 @@ class ActivityStatus extends Element
      */
     public function validate()
     {
-        // TODO: Implement validate() method.
+        $this->validator = $this->factory->sign($this->data())
+                                         ->with($this->rules(), $this->messages())
+                                         ->getValidatorInstance();
+
+        $this->setValidity();
     }
 
-    /**
-     * Set the validity for the IATI Element data.
-     */
-    protected function setValidity()
+    protected function csvHeader()
     {
-        // TODO: Implement setValidity() method.
+        return end($this->_csvHeader);
     }
 }

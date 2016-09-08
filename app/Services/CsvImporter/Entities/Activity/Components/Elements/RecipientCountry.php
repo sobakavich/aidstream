@@ -146,12 +146,4 @@ class RecipientCountry extends Element
     {
         // TODO: Implement validate() method.
     }
-
-    /**
-     * Set the validity for the IATI Element data.
-     */
-    protected function setValidity()
-    {
-        // TODO: Implement setValidity() method.
-    }
 }
