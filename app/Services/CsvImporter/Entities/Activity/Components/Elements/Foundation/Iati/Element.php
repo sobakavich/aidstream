@@ -79,4 +79,15 @@ abstract class Element
     {
         return $this->template;
     }
+
+    /**
+     * Load the provided Activity CodeList.
+     * @param $codeList
+     * @param $version
+     * @return mixed
+     */
+    protected function loadCodeList($codeList, $version, $directory = "Activity")
+    {
+        return json_decode(file_get_contents(app_path(sprintf('Core/%s/Codelist/en/%s/%s.json', $version, $directory, $codeList))), true);
+    }
 }

@@ -1,5 +1,6 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Factory;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Factory;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -33,6 +34,8 @@ class Validation extends Factory
     public function __construct(TranslatorInterface $translator)
     {
         parent::__construct($translator);
+
+        $this->registerValidationRules();
     }
 
     /**
@@ -68,5 +71,46 @@ class Validation extends Factory
     public function getValidatorInstance()
     {
         return $this->make($this->data, $this->rules, $this->messages);
+    }
+
+    public function registerValidationRules()
+    {
+        $this->extend(
+            'sector_percentage_sum',
+            function ($attribute, $value, $parameters, $validator) {
+                $totalPercentage = [];
+                array_walk(
+                    $value,
+                    function ($element) use (&$totalPercentage) {
+                        $sectorVocabulary = (integer) $element['sector_vocabulary'];
+                        $sectorPercentage = $element['percentage'];
+
+                        if (array_key_exists($sectorVocabulary, $totalPercentage)) {
+                            $totalPercentage[$sectorVocabulary] += $sectorPercentage;
+                        } else {
+                            $totalPercentage[$sectorVocabulary] = $sectorPercentage;
+                        }
+                    }
+                );
+                foreach ($totalPercentage as $key => $percentage) {
+                    if ($percentage != 100) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+        $this->extend(
+            'percentage_sum',
+            function ($attribute, $value, $parameters, $validator) {
+                if ($value != 100) {
+                    return false;
+                }
+
+                return true;
+            }
+        );
     }
 }

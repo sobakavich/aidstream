@@ -74,10 +74,10 @@ class ActivityDate extends Element
     public function map($key, $value, &$index)
     {
         if (!(is_null($value) || $value == "")) {
-            $type                                              = $this->setType($key);
-            $this->data['activity_date'][$index]['date']       = $this->setDate($value);
-            $this->data['activity_date'][$index]['type']       = $type;
-            $this->data['activity_date'][$index]['narratives'] = $this->setNarrative($value);
+            $type                                                = $this->setType($key);
+            $this->data['activity_date'][$index]['date']         = $this->setDate($value);
+            $this->data['activity_date'][$index]['type']         = $type;
+            $this->data['activity_date'][$index]['narratives'][] = $this->setNarrative($value);
         }
     }
 
