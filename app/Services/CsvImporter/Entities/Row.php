@@ -11,7 +11,7 @@ abstract class Row
      * Elements for a Row.
      * @var array
      */
-    protected $elements;
+    protected $elements = [];
 
     /**
      * Fields in the Row.
@@ -45,16 +45,13 @@ abstract class Row
 
     /**
      * Initialize the objects for the all the elements in the Row.
-     * @param $element
+     * @param $classNamespace
      * @param $fields
-     * @param $namespace
      * @return mixed
      */
-    protected function make($element, $fields, $namespace)
+    protected function make($classNamespace, $fields)
     {
-        if (class_exists($class = sprintf('%s\%s', $namespace, ucfirst($element)))) {
-            return app()->make($class, [$fields]);
-        }
+        return app()->make($classNamespace, [$fields]);
     }
 
     /**
@@ -73,7 +70,9 @@ abstract class Row
      */
     public function field($fieldName)
     {
-        if (array_key_exists($fieldName, $this->fields)) return $this->fields[$fieldName];
+        if (array_key_exists($fieldName, $this->fields)) {
+            return $this->fields[$fieldName];
+        }
     }
 
     /**
@@ -83,5 +82,16 @@ abstract class Row
     protected function elements()
     {
         return $this->elements;
+    }
+
+    /**
+     * Get the namespace for the element class.
+     * @param $element
+     * @param $baseNamespace
+     * @return string
+     */
+    protected function getNamespace($element, $baseNamespace)
+    {
+        return sprintf('%s\%s', $baseNamespace, ucfirst($element));
     }
 }
