@@ -4,7 +4,7 @@ use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Ia
 use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 /**
- * Class ParticipatingOrganisation
+ * Class ParticipatingOrganization
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
  */
 class ParticipatingOrganization extends Element
@@ -97,6 +97,15 @@ class ParticipatingOrganization extends Element
         }
 
         if ($key == $this->_csvHeaders[0] && (!is_null($value))) {
+            $validOrganizationRoles = $this->loadCodeList('OrganisationRole', 'V201');
+
+            foreach ($validOrganizationRoles['OrganisationRole'] as $role) {
+                if (ucwords($value) == $role['name']) {
+                    $value = $role['code'];
+                    break;
+                }
+            }
+
             $this->orgRoles[] = $value;
             $this->orgRoles   = array_unique($this->orgRoles);
 
@@ -135,6 +144,15 @@ class ParticipatingOrganization extends Element
         }
 
         if ($key == $this->_csvHeaders[1] && (!is_null($value))) {
+            $validOrganizationType = $this->loadCodeList('OrganisationType', 'V201');
+
+            foreach ($validOrganizationType['OrganisationType'] as $type) {
+                if (ucwords($value) == $type['name']) {
+                    $value = $type['code'];
+                    break;
+                }
+            }
+
             $this->types[] = $value;
             $this->types   = array_unique($this->types);
 
@@ -175,6 +193,7 @@ class ParticipatingOrganization extends Element
         return [
             'participating_organization'                     => 'required|required_only_one_among:identifier,narrative',
             'participating_organization.*.organization_role' => sprintf('required|in:%s', $this->validOrganizationRoles()),
+            'participating_organization.*.organization_type' => sprintf('required|in:%s', $this->validOrganizationTypes()),
         ];
     }
 
@@ -188,7 +207,8 @@ class ParticipatingOrganization extends Element
             'participating_organization.required'                     => 'Participating Organisation is required.',
             'participating_organization.*.organization_role.required' => 'Participating Organisation role is required.',
             'participating_organization.required_only_one_among'      => 'Either Participating Organisation Identifier or Participating Organisation Name is required.',
-            'participating_organization.*.organization_role.in'       => 'Only valid Organisation Roles are allowed.'
+            'participating_organization.*.organization_role.in'       => 'Only valid Organisation Roles are allowed.',
+            'participating_organization.*.organization_type.in'       => 'Only valid Organisation Types are allowed.'
         ];
     }
 
@@ -221,5 +241,24 @@ class ParticipatingOrganization extends Element
         );
 
         return implode(',', array_keys(array_flip($organizationRoles)));
+    }
+
+    /**
+     * Get the valid OrganizationType from the OrganizationType codelist as a string.
+     * @return string
+     */
+    protected function validOrganizationTypes()
+    {
+        list($organizationTypeCodeList, $organizationTypes) = [$this->loadCodeList('OrganisationType', 'V201'), []];
+
+        array_walk(
+            $organizationTypeCodeList['OrganisationType'],
+            function ($organizationType) use (&$organizationTypes) {
+                $organizationTypes[] = $organizationType['code'];
+                $organizationTypes[] = $organizationType['name'];
+            }
+        );
+
+        return implode(',', array_keys(array_flip($organizationTypes)));
     }
 }
