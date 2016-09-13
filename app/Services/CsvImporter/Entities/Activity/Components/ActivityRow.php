@@ -26,7 +26,7 @@ class ActivityRow extends Row
     /**
      * Number of headers for the Activity Csv with Transactions.
      */
-    const TRANSACTION_HEADER_COUNT = 39;
+    const TRANSACTION_HEADER_COUNT = 40;
 
     /**
      * Directory where the validated Csv data is written before import.
@@ -60,6 +60,27 @@ class ActivityRow extends Row
      */
     protected $transactionRows = [];
 
+    protected $transactionCSVHeaders = [
+        'transaction_internal_reference',
+        'transaction_type',
+        'transaction_date',
+        'transaction_value',
+        'transaction_value_date',
+        'transaction_description',
+        'transaction_provider_organisation_identifier',
+        'transaction_provider_organisation_type',
+        'transaction_provider_organisation_activity_identifier',
+        'transaction_provider_organisation_description',
+        'transaction_receiver_organisation_identifier',
+        'transaction_receiver_organisation_type',
+        'transaction_receiver_organisation_activity_identifier',
+        'transaction_receiver_organisation_description',
+        'transaction_sector_vocabulary',
+        'transaction_sector_code',
+        'transaction_recipient_country_code',
+        'transaction_recipient_region_code'
+    ];
+
     /**
      * All Elements for an Activity Row.
      * @var
@@ -74,7 +95,7 @@ class ActivityRow extends Row
     /**
      * @var
      */
-    protected $title;
+    public $title;
 
     /**
      * @var
@@ -94,27 +115,27 @@ class ActivityRow extends Row
     /**
      * @var
      */
-    protected $participatingOrganisation;
+    protected $participatingOrganization;
 
     /**
      * @var
      */
-    protected $recipientCountry;
+    public $recipientCountry;
 
     /**
      * @var
      */
-    protected $recipientRegion;
+    public $recipientRegion;
 
     /**
      * @var
      */
-    protected $sector;
+    public $sector;
 
     /**
      * @var array
      */
-    protected $transactions = [];
+    protected $transaction = [];
 
     /**
      * ActivityRow constructor.
@@ -222,15 +243,47 @@ class ActivityRow extends Row
      */
     protected function makeTransactionElements()
     {
+        $this->mapTransactionData();
+
         foreach ($this->transactionRows as $transactionRow) {
             if (class_exists($namespace = $this->getNamespace($this->transactionElement(), self::BASE_NAMESPACE))) {
-                $this->transactions[] = $this->make($namespace, $transactionRow);
+                $this->transaction[] = $this->make($namespace, $transactionRow, $this);
             }
         }
 
         $this->elements[] = $this->transactionElement();
 
         return $this;
+    }
+
+    protected function mapTransactionData()
+    {
+        foreach ($this->fields() as $key => $values) {
+            if (array_key_exists($key, array_flip($this->transactionCSVHeaders))) {
+                foreach ($values as $index => $value) {
+                    $this->transactionRows[$index][$key] = $value;
+                }
+            }
+        }
+
+        $this->removeEmptyTransactionData();
+    }
+
+    protected function removeEmptyTransactionData()
+    {
+        $totalNull = 0;
+
+        foreach ($this->transactionRows as $index => $transactionRow) {
+            foreach ($transactionRow as $value) {
+                if (!$value) {
+                    $totalNull ++;
+                }
+            }
+
+            if ($totalNull == count($this->transactionCSVHeaders)) {
+                unset($this->transactionRows[$index]);
+            }
+        }
     }
 
     /**
@@ -260,9 +313,17 @@ class ActivityRow extends Row
         $validities = [];
 
         foreach ($this->elements() as $element) {
-            $this->$element->validate();
+            if ($element == 'transaction') {
+                foreach ($this->$element as $transaction) {
+                    $transaction->validate();
 
-            $validities[] = $this->$element->isValid();
+                    $validities[] = $transaction->isValid();
+                }
+            } else {
+                $this->$element->validate();
+
+                $validities[] = $this->$element->isValid();
+            }
         }
 
         return $validities;
@@ -315,9 +376,15 @@ class ActivityRow extends Row
         $this->data = [];
 
         foreach ($this->elements() as $element) {
-            $this->data[snake_case($element)] = ($element === 'identifier')
-                ? $this->$element->data()
-                : $this->$element->data(snake_case($this->$element->pluckIndex()));
+            if ($element == 'transaction') {
+                foreach ($this->$element as $transaction) {
+                    $this->data[$element] = $transaction->data($transaction->pluckIndex());
+                }
+            } else {
+                $this->data[snake_case($element)] = ($element === 'identifier')
+                    ? $this->$element->data()
+                    : $this->$element->data(snake_case($this->$element->pluckIndex()));
+            }
         }
 
         return $this->data;
