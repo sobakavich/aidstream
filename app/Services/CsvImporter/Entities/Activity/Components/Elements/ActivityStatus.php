@@ -53,6 +53,14 @@ class ActivityStatus extends Element
     public function map($value)
     {
         if (!(is_null($value) || $value == "")) {
+            $validActivityStatus = $this->loadCodeList('ActivityStatus', 'V201');
+
+            foreach ($validActivityStatus['ActivityStatus'] as $status) {
+                if (ucwords($value) == $status['name']) {
+                    $value = $status['code'];
+                    break;
+                }
+            }
             $this->data[$this->csvHeader()][] = $value;
         }
     }
