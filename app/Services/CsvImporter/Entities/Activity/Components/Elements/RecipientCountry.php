@@ -161,7 +161,6 @@ class RecipientCountry extends Element
         $this->setValidity();
         unset($this->data['total_percentage']);
         unset($this->data['recipient_region']);
-
     }
 
     /**
@@ -180,7 +179,7 @@ class RecipientCountry extends Element
         foreach (getVal($this->data(), ['recipient_country'], []) as $key => $value) {
             $rules['recipient_country.' . $key . '.country_code'] = sprintf('required_with:recipient_country.%s.percentage|in:%s', $key, $codes);
             $rules['recipient_country.' . $key . '.percentage']   = sprintf('required_with:recipient_country.%s.country_code', $key);
-            $rules['recipient_country.' . $key . '.percentage']   = 'numeric|max:100';
+            $rules['recipient_country.' . $key . '.percentage']   = 'numeric|max:100|min:0';
         }
 
         return $rules;
@@ -203,7 +202,7 @@ class RecipientCountry extends Element
             $messages['recipient_country.' . $key . '.percentage.required_with']   = 'Percentage is required with Recipient Country Code.';
             $messages['recipient_country.' . $key . '.percentage.numeric']         = 'Percentage must be numeric.';
             $messages['recipient_country.' . $key . '.percentage.max']             = 'Percentage cannot be more than 100';
-
+            $messages['recipient_country.' . $key . '.percentage.min']             = 'Percentage cannot be less than 0';
         }
 
         return $messages;

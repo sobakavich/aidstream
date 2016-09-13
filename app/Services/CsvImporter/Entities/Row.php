@@ -56,13 +56,19 @@ abstract class Row
 
     /**
      * Initialize the objects for the all the elements in the Row.
-     * @param $classNamespace
-     * @param $fields
+     * @param      $classNamespace
+     * @param      $fields
+     * @param null $data
      * @return mixed
      */
-    protected function make($classNamespace, $fields)
+    protected function make($classNamespace, $fields, $data = null)
     {
+        if ($data) {
+            return app()->make($classNamespace, [$fields, $data]);
+        }
+
         return app()->make($classNamespace, [$fields]);
+
     }
 
     /**

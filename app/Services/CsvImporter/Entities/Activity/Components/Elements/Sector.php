@@ -9,6 +9,7 @@ use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
  */
 class Sector extends Element
 {
+    protected $type;
     /**
      * CSV Header of Description with their code
      */
@@ -40,6 +41,10 @@ class Sector extends Element
      */
     const CODE_LIST_PATH = '/Core/V201/Codelist/en/Activity';
 
+    const ACTIVITY_CSV_HEADER_COUNT = 22;
+
+    const TRANSACTION_CSV_HEADER_COUNT = 40;
+
     /**
      * @var array
      */
@@ -64,6 +69,7 @@ class Sector extends Element
     {
         $this->prepare($fields);
         $this->factory = $factory;
+        $this->type    = $this->getCsvType($fields);
     }
 
     /**
@@ -123,10 +129,9 @@ class Sector extends Element
     protected function setSectorCode($key, $value, $index)
     {
         if ($key == $this->_csvHeaders[1]) {
-            $sectorVocabulary         = $this->data['sector'][$index]['sector_vocabulary'];
-            $sectorVocabularyResponse = $this->isValidSectorVocabulary($sectorVocabulary);
+            $sectorVocabulary = (int) $this->data['sector'][$index]['sector_vocabulary'];
 
-            if ($sectorVocabularyResponse == 1) {
+            if ($sectorVocabulary == 1) {
                 ($value) ?: $value = '';
                 $this->codes[]                               = $value;
                 $this->data['sector'][$index]['sector_code'] = $value;
@@ -154,10 +159,9 @@ class Sector extends Element
     protected function setSectorCategoryCode($key, $value, $index)
     {
         if ($key == $this->_csvHeaders[1]) {
-            $sectorVocabulary         = $this->data['sector'][$index]['sector_vocabulary'];
-            $sectorVocabularyResponse = $this->isValidSectorVocabulary($sectorVocabulary);
+            $sectorVocabulary = $this->data['sector'][$index]['sector_vocabulary'];
 
-            if ($sectorVocabularyResponse == 2) {
+            if ($sectorVocabulary == 2) {
                 ($value) ?: $value = '';
                 $this->codes[]                                        = $value;
                 $this->data['sector'][$index]['sector_category_code'] = $value;
@@ -176,10 +180,9 @@ class Sector extends Element
     protected function setSectorText($key, $value, $index)
     {
         if ($key == $this->_csvHeaders[1]) {
-            $sectorVocabulary         = $this->data['sector'][$index]['sector_vocabulary'];
-            $sectorVocabularyResponse = $this->isValidSectorVocabulary($sectorVocabulary);
+            $sectorVocabulary = $this->data['sector'][$index]['sector_vocabulary'];
 
-            if (!$sectorVocabularyResponse || ($sectorVocabularyResponse != 1 && $sectorVocabularyResponse != 2)) {
+            if ($sectorVocabulary != 1 && $sectorVocabulary != 2) {
                 ($value) ?: $value = '';
                 $this->codes[]                               = $value;
                 $this->data['sector'][$index]['sector_text'] = $value;
@@ -234,24 +237,6 @@ class Sector extends Element
     }
 
     /**
-     * Check if the Sector Vocabulary from CSV file is valid.
-     * @param $value
-     * @return bool
-     */
-    protected function isValidSectorVocabulary($value)
-    {
-        $sectorVocabularyCodelist = $this->validSectorCodelist('SectorVocabulary','V201');
-
-        foreach ($sectorVocabularyCodelist as $key => $code) {
-            if ($value == $code) {
-                return $value;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Validate data for IATI Element.
      */
     public function validate()
@@ -268,16 +253,20 @@ class Sector extends Element
      */
     public function rules()
     {
-
-        $sectorVocabulary   = implode(",", $this->validSectorCodelist('SectorVocabulary', 'V201'));
-        $sectorCode         = implode(",", $this->validSectorCodelist('Sector', 'V201'));
-        $sectorCategoryCode = implode(",", $this->validSectorCodelist('SectorCategory', 'V201'));
+        $sectorVocabulary   = implode(",", $this->validSectorCodeList('SectorVocabulary', 'V201'));
+        $sectorCode         = implode(",", $this->validSectorCodeList('Sector', 'V201'));
+        $sectorCategoryCode = implode(",", $this->validSectorCodeList('SectorCategory', 'V201'));
 
         $rules = [
-            'sector'                     => 'required|sector_percentage_sum',
             'sector.*.sector_vocabulary' => sprintf('required|in:%s', $sectorVocabulary),
             'sector.*.percentage'        => 'required'
         ];
+
+        if ($this->type == 'activity') {
+            $rules['sector'] = 'required|sector_percentage_sum';
+        } elseif ($this->type == 'transaction') {
+            $rules['sector'] = 'sector_percentage_sum';
+        }
 
         foreach (getVal($this->data(), ['sector']) as $key => $value) {
             $rules['sector.' . $key . '.sector_code']          = sprintf('required_if:sector.%s.sector_vocabulary,1|in:%s', $key, $sectorCode);
@@ -287,11 +276,8 @@ class Sector extends Element
                 $key,
                 $key
             );
-            $rules['sector.' . $key . '.percentage']           = 'numeric';
-        }
 
-        foreach (getVal($this->data(), ['sector']) as $key => $value) {
-
+            $rules['sector.' . $key . '.percentage'] = 'numeric|max:100|min:0';
         }
 
         return $rules;
@@ -317,6 +303,8 @@ class Sector extends Element
             $messages['sector.' . $key . '.sector_category_code.required_if'] = "Sector code is required when sector category code is 2";
             $messages['sector.' . $key . '.sector_category_code.in']          = "Entered sector code for sector vocabulary 2 is invalid";
             $messages['sector.' . $key . '.sector_text.required_unless']      = "Sector code is required.";
+            $messages['sector.' . $key . '.percentage.min']                   = "Percentage cannot be less than 0.";
+            $messages['sector.' . $key . '.percentage.max']                   = "Percentage cannot be more than 100";
         }
 
         return $messages;
@@ -328,18 +316,31 @@ class Sector extends Element
      * @param $version
      * @return array
      */
-    protected function validSectorCodelist($name, $version)
+    protected function validSectorCodeList($name, $version)
     {
-        $sectorVocabulary = $this->loadCodeList($name, $version);
-        $vocabularies     = [];
+        $codeList = $this->loadCodeList($name, $version);
+        $list     = [];
 
         array_walk(
-            $sectorVocabulary[$name],
-            function ($vocabulary) use (&$vocabularies) {
-                $vocabularies[] = $vocabulary['code'];
+            $codeList[$name],
+            function ($code) use (&$list) {
+                $list[] = $code['code'];
             }
         );
 
-        return $vocabularies;
+        return $list;
+    }
+
+    protected function getCsvType($fields)
+    {
+        if (count($fields) == self::ACTIVITY_CSV_HEADER_COUNT) {
+
+            return 'activity';
+        } elseif (count($fields) == self::TRANSACTION_CSV_HEADER_COUNT) {
+
+            return 'transaction';
+        }
+
+        return null;
     }
 }
