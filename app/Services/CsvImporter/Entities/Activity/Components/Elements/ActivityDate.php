@@ -36,6 +36,12 @@ class ActivityDate extends Element
      */
     protected $dates;
 
+    protected $actualDates = [];
+
+    protected $plannedDates = [];
+
+    protected $activityDate = [];
+
     /**
      * ActivityDate constructor.
      * @param            $fields
@@ -74,10 +80,10 @@ class ActivityDate extends Element
     public function map($key, $value, &$index)
     {
         if (!(is_null($value) || $value == "")) {
-            $type                                                = $this->setType($key);
-            $this->data['activity_date'][$index]['date']         = $this->setDate($value);
-            $this->data['activity_date'][$index]['type']         = $type;
-            $this->data['activity_date'][$index]['narratives'][] = $this->setNarrative($value);
+            $type                                               = $this->setType($key);
+            $this->data['activity_date'][$index]['date']        = $this->setDate($value);
+            $this->data['activity_date'][$index]['type']        = $type;
+            $this->data['activity_date'][$index]['narrative'][] = $this->setNarrative($value);
         }
     }
 
@@ -125,9 +131,20 @@ class ActivityDate extends Element
      */
     public function rules()
     {
-        return [
-            'activity_date' => 'required'
+        $rules = [
+            'activity_date'          => 'required',
+            'activity_date.*'        => 'size:3'
         ];
+
+        foreach ($this->actualDates as $index => $date) {
+            foreach ($date as $key => $value) {
+                $rules['activity_date.' . $index . '.' . $key . '.date'] = 'date_format:Y-m-d';
+            }
+        }
+
+        // TODO: start-end date validation.
+
+        return $rules;
     }
 
     /**
@@ -136,7 +153,18 @@ class ActivityDate extends Element
      */
     public function messages()
     {
-        return ['activity_date.required' => 'Activity Date is required.'];
+        $messages = [
+            'activity_date.required' => 'Activity Date is required.',
+            'activity_date.*.size'   => 'Multiple Activity Dates are not allowed.'
+        ];
+
+        foreach ($this->actualDates as $index => $date) {
+            foreach ($date as $key => $value) {
+                $messages['activity_date.' . $index . '.' . $key . '.date.date_format'] = 'Activity Date must be of format Y-m-d.';
+            }
+        }
+
+        return $messages;
     }
 
     /**
@@ -144,10 +172,39 @@ class ActivityDate extends Element
      */
     public function validate()
     {
-        $this->validator = $this->factory->sign($this->data())
+        $this->activityDateRules();
+
+        $this->validator = $this->factory->sign($this->activityDate)
                                          ->with($this->rules(), $this->messages())
                                          ->getValidatorInstance();
 
         $this->setValidity();
+    }
+
+    /**
+     * Append additional rules for Activity Date.
+     */
+    protected function activityDateRules()
+    {
+        $this->sortByType();
+        $this->activityDate['activity_date'] = array_merge($this->actualDates, $this->plannedDates);
+    }
+
+    /**
+     * Sort ActivityDate by their type.
+     */
+    protected function sortByType()
+    {
+        $dates = array_flip($this->_csvHeaders);
+
+        foreach (getVal($this->data(), ['activity_date'], []) as $key => $value) {
+            $type = getVal($dates, [getVal($value, ['type'], '')], '');
+
+            if ($type == $dates[2] || $type == $dates[4]) {
+                $this->actualDates[$dates[$this->_csvHeaders[$type]]][] = $value;
+            } else {
+                $this->plannedDates[$dates[$this->_csvHeaders[$type]]][] = $value;
+            }
+        }
     }
 }
