@@ -137,5 +137,73 @@ class Validation extends Factory
                 return $isValid;
             }
         );
+
+        $this->extend(
+            'check_sector',
+            function ($attribute, $values, $parameters, $validator) {
+                $sectorInActivityLevel = true;
+                $status                = true;
+                foreach ($values as $value) {
+                    if ($value['activitySector'] == '') {
+                        $sectorInActivityLevel = false;
+                    }
+
+                    if ($value['sector_vocabulary'] == '' && $value['sector_code'] == ''
+                        && $value['sector_text'] == '' && $value['sector_category_code'] == ''
+                        && $sectorInActivityLevel == false
+                    ) {
+                        $status = false;
+                    } elseif (($value['sector_vocabulary'] != '' || $value['sector_code'] != ''
+                            || $value['sector_text'] != '' || $value['sector_category_code'] != '')
+                        && $sectorInActivityLevel == true
+                    ) {
+                        $status = false;
+                    }
+                }
+
+                return $status;
+            }
+        );
+        $this->extend(
+            'check_recipient_country',
+            function ($attribute, $values, $parameters, $validator) {
+                $countryInActivityLevel = true;
+                $status                 = true;
+                foreach ($values as $value) {
+                    if ($value['recipientCountry'] == '') {
+                        $countryInActivityLevel = false;
+                    }
+
+                    if ($value['country_code'] == '' && $countryInActivityLevel == false) {
+                        $status = false;
+                    } elseif ($value['country_code'] != '' && $countryInActivityLevel == true) {
+                        $status = false;
+                    }
+                }
+
+                return $status;
+            }
+        );
+
+        $this->extend(
+            'check_recipient_region',
+            function ($attribute, $values, $parameters, $validator) {
+                $regionInActivityLevel = true;
+                $status                = true;
+                foreach ($values as $value) {
+                    if ($value['recipientRegion'] == '') {
+                        $regionInActivityLevel = false;
+                    }
+
+                    if ($value['region_code'] == '' && $regionInActivityLevel == false) {
+                        $status = false;
+                    } elseif ($value['region_code'] != '' && $regionInActivityLevel == true) {
+                        $status = false;
+                    }
+                }
+
+                return $status;
+            }
+        );
     }
 }
