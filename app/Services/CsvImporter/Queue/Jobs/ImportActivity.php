@@ -29,6 +29,6 @@ class ImportActivity extends Job implements ShouldQueue
     public function handle()
     {
         $this->csvProcessor->handle();
-
+        $this->delete();
     }
 }
