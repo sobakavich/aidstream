@@ -7,12 +7,18 @@ use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
  * Class ParticipatingOrganisation
  * @package App\Services\CsvImporter\Entities\Activity\Components\Elements
  */
-class ParticipatingOrganisation extends Element
+class ParticipatingOrganization extends Element
 {
     /**
      * @var array
      */
     private $_csvHeaders = ['participating_organisation_role', 'participating_organisation_type', 'participating_organisation_name', 'participating_organisation_identifier'];
+
+    /**
+     * Index under which the data is stored within the object.
+     * @var string
+     */
+    protected $index = 'participating_organization';
 
     /**
      * @var array

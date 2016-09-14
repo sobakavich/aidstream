@@ -13,6 +13,21 @@ use App\Services\Organization\OrganizationManager;
 class ImportController extends Controller
 {
     /**
+     * Directory where the validated Csv data is written before import.
+     */
+    const CSV_DATA_STORAGE_PATH = 'csvImporter/tmp';
+
+    /**
+     * File in which the valida Csv data is written before import.
+     */
+    const VALID_CSV_FILE = 'valid.json';
+
+    /**
+     * File in which the invalid Csv data is written before import.
+     */
+    const INVALID_CSV_FILE = 'invalid.json';
+
+    /**
      * @var ImportActivityForm
      */
     protected $form;
@@ -77,11 +92,58 @@ class ImportController extends Controller
     /**
      * Import Activities into the database.
      * @param ImportActivity $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function activities(ImportActivity $request)
     {
         $file = $request->file('activity');
 
         $this->importManager->process($file);
+
+        return view('Activity.csvImporter.status');
+    }
+
+    /**
+     * Get the valid Csv data for import.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getValidData()
+    {
+        $filepath = $this->getFilePath(true);
+
+        if (file_exists($filepath)) {
+            return response()->json(json_decode(file_get_contents($filepath), true));
+        }
+
+        return response()->json('No data available.');
+    }
+
+    /**
+     * Get the invalid Csv data.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getInvalidData()
+    {
+        $filepath = $this->getFilePath(false);
+
+        if (file_exists($filepath)) {
+            return response()->json(json_decode(file_get_contents($filepath), true));
+        }
+
+        return response()->json('No data available.');
+    }
+
+    /**
+     * Get the filepath to the file in which the Csv data is written after processing for import.
+     * @param $isValid
+     * @return string
+     */
+    protected function getFilePath($isValid)
+    {
+        if ($isValid) {
+            return storage_path(sprintf('%s/%s', self::CSV_DATA_STORAGE_PATH, self::VALID_CSV_FILE));
+        }
+
+        return storage_path(sprintf('%s/%s', self::CSV_DATA_STORAGE_PATH, self::INVALID_CSV_FILE));
     }
 }
