@@ -16,6 +16,12 @@ class ActivityDate extends Element
     private $_csvHeaders = ['actual_start_date' => 2, 'actual_end_date' => 4, 'planned_start_date' => 1, 'planned_end_date' => 3];
 
     /**
+     * Index under which the data is stored within the object.
+     * @var string
+     */
+    protected $index = 'activity_date';
+
+    /**
      * Template for the ActivityDate element.
      * @var array
      */

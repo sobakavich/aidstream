@@ -15,6 +15,12 @@ class RecipientRegion extends Element
     private $_csvHeaders = ['recipient_region_code', 'recipient_region_percentage'];
 
     /**
+     * Index under which the data is stored within the object.
+     * @var string
+     */
+    protected $index = 'recipient_region';
+
+    /**
      * @var array
      */
     protected $regions = [];

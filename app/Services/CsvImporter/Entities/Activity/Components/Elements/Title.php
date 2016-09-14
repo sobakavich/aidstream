@@ -16,6 +16,12 @@ class Title extends Element
     private $_csvHeader = ['activity_title'];
 
     /**
+     * Index under which the data is stored within the object.
+     * @var string
+     */
+    protected $index = 'activity_title';
+
+    /**
      * @var
      */
     protected $narratives;
