@@ -15,6 +15,12 @@ class Description extends Element
     private $_csvHeaders = ['activity_description_general' => 1, 'activity_description_objectives' => 2, 'activity_description_target_groups' => 3, 'activity_description_others' => 4];
 
     /**
+     * Index under which the data is stored within the object.
+     * @var string
+     */
+    protected $index = 'description';
+
+    /**
      * @var array
      */
     protected $narratives = [];
