@@ -48,7 +48,6 @@ class CsvProcessor
             $this->make('App\Services\CsvImporter\Entities\Activity\Activity');
 
             $this->model->process();
-            dd($this);
         } catch (Exception $exception) {
             dd($exception);
         }

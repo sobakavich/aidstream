@@ -20,6 +20,17 @@ abstract class Row
     protected $fields;
 
     /**
+     * @var bool
+     */
+    protected $isValid = false;
+
+    /**
+     * Data in the row.
+     * @var array
+     */
+    protected $data = [];
+
+    /**
      * Initialize the Row object.
      * @return mixed
      */

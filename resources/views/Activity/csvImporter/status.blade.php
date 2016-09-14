@@ -1,0 +1,59 @@
+@extends('app')
+
+@section('title', 'Import Status')
+
+@section('content')
+    <div class="container main-container">
+        <div class="row">
+            @include('includes.side_bar_menu')
+            <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper upload-activity-wrapper">
+                @include('includes.response')
+                <div class="element-panel-heading">
+                    <div>
+                        Import Activities
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper">
+                    <div class="panel panel-default panel-upload">
+                        <div class="panel-body">
+                            <div class="create-form">
+                                <div>
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#valid" aria-controls="valid" role="tab" data-toggle="tab">Valid</a></li>
+                                        <li role="presentation"><a href="#invalid" aria-controls="invalid" role="tab" data-toggle="tab">Invalid</a></li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="valid">
+                                            <div class="valid-data">
+
+                                            </div>
+                                        </div>
+
+                                        <div role="tabpanel" class="tab-pane" id="invalid">
+                                            <div class="invalid-data">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="download-transaction-wrap">
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('script')
+    <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>
+@stop

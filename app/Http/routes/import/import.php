@@ -17,5 +17,15 @@ $router->group(
             'as'   => 'activity.download-template',
             'uses' => 'ImportController@downloadActivityTemplate'
         ]);
+
+        $router->get('/import-activity/get-valid-data', [
+            'as'   => 'activity.get-valid-data',
+            'uses' => 'ImportController@getValidData'
+        ]);
+
+        $router->get('/import-activity/get-invalid-data', [
+            'as'   => 'activity.get-invalid-data',
+            'uses' => 'ImportController@getInvalidData'
+        ]);
     }
 );
