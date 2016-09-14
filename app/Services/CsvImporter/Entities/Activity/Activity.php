@@ -31,7 +31,6 @@ class Activity extends Csv
         foreach ($this->rows() as $row) {
             $row->process()->validate()->keep();
         }
-        dd($this);
 
         return $this;
     }

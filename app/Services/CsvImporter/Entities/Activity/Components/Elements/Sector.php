@@ -15,6 +15,12 @@ class Sector extends Element
     private $_csvHeaders = ['sector_vocabulary', 'sector_code', 'sector_percentage'];
 
     /**
+     * Index under which the data is stored within the object.
+     * @var string
+     */
+    protected $index = 'sector';
+
+    /**
      * @var array
      */
     protected $vocabularies = [];

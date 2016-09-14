@@ -8,6 +8,12 @@
 abstract class Element
 {
     /**
+     * Index under which the data is stored within the object.
+     * @var string
+     */
+    protected $index;
+
+    /**
      * @var array
      */
     protected $data = [];
@@ -64,11 +70,20 @@ abstract class Element
     }
 
     /**
+     * @param null $popIndex
      * @return array
      */
-    public function data()
+    public function data($popIndex = null)
     {
-        return $this->data;
+        if (!$popIndex) {
+            return $this->data;
+        }
+
+        if (array_key_exists($popIndex, $this->data)) {
+            return $this->data[$popIndex];
+        }
+
+        return null;
     }
 
     /**
@@ -90,5 +105,23 @@ abstract class Element
     protected function loadCodeList($codeList, $version, $directory = "Activity")
     {
         return json_decode(file_get_contents(app_path(sprintf('Core/%s/Codelist/en/%s/%s.json', $version, $directory, $codeList))), true);
+    }
+
+    /**
+     * Check the validity of an Element.
+     * @return mixed
+     */
+    public function isValid()
+    {
+        return $this->isValid;
+    }
+
+    /**
+     * Get the index under which the data is stored within the object.
+     * @return mixed
+     */
+    public function pluckIndex()
+    {
+        return $this->index;
     }
 }

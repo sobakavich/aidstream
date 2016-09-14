@@ -15,6 +15,12 @@ class ActivityStatus extends Element
     private $_csvHeader = ['activity_status'];
 
     /**
+     * Index under which the data is stored within the object.
+     * @var string
+     */
+    protected $index = 'activity_status';
+
+    /**
      * Description constructor.
      * @param            $fields
      * @param Validation $factory
