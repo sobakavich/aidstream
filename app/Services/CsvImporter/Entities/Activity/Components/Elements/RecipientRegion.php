@@ -143,7 +143,7 @@ class RecipientRegion extends Element
     {
         $narrative = ['narrative' => '', 'language' => ''];
 
-        $this->data['recipient_region'][$index]['narrative'][] = $narrative;
+        $this->data['recipient_region'][$index]['narrative'][0] = $narrative;
     }
 
     /**
@@ -172,16 +172,16 @@ class RecipientRegion extends Element
     {
         $recipientCountry = $this->recipientCountry->data;
 
-        $this->totalPercentage += $this->recipientCountry->totalPercentage();
-        $this->data['total_percentage']  = $this->totalPercentage();
-        $this->data['recipient_country'] = (empty($recipientCountry)) ? '' : $recipientCountry;
-
-        $this->validator = $this->factory->sign($this->data())
-                                         ->with($this->rules(), $this->messages())
-                                         ->getValidatorInstance();
+        $this->totalPercentage                           = $this->totalPercentage() + $this->recipientCountry->totalPercentage();
+        $this->data['recipient_country']                 = (empty($recipientCountry)) ? '' : $recipientCountry;
+        $this->data['recipient_region_total_percentage'] = getVal($this->data, ['recipient_region'], []);
+        $this->data['total_percentage']                  = $this->totalPercentage;
+        $this->validator                                 = $this->factory->sign($this->data())
+                                                                         ->with($this->rules(), $this->messages())
+                                                                         ->getValidatorInstance();
 
         $this->setValidity();
-        unset($this->data['total_percentage']);
+        unset($this->data['recipient_region_total_percentage']);
         unset($this->data['recipient_country']);
     }
 
@@ -195,13 +195,14 @@ class RecipientRegion extends Element
 
         $rules = [
             'recipient_region' => sprintf('required_if:recipient_country,%s', ''),
-            'total_percentage' => 'percentageSum'
         ];
+        ($this->data['recipient_country'] != '') ? $rules['total_percentage'] = 'recipient_country_region_percentage_sum'
+            : $rules['recipient_region_total_percentage'] = 'percentage_sum';
 
         foreach (getVal($this->data(), ['recipient_region'], []) as $key => $value) {
             $rules['recipient_region.' . $key . '.region_code'] = sprintf('required_with:recipient_region.%s.percentage|in:%s', $key, $codes);
-            $rules['recipient_region.' . $key . '.percentage']  = sprintf('required_with:recipient_region.%s.region_code', $key);
-            $rules['recipient_region.' . $key . '.percentage']  = 'numeric|max:100|min:0';
+//            $rules['recipient_region.' . $key . '.percentage']  = sprintf('required_with:recipient_region.%s.region_code', $key);
+            $rules['recipient_region.' . $key . '.percentage'] = 'numeric|max:100|min:0';
         }
 
         return $rules;
@@ -214,14 +215,14 @@ class RecipientRegion extends Element
     public function messages()
     {
         $messages = [
-            'recipient_region.required_unless' => 'Recipient Region is required if Recipient Country is not present.',
-            'percentage_sum'                   => 'Sum of percentage of Recipient Country and Recipient Region must be 100.'
+            'recipient_region.required_if'                             => 'Recipient Region is required if Recipient Country is not present.',
+            'recipient_region_total_percentage.percentage_sum'         => 'Sum of percentage of Recipient Regions must be equal to 100.',
+            'total_percentage.recipient_country_region_percentage_sum' => 'Sum of percentage of Recipient Country and Recipient Region must be 100.'
         ];
 
         foreach (getVal($this->data(), ['recipient_region'], []) as $key => $value) {
             $messages['recipient_region.' . $key . '.region_code.required_with'] = 'Recipient region code is required with Percentage.';
             $messages['recipient_region.' . $key . '.region_code.in']            = 'Entered Recipient region code is invalid.';
-            $messages['recipient_region.' . $key . '.percentage.required_with']  = 'Percentage is required with Recipient Region Code.';
             $messages['recipient_region.' . $key . '.percentage.numeric']        = 'Percentage must be numeric.';
             $messages['recipient_region.' . $key . '.percentage.max']            = 'Percentage cannot be more than 100.';
             $messages['recipient_region.' . $key . '.percentage.min']            = 'Percentage cannot be less than 0.';
