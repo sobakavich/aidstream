@@ -20,6 +20,8 @@ class ActivityStatus extends Element
      */
     protected $index = 'activity_status';
 
+    protected $data;
+
     /**
      * Description constructor.
      * @param            $fields
@@ -40,7 +42,7 @@ class ActivityStatus extends Element
         foreach ($fields as $key => $values) {
             if (!is_null($values) && array_key_exists($key, array_flip($this->_csvHeader))) {
                 foreach ($values as $value) {
-                    $this->map($value);
+                    $this->map($value, $values);
                 }
             }
         }
@@ -49,8 +51,9 @@ class ActivityStatus extends Element
     /**
      * Map data from CSV into ActivityStatus data format.
      * @param $value
+     * @param $values
      */
-    public function map($value)
+    public function map($value, $values)
     {
         if (!(is_null($value) || $value == "")) {
             $validActivityStatus = $this->loadCodeList('ActivityStatus', 'V201');
@@ -61,7 +64,7 @@ class ActivityStatus extends Element
                     break;
                 }
             }
-            $this->data[$this->csvHeader()][] = $value;
+            (count(array_filter($values)) == 1) ? $this->data[$this->csvHeader()] = $value : $this->data[$this->csvHeader()][] = $value;
         }
     }
 

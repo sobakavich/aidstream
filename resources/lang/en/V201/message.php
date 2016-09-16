@@ -39,4 +39,5 @@ return [
     'activities_import_failed'                => 'Failed to import activities.',
     'organization_element_removed'            => 'Organization element has been removed successfully',
     'organization_element_not_removed'        => 'Failed to remove organization element',
+    'csv_header_mismatch'                     => ':message'
 ];
