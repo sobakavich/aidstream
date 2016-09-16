@@ -43,18 +43,31 @@ class ImportManager
     /**
      * Process the uploaded CSV file.
      * @param UploadedFile $file
+     * @return bool|null
      */
     public function process(UploadedFile $file)
     {
         try {
             $csv = $this->excel->load($file)->toArray();
 
-//            $csvProcessor = new CsvProcessor($csv);
-//            $csvProcessor->handle();
+            $csvProcessor = new CsvProcessor($csv);
+            $csvProcessor->handle();
 
-            $this->processor->pushIntoQueue($csv);
+//            if ($this->processor->isCorrectCsv($csv)) {
+//                $this->processor->pushIntoQueue($csv);
+//            }
+
+            return true;
         } catch (Exception $exception) {
-            dd($exception);
+            $this->logger->error(
+                $exception->getMessage(),
+                [
+                    'user'  => auth()->user()->getNameAttribute(),
+                    'trace' => $exception->getTraceAsString()
+                ]
+            );
+
+            return $exception->getMessage();
         }
     }
 }

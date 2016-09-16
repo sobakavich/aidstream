@@ -127,20 +127,19 @@ class Transaction extends Element
         $activitySector                                           = getVal($this->activityLevelSector(), ['sector'], []);
         $this->data['transaction']['sector'][0]['activitySector'] = (empty($activitySector) ? '' : $activitySector);
 
-        $recipientRegion                                                     = getVal($this->activityLevelRecipientRegion(), ['recipient_region'], []);
-        $this->data['transaction']['recipient_region'][0]['recipientRegion'] = (empty($recipientRegion) ? '' : $recipientRegion);
+        $recipientRegion                                      = getVal($this->activityLevelRecipientRegion(), ['recipient_region'], []);
+        $this->data['transaction']['activityRecipientRegion'] = (empty($recipientRegion) ? '' : $recipientRegion);
 
-        $recipientCountry                                                      = getVal($this->activityLevelRecipientCountry(), ['recipient_country'], []);
-        $this->data['transaction']['recipient_country'][0]['recipientCountry'] = (empty($recipientCountry) ? '' : $recipientCountry);
+        $recipientCountry                                      = getVal($this->activityLevelRecipientCountry(), ['recipient_country'], []);
+        $this->data['transaction']['activityRecipientCountry'] = (empty($recipientCountry) ? '' : $recipientCountry);
 
         $this->validator = $this->factory->sign($this->data())
                                          ->with($this->rules(), $this->messages())
                                          ->getValidatorInstance();
         $this->setValidity();
-
         unset($this->data['sector']['activitySector']);
-        unset($this->data['recipient_country']['recipient_country']);
-        unset($this->data['recipient_region']['recipient_region']);
+        unset($this->data['transaction']['activityRecipientRegion']);
+        unset($this->data['transaction']['activityRecipientCountry']);
     }
 
     /**
@@ -156,6 +155,7 @@ class Transaction extends Element
         $countryCode        = $this->validCodeList('Country', 'V201', 'Organization');
 
         $rules = [
+            'transaction'                                          => 'check_recipient_region_country',
             'transaction.transaction_type.*.transaction_type_code' => sprintf('required|in:%s', $this->validCodeOrName('TransactionType', 'V201')),
             'transaction.transaction_date.*.date'                  => 'required|date_format:Y-m-d',
             'transaction.value.*.amount'                           => 'required|numeric|min:0',
@@ -177,9 +177,7 @@ class Transaction extends Element
                 'activitySector',
                 ''
             ),
-            'transaction.recipient_country'                        => 'check_recipient_country',
             'transaction.recipient_country.0.country_code'         => sprintf('in:%s', $countryCode),
-            'transaction.recipient_region'                         => 'check_recipient_region',
             'transaction.recipient_region.0.region_code'           => sprintf('in:%s', $regionCode)
         ];
 
@@ -194,27 +192,28 @@ class Transaction extends Element
     public function messages()
     {
         $message = [
-            'transaction_type.required'                             => 'Transaction type is required.',
-            'transaction_type.in'                                   => 'Entered transaction type is incorrect.',
-            'transaction.transaction_date.*.date.required'          => 'Transaction date is required.',
-            'transaction.transaction_date.*.date.date_format'       => 'Please enter transaction date in Y - m - d format.',
-            'transaction.value.*.amount.required'                   => 'Transaction Value is required.',
-            'transaction.value.*.amount.numeric'                    => 'Transaction Value should be numeric.',
-            'transaction.value.*.amount.min'                        => 'Transaction Value should be positive.',
-            'transaction.value.*.date.required'                     => 'Transaction Value Date is required.',
-            'transaction.value.*.date.date_format'                  => 'Please enter transaction value date in Y - m - d format.',
-            'transaction.provider_organization.*type.in'            => 'Entered provider organisation type is incorrect.',
-            'transaction.receiver_organization.*type.in'            => 'Entered receiver organisation type is incorrect.',
-            'transaction.sector.check_sector'                       => 'Sector information must be present either in Transaction level or Activity level but not in both.',
-            'transaction.sector.*.sector_vocabulary.in'             => 'Entered sector vocabulary is incorrect.',
-            'transaction.sector.*.sector_vocabulary.required_if'    => 'Sector Vocabulary is required.',
-            'transaction.sector.*.sector_code.in'                   => 'Entered sector code for vocabulary 1 is incorrect.',
-            'transaction.sector.*.sector_category_code.in'          => 'Entered sector code for vocabulary 2 is incorrect.',
-            'transaction.sector.*.sector_text.required_unless'      => 'Sector code is required.',
-            'transaction.recipient_country.check_recipient_country' => 'Recipient country must be present either in Transaction level or Activity level but not in both.',
-            'transaction.recipient_region.check_recipient_region'   => 'Recipient region  must be present either in Transaction level or Activity level but not in both.',
-            'transaction.recipient_country.*.country_code.in'       => 'Entered Recipient country code is incorrect.',
-            'transaction.recipient_region.*.region_code.in'         => 'Entered recipient region code is incorrect.'
+            'transaction.check_recipient_region_country'                => 'Recipient Region or Recipient Region must be present either in Activity level or Transaction level but not in both . ',
+            'transaction_type.required'                                 => 'Transaction type is required . ',
+            'transaction_type.in'                                       => 'Entered transaction type is incorrect . ',
+            'transaction.transaction_date.*.date.required'              => 'Transaction date is required . ',
+            'transaction.transaction_date.*.date.date_format'           => 'Please enter transaction date in Y - m - d format . ',
+            'transaction.value.*.amount.required'                       => 'Transaction Value is required . ',
+            'transaction.value.*.amount.numeric'                        => 'Transaction Value should be numeric . ',
+            'transaction.value.*.amount. min'                           => 'Transaction Value should be positive . ',
+            'transaction.value.*.date.required'                         => 'Transaction Value Date is required . ',
+            'transaction.value.*.date.date_format'                      => 'Please enter transaction value date in Y - m - d format . ',
+            'transaction.provider_organization.*.type.in'               => 'Entered provider organisation type is incorrect . ',
+            'transaction.provider_organization.required_only_one_among' => 'Receiver Organisation identifier is required if organisation name is not present . ',
+            'transaction.receiver_organization.*.type.in'               => 'Entered receiver organisation type is incorrect . ',
+            'transaction.receiver_organization.required_only_one_among' => 'Provider Organisation identifier is required if organisation name is not present . ',
+            'transaction.sector.check_sector'                           => 'Sector information must be present either in Transaction level or Activity level but not in both . ',
+            'transaction.sector.*.sector_vocabulary.in'                 => 'Entered sector vocabulary is incorrect . ',
+            'transaction.sector.*.sector_vocabulary.required_if'        => 'Sector Vocabulary is required.',
+            'transaction.sector.*.sector_code.in'                       => 'Entered sector code for vocabulary 1 is incorrect . ',
+            'transaction.sector.*.sector_category_code.in'              => 'Entered sector code for vocabulary 2 is incorrect . ',
+            'transaction.sector.*.sector_text.required_unless'          => 'Sector code is required . ',
+            'transaction.recipient_country.*.country_code.in'           => 'Entered Recipient country code is incorrect . ',
+            'transaction.recipient_region.*.region_code.in'             => 'Entered recipient region code is incorrect . '
         ];
 
         return $message;
