@@ -45,6 +45,8 @@ class RecipientCountry extends Element
      */
     protected $recipientRegion;
 
+    protected $fields;
+
     /**
      * @var array
      */
@@ -59,6 +61,7 @@ class RecipientCountry extends Element
     {
         $this->prepare($fields);
         $this->factory = $factory;
+        $this->fields  = $fields;
     }
 
     /**
@@ -141,7 +144,7 @@ class RecipientCountry extends Element
     {
         $narrative = ['narrative' => '', 'language' => ''];
 
-        $this->data['recipient_country'][$index]['narrative'][] = $narrative;
+        $this->data['recipient_country'][$index]['narrative'][0] = $narrative;
     }
 
     /**
@@ -149,17 +152,16 @@ class RecipientCountry extends Element
      */
     public function validate()
     {
-        $recipientRegion = $this->recipientRegion;
+        $this->recipientRegion($this->fields);
 
-        $this->data['total_percentage'] = $this->totalPercentage();
-        $this->data['recipient_region'] = (empty($recipientRegion)) ? '' : $recipientRegion;
-
-        $this->validator = $this->factory->sign($this->data())
-                                         ->with($this->rules(), $this->messages())
-                                         ->getValidatorInstance();
-
+        $recipientRegion                                  = $this->recipientRegion->data;
+        $this->data['recipient_region']                   = (empty($recipientRegion)) ? '' : $recipientRegion;
+        $this->data['recipient_country_total_percentage'] = getVal($this->data, ['recipient_country'], []);
+        $this->validator                                  = $this->factory->sign($this->data())
+                                                                          ->with($this->rules(), $this->messages())
+                                                                          ->getValidatorInstance();
         $this->setValidity();
-        unset($this->data['total_percentage']);
+        unset($this->data['recipient_country_total_percentage']);
         unset($this->data['recipient_region']);
     }
 
@@ -173,8 +175,8 @@ class RecipientCountry extends Element
 
         $rules = [
             'recipient_country' => sprintf('required_if:recipient_region,%s', ''),
-            'total_percentage'  => 'percentage_sum'
         ];
+        ($this->data['recipient_region'] != '') ?: $rules['recipient_country_total_percentage'] = 'percentage_sum';
 
         foreach (getVal($this->data(), ['recipient_country'], []) as $key => $value) {
             $rules['recipient_country.' . $key . '.country_code'] = sprintf('required_with:recipient_country.%s.percentage|in:%s', $key, $codes);
@@ -192,8 +194,8 @@ class RecipientCountry extends Element
     public function messages()
     {
         $messages = [
-            'recipient_country.required_unless' => 'Recipient Region is required if Recipient Country is not present.',
-            'percentage_sum'                    => 'Sum of percentage of Recipient Country must be 100.'
+            'recipient_country.required_if' => 'Recipient Country is required if Recipient Region is not present.',
+            'percentage_sum'                => 'Sum of percentage of Recipient Country must be 100.'
         ];
 
         foreach (getVal($this->data(), ['recipient_country'], []) as $key => $value) {
