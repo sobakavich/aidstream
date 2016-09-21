@@ -11,6 +11,7 @@
                 <div class="element-panel-heading">
                     <div>
                         Import Activities
+                        <input type="text" id="value"/>
                     </div>
                     <div>
 
@@ -28,15 +29,16 @@
 
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane active" id="valid">
-                                            <div class="valid-data">
+                                            <form action="{{ route('activity.import-validated-activities') }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <div class="valid-data"></div>
 
-                                            </div>
+                                                <input type="submit" class="hidden" id="submit-valid-activities" value="Import">
+                                            </form>
                                         </div>
 
                                         <div role="tabpanel" class="tab-pane" id="invalid">
-                                            <div class="invalid-data">
-
-                                            </div>
+                                            <div class="invalid-data"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -55,5 +57,6 @@
 @stop
 
 @section('script')
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>
 @stop

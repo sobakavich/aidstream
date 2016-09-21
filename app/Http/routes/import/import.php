@@ -27,5 +27,15 @@ $router->group(
             'as'   => 'activity.get-invalid-data',
             'uses' => 'ImportController@getInvalidData'
         ]);
+
+        $router->post('/import-activity/import-validated-activities', [
+            'as'   => 'activity.import-validated-activities',
+            'uses' => 'ImportController@importValidatedActivities'
+        ]);
+
+        $router->get('/import-activity/import-status', [
+            'as'   => 'activity.import-status',
+            'uses' => 'ImportController@status'
+        ]);
     }
 );

@@ -30,5 +30,7 @@ class ImportActivity extends Job implements ShouldQueue
     {
         $this->csvProcessor->handle();
         $this->delete();
+
+        session()->put(['import-status' => 'Complete']);
     }
 }

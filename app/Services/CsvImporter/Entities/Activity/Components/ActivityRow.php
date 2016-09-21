@@ -137,6 +137,8 @@ class ActivityRow extends Row
      */
     protected $transaction = [];
 
+    protected $validElements = [];
+
     /**
      * ActivityRow constructor.
      * @param                   $fields
@@ -190,7 +192,7 @@ class ActivityRow extends Row
      */
     public function validate()
     {
-        $this->validateSelf($this->validateElements());
+        $this->validateElements()->validateSelf();
 
         return $this;
     }
@@ -306,40 +308,41 @@ class ActivityRow extends Row
 
     /**
      * Validate all elements contained in the ActivityRow.
-     * @return array
      */
     protected function validateElements()
     {
-        $validities = [];
-
         foreach ($this->elements() as $element) {
             if ($element == 'transaction') {
                 foreach ($this->$element as $transaction) {
-                    $transaction->validate();
+                    $transaction->validate()->withErrors();
+                    $this->recordErrors($transaction, $element);
 
-                    $validities[] = $transaction->isValid();
+                    $this->validElements[] = $transaction->isValid();
                 }
             } else {
-                $this->$element->validate();
+                $this->$element->validate()->withErrors();
+                $this->recordErrors($this->$element, $element);
 
-                $validities[] = $this->$element->isValid();
+                $this->validElements[] = $this->$element->isValid();
             }
         }
 
-        return $validities;
+        return $this;
     }
 
     /**
      * Set the validity for the whole ActivityRow.
-     * @param $validities
+     * @return $this
      */
-    protected function validateSelf($validities)
+    protected function validateSelf()
     {
-        if (in_array(false, $validities)) {
+        if (in_array(false, $this->validElements)) {
             $this->isValid = false;
         } else {
             $this->isValid = true;
         }
+
+        return $this;
     }
 
     /**
@@ -410,7 +413,7 @@ class ActivityRow extends Row
     protected function appendDataIntoFile($destinationFilePath)
     {
         if ($currentContents = json_decode(file_get_contents($destinationFilePath), true)) {
-            $currentContents[] = $this->data();
+            $currentContents[] = ['data' => $this->data(), 'errors' => $this->errors(), 'status' => 'processed'];
 
             file_put_contents($destinationFilePath, json_encode($currentContents));
         } else {
@@ -424,6 +427,18 @@ class ActivityRow extends Row
      */
     protected function createNewFile($destinationFilePath)
     {
-        file_put_contents($destinationFilePath, json_encode([$this->data()]));
+        file_put_contents($destinationFilePath, json_encode([['data' => $this->data(), 'errors' => $this->errors(), 'status' => 'processed']]));
+    }
+
+    public function errors()
+    {
+        return $this->errors;
+    }
+
+    protected function recordErrors($element, $elementName)
+    {
+        foreach ($element->errors() as $errors) {
+                $this->errors[] = $errors;
+        }
     }
 }

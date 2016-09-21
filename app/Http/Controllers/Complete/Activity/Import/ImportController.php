@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Services\CsvImporter\ImportManager;
 use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
 use App\Services\Organization\OrganizationManager;
+use Illuminate\Http\Request;
 
 /**
  * Class ImportController
@@ -46,6 +47,7 @@ class ImportController extends Controller
      * Basic Activity Template file path.
      */
     const BASIC_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/basic.csv';
+    protected $indices;
 
     /**
      * ImportController constructor.
@@ -58,6 +60,7 @@ class ImportController extends Controller
         $this->form                = $form;
         $this->organizationManager = $organizationManager;
         $this->importManager       = $importManager;
+        $this->indices             = [];
         $this->middleware('auth');
     }
 
@@ -98,9 +101,11 @@ class ImportController extends Controller
     {
         $file = $request->file('activity');
 
+        $this->importManager->startImport();
+
         $this->importManager->process($file);
 
-        return view('Activity.csvImporter.status');
+        return redirect()->route('activity.import-status');
     }
 
     /**
@@ -109,13 +114,33 @@ class ImportController extends Controller
      */
     public function getValidData()
     {
-        $filepath = $this->getFilePath(true);
+        if (session()->get('import-status') == 'Complete') {
+            $response = json_encode(['transferComplete' => true]);
+            session()->forget('import-status');
 
-        if (file_exists($filepath)) {
-            return response()->json(json_decode(file_get_contents($filepath), true));
+            return response()->json($response);
         }
 
-        return response()->json('No data available.');
+        $filepath = $this->getFilePath(true);
+        $read     = [];
+
+        if (file_exists($filepath)) {
+            $activities = json_decode(file_get_contents($filepath), true);
+            $indices    = array_keys($activities);
+
+            foreach ($activities as $key => $activity) {
+                $activity['status'] = 'read';
+                $read[]             = $activity;
+            }
+
+            file_put_contents($filepath, json_encode($read));
+
+            $response = ['render' => view('Activity.csvImporter.valid', compact('activities'))->render(), 'indices' => json_encode(array_keys($activities))];
+        } else {
+            $response = ['render' => 'No data available.', 'indices' => null];
+        }
+
+        return response()->json($response);
     }
 
     /**
@@ -124,13 +149,30 @@ class ImportController extends Controller
      */
     public function getInvalidData()
     {
+        if (session()->get('import-status') == 'Complete') {
+            $response = json_encode(['transferComplete' => true]);
+
+            return response()->json($response);
+        }
+
         $filepath = $this->getFilePath(false);
 
         if (file_exists($filepath)) {
-            return response()->json(json_decode(file_get_contents($filepath), true));
+            $activities      = json_decode(file_get_contents($filepath), true);
+            $keys            = array_keys($activities);
+
+//            array_walk($keys, function ($index, $value) {
+//                dd($index, $value);
+////                $this->indices[] = $value;
+//            });
+
+
+            $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render(), 'indices' => json_encode($keys)];
+        } else {
+            $response = ['render' => 'No data available.', 'indices' => null];
         }
 
-        return response()->json('No data available.');
+        return response()->json($response);
     }
 
     /**
@@ -145,5 +187,32 @@ class ImportController extends Controller
         }
 
         return storage_path(sprintf('%s/%s', self::CSV_DATA_STORAGE_PATH, self::INVALID_CSV_FILE));
+    }
+
+    /**
+     * Import validated activities into the database.
+     * @param Request $request
+     * @return mixed
+     */
+    public function importValidatedActivities(Request $request)
+    {
+        $activities = $request->get('activities');
+
+        if ($activities) {
+            $contents = json_decode(file_get_contents($this->importManager->getFilePath(false)), true);
+
+            $this->importManager->createActivity($activities, $contents);
+        } else {
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Please select the activities to be imported.']]]);
+        }
+    }
+
+    /**
+     * Show the status page for the Csv Import process.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function status()
+    {
+        return view('Activity.csvImporter.status');
     }
 }
