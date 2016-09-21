@@ -140,6 +140,10 @@ class Transaction extends Element
         unset($this->data['sector']['activitySector']);
         unset($this->data['transaction']['activityRecipientRegion']);
         unset($this->data['transaction']['activityRecipientCountry']);
+        unset($this->data['recipient_country']['recipient_country']);
+        unset($this->data['recipient_region']['recipient_region']);
+
+        return $this;
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity;
 
+use App\Services\CsvImporter\Entities\Activity\Components\ActivityRow;
 use App\Services\CsvImporter\Entities\Csv;
 use Exception;
 
@@ -12,13 +13,15 @@ class Activity extends Csv
     /**
      * Activity constructor.
      * @param $rows
+     * @param $organizationId
      */
-    public function __construct($rows)
+    public function __construct($rows, $organizationId)
     {
         try {
-            $this->make($rows, 'App\Services\CsvImporter\Entities\Activity\Components\ActivityRow');
+            $this->organizationId = $organizationId;
+            $this->make($rows, ActivityRow::class);
         } catch (Exception $exception) {
-            dd($exception);
+            dd($exception->getMessage());
         }
     }
 

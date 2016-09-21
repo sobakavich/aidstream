@@ -131,5 +131,7 @@ class Title extends Element
                                          ->getValidatorInstance();
 
         $this->setValidity();
+
+        return $this;
     }
 }
