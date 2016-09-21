@@ -1266,8 +1266,7 @@ label {
 
 .element-panel-heading {
   background: #f2f2f2;
-  padding: 8px 15px 14px 37px;
-  display: inline-block;
+  padding: 14px 15px 14px 37px;
   width: 100%;
   height: 63px;
   min-height: 63px;
@@ -3536,6 +3535,54 @@ pre.prettyprint {
 
 #document_list td {
   word-break: break-word; }
+
+.status-wrapper {
+  padding: 0;
+  margin-bottom: 100px; }
+  .status-wrapper .nav-tabs {
+    margin: 20px; }
+  .status-wrapper .panel-heading {
+    border-bottom: 1px solid rgba(72, 72, 72, 0.2);
+    -webkit-border-radius: 0;
+            border-radius: 0;
+    padding: 0; }
+    .status-wrapper .panel-heading .panel-content-heading {
+      padding: 0;
+      background: transparent;
+      height: auto;
+      min-height: inherit; }
+      .status-wrapper .panel-heading .panel-content-heading h3 {
+        padding: 0;
+        margin: 0; }
+      .status-wrapper .panel-heading .panel-content-heading .panel-title {
+        font: 14px Open-Sans-Bold;
+        width: 100%; }
+    .status-wrapper .panel-heading label {
+      padding: 14px 32px;
+      margin: 0 !important; }
+      .status-wrapper .panel-heading label:hover {
+        background: #fafafa; }
+
+.valid-data .panel-heading label {
+  border-left: 6px solid #80CA9C; }
+
+.invalid-data .panel-heading label {
+  border-left: 6px solid #e15454; }
+
+.data-listing {
+  padding: 12px 0 0 44px;
+  list-style: inherit;
+  display: none; }
+  .data-listing li {
+    padding-bottom: 4px;
+    color: #E15454; }
+
+#submit-valid-activities {
+  display: block;
+  position: absolute;
+  right: 20px;
+  top: -50px;
+  z-index: 1; }
 
 @media all and (max-width: 1030px) {
   .activity-status {

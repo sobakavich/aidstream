@@ -38,11 +38,6 @@ class RecipientCountry extends Element
     /**
      * @var
      */
-    protected $validator;
-
-    /**
-     * @var
-     */
     protected $recipientRegion;
 
     protected $fields;
@@ -163,6 +158,8 @@ class RecipientCountry extends Element
         $this->setValidity();
         unset($this->data['recipient_country_total_percentage']);
         unset($this->data['recipient_region']);
+
+        return $this;
     }
 
     /**

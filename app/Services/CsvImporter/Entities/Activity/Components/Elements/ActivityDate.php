@@ -186,6 +186,8 @@ class ActivityDate extends Element
                                          ->getValidatorInstance();
 
         $this->setValidity();
+
+        return $this;
     }
 
     /**
