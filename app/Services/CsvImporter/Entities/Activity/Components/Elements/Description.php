@@ -150,5 +150,7 @@ class Description extends Element
                                          ->getValidatorInstance();
 
         $this->setValidity();
+
+        return $this;
     }
 }

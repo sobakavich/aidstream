@@ -70,6 +70,8 @@ class Identifier extends Element
                                          ->getValidatorInstance();
 
         $this->setValidity();
+
+        return $this;
     }
 
     /**
