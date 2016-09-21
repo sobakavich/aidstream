@@ -91,13 +91,11 @@ class ImportManager
 
         foreach ($activities as $key => $activity) {
             $activity                    = $contents[$activity];
-            $activity['organization_id'] = $organizationId;
-            $importedActivities[$key]    = $activity;
+            $activity['data']['organization_id'] = $organizationId;
+            $importedActivities[$key]    = $activity['data'];
 
-            $activityModel->newInstance($activity)->save();
+            $activityModel->newInstance($activity['data'])->save();
         }
-
-        dd($importedActivities);
     }
 
     public function startImport()

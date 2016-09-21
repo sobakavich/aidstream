@@ -42,7 +42,6 @@ var CsvImportStatusManager = {
             var parentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
 
             parentDiv.append(invalidData.render);
-            test();
 
             return invalidData;
         }).error(function (error) {
@@ -98,6 +97,8 @@ $(document).ready(function () {
             CsvImportStatusManager.getRemainingValidData();
             CsvImportStatusManager.getRemainingInvalidData();
         }
+
+        test();
 
         if (transferComplete) {
             clearInterval(interval);
