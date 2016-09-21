@@ -31,6 +31,11 @@ abstract class Row
     protected $data = [];
 
     /**
+     * @var array
+     */
+    protected $errors = [];
+
+    /**
      * Initialize the Row object.
      * @return mixed
      */

@@ -222,6 +222,8 @@ class ParticipatingOrganization extends Element
                                          ->getValidatorInstance();
 
         $this->setValidity();
+
+        return $this;
     }
 
     /**

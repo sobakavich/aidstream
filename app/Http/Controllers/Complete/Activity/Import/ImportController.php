@@ -7,6 +7,7 @@ use App\Services\CsvImporter\ImportManager;
 use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
 use App\Services\Organization\OrganizationManager;
 
+
 /**
  * Class ImportController
  * @package App\Http\Controllers\Complete\Activity\Import
@@ -103,13 +104,11 @@ class ImportController extends Controller
     {
         $file = $request->file('activity');
 
-        if (true === ($status = $this->importManager->process($file))) {
-            return view('Activity.csvImporter.status');
-        }
+        $this->importManager->startImport();
 
-        $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => $status]]];
+        $this->importManager->process($file);
 
-        return redirect()->to('import-activity')->withResponse($response);
+        return redirect()->route('activity.import-status');
     }
 
     /**
@@ -121,10 +120,17 @@ class ImportController extends Controller
         $filepath = $this->getFilePath(true);
 
         if (file_exists($filepath)) {
-            return response()->json(json_decode(file_get_contents($filepath), true));
+            $activities = json_decode(file_get_contents($filepath), true);
+            $tempPath   = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp', session('org_id'), 'valid-temp.json'));
+
+            file_put_contents($tempPath, json_encode($activities));
+
+            $response = ['render' => view('Activity.csvImporter.valid', compact('activities'))->render()];
+        } else {
+            $response = ['render' => 'No data available.'];
         }
 
-        return response()->json('No data available.');
+        return response()->json($response);
     }
 
     /**
@@ -136,10 +142,18 @@ class ImportController extends Controller
         $filepath = $this->getFilePath(false);
 
         if (file_exists($filepath)) {
-            return response()->json(json_decode(file_get_contents($filepath), true));
+            $activities = json_decode(file_get_contents($filepath), true);
+            $tempPath   = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp', session('org_id'), 'invalid-temp.json'));
+
+
+            file_put_contents($tempPath, json_encode($activities));
+
+            $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
+        } else {
+            $response = ['render' => 'No data available.'];
         }
 
-        return response()->json('No data available.');
+        return response()->json($response);
     }
 
     /**
@@ -150,9 +164,115 @@ class ImportController extends Controller
     protected function getFilePath($isValid)
     {
         if ($isValid) {
-            return storage_path(sprintf('%s/%s', self::CSV_DATA_STORAGE_PATH, self::VALID_CSV_FILE));
+            return storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), self::VALID_CSV_FILE));
         }
 
-        return storage_path(sprintf('%s/%s', self::CSV_DATA_STORAGE_PATH, self::INVALID_CSV_FILE));
+        return storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), self::INVALID_CSV_FILE));
+    }
+
+    /**
+     * Import validated activities into the database.
+     * @param Request $request
+     * @return mixed
+     */
+    public function importValidatedActivities(Request $request)
+    {
+        $activities = $request->get('activities');
+
+        if ($activities) {
+            $contents = json_decode(file_get_contents($this->importManager->getFilePath(true)), true);
+
+            $this->importManager->createActivity($activities, $contents);
+        } else {
+            return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Please select the activities to be imported.']]]);
+        }
+    }
+
+    /**
+     * Show the status page for the Csv Import process.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function status()
+    {
+        return view('Activity.csvImporter.status');
+    }
+
+    /**
+     * Check Import Status.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkStatus()
+    {
+        if (file_exists(storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp', session('org_id'), 'status.json')))) {
+//            $contents = json_decode(file_get_contents(storage_path('csvImporter/tmp/status.json')), true);
+
+            return response()->json(json_encode(['status' => 'Complete']));
+        }
+
+        return response()->json(json_encode(['status' => 'Incomplete']));
+    }
+
+    public function getRemainingInvalidData()
+    {
+        $filepath = $this->getFilePath(false);
+
+        if (file_exists($filepath)) {
+            $activities = json_decode(file_get_contents($filepath), true);
+            $tempPath   = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp', session('org_id'), 'invalid-temp.json'));
+
+            if (file_exists($tempPath)) {
+                $old   = json_decode(file_get_contents($tempPath), true);
+                $diff  = array_diff_key($activities, $old);
+                $total = array_merge($diff, $old);
+
+                file_put_contents($tempPath, json_encode($total));
+
+                $activities = $diff;
+
+                $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
+
+                return response()->json($response);
+            } else {
+                file_put_contents($tempPath, json_encode($activities));
+            }
+
+            $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
+        } else {
+            $response = ['render' => 'No data available.'];
+        }
+
+        return response()->json($response);
+    }
+
+    public function getRemainingValidData()
+    {
+        $filepath = $this->getFilePath(true);
+
+        if (file_exists($filepath)) {
+            $activities = json_decode(file_get_contents($filepath), true);
+            $tempPath   = storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp', session('org_id'), 'valid-temp.json'));
+
+            if (file_exists($tempPath)) {
+                $old   = json_decode(file_get_contents($tempPath), true);
+                $diff  = array_diff_key($activities, $old);
+                $total = array_merge($diff, $old);
+
+                file_put_contents($tempPath, json_encode($total));
+
+                $activities = $diff;
+
+                $response = ['render' => view('Activity.csvImporter.valid', compact('activities'))->render()];
+
+                return response()->json($response);
+            } else {
+                file_put_contents($tempPath, json_encode($activities));
+            }
+
+            $response = ['render' => view('Activity.csvImporter.valid', compact('activities'))->render()];
+        } else {
+            $response = ['render' => 'No data available.'];
+        }
+
+        return response()->json($response);
     }
 }

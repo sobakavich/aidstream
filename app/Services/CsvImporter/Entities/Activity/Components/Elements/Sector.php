@@ -9,7 +9,11 @@ use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
  */
 class Sector extends Element
 {
+    /**
+     * @var null|string
+     */
     protected $type;
+
     /**
      * CSV Header of Description with their code
      */
@@ -245,6 +249,8 @@ class Sector extends Element
                                          ->with($this->rules(), $this->messages())
                                          ->getValidatorInstance();
         $this->setValidity();
+
+        return $this;
     }
 
     /**
