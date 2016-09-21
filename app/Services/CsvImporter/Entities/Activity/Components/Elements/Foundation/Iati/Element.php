@@ -7,6 +7,10 @@
  */
 abstract class Element
 {
+//    use ManagesErrors;
+
+    public $errors = [];
+
     /**
      * Index under which the data is stored within the object.
      * @var string
@@ -26,7 +30,7 @@ abstract class Element
     /**
      * @var
      */
-    protected $validator;
+    public $validator;
 
     /**
      * @var
@@ -83,7 +87,7 @@ abstract class Element
             return $this->data[$popIndex];
         }
 
-        return null;
+        return [];
     }
 
     /**
@@ -123,5 +127,24 @@ abstract class Element
     public function pluckIndex()
     {
         return $this->index;
+    }
+
+    /**
+     * Record all errors within the Element classes.
+     */
+    public function withErrors()
+    {
+        foreach ($this->validator->errors()->getMessages() as $element => $errors) {
+            foreach ($errors as $error) {
+                $this->errors[] = $error;
+            }
+        }
+
+        $this->errors = array_unique($this->errors);
+    }
+
+    public function errors()
+    {
+        return $this->errors;
     }
 }

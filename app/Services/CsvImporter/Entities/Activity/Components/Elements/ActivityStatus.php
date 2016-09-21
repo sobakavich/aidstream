@@ -91,7 +91,7 @@ class ActivityStatus extends Element
         return [
             sprintf('%s.required', $key) => 'Activity Status is required.',
             sprintf('%s.size', $key)     => 'Multiple Activity Statuses are not allowed.',
-            sprintf('%s.in', $key)       => 'Only valid Activity Status codes are allowed.'
+            sprintf('%s.*.in', $key)       => 'Only valid Activity Status codes are allowed.'
         ];
     }
 
@@ -105,6 +105,8 @@ class ActivityStatus extends Element
                                          ->getValidatorInstance();
 
         $this->setValidity();
+
+        return $this;
     }
 
     /**

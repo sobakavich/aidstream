@@ -46,11 +46,6 @@ class RecipientRegion extends Element
     protected $totalPercentage = 0;
 
     /**
-     * @var
-     */
-    protected $validator;
-
-    /**
      * Description constructor.
      * @param            $fields
      * @param Validation $factory
@@ -183,6 +178,8 @@ class RecipientRegion extends Element
         $this->setValidity();
         unset($this->data['recipient_region_total_percentage']);
         unset($this->data['recipient_country']);
+
+        return $this;
     }
 
     /**
