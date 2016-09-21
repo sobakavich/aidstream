@@ -121,7 +121,7 @@ class ImportController extends Controller
             return response()->json($response);
         }
 
-        $filepath = $this->getFilePath(true);
+        $filepath = $this->getFilePath(false);
         $read     = [];
 
         if (file_exists($filepath)) {

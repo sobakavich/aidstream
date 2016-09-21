@@ -24,7 +24,7 @@ var CsvImportStatusManager = {
         });
     },
     getValidData: function () {
-        CsvImportStatusManager.callAsync('get-invalid-data', 'GET').success(function (validData) {
+        CsvImportStatusManager.callAsync('get-valid-data', 'GET').success(function (validData) {
             if (validData.transferComplete == true) {
                 transferComplete = true;
             }
@@ -63,15 +63,14 @@ var CsvImportStatusManager = {
             // invalidIndices = JSON.parse(invalidData.indices);
 
             parentDiv.append(invalidData.render);
+            test();
 
             return invalidData;
         });
     },
     ifParentIsEmpty: function (className) {
         var parentDiv = CsvImportStatusManager.getParentDiv(className);
-
         return parentDiv.is(':empty');
-
         // var invalidParentDiv = CsvImportStatusManager.getParentDiv(className);
 
     },
@@ -91,9 +90,6 @@ $(document).ready(function () {
             if (transferComplete) {
                 clearInterval(interval);
             }
-
-            // CsvImportStatusManager.getValidData(validIndices);
-            // console.log(CsvImportStatusManager.getCurrentData('valid-data').html());
         }
 
         if (CsvImportStatusManager.ifParentIsEmpty('invalid-data')) {
@@ -105,7 +101,6 @@ $(document).ready(function () {
             if (transferComplete) {
                 clearInterval(interval);
             }
-            // console.log(CsvImportStatusManager.getCurrentData('invalid-data').html());
         }
     }, 2000);
 });
