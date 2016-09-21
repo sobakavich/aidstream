@@ -37,5 +37,20 @@ $router->group(
             'as'   => 'activity.import-status',
             'uses' => 'ImportController@status'
         ]);
+
+        $router->get('/import-activity/check-status', [
+            'as'   => 'activity.check-status',
+            'uses' => 'ImportController@checkStatus'
+        ]);
+
+        $router->get('/import-activity/remaining-invalid-data', [
+            'as'   => 'activity.remaining-invalid-data',
+            'uses' => 'ImportController@getRemainingInvalidData'
+        ]);
+
+        $router->get('/import-activity/remaining-valid-data', [
+            'as'   => 'activity.remaining-valid-data',
+            'uses' => 'ImportController@getRemainingValidData'
+        ]);
     }
 );

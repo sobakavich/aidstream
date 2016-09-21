@@ -29,8 +29,8 @@ class ImportActivity extends Job implements ShouldQueue
     public function handle()
     {
         $this->csvProcessor->handle();
-        $this->delete();
+        file_put_contents(storage_path('csvImporter/tmp/status.json'), json_encode(['status' => 'Complete']));
 
-        session()->put(['import-status' => 'Complete']);
+        $this->delete();
     }
 }

@@ -1,9 +1,6 @@
 var submitButton = $('input#submit-valid-activities');
-var validIndices = [];
-var invalidIndices = [];
 var count = 0;
 var counter = $('input#value');
-var dataCount = 0;
 var transferComplete = false;
 
 var CsvImportStatusManager = {
@@ -14,6 +11,8 @@ var CsvImportStatusManager = {
         if (response.render) {
             if (response.render.length > 18) {
                 submitButton.fadeIn().removeClass('hidden');
+            } else if (response.render == 'No data available.') {
+                transferComplete = true;
             }
         }
     },
@@ -24,88 +23,83 @@ var CsvImportStatusManager = {
         });
     },
     getValidData: function () {
-        CsvImportStatusManager.callAsync('get-invalid-data', 'GET').success(function (validData) {
-            if (validData.transferComplete == true) {
-                transferComplete = true;
-            }
+        CsvImportStatusManager.callAsync('get-valid-data', 'GET').success(function (validData) {
             var parentDiv = CsvImportStatusManager.getParentDiv('valid-data');
-            // validIndices = JSON.parse(invalidData.indices);
-            // console.log(validData);
-            // readIndices.push(validData.indices);
 
             parentDiv.append(validData.render);
 
             CsvImportStatusManager.enableImport(validData);
+        }).error(function (error) {
+            // TODO: handle error
 
-            count++;
+            var parentDiv = CsvImportStatusManager.getParentDiv('valid-data');
 
-            counter.val(count);
-
-            return validData;
+            parentDiv.append('Looks like something went wrong.');
         });
-        // if (indices) {
-        //     CsvImportStatusManager.callAsync('get-valid-data', 'GET', indices).success(function (validData) {
-        //         var parentDiv = CsvImportStatusManager.getParentDiv('valid-data');
-        //         validIndices = JSON.parse(invalidData.indices);
-        //         // console.log(validData);
-        //         // readIndices.push(validData.indices);
-        //
-        //         parentDiv.append(validData.render);
-        //
-        //         CsvImportStatusManager.enableImport(validData);
-        //     });
-        // } else {
-        // }
     },
     getInvalidData: function () {
         CsvImportStatusManager.callAsync('get-invalid-data', 'GET').success(function (invalidData) {
             var parentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
-            // invalidIndices = JSON.parse(invalidData.indices);
 
             parentDiv.append(invalidData.render);
 
             return invalidData;
+        }).error(function (error) {
+            // TODO: handle error
+            var parentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
+
+            parentDiv.append('Looks like something went wrong.');
         });
     },
     ifParentIsEmpty: function (className) {
         var parentDiv = CsvImportStatusManager.getParentDiv(className);
 
         return parentDiv.is(':empty');
-
-        // var invalidParentDiv = CsvImportStatusManager.getParentDiv(className);
-
     },
     getCurrentData: function (className) {
         return $('div.' + className);
+    },
+    isTransferComplete: function () {
+        CsvImportStatusManager.callAsync('/import-activity/check-status', 'GET').success(function (response) {
+            var r = JSON.parse(response);
+
+            if (r.status == 'Complete') {
+                transferComplete = true;
+            }
+        }).error(function (error) {
+            // TODO: handle error
+        });
+    },
+    getRemainingInvalidData: function () {
+        CsvImportStatusManager.callAsync('/import-activity/remaining-invalid-data', 'GET').success(function (response) {
+            var parentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
+
+            parentDiv.append(response.render);
+        });
+    },
+    getRemainingValidData: function () {
+        CsvImportStatusManager.callAsync('/import-activity/remaining-valid-data', 'GET').success(function (response) {
+            var parentDiv = CsvImportStatusManager.getParentDiv('valid-data');
+
+            parentDiv.append(response.render);
+        });
     }
 };
 
 $(document).ready(function () {
     var interval = setInterval(function () {
-        if (CsvImportStatusManager.ifParentIsEmpty('valid-data')) {
-            CsvImportStatusManager.getValidData();
-        } else {
-            clearInterval(interval);
-            var validData = CsvImportStatusManager.getValidData();
-
-            if (transferComplete) {
-                clearInterval(interval);
-            }
-
-            // CsvImportStatusManager.getValidData(validIndices);
-            // console.log(CsvImportStatusManager.getCurrentData('valid-data').html());
-        }
+        CsvImportStatusManager.isTransferComplete();
 
         if (CsvImportStatusManager.ifParentIsEmpty('invalid-data')) {
+            CsvImportStatusManager.getValidData();
             CsvImportStatusManager.getInvalidData();
         } else {
-            clearInterval(interval);
-            var invalidData = CsvImportStatusManager.getInvalidData();
-
-            if (transferComplete) {
-                clearInterval(interval);
-            }
-            // console.log(CsvImportStatusManager.getCurrentData('invalid-data').html());
+            CsvImportStatusManager.getRemainingValidData();
+            CsvImportStatusManager.getRemainingInvalidData();
         }
-    }, 2000);
+
+        if (transferComplete) {
+            clearInterval(interval);
+        }
+    }, 4000);
 });

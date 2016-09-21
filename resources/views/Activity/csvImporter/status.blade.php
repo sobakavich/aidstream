@@ -11,7 +11,6 @@
                 <div class="element-panel-heading">
                     <div>
                         Import Activities
-                        <input type="text" id="value"/>
                     </div>
                     <div>
 
@@ -57,6 +56,5 @@
 @stop
 
 @section('script')
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>
 @stop
