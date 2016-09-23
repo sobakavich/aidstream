@@ -52,5 +52,10 @@ $router->group(
             'as'   => 'activity.remaining-valid-data',
             'uses' => 'ImportController@getRemainingValidData'
         ]);
+
+        $router->get('/import-activity/clear-invalid-activities', [
+            'as'   => 'activity.clear-invalid-activities',
+            'uses' => 'ImportController@clearInvalidActivities'
+        ]);
     }
 );
