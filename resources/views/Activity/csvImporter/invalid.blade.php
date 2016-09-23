@@ -7,7 +7,7 @@
                         <h3>
                             <input type="checkbox" disabled="disabled" value="{{ $index }}"/>
                         <span class="panel-title">
-                            {{ getVal($activity, ['data', 'identifier', 'activity_identifier'], '') }}
+                            {{ getVal($activity, ['data', 'identifier', 'identifier', 'activity_identifier'], '') }}
                             - {{ getVal($activity, ['data', 'title', 0, 'narrative']) }}
                         </span>
                         </h3>

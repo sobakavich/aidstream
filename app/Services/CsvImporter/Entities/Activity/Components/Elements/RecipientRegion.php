@@ -45,6 +45,8 @@ class RecipientRegion extends Element
      */
     protected $totalPercentage = 0;
 
+    protected $fields;
+
     /**
      * Description constructor.
      * @param            $fields
@@ -54,6 +56,7 @@ class RecipientRegion extends Element
     {
         $this->prepare($fields);
         $this->factory = $factory;
+        $this->fields  = $fields;
         $this->recipientCountry($fields);
     }
 
@@ -174,7 +177,6 @@ class RecipientRegion extends Element
         $this->validator                                 = $this->factory->sign($this->data())
                                                                          ->with($this->rules(), $this->messages())
                                                                          ->getValidatorInstance();
-
         $this->setValidity();
         unset($this->data['recipient_region_total_percentage']);
         unset($this->data['recipient_country']);
@@ -189,10 +191,13 @@ class RecipientRegion extends Element
     public function rules()
     {
         $codes = $this->validRecipientRegion();
+        $rules = [];
 
-        $rules = [
-            'recipient_region' => sprintf('required_if:recipient_country,%s', ''),
-        ];
+        if (count($this->fields) == 20) {
+            $rules = [
+                'recipient_region' => sprintf('required_if:recipient_country,%s', ''),
+            ];
+        }
         ($this->data['recipient_country'] != '' && (array_key_exists('recipient_region', $this->data)))
             ? $rules['total_percentage'] = 'recipient_country_region_percentage_sum' : null;
 
