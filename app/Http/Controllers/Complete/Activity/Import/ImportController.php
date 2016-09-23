@@ -158,7 +158,7 @@ class ImportController extends Controller
 
     /**
      * Get the filepath to the file in which the Csv data is written after processing for import.
-     * @param $isValid
+     * @param bool $isValid
      * @return string
      */
     protected function getFilePath($isValid)
@@ -183,6 +183,8 @@ class ImportController extends Controller
             $contents = json_decode(file_get_contents($this->importManager->getFilePath(true)), true);
 
             $this->importManager->createActivity($activities, $contents);
+
+            return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'Activities successfully imported.']]]);
         } else {
             return redirect()->back()->withResponse(['type' => 'warning', 'code' => ['message', ['message' => 'Please select the activities to be imported.']]]);
         }
@@ -274,5 +276,22 @@ class ImportController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    /**
+     * Clear all invalid Activities.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function clearInvalidActivities()
+    {
+        $filePath = $this->getFilePath(false);
+
+        if (file_exists($filePath)) {
+            file_put_contents($filePath, '');
+
+            return response()->json('cleared');
+        }
+
+        return response()->json('error');
     }
 }

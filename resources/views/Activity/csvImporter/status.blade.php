@@ -35,16 +35,20 @@
                                 </div>
 
                                 <div role="tabpanel" class="tab-pane" id="invalid">
+                                    <span class="pull-right">
+                                        <a href="javascript:void(0)" id="clear-invalid">Clear all</a>
+                                    </span>
                                     <div class="invalid-data"></div>
+
                                 </div>
                             </div>
                         </div>
 
-                            <div class="download-transaction-wrap">
-                                <div>
-                                </div>
+                        <div class="download-transaction-wrap">
+                            <div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,7 +58,7 @@
 @section('script')
     <script>
         var test = function () {
-            $(".invalid-data .panel-default .panel-heading").on('click','label',function() {
+            $(".invalid-data .panel-default .panel-heading").on('click', 'label', function () {
                 $(this).children('.data-listing').slideToggle();
             });
         };
