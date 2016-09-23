@@ -88,9 +88,13 @@ class Validation extends Factory
                     return false;
                 } elseif (($planned_start_date > $planned_end_date) && ($planned_start_date != "" && $planned_end_date != "")) {
                     return false;
-                } elseif (($actual_start_date > $planned_end_date) && ($planned_start_date == "" && $actual_end_date == "")) {
+                } elseif (($actual_start_date > $planned_end_date) && ($actual_start_date != "" && $planned_end_date != "")
+                    && ($actual_end_date == "" && $planned_start_date == "")
+                ) {
                     return false;
-                } elseif (($planned_start_date > $actual_end_date) && ($planned_end_date == "" && $actual_start_date == "")) {
+                } elseif (($planned_start_date > $actual_end_date) && ($planned_start_date != "" && $actual_end_date != "")
+                    && ($planned_end_date == "" && $actual_start_date == "")
+                ) {
                     return false;
                 }
 

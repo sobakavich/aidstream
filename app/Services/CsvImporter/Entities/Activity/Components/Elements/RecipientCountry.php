@@ -169,11 +169,16 @@ class RecipientCountry extends Element
     public function rules()
     {
         $codes = $this->validRecipientCountry();
+        $rules = [];
 
-        $rules = [
-            'recipient_country' => sprintf('required_if:recipient_region,%s', ''),
-        ];
+        if (count($this->fields) == 20) {
+            $rules = [
+                'recipient_country' => sprintf('required_if:recipient_region,%s', ''),
+            ];
+        }
+
         ($this->data['recipient_region'] != '') ?: $rules['recipient_country_total_percentage'] = 'percentage_sum';
+
 
         foreach (getVal($this->data(), ['recipient_country'], []) as $key => $value) {
             $rules['recipient_country.' . $key . '.country_code'] = sprintf('required_with:recipient_country.%s.percentage|in:%s', $key, $codes);
