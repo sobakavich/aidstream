@@ -58,7 +58,7 @@ class ParticipatingOrganization extends Element
     public function prepare($fields)
     {
         foreach ($fields as $key => $values) {
-            if (!is_null($values)) {
+            if (!is_null($values) && array_key_exists($key, array_flip($this->_csvHeaders))) {
                 foreach ($values as $index => $value) {
                     $this->map($key, $value, $index);
                 }
@@ -74,7 +74,7 @@ class ParticipatingOrganization extends Element
      */
     public function map($key, $value, $index)
     {
-        if (array_key_exists($key, array_flip($this->_csvHeaders))) {
+        if (!is_null($value)) {
             $this->setOrganisationRole($key, $value, $index);
             $this->setIdentifier($key, $value, $index);
             $this->setOrganisationType($key, $value, $index);
@@ -208,7 +208,8 @@ class ParticipatingOrganization extends Element
             'participating_organization.*.organization_role.required' => 'Participating Organisation role is required.',
             'participating_organization.required_only_one_among'      => 'Either Participating Organisation Identifier or Participating Organisation Name is required.',
             'participating_organization.*.organization_role.in'       => 'Only valid Organisation Roles are allowed.',
-            'participating_organization.*.organization_type.in'       => 'Only valid Organisation Types are allowed.'
+            'participating_organization.*.organization_type.in'       => 'Only valid Organisation Types are allowed.',
+            'participating_organization.*.organization_type.required' => 'Participating Organisation Type is required.'
         ];
     }
 
