@@ -193,13 +193,15 @@ class RecipientRegion extends Element
         $rules = [
             'recipient_region' => sprintf('required_if:recipient_country,%s', ''),
         ];
-        ($this->data['recipient_country'] != '') ? $rules['total_percentage'] = 'recipient_country_region_percentage_sum'
-            : $rules['recipient_region_total_percentage'] = 'percentage_sum';
+        ($this->data['recipient_country'] != '' && (array_key_exists('recipient_region', $this->data)))
+            ? $rules['total_percentage'] = 'recipient_country_region_percentage_sum' : null;
+
+        ($this->data['recipient_country'] == '' && array_key_exists('recipient_region', $this->data))
+            ? $rules['recipient_region_total_percentage'] = 'percentage_sum' : null;
 
         foreach (getVal($this->data(), ['recipient_region'], []) as $key => $value) {
             $rules['recipient_region.' . $key . '.region_code'] = sprintf('required_with:recipient_region.%s.percentage|in:%s', $key, $codes);
-//            $rules['recipient_region.' . $key . '.percentage']  = sprintf('required_with:recipient_region.%s.region_code', $key);
-            $rules['recipient_region.' . $key . '.percentage'] = 'numeric|max:100|min:0';
+            $rules['recipient_region.' . $key . '.percentage']  = 'numeric|max:100|min:0';
         }
 
         return $rules;
@@ -214,7 +216,7 @@ class RecipientRegion extends Element
         $messages = [
             'recipient_region.required_if'                             => 'Recipient Region is required if Recipient Country is not present.',
             'recipient_region_total_percentage.percentage_sum'         => 'Sum of percentage of Recipient Regions must be equal to 100.',
-            'total_percentage.recipient_country_region_percentage_sum' => 'Sum of percentage of Recipient Country and Recipient Region must be 100.'
+            'total_percentage.recipient_country_region_percentage_sum' => 'Sum of percentage of Recipient Country and Recipient Region must be equal to 100.'
         ];
 
         foreach (getVal($this->data(), ['recipient_region'], []) as $key => $value) {
