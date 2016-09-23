@@ -247,25 +247,7 @@ class Validation extends Factory
                 return $status;
             }
         );
-        $this->extend(
-            'check_recipient_country',
-            function ($attribute, $values, $parameters, $validator) {
-                list($countryInActivityLevel, $regionInActivityLevel, $regionInTransactionLevel, $status) = [true, true, true, true];
-                foreach ($values as $value) {
-                    if ($value['recipientCountry'] == '') {
-                        $countryInActivityLevel = false;
-                    }
 
-                    if ($value['country_code'] == '' && $countryInActivityLevel == false) {
-                        $status = false;
-                    } elseif ($value['country_code'] != '' && $countryInActivityLevel == true) {
-                        $status = false;
-                    }
-                }
-
-                return $status;
-            }
-        );
         $this->extend(
             'check_recipient_region_country',
             function ($attribute, $values, $parameters, $validator) {
@@ -287,27 +269,6 @@ class Validation extends Factory
                 }
 
                 return false;
-            }
-        );
-
-        $this->extend(
-            'check_recipient_region',
-            function ($attribute, $values, $parameters, $validator) {
-                $regionInActivityLevel = true;
-                $status                = true;
-                foreach ($values as $value) {
-                    if ($value['recipientRegion'] == '') {
-                        $regionInActivityLevel = false;
-                    }
-
-                    if ($value['region_code'] == '' && $regionInActivityLevel == false) {
-                        $status = false;
-                    } elseif ($value['region_code'] != '' && $regionInActivityLevel == true) {
-                        $status = false;
-                    }
-                }
-
-                return $status;
             }
         );
     }
