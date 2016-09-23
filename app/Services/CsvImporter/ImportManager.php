@@ -95,9 +95,9 @@ class ImportManager
         $importedActivities = [];
 
         foreach ($activities as $key => $activity) {
-            $activity                    = $contents[$activity];
+            $activity                            = $contents[$activity];
             $activity['data']['organization_id'] = $organizationId;
-            $importedActivities[$key]    = $activity['data'];
+            $importedActivities[$key]            = $activity['data'];
 
             $activityModel->newInstance($activity['data'])->save();
         }
@@ -106,7 +106,6 @@ class ImportManager
     public function startImport()
     {
         $this->sessionManager->put(['import-status' => 'importing']);
-
     }
 
     /**
