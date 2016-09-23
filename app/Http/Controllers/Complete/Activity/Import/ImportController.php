@@ -47,7 +47,8 @@ class ImportController extends Controller
     /**
      * Basic Activity Template file path.
      */
-    const BASIC_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/basic.csv';
+    const BASIC_ACTIVITY_TEMPLATE_PATH       = '/Services/CsvImporter/Templates/Activity/%s/basic.csv';
+    const TRANSACTION_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/transaction.csv';
 
     /**
      * ImportController constructor.
@@ -65,11 +66,14 @@ class ImportController extends Controller
 
     /**
      * Download the Activity Template.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function downloadActivityTemplate()
+    public function downloadActivityTemplate(Request $request)
     {
-        return response()->download(app_path(sprintf(self::BASIC_ACTIVITY_TEMPLATE_PATH, session('version'))));
+        $path = ($request->get('type') == 'basic') ? self::BASIC_ACTIVITY_TEMPLATE_PATH : self::TRANSACTION_ACTIVITY_TEMPLATE_PATH;
+
+        return response()->download(app_path(sprintf($path, session('version'))));
     }
 
     /**
@@ -100,11 +104,17 @@ class ImportController extends Controller
     {
         $file = $request->file('activity');
 
-        $this->importManager->startImport();
+        if (true ===  ($status = $this->importManager->verifyHeaders($file))) {
+            $this->importManager->startImport();
 
-        $this->importManager->process($file);
+            $this->importManager->process($file);
 
-        return redirect()->route('activity.import-status');
+            return redirect()->route('activity.import-status');
+        }
+
+        $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => $status]]];
+
+        return redirect()->to('import-activity')->withResponse($response);
     }
 
     /**

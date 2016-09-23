@@ -67,6 +67,7 @@ class ImportManager
     /**
      * Process the uploaded CSV file.
      * @param UploadedFile $file
+     * @return null
      */
     public function process(UploadedFile $file)
     {
@@ -75,7 +76,15 @@ class ImportManager
 
             $this->processor->pushIntoQueue($csv);
         } catch (Exception $exception) {
-            dd($exception);
+            $this->logger->error(
+                $exception->getMessage(),
+                [
+                    'user'  => auth()->user()->getNameAttribute(),
+                    'trace' => $exception->getTraceAsString()
+                ]
+            );
+
+            return null;
         }
     }
 
@@ -112,5 +121,31 @@ class ImportManager
         }
 
         return storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), self::INVALID_CSV_FILE));
+    }
+
+    /**
+     * Check if the headers in the uploaded Csv file are as per the provided template.
+     * @param $file
+     * @return bool|string
+     */
+    public function verifyHeaders($file)
+    {
+        try {
+            $csv = $this->excel->load($file)->toArray();
+
+            if ($this->processor->isCorrectCsv($csv)) {
+                return true;
+            }
+        } catch (Exception $exception) {
+            $this->logger->error(
+                $exception->getMessage(),
+                [
+                    'user'  => auth()->user()->getNameAttribute(),
+                    'trace' => $exception->getTraceAsString()
+                ]
+            );
+
+            return $exception->getMessage();
+        }
     }
 }

@@ -77,6 +77,70 @@ class Validation extends Factory
     public function registerValidationRules()
     {
         $this->extend(
+            'start_end_date',
+            function ($attribute, $dates, $parameters, $validator) {
+                $actual_start_date  = getVal($dates, ['actual_start_date', 0, 'date']);
+                $actual_end_date    = getVal($dates, ['actual_end_date', 0, 'date']);
+                $planned_start_date = getVal($dates, ['planned_start_date', 0, 'date']);
+                $planned_end_date   = getVal($dates, ['planned_end_date', 0, 'date']);
+
+                if (($actual_start_date > $actual_end_date) && ($actual_start_date != "" && $actual_end_date != "")) {
+                    return false;
+                } elseif (($planned_start_date > $planned_end_date) && ($planned_start_date != "" && $planned_end_date != "")) {
+                    return false;
+                } elseif (($actual_start_date > $planned_end_date) && ($planned_start_date == "" && $actual_end_date == "")) {
+                    return false;
+                } elseif (($planned_start_date > $actual_end_date) && ($planned_end_date == "" && $actual_start_date == "")) {
+                    return false;
+                }
+
+                return true;
+            }
+        );
+
+        $this->extend(
+            'actual_date',
+            function ($attribute, $date, $parameters, $validator) {
+                $dateType = (!is_array($date)) ?: getVal($date, [0, 'type']);
+
+                if ($dateType == 2 || $dateType == 4) {
+                    $actual_date = (!is_array($date)) ?: getVal($date, [0, 'date']);
+                    if ($actual_date > date('Y-m-d')) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+        $this->extend(
+            'multiple_activity_date',
+            function ($attribute, $dates, $parameters, $validator) {
+                foreach ($dates as $activityDate) {
+                    if (count($activityDate) > 1) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+        $this->extend(
+            'start_date_required',
+            function ($attribute, $dates, $parameters, $validator) {
+                if (array_key_exists('actual_start_date', $dates)
+                    || array_key_exists('planned_start_date', $dates)
+                ) {
+                    return true;
+                }
+
+                return false;
+            }
+        );
+
+        $this->extend(
             'sector_percentage_sum',
             function ($attribute, $value, $parameters, $validator) {
                 $totalPercentage = [];
@@ -94,7 +158,7 @@ class Validation extends Factory
                     }
                 );
                 foreach ($totalPercentage as $key => $percentage) {
-                    if ($percentage != 100) {
+                    if ($percentage != "" && $percentage != 100) {
                         return false;
                     }
                 }
@@ -105,6 +169,26 @@ class Validation extends Factory
 
         $this->extend(
             'percentage_sum',
+            function ($attribute, $values, $parameters, $validator) {
+                $totalPercentage = 0;
+                foreach ($values as $value) {
+                    $percentage = $value['percentage'];
+                    $totalPercentage += $percentage;
+                }
+                if (count($values) == 1 && $totalPercentage == 0) {
+                    return true;
+                }
+
+                if ($totalPercentage != 100) {
+                    return false;
+                }
+
+                return true;
+            }
+        );
+
+        $this->extend(
+            'recipient_country_region_percentage_sum',
             function ($attribute, $value, $parameters, $validator) {
                 if ($value != 100) {
                     return false;
@@ -119,7 +203,6 @@ class Validation extends Factory
             function ($attribute, $values, $parameters, $validator) {
                 list($identifierIndex, $narrativeIndex) = $parameters;
                 $isValid = false;
-
                 foreach ($values as $key => $value) {
                     list($identifier, $narratives) = [getVal($value, [$identifierIndex], ''), getVal($value, [$narrativeIndex], [])];
 
@@ -167,8 +250,7 @@ class Validation extends Factory
         $this->extend(
             'check_recipient_country',
             function ($attribute, $values, $parameters, $validator) {
-                $countryInActivityLevel = true;
-                $status                 = true;
+                list($countryInActivityLevel, $regionInActivityLevel, $regionInTransactionLevel, $status) = [true, true, true, true];
                 foreach ($values as $value) {
                     if ($value['recipientCountry'] == '') {
                         $countryInActivityLevel = false;
@@ -182,6 +264,29 @@ class Validation extends Factory
                 }
 
                 return $status;
+            }
+        );
+        $this->extend(
+            'check_recipient_region_country',
+            function ($attribute, $values, $parameters, $validator) {
+                $transactionRecipientCountry = getVal($values, ['recipient_country', 0, 'country_code']);
+                $transactionRecipientRegion  = getVal($values, ['recipient_region', 0, 'region_code']);
+                $activityRecipientCountry    = getVal($values, ['activityRecipientCountry', 0, 'country_code']);
+                $activityRecipientRegion     = getVal($values, ['activityRecipientRegion', 0, 'region_code']);
+
+                if (($activityRecipientCountry == "" && $activityRecipientRegion == "")
+                    && ($transactionRecipientRegion != "" || $transactionRecipientCountry != "")
+                ) {
+                    return true;
+                }
+
+                if (($activityRecipientCountry != "" || $activityRecipientRegion != "")
+                    && ($transactionRecipientRegion == "" && $transactionRecipientCountry == "")
+                ) {
+                    return true;
+                }
+
+                return false;
             }
         );
 
