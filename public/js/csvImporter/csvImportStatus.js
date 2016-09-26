@@ -100,6 +100,7 @@ var CsvImportStatusManager = {
 };
 
 $(document).ready(function () {
+    test();
     clearInvalidButton.hide();
 
     var interval = setInterval(function () {
