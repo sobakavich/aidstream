@@ -1,5 +1,6 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Elements;
 
+use App\Services\CsvImporter\Entities\Activity\Components\ActivityRow;
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
 use App\Services\CsvImporter\Entities\Activity\Components\Elements\Transaction\PreparesTransactionData;
 use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
@@ -76,19 +77,22 @@ class Transaction extends Element
         'tied_status'           => ['tied_status_code' => '']
     ];
 
-    protected $activityData;
+    /**
+     * @var ActivityRow
+     */
+    protected $activityRow;
 
     /**
      * Transaction constructor.
      * @param            $transactionRow
-     * @param            $activityData
+     * @param            $activityRow
      * @param Validation $factory
      */
-    public function __construct($transactionRow, $activityData, Validation $factory)
+    public function __construct($transactionRow, $activityRow, Validation $factory)
     {
         $this->prepare($transactionRow);
         $this->factory      = $factory;
-        $this->activityData = $activityData;
+        $this->activityRow = $activityRow;
     }
 
     /**
@@ -196,33 +200,39 @@ class Transaction extends Element
     public function messages()
     {
         $message = [
-            'transaction.check_recipient_region_country'                => 'Recipient Region or Recipient Region must be present either in Activity level or Transaction level but not in both . ',
-            'transaction_type.required'                                 => 'Transaction type is required . ',
-            'transaction_type.in'                                       => 'Entered transaction type is incorrect . ',
-            'transaction.transaction_date.*.date.required'              => 'Transaction date is required . ',
-            'transaction.transaction_date.*.date.date_format'           => 'Please enter transaction date in Y - m - d format . ',
-            'transaction.value.*.amount.required'                       => 'Transaction Value is required . ',
-            'transaction.value.*.amount.numeric'                        => 'Transaction Value should be numeric . ',
-            'transaction.value.*.amount. min'                           => 'Transaction Value should be positive . ',
-            'transaction.value.*.date.required'                         => 'Transaction Value Date is required . ',
-            'transaction.value.*.date.date_format'                      => 'Please enter transaction value date in Y - m - d format . ',
-            'transaction.provider_organization.*.type.in'               => 'Entered provider organisation type is incorrect . ',
-            'transaction.provider_organization.required_only_one_among' => 'Receiver Organisation identifier is required if organisation name is not present . ',
-            'transaction.receiver_organization.*.type.in'               => 'Entered receiver organisation type is incorrect . ',
-            'transaction.receiver_organization.required_only_one_among' => 'Provider Organisation identifier is required if organisation name is not present . ',
-            'transaction.sector.check_sector'                           => 'Sector information must be present either in Transaction level or Activity level but not in both . ',
-            'transaction.sector.*.sector_vocabulary.in'                 => 'Entered sector vocabulary is incorrect . ',
+            'transaction.check_recipient_region_country'                => 'Recipient Region or Recipient Country must be present either in Activity level or Transaction level but not in both.',
+            'transaction_type.required'                                 => 'Transaction type is required.',
+            'transaction_type.in'                                       => 'Entered transaction type is incorrect.',
+            'transaction.transaction_date.*.date.required'              => 'Transaction date is required.',
+            'transaction.transaction_date.*.date.date_format'           => 'Please enter transaction date in Y - m - d format.',
+            'transaction.value.*.amount.required'                       => 'Transaction Value is required.',
+            'transaction.value.*.amount.numeric'                        => 'Transaction Value should be numeric.',
+            'transaction.value.*.amount. min'                           => 'Transaction Value should be positive.',
+            'transaction.value.*.date.required'                         => 'Transaction Value Date is required.',
+            'transaction.value.*.date.date_format'                      => 'Please enter transaction value date in Y - m - d format.',
+            'transaction.provider_organization.*.type.in'               => 'Entered provider organisation type is incorrect.',
+            'transaction.provider_organization.required_only_one_among' => 'Receiver Organisation identifier is required if organisation name is not present.',
+            'transaction.receiver_organization.*.type.in'               => 'Entered receiver organisation type is incorrect.',
+            'transaction.receiver_organization.required_only_one_among' => 'Provider Organisation identifier is required if organisation name is not present.',
+            'transaction.sector.check_sector'                           => 'Sector information must be present either in Transaction level or Activity level but not in both.',
+            'transaction.sector.*.sector_vocabulary.in'                 => 'Entered sector vocabulary is incorrect.',
             'transaction.sector.*.sector_vocabulary.required_if'        => 'Sector Vocabulary is required.',
-            'transaction.sector.*.sector_code.in'                       => 'Entered sector code for vocabulary 1 is incorrect . ',
-            'transaction.sector.*.sector_category_code.in'              => 'Entered sector code for vocabulary 2 is incorrect . ',
-            'transaction.sector.*.sector_text.required_unless'          => 'Sector code is required . ',
-            'transaction.recipient_country.*.country_code.in'           => 'Entered Recipient country code is incorrect . ',
-            'transaction.recipient_region.*.region_code.in'             => 'Entered recipient region code is incorrect . '
+            'transaction.sector.*.sector_code.in'                       => 'Entered sector code for vocabulary 1 is incorrect.',
+            'transaction.sector.*.sector_category_code.in'              => 'Entered sector code for vocabulary 2 is incorrect.',
+            'transaction.sector.*.sector_text.required_unless'          => 'Sector code is required.',
+            'transaction.recipient_country.*.country_code.in'           => 'Entered Recipient country code is incorrect.',
+            'transaction.recipient_region.*.region_code.in'             => 'Entered recipient region code is incorrect.'
         ];
 
         return $message;
     }
 
+    /**
+     * Get the valid codes/names from the respective code list.
+     * @param $name
+     * @param $version
+     * @return string
+     */
     protected function validCodeOrName($name, $version)
     {
         list($validCodes, $codes) = [$this->loadCodeList($name, $version), []];
@@ -238,6 +248,13 @@ class Transaction extends Element
         return implode(',', array_keys(array_flip($codes)));
     }
 
+    /**
+     * Get the valid codes from the respective code list.
+     * @param        $name
+     * @param        $version
+     * @param string $directory
+     * @return string
+     */
     protected function validCodeList($name, $version, $directory = "Activity")
     {
         $codeList = $this->loadCodeList($name, $version, $directory);
@@ -253,18 +270,30 @@ class Transaction extends Element
         return implode(",", $codes);
     }
 
+    /**
+     * Get the Sector for the Activity Level.
+     * @return mixed
+     */
     protected function activityLevelSector()
     {
-        return $this->activityData->sector->data;
+        return $this->activityRow->sector->data;
     }
 
+    /**
+     * Get the Recipient Country for the Activity Level.
+     * @return mixed
+     */
     protected function activityLevelRecipientCountry()
     {
-        return $this->activityData->recipientCountry->data;
+        return $this->activityRow->recipientCountry->data;
     }
 
+    /**
+     * Get the Recipient Region for the Activity Level.
+     * @return mixed
+     */
     protected function activityLevelRecipientRegion()
     {
-        return $this->activityData->recipientRegion->data;
+        return $this->activityRow->recipientRegion->data;
     }
 }

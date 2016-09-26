@@ -47,7 +47,17 @@ class ActivityRow extends Row
      * Activity Elements for an Activity Row.
      * @var array
      */
-    protected $activityElements = ['identifier', 'title', 'description', 'activityStatus', 'activityDate', 'participatingOrganization', 'recipientCountry', 'recipientRegion', 'sector'];
+    protected $activityElements = [
+        'identifier',
+        'title',
+        'description',
+        'activityStatus',
+        'activityDate',
+        'participatingOrganization',
+        'recipientCountry',
+        'recipientRegion',
+        'sector'
+    ];
 
     /**
      * Transaction Elements for an Activity Row.
@@ -60,6 +70,9 @@ class ActivityRow extends Row
      */
     protected $transactionRows = [];
 
+    /**
+     * @var array
+     */
     protected $transactionCSVHeaders = [
         'transaction_internal_reference',
         'transaction_type',
@@ -137,18 +150,34 @@ class ActivityRow extends Row
      */
     protected $transaction = [];
 
+    /**
+     * @var array
+     */
     protected $validElements = [];
 
+    /**
+     * Current Organization's id.
+     * @var
+     */
     protected $organizationId;
 
     /**
-     * ActivityRow constructor.
-     * @param                   $fields
+     * Current User's id.
+     * @var
      */
-    public function __construct($fields, $organizationId)
+    protected $userId;
+
+    /**
+     * ActivityRow constructor.
+     * @param $fields
+     * @param $organizationId
+     * @param $userId
+     */
+    public function __construct($fields, $organizationId, $userId)
     {
         $this->fields         = $fields;
         $this->organizationId = $organizationId;
+        $this->userId         = $userId;
         $this->init();
     }
 
@@ -261,6 +290,9 @@ class ActivityRow extends Row
         return $this;
     }
 
+    /**
+     * Map Transaction data into singular Transaction block for each Activity.
+     */
     protected function mapTransactionData()
     {
         foreach ($this->fields() as $key => $values) {
@@ -274,6 +306,9 @@ class ActivityRow extends Row
         $this->removeEmptyTransactionData();
     }
 
+    /**
+     * Remove empty Transaction rows.
+     */
     protected function removeEmptyTransactionData()
     {
         $totalNull = 0;
@@ -318,13 +353,13 @@ class ActivityRow extends Row
             if ($element == 'transaction') {
                 foreach ($this->$element as $transaction) {
                     $transaction->validate()->withErrors();
-                    $this->recordErrors($transaction, $element);
+                    $this->recordErrors($transaction);
 
                     $this->validElements[] = $transaction->isValid();
                 }
             } else {
                 $this->$element->validate()->withErrors();
-                $this->recordErrors($this->$element, $element);
+                $this->recordErrors($this->$element);
 
                 $this->validElements[] = $this->$element->isValid();
             }
@@ -353,9 +388,11 @@ class ActivityRow extends Row
      */
     protected function makeDirectoryIfNonExistent()
     {
-        if (!file_exists(storage_path(self::CSV_DATA_STORAGE_PATH) . '/' . $this->organizationId)) {
-            mkdir(sprintf('%s/%s/', storage_path(self::CSV_DATA_STORAGE_PATH), $this->organizationId), 0777, true);
-            shell_exec(sprintf('chmod 777 -R %s/%s', storage_path(self::CSV_DATA_STORAGE_PATH), $this->organizationId));
+        $path = sprintf('%s/%s/%s/', storage_path(self::CSV_DATA_STORAGE_PATH), $this->organizationId, $this->userId);
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+            shell_exec($path);
         }
 
         return $this;
@@ -368,10 +405,10 @@ class ActivityRow extends Row
     protected function getCsvFilepath()
     {
         if ($this->isValid) {
-            return storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, $this->organizationId, self::VALID_CSV_FILE));
+            return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, $this->organizationId, $this->userId, self::VALID_CSV_FILE));
         }
 
-        return storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, $this->organizationId, self::INVALID_CSV_FILE));
+        return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, $this->organizationId, $this->userId, self::INVALID_CSV_FILE));
     }
 
     /**
@@ -434,15 +471,104 @@ class ActivityRow extends Row
         file_put_contents($destinationFilePath, json_encode([['data' => $this->data(), 'errors' => $this->errors(), 'status' => 'processed']]));
     }
 
+    /**
+     * Get all the errors associated with the current ActivityRow.
+     * @return array
+     */
     public function errors()
     {
         return $this->errors;
     }
 
-    protected function recordErrors($element, $elementName)
+    /**
+     * Record errors within the ActivityRow.
+     * @param $element
+     */
+    protected function recordErrors($element)
     {
         foreach ($element->errors() as $errors) {
             $this->errors[] = $errors;
         }
+    }
+
+    /**
+     * Validate unique against Identifiers and Transaction Internal References within the uploaded CSV file.
+     * @param $rows
+     * @return $this
+     */
+    public function validateUnique($rows)
+    {
+        $commonIdentifierCount = $this->countDuplicateActivityIdentifiers($rows);
+        $references            = $this->getTransactionInternalReferences();
+
+        if ($this->containsDuplicateActivities($commonIdentifierCount) || $this->containsDuplicateTransactions($references)) {
+            $this->isValid = false;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the Transactions for the ActivityRow.
+     * @return array
+     */
+    public function getTransactions()
+    {
+        return $this->transaction;
+    }
+
+    /**
+     * Get all the internal references for an Activity's Transactions.
+     * @return array
+     */
+    protected function getTransactionInternalReferences()
+    {
+        $references = [];
+
+        foreach ($this->getTransactions() as $transaction) {
+            $references[] = getVal($transaction->data(), ['transaction', 'reference']);
+        }
+
+        return $references;
+    }
+
+    /**
+     * Get the count of duplicated Activity Identifiers.
+     * @param $rows
+     * @return int
+     */
+    protected function countDuplicateActivityIdentifiers($rows)
+    {
+        $commonIdentifierCount = 0;
+
+        foreach ($rows as $index => $row) {
+            if (array_key_exists('activity_identifier', $row)) {
+                if ($this->identifier->data()['activity_identifier'] == getVal($row, ['activity_identifier', 0])) {
+                    $commonIdentifierCount ++;
+                }
+            }
+        }
+
+        return $commonIdentifierCount;
+    }
+
+    /**
+     * Check if the Transaction Internal References are duplicated within the uploaded CSV file.
+     * @param $references
+     * @return bool
+     */
+    protected function containsDuplicateTransactions($references)
+    {
+        return (count(array_unique($references)) != count($this->getTransactions()));
+    }
+
+    /**
+     * Check if the Activity Identifiers are duplicated within the uploaded CSV file.
+     * @param $commonIdentifierCount
+     * @return bool
+     */
+    protected function containsDuplicateActivities($commonIdentifierCount)
+    {
+        return ($commonIdentifierCount > 1);
     }
 }
