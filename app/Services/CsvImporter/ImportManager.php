@@ -65,6 +65,12 @@ class ImportManager
     protected $transactionRepo;
 
     /**
+     * Current User's id.
+     * @var
+     */
+    protected $userId;
+
+    /**
      * ImportManager constructor.
      * @param Excel                  $excel
      * @param ProcessorInterface     $processor
@@ -90,6 +96,7 @@ class ImportManager
         $this->activityRepo     = $activityRepo;
         $this->organizationRepo = $organizationRepo;
         $this->transactionRepo  = $transactionRepo;
+        $this->userId           = $this->getUserId();
     }
 
     /**
@@ -101,7 +108,7 @@ class ImportManager
     {
         try {
             $csv = $this->excel->load($file)->toArray();
-            
+
             $this->processor->pushIntoQueue($csv);
         } catch (Exception $exception) {
             $this->logger->error(
@@ -157,9 +164,20 @@ class ImportManager
         }
     }
 
+    /**
+     * Set the key to specify that import process has started for the current User.
+     */
     public function startImport()
     {
         $this->sessionManager->put(['import-status' => 'importing']);
+    }
+
+    /**
+     * Remove the import-status key from the User's current session.
+     */
+    public function endImport()
+    {
+        $this->sessionManager->forget('import-status');
     }
 
     /**
@@ -170,10 +188,10 @@ class ImportManager
     public function getFilePath($isValid)
     {
         if ($isValid) {
-            return storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), self::VALID_CSV_FILE));
+            return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, self::VALID_CSV_FILE));
         }
 
-        return storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), self::INVALID_CSV_FILE));
+        return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, self::INVALID_CSV_FILE));
     }
 
     /**
@@ -199,6 +217,17 @@ class ImportManager
             );
 
             return $exception->getMessage();
+        }
+    }
+
+    /**
+     * Get the current User's id.
+     * @return mixed
+     */
+    protected function getUserId()
+    {
+        if (auth()->check()) {
+            return auth()->user()->id;
         }
     }
 }
