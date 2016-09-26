@@ -134,11 +134,11 @@ class ImportController extends Controller
      */
     public function getValidData()
     {
-        $filepath = $this->getFilePath(true);
+        $filepath = $this->importManager->getFilePath(true);
 
         if (file_exists($filepath)) {
             $activities = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->getTemporaryFilepath('valid-temp.json');
+            $tempPath   = $this->importManager->getTemporaryFilepath('valid-temp.json');
 
             file_put_contents($tempPath, json_encode($activities));
 
@@ -156,11 +156,11 @@ class ImportController extends Controller
      */
     public function getInvalidData()
     {
-        $filepath = $this->getFilePath(false);
+        $filepath = $this->importManager->getFilePath(false);
 
         if (file_exists($filepath)) {
             $activities = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->getTemporaryFilepath('invalid-temp.json');
+            $tempPath   = $this->importManager->getTemporaryFilepath('invalid-temp.json');
 
 
             file_put_contents($tempPath, json_encode($activities));
@@ -171,20 +171,6 @@ class ImportController extends Controller
         }
 
         return response()->json($response);
-    }
-
-    /**
-     * Get the filepath to the file in which the Csv data is written after processing for import.
-     * @param bool $isValid
-     * @return string
-     */
-    protected function getFilePath($isValid)
-    {
-        if ($isValid) {
-            return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, self::VALID_CSV_FILE));
-        }
-
-        return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, self::INVALID_CSV_FILE));
     }
 
     /**
@@ -222,7 +208,7 @@ class ImportController extends Controller
      */
     public function checkStatus()
     {
-        if (file_exists($this->getTemporaryFilepath('status.json'))) {
+        if (file_exists($this->importManager->getTemporaryFilepath('status.json'))) {
             $this->importManager->endImport();
             return response()->json(json_encode(['status' => 'Complete']));
         }
@@ -236,11 +222,11 @@ class ImportController extends Controller
      */
     public function getRemainingInvalidData()
     {
-        $filepath = $this->getFilePath(false);
+        $filepath = $this->importManager->getFilePath(false);
 
         if (file_exists($filepath)) {
             $activities = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->getTemporaryFilepath('invalid-temp.json');
+            $tempPath   = $this->importManager->getTemporaryFilepath('invalid-temp.json');
 
             if (file_exists($tempPath)) {
                 $old   = json_decode(file_get_contents($tempPath), true);
@@ -272,11 +258,11 @@ class ImportController extends Controller
      */
     public function getRemainingValidData()
     {
-        $filepath = $this->getFilePath(true);
+        $filepath = $this->importManager->getFilePath(true);
 
         if (file_exists($filepath)) {
             $activities = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->getTemporaryFilepath('valid-temp.json');
+            $tempPath   = $this->importManager->getTemporaryFilepath('valid-temp.json');
 
             if (file_exists($tempPath)) {
                 $old   = json_decode(file_get_contents($tempPath), true);
@@ -308,24 +294,10 @@ class ImportController extends Controller
      */
     public function clearInvalidActivities()
     {
-        $filePath = $this->getFilePath(false);
-
-        if (file_exists($filePath)) {
-            file_put_contents($filePath, '');
-
+        if ($this->importManager->clearInvalidActivities()) {
             return response()->json('cleared');
         }
 
         return response()->json('error');
-    }
-
-    /**
-     * Get the filepath for the temporary files used by the import process.
-     * @param $filename
-     * @return string
-     */
-    protected function getTemporaryFilepath($filename)
-    {
-        return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, $filename));
     }
 }

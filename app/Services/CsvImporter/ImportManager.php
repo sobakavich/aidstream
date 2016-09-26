@@ -70,10 +70,17 @@ class ImportManager
      * @var
      */
     protected $userId;
+
     /**
      * @var Filesystem
      */
     protected $filesystem;
+
+    /**
+     * File names for the invalid activities.
+     * @var array
+     */
+    protected $invalidActivityFileNames = ['invalid.json', 'invalid-temp.json'];
 
     /**
      * ImportManager constructor.
@@ -239,7 +246,7 @@ class ImportManager
 
     /**
      * Get the filepath to the file in which the Csv data is written after processing for import.
-     * @param $isValid
+     * @param bool $isValid
      * @return string
      */
     public function getFilePath($isValid)
@@ -286,5 +293,47 @@ class ImportManager
         if (auth()->check()) {
             return auth()->user()->id;
         }
+    }
+
+    /**
+     * Clear all invalid activities.
+     * @return bool|null
+     */
+    public function clearInvalidActivities()
+    {
+        try {
+            list($file, $temporaryFile) = [$this->getFilePath(false), $this->getTemporaryFilepath('invalid-temp.json')];
+
+            if (file_exists($file)) {
+                unlink($file);
+            }
+
+            if (file_exists($temporaryFile)) {
+                unlink($temporaryFile);
+            }
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Error clearing invalid Activities due to [%s]', $exception->getMessage()),
+                [
+                    'trace'           => $exception->getTraceAsString(),
+                    'user_id'         => $this->userId,
+                    'organization_id' => session('org_id')
+                ]
+            );
+
+            return null;
+        }
+    }
+
+    /**
+     * Get the filepath for the temporary files used by the import process.
+     * @param $filename
+     * @return string
+     */
+    public function getTemporaryFilepath($filename)
+    {
+        return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, $filename));
     }
 }
