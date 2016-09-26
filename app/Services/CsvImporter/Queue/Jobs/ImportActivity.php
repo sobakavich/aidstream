@@ -4,6 +4,10 @@ use App\Jobs\Job;
 use App\Services\CsvImporter\CsvProcessor;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class ImportActivity
+ * @package App\Services\CsvImporter\Queue\Jobs
+ */
 class ImportActivity extends Job implements ShouldQueue
 {
     /**
@@ -12,9 +16,16 @@ class ImportActivity extends Job implements ShouldQueue
     protected $csvProcessor;
 
     /**
+     * Current Organization's Id.
      * @var
      */
     protected $organizationId;
+
+    /**
+     * Current User's Id.
+     * @var
+     */
+    protected $userId;
 
     /**
      * Create a new job instance.
@@ -25,6 +36,7 @@ class ImportActivity extends Job implements ShouldQueue
     {
         $this->csvProcessor   = $csvProcessor;
         $this->organizationId = session('org_id');
+        $this->userId         = $this->getUserId();
     }
 
     /**
@@ -34,9 +46,20 @@ class ImportActivity extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->csvProcessor->handle($this->organizationId);
-        file_put_contents(storage_path(sprintf('%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, 'status.json')), json_encode(['status' => 'Complete']));
+        $this->csvProcessor->handle($this->organizationId, $this->userId);
+        file_put_contents(storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId, 'status.json')), json_encode(['status' => 'Complete']));
 
         $this->delete();
+    }
+
+    /**
+     * Get the current User's id.
+     * @return mixed
+     */
+    protected function getUserId()
+    {
+        if (auth()->check()) {
+            return auth()->user()->id;
+        }
     }
 }

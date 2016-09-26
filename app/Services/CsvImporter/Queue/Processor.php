@@ -50,9 +50,6 @@ class Processor implements ProcessorInterface
      */
     public function pushIntoQueue($csv)
     {
-        // TODO: management stuff...
-        // TODO: clean things up...
-
         $this->dispatch(
             new ImportActivity(new CsvProcessor($csv))
         );

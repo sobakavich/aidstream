@@ -13,7 +13,23 @@ abstract class Csv
      */
     protected $rows;
 
+    /**
+     * Current Organization's id.
+     * @var
+     */
     protected $organizationId;
+
+    /**
+     * Current User's id.
+     * @var
+     */
+    protected $userId;
+
+    /**
+     * Rows from the uploaded CSV file.
+     * @var array
+     */
+    protected $csvRows = [];
 
     /**
      * Initialize objects for the CSV class with the respective Row objects.
@@ -27,7 +43,7 @@ abstract class Csv
             function ($row) use ($class) {
                 if (class_exists($class)) {
                     try {
-                        $this->rows[] = app()->make($class, [$row, $this->organizationId]);
+                        $this->rows[] = app()->make($class, [$row, $this->organizationId, $this->userId]);
                     } catch (Exception $exception) {
                         dd($exception->getMessage());
                     }
