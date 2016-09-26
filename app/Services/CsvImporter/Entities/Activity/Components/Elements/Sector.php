@@ -296,21 +296,21 @@ class Sector extends Element
     public function messages()
     {
         $messages = [
-            'sector.required'                     => 'At least one sector is required.',
-            'sector.sector_percentage_sum'        => 'Sum of percentage under same vocabulary must be 100',
+            'sector.required'                     => 'At least one Sector is required.',
+            'sector.sector_percentage_sum'        => 'Sum of percentage under same Sector vocabulary must be 100',
             'sector.*.sector_vocabulary.required' => 'Sector Vocabulary is required.',
-            'sector.*.sector_vocabulary.in'       => 'Entered sector vocabulary is invalid.',
-            'sector.*.percentage'                 => 'Percentage is required'
+            'sector.*.sector_vocabulary.in'       => 'Entered Sector vocabulary is invalid.',
+            'sector.*.percentage'                 => 'Sector Percentage is required.'
         ];
 
         foreach (getVal($this->data(), ['sector']) as $key => $value) {
-            $messages['sector.' . $key . '.sector_code.required_if']          = "Sector code is required when sector vocabulary is 1";
-            $messages['sector.' . $key . '.sector_code.in']                   = "Entered sector code for sector vocabulary 1 is invalid";
-            $messages['sector.' . $key . '.sector_category_code.required_if'] = "Sector code is required when sector category code is 2";
-            $messages['sector.' . $key . '.sector_category_code.in']          = "Entered sector code for sector vocabulary 2 is invalid";
+            $messages['sector.' . $key . '.sector_code.required_if']          = "Sector code is required when Sector vocabulary is 1";
+            $messages['sector.' . $key . '.sector_code.in']                   = "Entered sector code for Sector vocabulary 1 is invalid";
+            $messages['sector.' . $key . '.sector_category_code.required_if'] = "Sector code is required when Sector category code is 2";
+            $messages['sector.' . $key . '.sector_category_code.in']          = "Entered sector code for Sector vocabulary 2 is invalid";
             $messages['sector.' . $key . '.sector_text.required_unless']      = "Sector code is required.";
-            $messages['sector.' . $key . '.percentage.min']                   = "Percentage cannot be less than 0.";
-            $messages['sector.' . $key . '.percentage.max']                   = "Percentage cannot be more than 100";
+            $messages['sector.' . $key . '.percentage.min']                   = "Sector Percentage cannot be less than 0.";
+            $messages['sector.' . $key . '.percentage.max']                   = "Sector Percentage cannot be more than 100";
         }
 
         return $messages;

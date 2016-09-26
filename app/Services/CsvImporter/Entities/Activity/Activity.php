@@ -14,11 +14,14 @@ class Activity extends Csv
      * Activity constructor.
      * @param $rows
      * @param $organizationId
+     * @param $userId
      */
-    public function __construct($rows, $organizationId)
+    public function __construct($rows, $organizationId, $userId)
     {
         try {
+            $this->csvRows        = $rows;
             $this->organizationId = $organizationId;
+            $this->userId         = $userId;
             $this->make($rows, ActivityRow::class);
         } catch (Exception $exception) {
             dd($exception->getMessage());
@@ -32,7 +35,7 @@ class Activity extends Csv
     public function process()
     {
         foreach ($this->rows() as $row) {
-            $row->process()->validate()->keep();
+            $row->process()->validate()->validateUnique($this->csvRows)->keep();
         }
 
         return $this;

@@ -39,33 +39,35 @@ class CsvProcessor
 
     /**
      * Handle the import functionality.
+     * @param $organizationId
+     * @param $userId
      */
-    public function handle($organizationId)
+    public function handle($organizationId, $userId)
     {
         $this->groupValues($this->csv);
 
         try {
-            $this->make('App\Services\CsvImporter\Entities\Activity\Activity', $organizationId);
+            $this->make('App\Services\CsvImporter\Entities\Activity\Activity', ['organization_id' => $organizationId, 'user_id' => $userId]);
 
             $this->model->process();
         } catch (Exception $exception) {
-            dd($exception);
+            dd($exception->getMessage());
         }
     }
 
     /**
      * Make objects for the provided class.
-     * @param $class
-     * @param $organizationId
+     * @param       $class
+     * @param array $options
      */
-    protected function make($class, $organizationId)
+    protected function make($class, array $options = [])
     {
         try {
             if (class_exists($class)) {
-                $this->model = app()->make($class, [$this->data, $organizationId]);
+                $this->model = app()->make($class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id'])]);
             }
         } catch (Exception $exception) {
-            dd($exception);
+            dd($exception->getMessage());
         }
     }
 

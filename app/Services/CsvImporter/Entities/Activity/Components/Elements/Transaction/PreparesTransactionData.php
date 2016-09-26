@@ -20,7 +20,7 @@ trait PreparesTransactionData
     }
 
     /**
-     *
+     * Set the Humanitarian field for the Transaction Element.
      */
     protected function setHumanitarian()
     {
@@ -30,6 +30,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the Transaction Type for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -48,6 +49,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the date for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -59,6 +61,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the value for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -70,6 +73,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the value date for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -82,6 +86,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the description for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -93,6 +98,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the Provider Organization for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -113,6 +119,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the Receiver Organization for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -133,7 +140,7 @@ trait PreparesTransactionData
     }
 
     /**
-     *
+     * Set the Disbursement Channel for the Transaction Element.
      */
     protected function setDisbursementChannel()
     {
@@ -143,6 +150,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the Sector for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -160,6 +168,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the Sector code for the Transaction Element's Sector.
      * @param $sectorVocabulary
      * @param $value
      */
@@ -185,6 +194,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the Recipient Country for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -197,6 +207,7 @@ trait PreparesTransactionData
     }
 
     /**
+     * Set the Recipient Region for the Transaction Element.
      * @param $key
      * @param $value
      */
@@ -211,7 +222,7 @@ trait PreparesTransactionData
     }
 
     /**
-     *
+     * Set the Flow Type for the Transaction Element.
      */
     protected function setFlowType()
     {
@@ -221,7 +232,7 @@ trait PreparesTransactionData
     }
 
     /**
-     *
+     * Set the Finance Type for the Transaction Element.
      */
     protected function setFinanceType()
     {
@@ -231,7 +242,7 @@ trait PreparesTransactionData
     }
 
     /**
-     *
+     * Set the Aid Type for the Transaction Element.
      */
     protected function setAidType()
     {
