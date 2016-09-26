@@ -385,7 +385,7 @@ class ActivityRow extends Row
         foreach ($this->elements() as $element) {
             if ($element == 'transaction') {
                 foreach ($this->$element as $transaction) {
-                    $this->data[$element] = $transaction->data($transaction->pluckIndex());
+                    $this->data[$element][] = $transaction->data($transaction->pluckIndex());
                 }
             } else {
                 $this->data[snake_case($element)] = ($element === 'identifier')
