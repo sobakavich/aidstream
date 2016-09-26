@@ -5,6 +5,7 @@ use App\Core\V201\Repositories\Activity\Transaction;
 use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use App\Models\Activity\Activity;
 use Exception;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Session\SessionManager;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
@@ -69,6 +70,10 @@ class ImportManager
      * @var
      */
     protected $userId;
+    /**
+     * @var Filesystem
+     */
+    protected $filesystem;
 
     /**
      * ImportManager constructor.
@@ -79,6 +84,7 @@ class ImportManager
      * @param ActivityRepository     $activityRepo
      * @param OrganizationRepository $organizationRepo
      * @param Transaction            $transactionRepo
+     * @param Filesystem             $filesystem
      */
     public function __construct(
         Excel $excel,
@@ -87,7 +93,8 @@ class ImportManager
         SessionManager $sessionManager,
         ActivityRepository $activityRepo,
         OrganizationRepository $organizationRepo,
-        Transaction $transactionRepo
+        Transaction $transactionRepo,
+        Filesystem $filesystem
     ) {
         $this->excel            = $excel;
         $this->processor        = $processor;
@@ -97,6 +104,7 @@ class ImportManager
         $this->organizationRepo = $organizationRepo;
         $this->transactionRepo  = $transactionRepo;
         $this->userId           = $this->getUserId();
+        $this->filesystem       = $filesystem;
     }
 
     /**
@@ -150,6 +158,7 @@ class ImportManager
                 $this->createTransaction(getVal($activity['data'], ['transaction'], []), $createdActivity->id);
             }
         }
+        $this->activityImportStatus($activities);
     }
 
     /**
@@ -162,6 +171,54 @@ class ImportManager
         foreach ($transactions as $transaction) {
             $this->transactionRepo->createTransaction($transaction, $activityId);
         }
+    }
+
+    /**
+     * Check the status of the csv activities being imported.
+     * @param $activities
+     */
+    protected function activityImportStatus($activities)
+    {
+        if (session('importing') && $this->checkStatusFile()) {
+            $this->removeImportedActivity($activities);
+        }
+
+        if ($this->checkStatusFile() && is_null(session('importing'))) {
+            $this->removeImportDirectory();
+        }
+    }
+
+    /**
+     * Remove the imported activity if the csv is still being processed.
+     * @param $checkedActivities
+     */
+    protected function removeImportedActivity($checkedActivities)
+    {
+        $validActivities = json_decode(file_get_contents($this->getFilePath(true)), true);
+        foreach ($checkedActivities as $key => $activity) {
+            unset($validActivities[$key]);
+        }
+
+        json_encode(file_put_contents($this->getFilePath(true), $validActivities));
+    }
+
+    /**
+     * Check if the status.json file is present.
+     * @return bool
+     */
+    protected function checkStatusFile()
+    {
+        return file_exists(storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, 'status.json')));
+    }
+
+    /**
+     * Remove the user folder containing valid, invalid and status json.
+     */
+    protected function removeImportDirectory()
+    {
+        $dir = storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
+        $this->filesystem->deleteDirectory($dir);
+
     }
 
     /**
