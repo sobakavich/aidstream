@@ -392,7 +392,7 @@ class ActivityRow extends Row
 
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
-            shell_exec($path);
+            shell_exec(sprintf('chmod 777 -R %s', $path));
         }
 
         return $this;
