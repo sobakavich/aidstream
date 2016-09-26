@@ -1,5 +1,8 @@
 <?php namespace App\Services\CsvImporter;
 
+use App\Core\V201\Repositories\Activity\ActivityRepository;
+use App\Core\V201\Repositories\Activity\Transaction;
+use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use App\Models\Activity\Activity;
 use Exception;
 use Illuminate\Session\SessionManager;
@@ -48,20 +51,45 @@ class ImportManager
      * @var SessionManager
      */
     protected $sessionManager;
+    /**
+     * @var ActivityRepository
+     */
+    protected $activityRepo;
+    /**
+     * @var OrganizationRepository
+     */
+    protected $organizationRepo;
+    /**
+     * @var Transaction
+     */
+    protected $transactionRepo;
 
     /**
      * ImportManager constructor.
-     * @param Excel              $excel
-     * @param ProcessorInterface $processor
-     * @param LoggerInterface    $logger
-     * @param SessionManager     $sessionManager
+     * @param Excel                  $excel
+     * @param ProcessorInterface     $processor
+     * @param LoggerInterface        $logger
+     * @param SessionManager         $sessionManager
+     * @param ActivityRepository     $activityRepo
+     * @param OrganizationRepository $organizationRepo
+     * @param Transaction            $transactionRepo
      */
-    public function __construct(Excel $excel, ProcessorInterface $processor, LoggerInterface $logger, SessionManager $sessionManager)
-    {
-        $this->excel          = $excel;
-        $this->processor      = $processor;
-        $this->logger         = $logger;
-        $this->sessionManager = $sessionManager;
+    public function __construct(
+        Excel $excel,
+        ProcessorInterface $processor,
+        LoggerInterface $logger,
+        SessionManager $sessionManager,
+        ActivityRepository $activityRepo,
+        OrganizationRepository $organizationRepo,
+        Transaction $transactionRepo
+    ) {
+        $this->excel            = $excel;
+        $this->processor        = $processor;
+        $this->logger           = $logger;
+        $this->sessionManager   = $sessionManager;
+        $this->activityRepo     = $activityRepo;
+        $this->organizationRepo = $organizationRepo;
+        $this->transactionRepo  = $transactionRepo;
     }
 
     /**
@@ -73,7 +101,7 @@ class ImportManager
     {
         try {
             $csv = $this->excel->load($file)->toArray();
-
+            
             $this->processor->pushIntoQueue($csv);
         } catch (Exception $exception) {
             $this->logger->error(
@@ -88,18 +116,44 @@ class ImportManager
         }
     }
 
+    /**
+     * Create Valid activities.
+     * @param $activities
+     * @param $contents
+     */
     public function createActivity($activities, $contents)
     {
-        $activityModel      = app(Activity::class);
-        $organizationId     = $this->sessionManager->get('org_id');
-        $importedActivities = [];
+        $organizationId         = $this->sessionManager->get('org_id');
+        $importedActivities     = [];
+        $organizationIdentifier = getVal(
+            $this->organizationRepo->getOrganization($organizationId)->toArray(),
+            ['reporting_org', 0, 'reporting_organization_identifier']
+        );
 
         foreach ($activities as $key => $activity) {
-            $activity                            = $contents[$activity];
-            $activity['data']['organization_id'] = $organizationId;
-            $importedActivities[$key]            = $activity['data'];
+            $activity                                               = $contents[$activity];
+            $activity['data']['organization_id']                    = $organizationId;
+            $importedActivities[$key]                               = $activity['data'];
+            $iati_identifier_text                                   = $organizationIdentifier . '-' . $activity['data']['identifier']['activity_identifier'];
+            $activity['data']['identifier']['iati_identifier_text'] = $iati_identifier_text;
 
-            $activityModel->newInstance($activity['data'])->save();
+            $createdActivity = $this->activityRepo->createActivity($activity['data']);
+
+            if (array_key_exists('transaction', $activity['data'])) {
+                $this->createTransaction(getVal($activity['data'], ['transaction'], []), $createdActivity->id);
+            }
+        }
+    }
+
+    /**
+     * Create Transaction of Valid Activities
+     * @param $transactions
+     * @param $activityId
+     */
+    public function createTransaction($transactions, $activityId)
+    {
+        foreach ($transactions as $transaction) {
+            $this->transactionRepo->createTransaction($transaction, $activityId);
         }
     }
 
