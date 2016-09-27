@@ -15,7 +15,7 @@ var CsvImportStatusManager = {
     enableImport: function (response) {
         if (response.render) {
             if (response.render.length > 18) {
-                submitButton.fadeIn().removeClass('hidden');
+                submitButton.fadeIn("slow").removeClass('hidden');
             } else if (response.render == 'No data available.') {
                 transferComplete = true;
             }
@@ -72,8 +72,8 @@ var CsvImportStatusManager = {
 
             if (r.status == 'Complete') {
                 transferComplete = true;
-                cancelButton.fadeIn().removeClass('hidden');
-                checkAll.fadeIn().removeClass('hidden');
+                cancelButton.fadeIn('slow').removeClass('hidden');
+                checkAll.fadeIn('slow').removeClass('hidden');
             }
         }).error(function (error) {
             // TODO: handle error
@@ -100,6 +100,38 @@ var CsvImportStatusManager = {
     },
     showClearButton: function () {
         clearInvalidButton.show();
+    },
+    getData: function () {
+        CsvImportStatusManager.callAsync('get-data', 'GET').success(function (response) {
+            var validParentDiv = CsvImportStatusManager.getParentDiv('valid-data');
+            var invalidParentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
+
+            if (response.validData) {
+                if (validParentDiv.html() != 'No data available.') {
+                    validParentDiv.append(response.validData.render);
+                }
+
+                CsvImportStatusManager.enableImport(response.validData);
+            } else if (response.invalidData) {
+                if (invalidParentDiv.html() != 'No data available.') {
+                    invalidParentDiv.append(response.invalidData.render);
+                }
+            } else {
+                if (validParentDiv.html() != 'No data available.') {
+                    validParentDiv.append(response.validData.render);
+                }
+
+                if (invalidParentDiv.html() != 'No data available.') {
+                    invalidParentDiv.append(response.invalidData.render);
+                }
+            }
+        }).error(function (error) {
+            var validParentDiv = CsvImportStatusManager.getParentDiv('valid-data');
+            var invalidParentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
+
+            validParentDiv.append('Looks like something went wrong.');
+            invalidParentDiv.append('Looks like something went wrong.');
+        });
     }
 };
 
@@ -110,8 +142,7 @@ $(document).ready(function () {
     var interval = setInterval(function () {
         CsvImportStatusManager.isTransferComplete();
         if (CsvImportStatusManager.ifParentIsEmpty('invalid-data')) {
-            CsvImportStatusManager.getValidData();
-            CsvImportStatusManager.getInvalidData();
+            CsvImportStatusManager.getData();
         } else {
             CsvImportStatusManager.getRemainingValidData();
             CsvImportStatusManager.getRemainingInvalidData();
