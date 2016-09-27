@@ -74,10 +74,14 @@ class ActivityStatus extends Element
      */
     public function rules()
     {
-        return [
-            $this->csvHeader()                  => 'required|size:1',
-            sprintf('%s.*', $this->csvHeader()) => sprintf('in:%s', $this->validActivityStatus())
+        $rules = [];
+
+        $rules = [
+            $this->csvHeader() => sprintf('required|in:%s', $this->validActivityStatus())
         ];
+        (!is_array($this->data['activity_status'])) ?: $rules[$this->csvHeader()] .= '|size:1';
+
+        return $rules;
     }
 
     /**
@@ -91,7 +95,7 @@ class ActivityStatus extends Element
         return [
             sprintf('%s.required', $key) => 'Activity Status is required.',
             sprintf('%s.size', $key)     => 'Multiple Activity Statuses are not allowed.',
-            sprintf('%s.*.in', $key)       => 'Only valid Activity Status codes are allowed.'
+            sprintf('%s.in', $key)       => 'Only valid Activity Status codes are allowed.'
         ];
     }
 
