@@ -57,5 +57,10 @@ $router->group(
             'as'   => 'activity.clear-invalid-activities',
             'uses' => 'ImportController@clearInvalidActivities'
         ]);
+
+        $router->get('/check-session-status', [
+            'as'   => 'activity.check-session-status',
+            'uses' => 'ImportController@checkSessionStatus'
+        ]);
     }
 );
