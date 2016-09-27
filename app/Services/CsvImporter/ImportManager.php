@@ -233,7 +233,7 @@ class ImportManager
      */
     public function startImport()
     {
-        $this->sessionManager->put(['import-status' => 'importing']);
+        $this->sessionManager->put(['import-status' => 'Importing']);
     }
 
     /**
@@ -335,5 +335,22 @@ class ImportManager
     public function getTemporaryFilepath($filename)
     {
         return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, $filename));
+    }
+
+    /**
+     * Set import-status key when the processing is complete.
+     */
+    public function setProcessCompleteSession()
+    {
+        $this->sessionManager->put(['import-status' => 'Complete']);
+    }
+
+    /**
+     * Get the Csv Import status from the current User's session.
+     * @return mixed
+     */
+    public function getSessionStatus()
+    {
+        return $this->sessionManager->get('import-status');
     }
 }
