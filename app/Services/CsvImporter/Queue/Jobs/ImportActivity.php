@@ -28,15 +28,27 @@ class ImportActivity extends Job implements ShouldQueue
     protected $userId;
 
     /**
+     * Directory where the uploaded Csv file is stored temporarily before import.
+     */
+    const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/file';
+
+    /**
+     * @var
+     */
+    protected $filename;
+
+    /**
      * Create a new job instance.
      *
      * @param CsvProcessor $csvProcessor
+     * @param              $filename
      */
-    public function __construct(CsvProcessor $csvProcessor)
+    public function __construct(CsvProcessor $csvProcessor, $filename)
     {
         $this->csvProcessor   = $csvProcessor;
         $this->organizationId = session('org_id');
         $this->userId         = $this->getUserId();
+        $this->filename       = $filename;
     }
 
     /**
@@ -48,6 +60,11 @@ class ImportActivity extends Job implements ShouldQueue
     {
         $this->csvProcessor->handle($this->organizationId, $this->userId);
         file_put_contents(storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId, 'status.json')), json_encode(['status' => 'Complete']));
+        $uploadedFilepath = $this->getStoredCsvFilePath($this->filename);
+
+        if (file_exists($uploadedFilepath)) {
+            unlink($uploadedFilepath);
+        }
 
         $this->delete();
     }
@@ -61,5 +78,15 @@ class ImportActivity extends Job implements ShouldQueue
         if (auth()->check()) {
             return auth()->user()->id;
         }
+    }
+
+    /**
+     * Get the temporary Csv filepath for the uploaded Csv file.
+     * @param $filename
+     * @return string
+     */
+    protected function getStoredCsvFilePath($filename)
+    {
+        return sprintf('%s/%s', storage_path(sprintf('%s/%s/%s', self::UPLOADED_CSV_STORAGE_PATH, $this->organizationId, $this->userId)), $filename);
     }
 }

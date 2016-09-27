@@ -3,9 +3,11 @@
 use App\Core\V201\Requests\Activity\ImportActivity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
+use App\Services\CsvImporter\Events\ActivityCsvWasUploaded;
 use App\Services\CsvImporter\ImportManager;
 use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
 use App\Services\Organization\OrganizationManager;
+use Illuminate\Support\Facades\Event;
 
 
 /**
@@ -95,6 +97,7 @@ class ImportController extends Controller
     {
         $organization = $this->organizationManager->getOrganization(session('org_id'));
 
+        $this->importManager->refreshSessionIfRequired();
 
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
@@ -116,17 +119,26 @@ class ImportController extends Controller
     {
         $file = $request->file('activity');
 
-        if (true === ($status = $this->importManager->verifyHeaders($file))) {
-            $this->importManager->startImport();
+        if ($this->importManager->storeCsv($file)) {
+            $this->importManager->startImport()
+                                ->rememberFilename($file->getClientOriginalName());
 
-            $this->importManager->process($file);
+            Event::fire(new ActivityCsvWasUploaded($file->getClientOriginalName()));
 
             return redirect()->route('activity.import-status');
         }
 
-        $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => $status]]];
+        $response = ['type' => 'danger', 'code' => ['csv_header_mismatch', ['message' => 'Something is not right.']]];
 
         return redirect()->to('import-activity')->withResponse($response);
+
+//        if (true === ($status = $this->importManager->verifyHeaders($file))) {
+//            $this->importManager->startImport();
+//
+//            $this->importManager->process($file);
+//
+//            return redirect()->route('activity.import-status');
+//        }
     }
 
     /**
