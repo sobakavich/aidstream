@@ -206,6 +206,12 @@ class ImportController extends Controller
         $filePath = $this->importManager->getTemporaryFilepath('status.json');
 
         if (file_exists($filePath)) {
+            $contents = json_decode(file_get_contents($filePath), true);
+
+            if ($contents['status'] == 'Complete') {
+                $this->importManager->setProcessCompleteSession();
+            }
+
             return response()->json(file_get_contents($filePath));
         }
 
@@ -295,5 +301,14 @@ class ImportController extends Controller
         }
 
         return response()->json('error');
+    }
+
+    /**
+     * Get the Csv Import status from the current User's session.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkSessionStatus()
+    {
+        return response()->json(['status' => $this->importManager->getSessionStatus()]);
     }
 }
