@@ -120,6 +120,9 @@
                  </span>
                     @endif
                 </div>
+
+                <div id="import-status-placeholder">
+                </div>
             @endif
         </div>
     </div>
@@ -167,8 +170,27 @@
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <!-- End Google Analytics -->
-
 @yield('script')
+{{--<script type="text/javascript" src="{{url('/js/csvImporter/csvImportStatus.js')}}"></script>--}}
+<script>
+    $(document).ready(function () {
+        var checkStatus = function () {
+            $.ajax({
+                url: '{{ route('activity.check-session-status')}}',
+                method: 'GET'
+            }).success(function (response) {
+                var placeHolder = $('div#import-status-placeholder');
+                if (response.status) {
+                    placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>")
+                    checkStatus();
+                }
+            });
+        }
+
+        checkStatus();
+    });
+</script>
+
 @yield('foot')
 
 </body>
