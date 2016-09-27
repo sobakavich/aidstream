@@ -206,7 +206,7 @@
                     checkStatus();
                 }
             });
-        }
+        };
 
         checkStatus();
     });

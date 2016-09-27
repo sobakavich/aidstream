@@ -3,6 +3,24 @@
 @section('title', 'Import Status')
 
 @section('content')
+    {{--for Sweta--}}
+    <style>
+        input#cancel-import {
+            position: absolute;
+            right: 115px;
+            top: -50px;
+            z-index: 1;
+        }
+
+        #checkAll {
+            position: absolute;
+            right: 120px;
+            top: 30px;
+            z-index: 1;
+        }
+    </style>
+    {{--for Sweta--}}
+
     <div class="container main-container">
         <div class="row">
             @include('includes.side_bar_menu')
@@ -26,11 +44,20 @@
 
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="valid">
+                                    <div id="checkAll" class="hidden">
+                                        <label>
+                                            <input type="checkbox" id="check-all" >Check All
+                                        </label>
+                                    </div>
                                     <form action="{{ route('activity.import-validated-activities') }}" method="POST">
                                         {{ csrf_field() }}
                                         <div class="valid-data"></div>
-
                                         <input type="submit" class="hidden" id="submit-valid-activities" value="Import">
+                                    </form>
+
+                                    <form action="{{ route('activity.cancel-import') }}" method="POST" id="cancel-import">
+                                        {{ csrf_field() }}
+                                        <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="Are you sure you want to Cancel Activity Import?" value="Cancel">
                                     </form>
                                 </div>
 
@@ -62,6 +89,11 @@
                 $(this).children('.data-listing').slideToggle();
             });
         };
+
+        $('#check-all').on('change', function () {
+            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+        });
+
     </script>
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>
 @stop
