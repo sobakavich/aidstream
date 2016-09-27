@@ -441,8 +441,6 @@ class ActivityRow extends Row
     protected function writeCsvDataAsJson($destinationFilePath)
     {
         if (file_exists($destinationFilePath)) {
-            shell_exec(sprintf('chmod 777 -R %s', $destinationFilePath));
-
             $this->appendDataIntoFile($destinationFilePath);
         } else {
             $this->createNewFile($destinationFilePath);
@@ -470,8 +468,8 @@ class ActivityRow extends Row
      */
     protected function createNewFile($destinationFilePath)
     {
-        shell_exec(sprintf('chmod 777 -R %s', $destinationFilePath));
         file_put_contents($destinationFilePath, json_encode([['data' => $this->data(), 'errors' => $this->errors(), 'status' => 'processed']]));
+        shell_exec(sprintf('chmod 777 -R %s', $destinationFilePath));
     }
 
     /**
