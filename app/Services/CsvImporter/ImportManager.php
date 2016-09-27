@@ -3,12 +3,12 @@
 use App\Core\V201\Repositories\Activity\ActivityRepository;
 use App\Core\V201\Repositories\Activity\Transaction;
 use App\Core\V201\Repositories\Organization\OrganizationRepository;
-use App\Models\Activity\Activity;
 use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Session\SessionManager;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Services\CsvImporter\Queue\Contracts\ProcessorInterface;
 
@@ -32,6 +32,11 @@ class ImportManager
      * File in which the invalid Csv data is written before import.
      */
     const INVALID_CSV_FILE = 'invalid.json';
+
+    /**
+     * Directory where the uploaded Csv file is stored temporarily before import.
+     */
+    const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/file';
 
     /**
      * @var Excel
@@ -116,15 +121,17 @@ class ImportManager
 
     /**
      * Process the uploaded CSV file.
-     * @param UploadedFile $file
-     * @return bool|null
+     * @param $filename
+     * @return null
      */
-    public function process(UploadedFile $file)
+    public function process($filename)
     {
         try {
+            $file = new File($this->getStoredCsvPath($filename));
+
             $csv = $this->excel->load($file)->toArray();
 
-            $this->processor->pushIntoQueue($csv);
+            $this->processor->pushIntoQueue($csv, $filename);
         } catch (Exception $exception) {
             $this->logger->error(
                 $exception->getMessage(),
@@ -230,10 +237,13 @@ class ImportManager
 
     /**
      * Set the key to specify that import process has started for the current User.
+     * @return $this
      */
     public function startImport()
     {
         $this->sessionManager->put(['import-status' => 'Importing']);
+
+        return $this;
     }
 
     /**
@@ -401,6 +411,63 @@ class ImportManager
             );
 
             return null;
+        }
+    }
+
+    /**
+     * Store Csv file before import.
+     * @param UploadedFile $file
+     * @return bool|null
+     */
+    public function storeCsv(UploadedFile $file)
+    {
+        try {
+            $file->move($this->getStoredCsvPath(), $file->getClientOriginalName());
+
+            return true;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Error uploading Activity CSV file due to [%s]', $exception->getMessage()),
+                [
+                    'trace'   => $exception->getTraceAsString(),
+                    'user_id' => $this->userId
+                ]
+            );
+
+            return null;
+        }
+    }
+
+    /**
+     * Get the temporary Csv filepath for the uploaded Csv file.
+     * @param $filename
+     * @return string
+     */
+    public function getStoredCsvPath($filename = null)
+    {
+        if ($filename) {
+            return sprintf('%s/%s', storage_path(sprintf('%s/%s/%s', self::UPLOADED_CSV_STORAGE_PATH, session('org_id'), $this->userId)), $filename);
+        }
+
+        return storage_path(sprintf('%s/%s/%s/', self::UPLOADED_CSV_STORAGE_PATH, session('org_id'), $this->userId));
+    }
+
+    /**
+     * Set the filename of the file currently being processed in the current session.
+     * @param $filename
+     */
+    public function rememberFilename($filename)
+    {
+        $this->sessionManager->put(['filename' => $filename]);
+    }
+
+    /**
+     * Reset session values if necessary.
+     */
+    public function refreshSessionIfRequired()
+    {
+        if ($this->sessionManager->get('import-status') == 'Complete') {
+            $this->sessionManager->forget('filename');
         }
     }
 }
