@@ -221,7 +221,7 @@ class ImportManager
     /**
      * Remove the user folder containing valid, invalid and status json.
      */
-    protected function removeImportDirectory()
+    public function removeImportDirectory()
     {
         $dir = storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
         $this->filesystem->deleteDirectory($dir);

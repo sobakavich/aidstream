@@ -95,6 +95,7 @@ class ImportController extends Controller
     {
         $organization = $this->organizationManager->getOrganization(session('org_id'));
 
+
         if (!isset($organization->reporting_org[0])) {
             $response = ['type' => 'warning', 'code' => ['settings', ['name' => 'activity']]];
 
@@ -316,5 +317,16 @@ class ImportController extends Controller
     public function checkSessionStatus()
     {
         return response()->json(['status' => $this->importManager->getSessionStatus()]);
+    }
+
+    /**
+     * Cancel the CSV Uploading Process.
+     */
+    public function cancel()
+    {
+        $this->importManager->removeImportDirectory();
+        $this->importManager->endImport();
+
+        return redirect()->route('activity.upload-csv');
     }
 }

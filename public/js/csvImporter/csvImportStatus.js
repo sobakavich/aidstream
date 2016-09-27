@@ -1,4 +1,6 @@
 var submitButton = $('input#submit-valid-activities');
+var cancelButton = $('input#cancel-import');
+var checkAll = $('div#checkAll');
 var count = 0;
 var counter = $('input#value');
 var transferComplete = false;
@@ -70,6 +72,8 @@ var CsvImportStatusManager = {
 
             if (r.status == 'Complete') {
                 transferComplete = true;
+                cancelButton.fadeIn().removeClass('hidden');
+                checkAll.fadeIn().removeClass('hidden');
             }
         }).error(function (error) {
             // TODO: handle error

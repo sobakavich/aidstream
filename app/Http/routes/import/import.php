@@ -62,5 +62,10 @@ $router->group(
             'as'   => 'activity.check-session-status',
             'uses' => 'ImportController@checkSessionStatus'
         ]);
+
+        $router->post('/import-activity/cancel-import', [
+            'as'   => 'activity.cancel-import',
+            'uses' => 'ImportController@cancel'
+        ]);
     }
 );
