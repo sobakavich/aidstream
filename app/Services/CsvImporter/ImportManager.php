@@ -353,4 +353,54 @@ class ImportManager
     {
         return $this->sessionManager->get('import-status');
     }
+
+    /**
+     * Get the processed data from the server.
+     * @param $filePath
+     * @param $temporaryFileName
+     * @param $view
+     * @return string
+     */
+    protected function getDataFrom($filePath, $temporaryFileName, $view)
+    {
+        $activities = json_decode(file_get_contents($filePath), true);
+
+        file_put_contents($this->getTemporaryFilepath($temporaryFileName), json_encode($activities));
+
+        return view(sprintf('Activity.csvImporter.%s', $view), compact('activities'))->render();
+    }
+
+    /**
+     * Get processed data from the server.
+     * @return array|null
+     */
+    public function getData()
+    {
+        try {
+            list($validFilepath, $invalidFilepath, $response) = [$this->getFilePath(true), $this->getFilePath(false), []];
+
+            if (file_exists($validFilepath)) {
+                $validResponse         = $this->getDataFrom($validFilepath, 'valid-temp.json', 'valid');
+                $response['validData'] = ['render' => $validResponse];
+            }
+
+            if (file_exists($invalidFilepath)) {
+                $invalidResponse         = $this->getDataFrom($invalidFilepath, 'invalid-temp.json', 'invalid');
+                $response['invalidData'] = ['render' => $invalidResponse];
+            }
+
+            return $response;
+        } catch (Exception $exception) {
+            $this->logger->error(
+                sprintf('Error during reading data due to [%s]', $exception->getMessage()),
+                [
+                    'trace'           => $exception->getTraceAsString(),
+                    'user_id'         => $this->userId,
+                    'organization_id' => session('org_id')
+                ]
+            );
+
+            return null;
+        }
+    }
 }

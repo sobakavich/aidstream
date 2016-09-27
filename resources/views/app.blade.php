@@ -175,16 +175,30 @@
 <script>
     $(document).ready(function () {
         var checkStatus = function () {
-            $.ajax({
-                url: '{{ route('activity.check-session-status')}}',
-                method: 'GET'
-            }).success(function (response) {
-                var placeHolder = $('div#import-status-placeholder');
-                if (response.status) {
-                    placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>")
-                    checkStatus();
-                }
-            });
+            setTimeout(function () {
+                $.ajax({
+                    url: '{{ route('activity.check-session-status')}}',
+                    method: 'GET'
+                }).success(function (response) {
+                    var placeHolder = $('div#import-status-placeholder');
+                    console.log(response);
+
+                    if (response.status == null) {
+                        return;
+                    }
+
+                    if (response.status == 'Importing') {
+                        placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>");
+                        checkStatus();
+                    }
+
+                    if (response.status == 'Complete') {
+                        placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>");
+
+                        return;
+                    }
+                });
+            }, 3000);
         };
 
         checkStatus();
