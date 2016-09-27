@@ -67,5 +67,10 @@ $router->group(
             'as'   => 'activity.cancel-import',
             'uses' => 'ImportController@cancel'
         ]);
+
+        $router->get('/import-activity/get-data', [
+            'as'   => 'activity.get-data',
+            'uses' => 'ImportController@getData'
+        ]);
     }
 );
