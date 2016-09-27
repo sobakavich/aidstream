@@ -130,51 +130,6 @@ class ImportController extends Controller
     }
 
     /**
-     * Get the valid Csv data for import.
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getValidData()
-    {
-        $filepath = $this->importManager->getFilePath(true);
-
-        if (file_exists($filepath)) {
-            $activities = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->importManager->getTemporaryFilepath('valid-temp.json');
-
-            file_put_contents($tempPath, json_encode($activities));
-
-            $response = ['render' => view('Activity.csvImporter.valid', compact('activities'))->render()];
-        } else {
-            $response = ['render' => 'No data available.'];
-        }
-
-        return response()->json($response);
-    }
-
-    /**
-     * Get the invalid Csv data.
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getInvalidData()
-    {
-        $filepath = $this->importManager->getFilePath(false);
-
-        if (file_exists($filepath)) {
-            $activities = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->importManager->getTemporaryFilepath('invalid-temp.json');
-
-
-            file_put_contents($tempPath, json_encode($activities));
-
-            $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
-        } else {
-            $response = ['render' => 'No data available.'];
-        }
-
-        return response()->json($response);
-    }
-
-    /**
      * Import validated activities into the database.
      * @param Request $request
      * @return mixed
@@ -328,5 +283,18 @@ class ImportController extends Controller
         $this->importManager->endImport();
 
         return redirect()->route('activity.upload-csv');
+    }
+
+    /**
+     * Get processed data from the server.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getData()
+    {
+        if (!($response = $this->importManager->getData())) {
+            $response = ['render' => 'No data available.'];
+        }
+
+        return response()->json($response);
     }
 }
