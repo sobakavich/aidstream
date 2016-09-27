@@ -180,6 +180,7 @@ class ImportController extends Controller
             $contents = json_decode(file_get_contents($this->importManager->getFilePath(true)), true);
 
             $this->importManager->createActivity($activities, $contents);
+            $this->importManager->endImport();
 
             return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'Activities successfully imported.']]]);
         } else {
@@ -202,9 +203,10 @@ class ImportController extends Controller
      */
     public function checkStatus()
     {
-        if (file_exists($this->importManager->getTemporaryFilepath('status.json'))) {
-            $this->importManager->endImport();
-            return response()->json(json_encode(['status' => 'Complete']));
+        $filePath = $this->importManager->getTemporaryFilepath('status.json');
+
+        if (file_exists($filePath)) {
+            return response()->json(file_get_contents($filePath));
         }
 
         return response()->json(json_encode(['status' => 'Incomplete']));
