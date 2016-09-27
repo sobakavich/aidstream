@@ -202,7 +202,6 @@
                     method: 'GET'
                 }).success(function (response) {
                     var placeHolder = $('div#import-status-placeholder');
-                    console.log(response);
 
                     if (response.status == null) {
                         return;
