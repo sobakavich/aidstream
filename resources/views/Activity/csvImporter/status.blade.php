@@ -4,21 +4,21 @@
 
 @section('content')
     {{--for Sweta--}}
-    <style>
-        input#cancel-import {
-            position: absolute;
-            right: 115px;
-            top: -50px;
-            z-index: 1;
-        }
+    {{--<style>--}}
+        {{--input#cancel-import {--}}
+            {{--position: absolute;--}}
+            {{--right: 115px;--}}
+            {{--top: -50px;--}}
+            {{--z-index: 1;--}}
+        {{--}--}}
 
-        #checkAll {
-            position: absolute;
-            right: 120px;
-            top: 30px;
-            z-index: 1;
-        }
-    </style>
+        {{--#checkAll {--}}
+            {{--position: absolute;--}}
+            {{--right: 120px;--}}
+            {{--top: 30px;--}}
+            {{--z-index: 1;--}}
+        {{--}--}}
+    {{--</style>--}}
     {{--for Sweta--}}
 
     <div class="container main-container">
@@ -35,8 +35,6 @@
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
                             <div class="status-show-block">
-                                <input type="checkbox">
-                                <span></span>
                                 <label>Show</label>
                                 <select class="tab-select">
                                     <option data-select="all">All</option>
@@ -54,10 +52,10 @@
                                     <div class="all-data"></div>
                                 </div>
 
-                                <div role="tabpanel" class="tab-pane active" id="valid">
+                                <div role="tabpanel" class="tab-pane active checkall-wrap" id="valid">
                                     <div id="checkAll" class="hidden">
                                         <label>
-                                            <input type="checkbox" id="check-all" >Check All
+                                            <input type="checkbox" id="check-all" >
                                             <span></span>
                                         </label>
                                     </div>

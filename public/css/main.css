@@ -6481,6 +6481,21 @@ pre.prettyprint {
   height: 30px;
   font-size: 12px; }
 
+.checkall-wrap {
+  position: absolute;
+  left: 0;
+  top: 0; }
+
+#checkAll label {
+  padding-top: 28px;
+  padding-left: 37px;
+  margin-right: 20px; }
+
+#cancel-import {
+  position: absolute;
+  right: 10px;
+  top: 4px; }
+
 @media all and (max-width: 1030px) {
   .activity-status {
     padding: 16px 10px 18px 50px; }
