@@ -36,6 +36,12 @@ var CsvImportStatusManager = {
         CsvImportStatusManager.callAsync('/import-activity/check-status', 'GET').success(function (response) {
             var r = JSON.parse(response);
 
+            if (r.status == 'Error') {
+                cancelButton.fadeIn('slow').removeClass('hidden');
+
+                transferComplete = null;
+            }
+
             if (r.status == 'Complete') {
                 transferComplete = true;
                 cancelButton.fadeIn('slow').removeClass('hidden');
@@ -75,15 +81,9 @@ var CsvImportStatusManager = {
                 }
 
                 CsvImportStatusManager.enableImport(response.validData);
-            } else if (response.invalidData) {
-                if (invalidParentDiv.html() != 'No data available.') {
-                    invalidParentDiv.append(response.invalidData.render);
-                }
-            } else {
-                if (validParentDiv.html() != 'No data available.') {
-                    validParentDiv.append(response.validData.render);
-                }
+            }
 
+            if (response.invalidData) {
                 if (invalidParentDiv.html() != 'No data available.') {
                     invalidParentDiv.append(response.invalidData.render);
                 }
@@ -99,7 +99,7 @@ var CsvImportStatusManager = {
 };
 
 $(document).ready(function () {
-    test();
+    accordionInit();
     clearInvalidButton.hide();
 
     var interval = setInterval(function () {
@@ -112,8 +112,12 @@ $(document).ready(function () {
             CsvImportStatusManager.getRemainingInvalidData();
         }
 
+        if (null == transferComplete) {
+            window.location = '../import-activity/upload-csv-redirect';
+        }
+
         if (transferComplete) {
-            test();
+            accordionInit();
             clearInterval(interval);
         }
     }, 5000);

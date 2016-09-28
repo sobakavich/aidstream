@@ -1,4 +1,4 @@
-var test = function () {
+var accordionInit = function () {
     $(".invalid-data .panel-default .panel-heading").on('click', 'label', function () {
         $(this).children('.data-listing').slideToggle();
     });
