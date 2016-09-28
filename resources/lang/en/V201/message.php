@@ -44,4 +44,5 @@ return [
     'sent'                                    => ':name have been sent',
     'organization_element_removed'            => 'Organisation element has been removed successfully',
     'organization_element_not_removed'        => 'Failed to remove organisation element',
+    'csv_header_mismatch'                     => ':message'
 ];

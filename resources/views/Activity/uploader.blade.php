@@ -25,14 +25,22 @@
                             <div class="create-form">
                                 {!! form($form) !!}
                             </div>
-                            <div class="download-transaction-wrap">
-                                <a href="{{route('download.activity-template')}}"
-                                   class="btn btn-primary btn-form btn-submit">Download Activity Template</a>
-                                <div>
-                                    This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
-                                    For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
-                                </div>
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Download Activity Template
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{route('activity.download-template',['type'=>'basic'])}}">Activity Basics</a></li>
+                                    <li><a href="{{route('activity.download-template',['type'=>'transaction'])}}">Activity with Transactions</a></li>
+                                </ul>
                             </div>
+                            <div>
+                                This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
+                                For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
+                            </div>
+                            {{--<div class="download-transaction-wrap">--}}
+                            {{--<a href="{{route('activity.download-template')}}"--}}
+                            {{--class="btn btn-primary btn-form btn-submit">Download Activity Template</a>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
                 </div>

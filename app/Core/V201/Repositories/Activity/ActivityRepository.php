@@ -294,4 +294,26 @@ class ActivityRepository
 
         return $narratives;
     }
+
+    /**
+     * @param $activityData
+     * @return Activity
+     */
+    public function createActivity($activityData)
+    {
+        return $this->activity->create(
+            [
+                'identifier'                 => $activityData['identifier'],
+                'title'                      => $activityData['title'],
+                'description'                => $activityData['description'],
+                'activity_status'            => $activityData['activity_status'],
+                'activity_date'              => $activityData['activity_date'],
+                'participating_organization' => $activityData['participating_organization'],
+                'recipient_country'          => $activityData['recipient_country'],
+                'recipient_region'           => $activityData['recipient_region'],
+                'sector'                     => $activityData['sector'],
+                'organization_id'            => $activityData['organization_id']
+            ]
+        );
+    }
 }

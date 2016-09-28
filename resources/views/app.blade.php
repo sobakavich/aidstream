@@ -48,7 +48,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{route('activity.create') }}">Add Activity Manually</a></li>
                             {{--<li><a href="{{route('wizard.activity.create') }}">Add Activity using Wizard</a></li>--}}
-                            <li><a href="{{ route('import-activity.index') }}">Upload Activities</a></li>
+                            <li><a href="{{ route('activity.upload-csv') }}">Upload Activities</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -139,6 +139,9 @@
                  </span>
                     @endif
                 </div>
+
+                <div id="import-status-placeholder">
+                </div>
             @endif
         </div>
     </div>
@@ -189,6 +192,39 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/intro.min.js"></script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
 @yield('script')
+{{--<script type="text/javascript" src="{{url('/js/csvImporter/csvImportStatus.js')}}"></script>--}}
+<script>
+    $(document).ready(function () {
+        var checkStatus = function () {
+            setTimeout(function () {
+                $.ajax({
+                    url: '{{ route('activity.check-session-status')}}',
+                    method: 'GET'
+                }).success(function (response) {
+                    var placeHolder = $('div#import-status-placeholder');
+
+                    if (response.status == null) {
+                        return;
+                    }
+
+                    if (response.status == 'Importing') {
+                        placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>");
+                        checkStatus();
+                    }
+
+                    if (response.status == 'Complete') {
+                        placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>");
+
+                        return;
+                    }
+                });
+            }, 3000);
+        };
+
+        checkStatus();
+    });
+</script>
+
 @yield('foot')
 
 </body>
