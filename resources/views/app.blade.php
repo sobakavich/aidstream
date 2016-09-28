@@ -171,7 +171,7 @@
 <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <!-- End Google Analytics -->
 @yield('script')
-{{--<script type="text/javascript" src="{{url('/js/csvImporter/csvImportStatus.js')}}"></script>--}}
+
 <script>
     $(document).ready(function () {
         var checkStatus = function () {
@@ -188,7 +188,6 @@
 
                     if (response.status == 'Importing') {
                         placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>");
-                        checkStatus();
                     }
 
                     if (response.status == 'Complete') {

@@ -72,5 +72,10 @@ $router->group(
             'as'   => 'activity.get-data',
             'uses' => 'ImportController@getData'
         ]);
+
+        $router->get('/import-activity/upload-csv-redirect', [
+            'as'   => 'activity.upload-redirect',
+            'uses' => 'ImportController@uploadRedirect'
+        ]);
     }
 );

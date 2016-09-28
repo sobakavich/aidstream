@@ -95,6 +95,11 @@ class ImportController extends Controller
      */
     public function uploadActivityCsv()
     {
+        if (session()->has('header_mismatch') && (session()->get('header_mismatch') == true)) {
+
+            return redirect()->route('activity.upload-redirect');
+        }
+
         $organization = $this->organizationManager->getOrganization(session('org_id'));
 
         $this->importManager->refreshSessionIfRequired();
@@ -169,6 +174,13 @@ class ImportController extends Controller
      */
     public function checkStatus()
     {
+        if ($this->importManager->caughtExceptions()) {
+            unlink($this->importManager->getTemporaryFilepath('header_mismatch.json'));
+            session()->put(['header_mismatch' => true]);
+
+            return response()->json(json_encode(['status' => 'Error', 'message' => 'The headers in the uploaded Csv file do not match with the provided template.']));
+        }
+
         $filePath = $this->importManager->getTemporaryFilepath('status.json');
 
         if (file_exists($filePath)) {
@@ -300,5 +312,21 @@ class ImportController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    /**
+     * Redirect to upload csv page in case of header mismatch.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function uploadRedirect()
+    {
+        $form     = $this->form->createForm();
+        $mismatch = ['type' => 'warning', 'code' => ['message', ['message' => 'The headers in the uploaded Csv file do not match with the provided template.']]];
+
+        session()->forget('header_mismatch');
+        session()->forget('import-status');
+        session()->forget('filename');
+
+        return view('Activity.uploader', compact('form', 'mismatch'));
     }
 }

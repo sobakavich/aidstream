@@ -129,9 +129,7 @@ class ImportManager
         try {
             $file = new File($this->getStoredCsvPath($filename));
 
-            $csv = $this->excel->load($file)->toArray();
-
-            $this->processor->pushIntoQueue($csv, $filename);
+            $this->processor->pushIntoQueue($file, $filename);
         } catch (Exception $exception) {
             $this->logger->error(
                 $exception->getMessage(),
@@ -268,31 +266,29 @@ class ImportManager
         return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, self::INVALID_CSV_FILE));
     }
 
-    /**
-     * Check if the headers in the uploaded Csv file are as per the provided template.
-     * @param $file
-     * @return bool|string
-     */
-    public function verifyHeaders($file)
-    {
-        try {
-            $csv = $this->excel->load($file)->toArray();
-
-            if ($this->processor->isCorrectCsv($csv)) {
-                return true;
-            }
-        } catch (Exception $exception) {
-            $this->logger->error(
-                $exception->getMessage(),
-                [
-                    'user'  => auth()->user()->getNameAttribute(),
-                    'trace' => $exception->getTraceAsString()
-                ]
-            );
-
-            return $exception->getMessage();
-        }
-    }
+//    /**
+//     * Check if the headers in the uploaded Csv file are as per the provided template.
+//     * @param $csv
+//     * @return bool|string
+//     */
+//    public function verifyHeaders($csv)
+//    {
+//        try {
+//            if ($this->processor->isCorrectCsv($csv)) {
+//                return true;
+//            }
+//        } catch (Exception $exception) {
+//            $this->logger->error(
+//                $exception->getMessage(),
+//                [
+//                    'user'  => auth()->user()->getNameAttribute(),
+//                    'trace' => $exception->getTraceAsString()
+//                ]
+//            );
+//
+//            return $exception->getMessage();
+//        }
+//    }
 
     /**
      * Get the current User's id.
@@ -469,5 +465,23 @@ class ImportManager
         if ($this->sessionManager->get('import-status') == 'Complete') {
             $this->sessionManager->forget('filename');
         }
+    }
+
+    /**
+     * Check if any exceptions have been caught.
+     * @return bool
+     */
+    public function caughtExceptions()
+    {
+        $filepath = $this->getTemporaryFilepath('header_mismatch.json');
+
+        if (file_exists($filepath)) {
+            $contents = json_decode(file_get_contents($filepath), true);
+            if (array_key_exists('mismatch', $contents)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

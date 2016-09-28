@@ -36,6 +36,12 @@ var CsvImportStatusManager = {
         CsvImportStatusManager.callAsync('/import-activity/check-status', 'GET').success(function (response) {
             var r = JSON.parse(response);
 
+            if (r.status == 'Error') {
+                cancelButton.fadeIn('slow').removeClass('hidden');
+
+                transferComplete = null;
+            }
+
             if (r.status == 'Complete') {
                 transferComplete = true;
                 cancelButton.fadeIn('slow').removeClass('hidden');
@@ -104,6 +110,10 @@ $(document).ready(function () {
         } else {
             CsvImportStatusManager.getRemainingValidData();
             CsvImportStatusManager.getRemainingInvalidData();
+        }
+
+        if (null == transferComplete) {
+            window.location = '../import-activity/upload-csv-redirect';
         }
 
         if (transferComplete) {
