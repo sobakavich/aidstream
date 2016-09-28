@@ -141,7 +141,8 @@ $(document).ready(function () {
 
     var interval = setInterval(function () {
         CsvImportStatusManager.isTransferComplete();
-        if (CsvImportStatusManager.ifParentIsEmpty('invalid-data')) {
+
+        if (CsvImportStatusManager.ifParentIsEmpty('invalid-data') && CsvImportStatusManager.ifParentIsEmpty('valid-data')) {
             CsvImportStatusManager.getData();
         } else {
             CsvImportStatusManager.getRemainingValidData();
@@ -153,7 +154,7 @@ $(document).ready(function () {
             CsvImportStatusManager.showClearButton();
             clearInterval(interval);
         }
-    }, 8000);
+    }, 5000);
 
     clearInvalidButton.on('click', function () {
         CsvImportStatusManager.callAsync('/import-activity/clear-invalid-activities', 'GET').success(function (response) {
