@@ -3,29 +3,13 @@
 @section('title', 'Import Status')
 
 @section('content')
-    {{--for Sweta--}}
-    <style>
-        input#cancel-import {
-            position: absolute;
-            right: 115px;
-            top: -50px;
-            z-index: 1;
-        }
-
-        #checkAll {
-            position: absolute;
-            right: 120px;
-            top: 30px;
-            z-index: 1;
-        }
-    </style>
-    {{--for Sweta--}}
 
     <div class="container main-container">
         <div class="row">
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper upload-activity-wrapper">
                 @include('includes.response')
+                <div id="import-status-placeholder" class="status-nolink"></div>
                 <div class="element-panel-heading">
                     <div>
                         Import Activities
@@ -34,12 +18,14 @@
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper status-wrapper">
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
-                            <select class="tab-select">
-                                <option data-select="all">All</option>
-                                <option data-select="valid">Valid</option>
-                                <option data-select="invalid">Invalid</option>
-                            </select>
-
+                            <div class="status-show-block">
+                                <label>Show</label>
+                                <select class="tab-select">
+                                    <option data-select="all">All</option>
+                                    <option data-select="valid">Valid</option>
+                                    <option data-select="invalid">Invalid</option>
+                                </select>
+                            </div>
                             <form action="{{ route('activity.cancel-import') }}" method="POST" id="cancel-import">
                                 {{ csrf_field() }}
                                 <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="Are you sure you want to Cancel Activity Import?" value="Cancel">
@@ -50,10 +36,10 @@
                                     <div class="all-data"></div>
                                 </div>
 
-                                <div role="tabpanel" class="tab-pane active" id="valid">
+                                <div role="tabpanel" class="tab-pane active checkall-wrap" id="valid">
                                     <div id="checkAll" class="hidden">
                                         <label>
-                                            <input type="checkbox" id="check-all" >Check All
+                                            <input type="checkbox" id="check-all" >
                                             <span></span>
                                         </label>
                                     </div>
@@ -80,9 +66,12 @@
         </div>
     </div>
 @stop
-
 @section('script')
     <script src="{{ asset('js/csvImporter/accordion.js') }}"></script>
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>
     <script src="{{ asset('js/csvImporter/selectTabs.js') }}"></script>
+    <script>
+        var checkSessionRoute = '{{ route('activity.check-session-status')}}';
+    </script>
+    <script src=" {{ asset('js/csvImporter/checkSessionStatus.js') }}"></script>
 @stop

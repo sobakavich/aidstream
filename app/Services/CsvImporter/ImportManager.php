@@ -6,6 +6,7 @@ use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Session\SessionManager;
+use Illuminate\Support\Facades\File as FileFacade;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -129,9 +130,7 @@ class ImportManager
         try {
             $file = new File($this->getStoredCsvPath($filename));
 
-            $csv = $this->excel->load($file)->toArray();
-
-            $this->processor->pushIntoQueue($csv, $filename);
+            $this->processor->pushIntoQueue($file, $filename);
         } catch (Exception $exception) {
             $this->logger->error(
                 $exception->getMessage(),
@@ -213,7 +212,7 @@ class ImportManager
             unset($validActivities[$key]);
         }
 
-        json_encode(file_put_contents($this->getFilePath(true), $validActivities));
+        FileFacade::put($this->getFilePath(true), $validActivities);
     }
 
     /**
@@ -241,7 +240,7 @@ class ImportManager
      */
     public function startImport()
     {
-        $this->sessionManager->put(['import-status' => 'Importing']);
+        $this->sessionManager->put(['import-status' => 'Processing']);
 
         return $this;
     }
@@ -252,6 +251,7 @@ class ImportManager
     public function endImport()
     {
         $this->sessionManager->forget('import-status');
+        $this->sessionManager->forget('filename');
     }
 
     /**
@@ -266,32 +266,6 @@ class ImportManager
         }
 
         return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, self::INVALID_CSV_FILE));
-    }
-
-    /**
-     * Check if the headers in the uploaded Csv file are as per the provided template.
-     * @param $file
-     * @return bool|string
-     */
-    public function verifyHeaders($file)
-    {
-        try {
-            $csv = $this->excel->load($file)->toArray();
-
-            if ($this->processor->isCorrectCsv($csv)) {
-                return true;
-            }
-        } catch (Exception $exception) {
-            $this->logger->error(
-                $exception->getMessage(),
-                [
-                    'user'  => auth()->user()->getNameAttribute(),
-                    'trace' => $exception->getTraceAsString()
-                ]
-            );
-
-            return $exception->getMessage();
-        }
     }
 
     /**
@@ -342,9 +316,13 @@ class ImportManager
      * @param $filename
      * @return string
      */
-    public function getTemporaryFilepath($filename)
+    public function getTemporaryFilepath($filename = null)
     {
-        return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, $filename));
+        if ($filename) {
+            return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, $filename));
+        }
+
+        return storage_path(sprintf('%s/%s/%s/', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
     }
 
     /**
@@ -361,7 +339,11 @@ class ImportManager
      */
     public function getSessionStatus()
     {
-        return $this->sessionManager->get('import-status');
+        if ($this->sessionManager->has('import-status')) {
+            return $this->sessionManager->get('import-status');
+        }
+
+        return null;
     }
 
     /**
@@ -374,8 +356,11 @@ class ImportManager
     protected function getDataFrom($filePath, $temporaryFileName, $view)
     {
         $activities = json_decode(file_get_contents($filePath), true);
+        $path = $this->getTemporaryFilepath($temporaryFileName);
 
-        file_put_contents($this->getTemporaryFilepath($temporaryFileName), json_encode($activities));
+        $this->fixStagingPermission($this->getTemporaryFilepath());
+
+        FileFacade::put($path, json_encode($activities));
 
         return view(sprintf('Activity.csvImporter.%s', $view), compact('activities'))->render();
     }
@@ -424,6 +409,8 @@ class ImportManager
         try {
             $file->move($this->getStoredCsvPath(), $file->getClientOriginalName());
 
+//            $this->fixStagingPermission($this->getStoredCsvPath());
+
             return true;
         } catch (Exception $exception) {
             $this->logger->error(
@@ -469,5 +456,71 @@ class ImportManager
         if ($this->sessionManager->get('import-status') == 'Complete') {
             $this->sessionManager->forget('filename');
         }
+    }
+
+    /**
+     * Check if any exceptions have been caught.
+     * @return bool
+     */
+    public function caughtExceptions()
+    {
+        $filepath = $this->getTemporaryFilepath('header_mismatch.json');
+
+        if (file_exists($filepath)) {
+            $contents = json_decode(file_get_contents($filepath), true);
+            if (array_key_exists('mismatch', $contents)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Record if the headers have been mismatched during processing.
+     */
+    public function reportHeaderMismatch()
+    {
+        $this->sessionManager->put(['header_mismatch' => true]);
+    }
+
+    /**
+     * Clear keys from the current session.
+     * @param array $keys
+     */
+    public function clearSession(array $keys)
+    {
+        foreach ($keys as $key) {
+            $this->sessionManager->forget($key);
+        }
+    }
+
+    /**
+     * Check if header mismatch has been recorded.
+     * @return bool
+     */
+    public function headersHadBeenMismatched()
+    {
+        return ($this->sessionManager->has('header_mismatch') && ($this->sessionManager->get('header_mismatch') == true));
+    }
+
+    /**
+     * Fix file permission while on staging environment
+     * @param $path
+     */
+    protected function fixStagingPermission($path)
+    {
+        // TODO: Remove this.
+        shell_exec(sprintf('chmod 777 -R %s', $path));
+    }
+
+    /**
+     * Delete a temporary file with the provided filename.
+     * @param $filename
+     */
+    public function deleteFile($filename)
+    {
+//        $this->fixStagingPermission(storage_path(sprintf('%s/%s/%s/', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId)));
+        unlink($this->getTemporaryFilepath($filename));
     }
 }
