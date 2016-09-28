@@ -34,12 +34,16 @@
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper status-wrapper">
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
-                            <select class="tab-select">
-                                <option data-select="all">All</option>
-                                <option data-select="valid">Valid</option>
-                                <option data-select="invalid">Invalid</option>
-                            </select>
-
+                            <div class="status-show-block">
+                                <input type="checkbox">
+                                <span></span>
+                                <label>Show</label>
+                                <select class="tab-select">
+                                    <option data-select="all">All</option>
+                                    <option data-select="valid">Valid</option>
+                                    <option data-select="invalid">Invalid</option>
+                                </select>
+                            </div>
                             <form action="{{ route('activity.cancel-import') }}" method="POST" id="cancel-import">
                                 {{ csrf_field() }}
                                 <input type="button" class="btn_confirm hidden" id="cancel-import" data-title="Confirmation" data-message="Are you sure you want to Cancel Activity Import?" value="Cancel">
