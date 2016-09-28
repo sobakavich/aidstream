@@ -7,11 +7,10 @@ interface ProcessorInterface
 {
     /**
      * Push a CSV file's data for processing into Queue.
-     * @param $csv
+     * @param $file
      * @param $filename
-     * @return
      */
-    public function pushIntoQueue($csv, $filename);
+    public function pushIntoQueue($file, $filename);
 
     /**
      * Check if the headers are correct according to the provided template.

@@ -29,6 +29,16 @@ class ActivityRow extends Row
     const TRANSACTION_HEADER_COUNT = 40;
 
     /**
+     * Number of headers for the Activity Csv with Transactions and Other Fields.
+     */
+    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 50;
+
+    /**
+     * Number of headers for the Activity Csv with Other Fields.
+     */
+    const ACTIVITY_OTHERS_HEADER_COUNT = 32;
+
+    /**
      * Directory where the validated Csv data is written before import.
      */
     const CSV_DATA_STORAGE_PATH = 'csvImporter/tmp';
@@ -95,6 +105,10 @@ class ActivityRow extends Row
     ];
 
     /**
+     * @var array
+     */
+    protected $otherElements = ['activityScope', 'budget', 'policyMarker'];
+    /**
      * All Elements for an Activity Row.
      * @var
      */
@@ -151,6 +165,21 @@ class ActivityRow extends Row
     protected $transaction = [];
 
     /**
+     * @var
+     */
+    protected $budget;
+
+    /**
+     * @var
+     */
+    protected $activityScope;
+
+    /**
+     * @var
+     */
+    protected $policyMarker;
+
+    /**
      * @var array
      */
     protected $validElements = [];
@@ -187,7 +216,6 @@ class ActivityRow extends Row
     public function init()
     {
         $method = $this->getMethodNameByType();
-
         if (method_exists($this, $method)) {
             $this->$method();
         }
@@ -207,6 +235,22 @@ class ActivityRow extends Row
     public function transaction()
     {
         $this->makeActivityElements()->makeTransactionElements();
+    }
+
+    /**
+     * Initiate the ActivityRow elements with Activity and Other Fields.
+     */
+    public function otherFields()
+    {
+        $this->makeActivityElements()->makeOtherFieldsElements();
+    }
+
+    /**
+     * Initiate the ActivityRow elements with Activity, Transaction and Other Fields.
+     */
+    public function otherFieldsWithTransaction()
+    {
+        $this->makeActivityElements()->makeTransactionElements()->makeOtherFieldsElements();
     }
 
     /**
@@ -252,6 +296,14 @@ class ActivityRow extends Row
             return 'transaction';
         }
 
+        if (count($this->fields()) == self::ACTIVITY_OTHERS_HEADER_COUNT) {
+            return 'otherFields';
+        }
+
+        if (count($this->fields()) == self::ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT) {
+            return 'otherFieldsWithTransaction';
+        }
+
         return null;
     }
 
@@ -286,6 +338,21 @@ class ActivityRow extends Row
         }
 
         $this->elements[] = $this->transactionElement();
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function makeOtherFieldsElements()
+    {
+        foreach ($this->otherElements() as $element) {
+            if (class_exists($namespace = $this->getNamespace($element, self::BASE_NAMESPACE))) {
+                $this->$element   = $this->make($namespace, $this->fields());
+                $this->elements[] = $element;
+            }
+        }
 
         return $this;
     }
@@ -345,6 +412,15 @@ class ActivityRow extends Row
     }
 
     /**
+     * Get the other Elements.
+     * @return array
+     */
+    protected function otherElements()
+    {
+        return $this->otherElements;
+    }
+
+    /**
      * Validate all elements contained in the ActivityRow.
      */
     protected function validateElements()
@@ -392,8 +468,9 @@ class ActivityRow extends Row
 
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
-            shell_exec(sprintf('chmod 777 -R %s', $path));
         }
+
+        shell_exec(sprintf('chmod 777 -R %s', $path));
 
         return $this;
     }

@@ -312,7 +312,10 @@ class ActivityRepository
                 'recipient_country'          => $activityData['recipient_country'],
                 'recipient_region'           => $activityData['recipient_region'],
                 'sector'                     => $activityData['sector'],
-                'organization_id'            => $activityData['organization_id']
+                'organization_id'            => $activityData['organization_id'],
+                'policy_marker'              => (array_key_exists('policy_marker', $activityData) ? $activityData['policy_marker'] : null),
+                'budget'                     => (array_key_exists('budget', $activityData) ? $activityData['budget'] : null),
+                'activity_scope'             => (array_key_exists('activity_scope', $activityData) ? $activityData['activity_scope'] : null)
             ]
         );
     }
