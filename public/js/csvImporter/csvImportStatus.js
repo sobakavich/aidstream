@@ -27,44 +27,10 @@ var CsvImportStatusManager = {
             type: methodType
         });
     },
-    getValidData: function () {
-        CsvImportStatusManager.callAsync('get-valid-data', 'GET').success(function (validData) {
-            var parentDiv = CsvImportStatusManager.getParentDiv('valid-data');
-
-            if (validParentDiv.html() != 'No data available.') {
-                parentDiv.append(validData.render);
-            }
-
-            CsvImportStatusManager.enableImport(validData);
-        }).error(function (error) {
-            // TODO: handle error
-
-            var parentDiv = CsvImportStatusManager.getParentDiv('valid-data');
-
-            parentDiv.append('Looks like something went wrong.');
-        });
-    },
-    getInvalidData: function () {
-        CsvImportStatusManager.callAsync('get-invalid-data', 'GET').success(function (invalidData) {
-            var parentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
-
-            if (invalidParentDiv.html() != 'No data available.') {
-                parentDiv.append(invalidData.render);
-            }
-        }).error(function (error) {
-            // TODO: handle error
-            var parentDiv = CsvImportStatusManager.getParentDiv('invalid-data');
-
-            parentDiv.append('Looks like something went wrong.');
-        });
-    },
     ifParentIsEmpty: function (className) {
         var parentDiv = CsvImportStatusManager.getParentDiv(className);
 
         return parentDiv.is(':empty');
-    },
-    getCurrentData: function (className) {
-        return $('div.' + className);
     },
     isTransferComplete: function () {
         CsvImportStatusManager.callAsync('/import-activity/check-status', 'GET').success(function (response) {
@@ -97,9 +63,6 @@ var CsvImportStatusManager = {
             }
 
         });
-    },
-    showClearButton: function () {
-        clearInvalidButton.show();
     },
     getData: function () {
         CsvImportStatusManager.callAsync('get-data', 'GET').success(function (response) {
@@ -151,18 +114,7 @@ $(document).ready(function () {
 
         if (transferComplete) {
             test();
-            CsvImportStatusManager.showClearButton();
             clearInterval(interval);
         }
     }, 5000);
-
-    clearInvalidButton.on('click', function () {
-        CsvImportStatusManager.callAsync('/import-activity/clear-invalid-activities', 'GET').success(function (response) {
-            if (!CsvImportStatusManager.ifParentIsEmpty('invalid-data')) {
-                if (response == 'cleared') {
-                    CsvImportStatusManager.getCurrentData('invalid-data').empty();
-                }
-            }
-        });
-    });
 });
