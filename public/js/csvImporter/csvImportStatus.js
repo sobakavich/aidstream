@@ -75,15 +75,9 @@ var CsvImportStatusManager = {
                 }
 
                 CsvImportStatusManager.enableImport(response.validData);
-            } else if (response.invalidData) {
-                if (invalidParentDiv.html() != 'No data available.') {
-                    invalidParentDiv.append(response.invalidData.render);
-                }
-            } else {
-                if (validParentDiv.html() != 'No data available.') {
-                    validParentDiv.append(response.validData.render);
-                }
+            }
 
+            if (response.invalidData) {
                 if (invalidParentDiv.html() != 'No data available.') {
                     invalidParentDiv.append(response.invalidData.render);
                 }
@@ -99,7 +93,7 @@ var CsvImportStatusManager = {
 };
 
 $(document).ready(function () {
-    test();
+    accordionInit();
     clearInvalidButton.hide();
 
     var interval = setInterval(function () {
@@ -113,7 +107,7 @@ $(document).ready(function () {
         }
 
         if (transferComplete) {
-            test();
+            accordionInit();
             clearInterval(interval);
         }
     }, 5000);
