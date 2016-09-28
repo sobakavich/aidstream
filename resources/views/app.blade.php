@@ -138,9 +138,6 @@
                  </span>
                     @endif
                 </div>
-
-                <div id="import-status-placeholder">
-                </div>
             @endif
         </div>
     </div>
@@ -192,38 +189,6 @@
 <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
 
 @yield('script')
-{{--<script type="text/javascript" src="{{url('/js/csvImporter/csvImportStatus.js')}}"></script>--}}
-<script>
-    $(document).ready(function () {
-        var checkStatus = function () {
-            setTimeout(function () {
-                $.ajax({
-                    url: '{{ route('activity.check-session-status')}}',
-                    method: 'GET'
-                }).success(function (response) {
-                    var placeHolder = $('div#import-status-placeholder');
-
-                    if (response.status == null) {
-                        return;
-                    }
-
-                    if (response.status == 'Importing') {
-                        placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>");
-                        checkStatus();
-                    }
-
-                    if (response.status == 'Complete') {
-                        placeHolder.empty().append("<span><a href='/import-activity/import-status'>" + response.status + "</a></span>");
-
-                        return;
-                    }
-                });
-            }, 3000);
-        };
-
-        checkStatus();
-    });
-</script>
 
 @yield('foot')
 
