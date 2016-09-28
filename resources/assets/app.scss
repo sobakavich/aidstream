@@ -2330,12 +2330,16 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .download-transaction-wrap {
   padding: 0 36px;
   .btn {
-    margin-bottom: 20px;
     display: inline-block;
     vertical-align: middle;
     float: none;
     font-size: 13px;
     width: 260px;
+    height: 40px;
+    .caret {
+      margin-left: 4px;
+      color: #fff;
+    }
   }
   > div {
     width: calc(100% - 370px);
@@ -2343,9 +2347,17 @@ form > .add_to_collection[data-collection="legacy_data"] {
     color: #aaa;
     font-weight: normal;
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
     margin-left: 40px;
     line-height: 18px;
+  }
+}
+
+.download-transaction-wrap > .dropdown {
+  width: auto;
+  margin: 0;
+  .dropdown-menu {
+    width: 260px;
   }
 }
 
@@ -2935,6 +2947,7 @@ div[class*="panel-level-"] .panel > .panel-body {
 
 .element-upload-wrapper {
   width: 100%;
+  padding-left: 0;
 }
 
 #document_list {
@@ -4069,7 +4082,7 @@ pre.prettyprint {
     }
     label {
       padding: 14px 32px;
-      margin: 0!important;
+      margin: 0 !important;
       &:hover {
         background: #fafafa;
       }
@@ -4137,7 +4150,7 @@ pre.prettyprint {
   }
 }
 
-.status-wrapper .invalid-data h3 input[type=checkbox]+span:before {
+.status-wrapper .invalid-data h3 input[type=checkbox] + span:before {
   background: #eee;
 }
 
@@ -4163,17 +4176,17 @@ pre.prettyprint {
 .status-show-block {
   background: #e5e5e5;
   padding: 6px 37px;
-  >span {
+  > span {
     vertical-align: top;
     &:before {
-      top: 12px!important;
+      top: 12px !important;
     }
   }
   label {
     display: inline-block;
     font: 12px $font_1;
     color: $color_gravel_approx;
-    padding: 10px 0 0 10px;
+    padding: 10px 0 0 20px;
     vertical-align: top;
   }
   .nav-tabs {
@@ -4187,31 +4200,50 @@ pre.prettyprint {
 
 .tab-select {
   border: 1px solid #ccc;
-  border-radius: 0!important;
+  border-radius: 0 !important;
   width: 98px;
-  background: #fff!important;
+  background: #fff !important;
   box-shadow: none;
   display: inline-block;
   height: 30px;
   font-size: 12px;
+  margin: 2px 0 0;
+  position: relative;
+  z-index: 1;
 }
 
 .checkall-wrap {
   position: absolute;
   left: 0;
   top: 0;
+  form {
+    padding: 20px 36px;
+  }
 }
 
-#checkAll label {
-  padding-top: 28px;
-  padding-left: 37px;
-  margin-right: 20px;
+.valid-data {
+  color: #777;
 }
 
-#cancel-import {
-  position: absolute;
-  right: 10px;
-  top: 4px;
+#checkAll {
+  width: 56px;
+  label {
+    padding-top: 14px;
+    padding-left: 37px;
+    margin-right: 20px;
+  }
+}
+
+#cancel-import input[type="button"] {
+  @include position(absolute, 8px 10px auto auto);
+  z-index: 10000;
+  padding: 8px 16px;
+}
+
+#import-status-placeholder {
+  float: left;
+  margin: 6px 20px 0 0;
+  font-size: 12px;
 }
 
 @media all and (max-width: 1030px) {
@@ -5398,5 +5430,5 @@ pre.prettyprint {
   .activity-element-wrapper .activity-element-info em {
     font-size: 11px;
   }
-
 }
+

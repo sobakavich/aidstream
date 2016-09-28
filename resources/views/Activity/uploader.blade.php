@@ -25,17 +25,19 @@
                             <div class="create-form">
                                 {!! form($form) !!}
                             </div>
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Download Activity Template
-                                    <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{route('activity.download-template',['type'=>'basic'])}}">Activity Basics</a></li>
-                                    <li><a href="{{route('activity.download-template',['type'=>'transaction'])}}">Activity with Transactions</a></li>
-                                </ul>
-                            </div>
-                            <div>
-                                This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
-                                For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
+                            <div class="download-transaction-wrap">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Download Activity Template
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{route('activity.download-template',['type'=>'basic'])}}">Activity Basics</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'transaction'])}}">Activity with Transactions</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    This template contains few basic elements that you have to fill to import into AidStream. Please make sure that you follow the structure and format of the template.
+                                    For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
+                                </div>
                             </div>
                             {{--<div class="download-transaction-wrap">--}}
                             {{--<a href="{{route('activity.download-template')}}"--}}

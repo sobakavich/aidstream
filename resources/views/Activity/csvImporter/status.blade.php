@@ -3,23 +3,6 @@
 @section('title', 'Import Status')
 
 @section('content')
-    {{--for Sweta--}}
-    {{--<style>--}}
-        {{--input#cancel-import {--}}
-            {{--position: absolute;--}}
-            {{--right: 115px;--}}
-            {{--top: -50px;--}}
-            {{--z-index: 1;--}}
-        {{--}--}}
-
-        {{--#checkAll {--}}
-            {{--position: absolute;--}}
-            {{--right: 120px;--}}
-            {{--top: 30px;--}}
-            {{--z-index: 1;--}}
-        {{--}--}}
-    {{--</style>--}}
-    {{--for Sweta--}}
 
     <div class="container main-container">
         <div class="row">

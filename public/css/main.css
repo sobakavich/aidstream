@@ -4848,12 +4848,15 @@ form > .add_to_collection[data-collection="legacy_data"] {
 .download-transaction-wrap {
   padding: 0 36px; }
   .download-transaction-wrap .btn {
-    margin-bottom: 20px;
     display: inline-block;
     vertical-align: middle;
     float: none;
     font-size: 13px;
-    width: 260px; }
+    width: 260px;
+    height: 40px; }
+    .download-transaction-wrap .btn .caret {
+      margin-left: 4px;
+      color: #fff; }
   .download-transaction-wrap > div {
     width: -webkit-calc(100% - 370px);
     width: -moz-calc(100% - 370px);
@@ -4862,9 +4865,15 @@ form > .add_to_collection[data-collection="legacy_data"] {
     color: #aaa;
     font-weight: normal;
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
     margin-left: 40px;
     line-height: 18px; }
+
+.download-transaction-wrap > .dropdown {
+  width: auto;
+  margin: 0; }
+  .download-transaction-wrap > .dropdown .dropdown-menu {
+    width: 260px; }
 
 .change-activity-form {
   border: 0; }
@@ -5366,7 +5375,8 @@ div[class*="panel-level-"] .panel > .panel-body {
   margin-top: 30px; }
 
 .element-upload-wrapper {
-  width: 100%; }
+  width: 100%;
+  padding-left: 0; }
 
 #document_list thead {
   border-bottom: 1px solid #c0c0c0; }
@@ -6460,7 +6470,7 @@ pre.prettyprint {
     display: inline-block;
     font: 12px Open-Sans-Bold;
     color: #484848;
-    padding: 10px 0 0 10px;
+    padding: 10px 0 0 20px;
     vertical-align: top; }
   .status-show-block .nav-tabs {
     width: 100px;
@@ -6479,22 +6489,41 @@ pre.prettyprint {
           box-shadow: none;
   display: inline-block;
   height: 30px;
-  font-size: 12px; }
+  font-size: 12px;
+  margin: 2px 0 0;
+  position: relative;
+  z-index: 1; }
 
 .checkall-wrap {
   position: absolute;
   left: 0;
   top: 0; }
+  .checkall-wrap form {
+    padding: 20px 36px; }
 
-#checkAll label {
-  padding-top: 28px;
-  padding-left: 37px;
-  margin-right: 20px; }
+.valid-data {
+  color: #777; }
 
-#cancel-import {
+#checkAll {
+  width: 56px; }
+  #checkAll label {
+    padding-top: 14px;
+    padding-left: 37px;
+    margin-right: 20px; }
+
+#cancel-import input[type="button"] {
   position: absolute;
+  top: 8px;
   right: 10px;
-  top: 4px; }
+  bottom: auto;
+  left: auto;
+  z-index: 10000;
+  padding: 8px 16px; }
+
+#import-status-placeholder {
+  float: left;
+  margin: 6px 20px 0 0;
+  font-size: 12px; }
 
 @media all and (max-width: 1030px) {
   .activity-status {
