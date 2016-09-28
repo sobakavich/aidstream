@@ -30,9 +30,6 @@
                     <div>
                         Import Activities
                     </div>
-                    <div>
-
-                    </div>
                 </div>
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper status-wrapper">
                     <div class="panel panel-default panel-upload">
@@ -47,6 +44,7 @@
                                     <div id="checkAll" class="hidden">
                                         <label>
                                             <input type="checkbox" id="check-all" >Check All
+                                            <span></span>
                                         </label>
                                     </div>
                                     <form action="{{ route('activity.import-validated-activities') }}" method="POST">
@@ -66,7 +64,6 @@
                                         <a href="javascript:void(0)" id="clear-invalid">Clear all</a>
                                     </span>
                                     <div class="invalid-data"></div>
-
                                 </div>
                             </div>
                         </div>
@@ -90,10 +87,11 @@
             });
         };
 
+
         $('#check-all').on('change', function () {
             $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
         });
-
     </script>
+
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>
 @stop

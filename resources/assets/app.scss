@@ -4048,9 +4048,6 @@ pre.prettyprint {
 .status-wrapper {
   padding: 0;
   margin-bottom: 100px;
-  .nav-tabs {
-    margin: 20px;
-  }
   .panel-heading {
     border-bottom: 1px solid rgba($color_gravel_approx, 0.2);
     border-radius: 0;
@@ -4067,6 +4064,7 @@ pre.prettyprint {
       .panel-title {
         font: 14px $font_1;
         width: 100%;
+        padding-left: 10px;
       }
     }
     label {
@@ -4103,6 +4101,88 @@ pre.prettyprint {
   right: 20px;
   top: -50px;
   z-index: 1;
+}
+
+.status-wrapper {
+  input[type="checkbox"] {
+    position: absolute;
+    left: -9999px;
+    & + span {
+      position: relative;
+      padding-left: 20px;
+      cursor: pointer;
+      font-size: initial;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 4px;
+        width: 14px;
+        height: 14px;
+        background: $color_romance_approx;
+        border-radius: 2px;
+        border: 2px solid #aaa;
+      }
+      &:after {
+        content: '✔';
+        position: absolute;
+        top: 6px;
+        left: 2px;
+        font-size: 10px;
+        line-height: 0.8;
+        color: #fff;
+        transition: all .2s;
+      }
+    }
+  }
+}
+
+.status-wrapper .invalid-data h3 input[type=checkbox]+span:before {
+  background: #eee;
+}
+
+.status-wrapper {
+  [type="checkbox"]:not(:checked) + span:after {
+    opacity: 0;
+    transform: scale(0);
+  }
+  [type="checkbox"]:checked + span:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  [readonly="readonly"] + span:before {
+    background: #d8d8d8 !important;
+    border: 1px solid #d8d8d8 !important;
+  }
+  [type="checkbox"]:checked + span:before {
+    background: $color_dodger_blue_approx;
+    border: 1px solid $color_dodger_blue_approx;
+  }
+}
+
+.status-show-block {
+  background: #e5e5e5;
+  padding: 6px 37px;
+  >span {
+    vertical-align: top;
+    &:before {
+      top: 12px!important;
+    }
+  }
+  label {
+    display: inline-block;
+    font: 12px $font_1;
+    color: $color_gravel_approx;
+    padding: 10px 0 0 10px;
+    vertical-align: top;
+  }
+  .nav-tabs {
+    width: 100px;
+    padding: 7px 10px;
+    background: $color_white;
+    border: 1px solid #ccc;
+    display: inline-block;
+  }
 }
 
 @media all and (max-width: 1030px) {
