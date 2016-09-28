@@ -46,11 +46,13 @@ class Processor implements ProcessorInterface
 
     /**
      * Push a CSV file's data for processing into Queue.
-     * @param $csv
+     * @param $file
      * @param $filename
      */
-    public function pushIntoQueue($csv, $filename)
+    public function pushIntoQueue($file, $filename)
     {
+        $csv = $this->csvReader->load($file)->toArray();
+
         $this->dispatch(
             new ImportActivity(new CsvProcessor($csv), $filename)
         );

@@ -1,6 +1,8 @@
 <?php namespace App\Services\CsvImporter;
 
+use App\Services\CsvImporter\Queue\Exceptions\HeaderMismatchException;
 use Exception;
+use Maatwebsite\Excel\Excel;
 
 /**
  * Class CsvProcessor
@@ -29,6 +31,27 @@ class CsvProcessor
     protected $csvIdentifier = 'activity_identifier';
 
     /**
+     * Total no. of header present in basic csv.
+     */
+    const BASIC_CSV_HEADERS_COUNT = 22;
+
+    /**
+     * Total no. of header present in basic with transaction csv.
+     */
+    const TRANSACTION_CSV_HEADERS_COUNT = 40;
+
+    /**
+     * Number of headers for the Activity Csv with Transactions and Other Fields.
+     */
+    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 50;
+
+    /**
+     * Number of headers for the Activity Csv with Other Fields.
+     */
+    const ACTIVITY_OTHERS_HEADER_COUNT = 32;
+
+
+    /**
      * CsvProcessor constructor.
      * @param $csv
      */
@@ -44,15 +67,37 @@ class CsvProcessor
      */
     public function handle($organizationId, $userId)
     {
-        $this->groupValues($this->csv);
-
         try {
-            $this->make('App\Services\CsvImporter\Entities\Activity\Activity', ['organization_id' => $organizationId, 'user_id' => $userId]);
+            if ($this->isCorrectCsv()) {
+                $this->groupValues();
 
-            $this->model->process();
+                $this->make('App\Services\CsvImporter\Entities\Activity\Activity', ['organization_id' => $organizationId, 'user_id' => $userId]);
+
+                $this->model->process();
+            } else {
+                $filepath = storage_path('csvImporter/tmp/' . $organizationId . '/' . $userId);
+                $filename = 'header_mismatch.json';
+
+                if (!file_exists($filepath)) {
+                    mkdir($filepath, 0777, true);
+                }
+
+                file_put_contents($filepath . '/'. $filename, json_encode(['mismatch' => true]));
+//                $this->fixStagingPermission($filepath . '/'. $filename);
+            }
         } catch (Exception $exception) {
             dd($exception->getMessage());
         }
+    }
+
+    /**
+     * Fix file permission while on staging environment
+     * @param $path
+     */
+    protected function fixStagingPermission($path)
+    {
+        // TODO: Remove this.
+        shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 
     /**
@@ -73,13 +118,12 @@ class CsvProcessor
 
     /**
      * Group rows into single Activities.
-     * @param $csv
      */
-    protected function groupValues($csv)
+    protected function groupValues()
     {
         $index = - 1;
 
-        foreach ($csv as $row) {
+        foreach ($this->csv as $row) {
             if (!$this->isSameEntity($row)) {
                 $index ++;
             }
@@ -119,6 +163,82 @@ class CsvProcessor
     protected function isSameEntity($row)
     {
         if (is_null($row[$this->csvIdentifier]) || $row[$this->csvIdentifier] == '') {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the headers are correct according to the provided template.
+     * @return bool
+     * @throws HeaderMismatchException
+     */
+    protected function isCorrectCsv()
+    {
+        if (!$this->csv) {
+            return false;
+        }
+
+        $csvHeaders = array_keys($this->csv[0]);
+        if (count($csvHeaders) == self::BASIC_CSV_HEADERS_COUNT) {
+            $templateHeaders = $this->loadCsv('V201', 'basic_headers');
+            $templateHeaders = array_keys($templateHeaders[0]);
+            $diffHeaders     = array_diff($csvHeaders, $templateHeaders);
+
+            return $this->isSameCsvHeader($diffHeaders);
+        }
+
+        if (count($csvHeaders) == self::TRANSACTION_CSV_HEADERS_COUNT) {
+            $templateHeaders = $this->loadCsv('V201', 'transaction_headers');
+            $templateHeaders = array_keys($templateHeaders[0]);
+            $diffHeaders     = array_diff($csvHeaders, $templateHeaders);
+
+            return $this->isSameCsvHeader($diffHeaders);
+        }
+
+        if (count($csvHeaders) == self::ACTIVITY_OTHERS_HEADER_COUNT) {
+            $templateHeaders = $this->loadCsv('V201', 'other_headers');
+            $templateHeaders = array_keys($templateHeaders[0]);
+            $diffHeaders     = array_diff($csvHeaders, $templateHeaders);
+
+            return $this->isSameCsvHeader($diffHeaders);
+        }
+
+        if (count($csvHeaders) == self::ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT) {
+            $templateHeaders = $this->loadCsv('V201', 'other_transaction_headers');
+            $templateHeaders = array_keys($templateHeaders[0]);
+            $diffHeaders     = array_diff($csvHeaders, $templateHeaders);
+
+            return $this->isSameCsvHeader($diffHeaders);
+        }
+
+        return false;
+    }
+
+    /**
+     * Load Csv template
+     * @param $version
+     * @param $filename
+     * @return array
+     */
+    protected function loadCsv($version, $filename)
+    {
+        $excel = app()->make(Excel::class);
+
+        $file = $excel->load(app_path(sprintf('Services/CsvImporter/Templates/Activity/%s/%s.csv', $version, $filename)));
+
+        return $file->toArray();
+    }
+
+    /**
+     * Check if the difference of the csv headers is empty.
+     * @param array $diffHeaders
+     * @return bool
+     */
+    protected function isSameCsvHeader(array $diffHeaders)
+    {
+        if (empty($diffHeaders)) {
             return true;
         }
 

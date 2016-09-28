@@ -1,5 +1,6 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Factory;
 
+use Carbon\Carbon;
 use Illuminate\Validation\Factory;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -273,6 +274,61 @@ class Validation extends Factory
                 }
 
                 return false;
+            }
+        );
+
+        $this->extend(
+            'start_before_end_date',
+            function ($attribute, $values, $parameters, $validator) {
+                if (count($values) > 1) {
+                    return true;
+                }
+                foreach ($values as $value) {
+                    $periodStart = strtotime(getVal($value, ['period_start', 0, 'date']));
+                    $periodEnd   = strtotime(getVal($value, ['period_end', 0, 'date']));
+
+
+                    if ($periodStart == false || $periodEnd == false) {
+                        return true;
+                    }
+
+                    if ($periodStart <= $periodEnd) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+        );
+
+        $this->extend(
+            'diff_one_year',
+            function ($attribute, $values, $parameters, $validator) {
+                if (count($values) > 1) {
+                    return true;
+                }
+
+                foreach ($values as $value) {
+                    $periodStart       = getVal($value, ['period_start', 0, 'date']);
+                    $periodEnd         = getVal($value, ['period_end', 0, 'date']);
+                    $isPeriodStartDate = strtotime($periodStart);
+                    $isPeriodEndDate   = strtotime($periodEnd);
+
+                    if ($isPeriodStartDate != false && $isPeriodEndDate != false) {
+                        $periodStart = Carbon::parse($periodStart);
+                        $periodEnd   = Carbon::parse($periodEnd);
+
+                        $diff = $periodStart->diff($periodEnd)->days;
+
+                        if ($diff <= 365) {
+                            return true;
+                        }
+
+                        return false;
+                    }
+
+                    return true;
+                }
             }
         );
     }
