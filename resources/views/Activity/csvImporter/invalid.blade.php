@@ -6,6 +6,7 @@
                     <span class="panel-content-heading">
                         <h3>
                             <input type="checkbox" disabled="disabled" value="{{ $index }}"/>
+                            <span></span>
                         <span class="panel-title">
                             {{ getVal($activity, ['data', 'identifier', 'activity_identifier'], '') }}
                             - {{ getVal($activity, ['data', 'title', 0, 'narrative']) }}
