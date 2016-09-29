@@ -267,30 +267,6 @@ class ImportManager
         return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, self::INVALID_CSV_FILE));
     }
 
-//    /**
-//     * Check if the headers in the uploaded Csv file are as per the provided template.
-//     * @param $csv
-//     * @return bool|string
-//     */
-//    public function verifyHeaders($csv)
-//    {
-//        try {
-//            if ($this->processor->isCorrectCsv($csv)) {
-//                return true;
-//            }
-//        } catch (Exception $exception) {
-//            $this->logger->error(
-//                $exception->getMessage(),
-//                [
-//                    'user'  => auth()->user()->getNameAttribute(),
-//                    'trace' => $exception->getTraceAsString()
-//                ]
-//            );
-//
-//            return $exception->getMessage();
-//        }
-//    }
-
     /**
      * Get the current User's id.
      * @return mixed
@@ -375,8 +351,11 @@ class ImportManager
     protected function getDataFrom($filePath, $temporaryFileName, $view)
     {
         $activities = json_decode(file_get_contents($filePath), true);
+        $path = $this->getTemporaryFilepath($temporaryFileName);
 
-        file_put_contents($this->getTemporaryFilepath($temporaryFileName), json_encode($activities));
+        $this->fixStagingPermission($path);
+
+        file_put_contents($path, json_encode($activities));
 
         return view(sprintf('Activity.csvImporter.%s', $view), compact('activities'))->render();
     }
@@ -424,6 +403,8 @@ class ImportManager
     {
         try {
             $file->move($this->getStoredCsvPath(), $file->getClientOriginalName());
+
+            $this->fixStagingPermission($this->getStoredCsvPath());
 
             return true;
         } catch (Exception $exception) {
@@ -488,5 +469,43 @@ class ImportManager
         }
 
         return false;
+    }
+
+    /**
+     * Record if the headers have been mismatched during processing.
+     */
+    public function reportHeaderMismatch()
+    {
+        $this->sessionManager->put(['header_mismatch' => true]);
+    }
+
+    /**
+     * Clear keys from the current session.
+     * @param array $keys
+     */
+    public function clearSession(array $keys)
+    {
+        foreach ($keys as $key) {
+            $this->sessionManager->forget($key);
+        }
+    }
+
+    /**
+     * Check if header mismatch has been recorded.
+     * @return bool
+     */
+    public function headersHadBeenMismatched()
+    {
+        return ($this->sessionManager->has('header_mismatch') && ($this->sessionManager->get('header_mismatch') == true));
+    }
+
+    /**
+     * Fix file permission while on staging environment
+     * @param $path
+     */
+    protected function fixStagingPermission($path)
+    {
+        // TODO: Remove this.
+        shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 }

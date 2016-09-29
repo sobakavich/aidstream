@@ -72,10 +72,21 @@ class CsvProcessor
                 }
 
                 file_put_contents($filepath . '/'. $filename, json_encode(['mismatch' => true]));
+                $this->fixStagingPermission($filepath . '/'. $filename);
             }
         } catch (Exception $exception) {
             dd($exception->getMessage());
         }
+    }
+
+    /**
+     * Fix file permission while on staging environment
+     * @param $path
+     */
+    protected function fixStagingPermission($path)
+    {
+        // TODO: Remove this.
+        shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 
     /**

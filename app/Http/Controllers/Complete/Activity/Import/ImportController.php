@@ -176,7 +176,7 @@ class ImportController extends Controller
     {
         if ($this->importManager->caughtExceptions()) {
             unlink($this->importManager->getTemporaryFilepath('header_mismatch.json'));
-            session()->put(['header_mismatch' => true]);
+            $this->importManager->reportHeaderMismatch();
 
             return response()->json(json_encode(['status' => 'Error', 'message' => 'The headers in the uploaded Csv file do not match with the provided template.']));
         }
@@ -213,6 +213,7 @@ class ImportController extends Controller
                 $diff  = array_diff_key($activities, $old);
                 $total = array_merge($diff, $old);
 
+                $this->fixStagingPermission($tempPath);
                 file_put_contents($tempPath, json_encode($total));
 
                 $activities = $diff;
@@ -221,6 +222,7 @@ class ImportController extends Controller
 
                 return response()->json($response);
             } else {
+                $this->fixStagingPermission($tempPath);
                 file_put_contents($tempPath, json_encode($activities));
             }
 
@@ -249,6 +251,7 @@ class ImportController extends Controller
                 $diff  = array_diff_key($activities, $old);
                 $total = array_merge($diff, $old);
 
+                $this->fixStagingPermission($tempPath);
                 file_put_contents($tempPath, json_encode($total));
 
                 $activities = $diff;
@@ -257,6 +260,7 @@ class ImportController extends Controller
 
                 return response()->json($response);
             } else {
+                $this->fixStagingPermission($tempPath);
                 file_put_contents($tempPath, json_encode($activities));
             }
 
@@ -320,13 +324,29 @@ class ImportController extends Controller
      */
     public function uploadRedirect()
     {
-        $form     = $this->form->createForm();
-        $mismatch = ['type' => 'warning', 'code' => ['message', ['message' => 'The headers in the uploaded Csv file do not match with the provided template.']]];
+        $form = $this->form->createForm();
 
-        session()->forget('header_mismatch');
-        session()->forget('import-status');
-        session()->forget('filename');
+        $this->importManager->clearSession(['import-status', 'filename']);
+
+        if ($this->importManager->headersHadBeenMismatched()) {
+            $this->importManager->clearSession(['header_mismatch']);
+            $mismatch = ['type' => 'warning', 'code' => ['message', ['message' => 'The headers in the uploaded Csv file do not match with the provided template.']]];
+
+            return view('Activity.uploader', compact('form', 'mismatch'));
+        }
+
+        $mismatch = null;
 
         return view('Activity.uploader', compact('form', 'mismatch'));
+    }
+
+    /**
+     * Fix file permission while on staging environment
+     * @param $path
+     */
+    protected function fixStagingPermission($path)
+    {
+        // TODO: Remove this.
+        shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 }
