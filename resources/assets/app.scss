@@ -4216,13 +4216,14 @@ pre.prettyprint {
   position: absolute;
   left: 0;
   top: 0;
-  form {
-    padding: 20px 36px;
-  }
+  width: 100%;
 }
 
-.valid-data {
+.valid-data p, .invalid-data p {
   color: #777;
+  padding: 20px 36px;
+  font-size: 14px!important;
+  font-style: italic;
 }
 
 #checkAll {

@@ -229,7 +229,7 @@ class ImportController extends Controller
 
             $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
         } else {
-            $response = ['render' => 'No data available.'];
+            $response = ['render' => '<p>No data available.</p>'];
         }
 
         return response()->json($response);
@@ -267,7 +267,7 @@ class ImportController extends Controller
 
             $response = ['render' => view('Activity.csvImporter.valid', compact('activities'))->render()];
         } else {
-            $response = ['render' => 'No data available.'];
+            $response = ['render' => '<p>No data available.</p>'];
         }
 
         return response()->json($response);
@@ -313,7 +313,7 @@ class ImportController extends Controller
     public function getData()
     {
         if (!($response = $this->importManager->getData())) {
-            $response = ['render' => 'No data available.'];
+            $response = ['render' => '<p>No data available.</p>'];
         }
 
         return response()->json($response);
