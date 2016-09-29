@@ -214,7 +214,7 @@ class ImportController extends Controller
                 $diff  = array_diff_key($activities, $old);
                 $total = array_merge($diff, $old);
 
-                $this->fixStagingPermission($tempPath);
+//                $this->fixStagingPermission($tempPath);
                 File::put($tempPath, json_encode($total));
 
                 $activities = $diff;
@@ -223,7 +223,7 @@ class ImportController extends Controller
 
                 return response()->json($response);
             } else {
-                $this->fixStagingPermission($tempPath);
+//                $this->fixStagingPermission($tempPath);
                 File::put($tempPath, json_encode($activities));
             }
 
@@ -252,7 +252,7 @@ class ImportController extends Controller
                 $diff  = array_diff_key($activities, $old);
                 $total = array_merge($diff, $old);
 
-                $this->fixStagingPermission($tempPath);
+//                $this->fixStagingPermission($tempPath);
                 File::put($tempPath, json_encode($total));
 
                 $activities = $diff;
@@ -261,7 +261,7 @@ class ImportController extends Controller
 
                 return response()->json($response);
             } else {
-                $this->fixStagingPermission($tempPath);
+//                $this->fixStagingPermission($tempPath);
                 File::put($tempPath, json_encode($activities));
             }
 

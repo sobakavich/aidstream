@@ -316,9 +316,13 @@ class ImportManager
      * @param $filename
      * @return string
      */
-    public function getTemporaryFilepath($filename)
+    public function getTemporaryFilepath($filename = null)
     {
-        return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, $filename));
+        if ($filename) {
+            return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId, $filename));
+        }
+
+        return storage_path(sprintf('%s/%s/%s/', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
     }
 
     /**
@@ -354,7 +358,7 @@ class ImportManager
         $activities = json_decode(file_get_contents($filePath), true);
         $path = $this->getTemporaryFilepath($temporaryFileName);
 
-        $this->fixStagingPermission($path);
+        $this->fixStagingPermission($this->getTemporaryFilepath());
 
         FileFacade::put($path, json_encode($activities));
 
@@ -405,7 +409,7 @@ class ImportManager
         try {
             $file->move($this->getStoredCsvPath(), $file->getClientOriginalName());
 
-            $this->fixStagingPermission($this->getStoredCsvPath());
+//            $this->fixStagingPermission($this->getStoredCsvPath());
 
             return true;
         } catch (Exception $exception) {
@@ -516,6 +520,7 @@ class ImportManager
      */
     public function deleteFile($filename)
     {
+//        $this->fixStagingPermission(storage_path(sprintf('%s/%s/%s/', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId)));
         unlink($this->getTemporaryFilepath($filename));
     }
 }

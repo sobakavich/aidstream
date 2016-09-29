@@ -72,7 +72,7 @@ class CsvProcessor
                 }
 
                 file_put_contents($filepath . '/'. $filename, json_encode(['mismatch' => true]));
-                $this->fixStagingPermission($filepath . '/'. $filename);
+//                $this->fixStagingPermission($filepath . '/'. $filename);
             }
         } catch (Exception $exception) {
             dd($exception->getMessage());
