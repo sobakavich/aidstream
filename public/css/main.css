@@ -6520,10 +6520,18 @@ pre.prettyprint {
   z-index: 10000;
   padding: 8px 16px; }
 
-#import-status-placeholder {
-  float: left;
-  margin: 6px 20px 0 0;
-  font-size: 12px; }
+#import-status-placeholder a {
+  font-size: 12px;
+  z-index: 100000;
+  padding: 10px;
+  background: #8aa5b3;
+  width: 100%;
+  text-align: center;
+  display: block;
+  color: #fff; }
+
+.status-nolink {
+  pointer-events: none; }
 
 @media all and (max-width: 1030px) {
   .activity-status {

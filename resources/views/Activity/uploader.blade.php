@@ -15,7 +15,7 @@
                         <span>{!! message($mismatch) !!}</span>
                     </div>
                 @endif
-
+                <div id="import-status-placeholder"></div>
                 <div class="element-panel-heading">
                     <div>
                         Import Activities
@@ -29,7 +29,6 @@
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper">
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
-                            <div id="import-status-placeholder"></div>
                             <div class="create-form">
                                 {!! form($form) !!}
                             </div>
@@ -54,7 +53,6 @@
         </div>
     </div>
 @stop
-
 @section('script')
     <script>
         var checkSessionRoute = '{{ route('activity.check-session-status')}}';

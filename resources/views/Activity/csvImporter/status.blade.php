@@ -9,6 +9,7 @@
             @include('includes.side_bar_menu')
             <div class="col-xs-9 col-md-9 col-lg-9 content-wrapper upload-activity-wrapper">
                 @include('includes.response')
+                <div id="import-status-placeholder" class="status-nolink"></div>
                 <div class="element-panel-heading">
                     <div>
                         Import Activities
@@ -65,7 +66,6 @@
         </div>
     </div>
 @stop
-
 @section('script')
     <script src="{{ asset('js/csvImporter/accordion.js') }}"></script>
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>

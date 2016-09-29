@@ -4240,10 +4240,19 @@ pre.prettyprint {
   padding: 8px 16px;
 }
 
-#import-status-placeholder {
-  float: left;
-  margin: 6px 20px 0 0;
+#import-status-placeholder a {
   font-size: 12px;
+  z-index: 100000;
+  padding: 10px;
+  background: #8aa5b3;
+  width: 100%;
+  text-align: center;
+  display: block;
+  color: $color_white;
+}
+
+.status-nolink {
+  pointer-events: none;
 }
 
 @media all and (max-width: 1030px) {
