@@ -239,7 +239,7 @@ class ImportManager
      */
     public function startImport()
     {
-        $this->sessionManager->put(['import-status' => 'Importing']);
+        $this->sessionManager->put(['import-status' => 'Processing']);
 
         return $this;
     }
@@ -250,6 +250,7 @@ class ImportManager
     public function endImport()
     {
         $this->sessionManager->forget('import-status');
+        $this->sessionManager->forget('filename');
     }
 
     /**
@@ -357,7 +358,11 @@ class ImportManager
      */
     public function getSessionStatus()
     {
-        return $this->sessionManager->get('import-status');
+        if ($this->sessionManager->has('import-status')) {
+            return $this->sessionManager->get('import-status');
+        }
+
+        return null;
     }
 
     /**

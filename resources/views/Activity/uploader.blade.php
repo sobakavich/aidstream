@@ -29,6 +29,7 @@
                 <div class="col-xs-12 col-md-8 col-lg-8 element-content-wrapper element-upload-wrapper">
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
+                            <div id="import-status-placeholder"></div>
                             <div class="create-form">
                                 {!! form($form) !!}
                             </div>
@@ -46,14 +47,17 @@
                                     For more details, please follow <a href="https://github.com/younginnovations/aidstream-new/wiki/Activity-Creation#2-bulk-activity-import" target="_blank">here</a>.
                                 </div>
                             </div>
-                            {{--<div class="download-transaction-wrap">--}}
-                            {{--<a href="{{route('activity.download-template')}}"--}}
-                            {{--class="btn btn-primary btn-form btn-submit">Download Activity Template</a>--}}
-                            {{--</div>--}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@stop
+
+@section('script')
+    <script>
+        var checkSessionRoute = '{{ route('activity.check-session-status')}}';
+    </script>
+    <script src=" {{ asset('js/csvImporter/checkSessionStatus.js') }}"></script>
 @stop
