@@ -6,6 +6,7 @@ use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Session\SessionManager;
+use Illuminate\Support\Facades\File as FileFacade;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -211,7 +212,7 @@ class ImportManager
             unset($validActivities[$key]);
         }
 
-        json_encode(file_put_contents($this->getFilePath(true), $validActivities));
+        FileFacade::put($this->getFilePath(true), $validActivities);
     }
 
     /**
@@ -355,7 +356,7 @@ class ImportManager
 
         $this->fixStagingPermission($path);
 
-        file_put_contents($path, json_encode($activities));
+        FileFacade::put($path, json_encode($activities));
 
         return view(sprintf('Activity.csvImporter.%s', $view), compact('activities'))->render();
     }
@@ -507,5 +508,14 @@ class ImportManager
     {
         // TODO: Remove this.
         shell_exec(sprintf('chmod 777 -R %s', $path));
+    }
+
+    /**
+     * Delete a temporary file with the provided filename.
+     * @param $filename
+     */
+    public function deleteFile($filename)
+    {
+        unlink($this->getTemporaryFilepath($filename));
     }
 }

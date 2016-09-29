@@ -8,6 +8,7 @@ use App\Services\CsvImporter\ImportManager;
 use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
 use App\Services\Organization\OrganizationManager;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
 
 
 /**
@@ -175,7 +176,7 @@ class ImportController extends Controller
     public function checkStatus()
     {
         if ($this->importManager->caughtExceptions()) {
-            unlink($this->importManager->getTemporaryFilepath('header_mismatch.json'));
+            $this->importManager->deleteFile('header_mismatch.json');
             $this->importManager->reportHeaderMismatch();
 
             return response()->json(json_encode(['status' => 'Error', 'message' => 'The headers in the uploaded Csv file do not match with the provided template.']));
@@ -214,7 +215,7 @@ class ImportController extends Controller
                 $total = array_merge($diff, $old);
 
                 $this->fixStagingPermission($tempPath);
-                file_put_contents($tempPath, json_encode($total));
+                File::put($tempPath, json_encode($total));
 
                 $activities = $diff;
 
@@ -223,7 +224,7 @@ class ImportController extends Controller
                 return response()->json($response);
             } else {
                 $this->fixStagingPermission($tempPath);
-                file_put_contents($tempPath, json_encode($activities));
+                File::put($tempPath, json_encode($activities));
             }
 
             $response = ['render' => view('Activity.csvImporter.invalid', compact('activities'))->render()];
@@ -252,7 +253,7 @@ class ImportController extends Controller
                 $total = array_merge($diff, $old);
 
                 $this->fixStagingPermission($tempPath);
-                file_put_contents($tempPath, json_encode($total));
+                File::put($tempPath, json_encode($total));
 
                 $activities = $diff;
 
@@ -261,7 +262,7 @@ class ImportController extends Controller
                 return response()->json($response);
             } else {
                 $this->fixStagingPermission($tempPath);
-                file_put_contents($tempPath, json_encode($activities));
+                File::put($tempPath, json_encode($activities));
             }
 
             $response = ['render' => view('Activity.csvImporter.valid', compact('activities'))->render()];
@@ -330,6 +331,8 @@ class ImportController extends Controller
 
         if ($this->importManager->headersHadBeenMismatched()) {
             $this->importManager->clearSession(['header_mismatch']);
+            $this->importManager->deleteFile('status.json');
+
             $mismatch = ['type' => 'warning', 'code' => ['message', ['message' => 'The headers in the uploaded Csv file do not match with the provided template.']]];
 
             return view('Activity.uploader', compact('form', 'mismatch'));
