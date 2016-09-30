@@ -3,9 +3,11 @@
 use App\Core\V201\Repositories\Activity\ActivityRepository;
 use App\Core\V201\Repositories\Activity\Transaction;
 use App\Core\V201\Repositories\Organization\OrganizationRepository;
+use App\Services\CsvImporter\Events\ActivityCsvWasUploaded;
 use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Session\SessionManager;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File as FileFacade;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
@@ -147,10 +149,10 @@ class ImportManager
     /**
      * Create Valid activities.
      * @param $activities
-     * @param $contents
      */
-    public function createActivity($activities, $contents)
+    public function create($activities)
     {
+        $contents               = json_decode(file_get_contents($this->getFilePath(true)), true);
         $organizationId         = $this->sessionManager->get('org_id');
         $importedActivities     = [];
         $organizationIdentifier = getVal(
@@ -236,11 +238,13 @@ class ImportManager
 
     /**
      * Set the key to specify that import process has started for the current User.
+     * @param $filename
      * @return $this
      */
-    public function startImport()
+    public function startImport($filename)
     {
         $this->sessionManager->put(['import-status' => 'Processing']);
+        $this->sessionManager->put(['filename' => $filename]);
 
         return $this;
     }
@@ -328,7 +332,7 @@ class ImportManager
     /**
      * Set import-status key when the processing is complete.
      */
-    public function setProcessCompleteSession()
+    public function setProcessCompleteToSession()
     {
         $this->sessionManager->put(['import-status' => 'Complete']);
     }
@@ -356,7 +360,7 @@ class ImportManager
     protected function getDataFrom($filePath, $temporaryFileName, $view)
     {
         $activities = json_decode(file_get_contents($filePath), true);
-        $path = $this->getTemporaryFilepath($temporaryFileName);
+        $path       = $this->getTemporaryFilepath($temporaryFileName);
 
         $this->fixStagingPermission($this->getTemporaryFilepath());
 
@@ -409,8 +413,6 @@ class ImportManager
         try {
             $file->move($this->getStoredCsvPath(), $file->getClientOriginalName());
 
-//            $this->fixStagingPermission($this->getStoredCsvPath());
-
             return true;
         } catch (Exception $exception) {
             $this->logger->error(
@@ -437,15 +439,6 @@ class ImportManager
         }
 
         return storage_path(sprintf('%s/%s/%s/', self::UPLOADED_CSV_STORAGE_PATH, session('org_id'), $this->userId));
-    }
-
-    /**
-     * Set the filename of the file currently being processed in the current session.
-     * @param $filename
-     */
-    public function rememberFilename($filename)
-    {
-        $this->sessionManager->put(['filename' => $filename]);
     }
 
     /**
@@ -517,10 +510,43 @@ class ImportManager
     /**
      * Delete a temporary file with the provided filename.
      * @param $filename
+     * @return $this
      */
     public function deleteFile($filename)
     {
-//        $this->fixStagingPermission(storage_path(sprintf('%s/%s/%s/', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId)));
         unlink($this->getTemporaryFilepath($filename));
+
+        return $this;
+    }
+
+    /**
+     * Fire Csv Upload event on Csv File upload.
+     * @param $filename
+     */
+    public function fireCsvUploadEvent($filename)
+    {
+        Event::fire(new ActivityCsvWasUploaded($filename));
+    }
+
+    /**
+     * Check if the import process is complete.
+     * @return bool|string
+     */
+    public function importIsComplete()
+    {
+        $filePath = $this->getTemporaryFilepath('status.json');
+
+        if (file_exists($filePath)) {
+            $jsonContents = file_get_contents($filePath);
+            $contents     = json_decode($jsonContents, true);
+
+            if ($contents['status'] == 'Complete') {
+                $this->setProcessCompleteToSession();
+            }
+
+            return $jsonContents;
+        }
+
+        return false;
     }
 }
