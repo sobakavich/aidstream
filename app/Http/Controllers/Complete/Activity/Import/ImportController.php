@@ -3,11 +3,9 @@
 use App\Core\V201\Requests\Activity\ImportActivity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
-use App\Services\CsvImporter\Events\ActivityCsvWasUploaded;
 use App\Services\CsvImporter\ImportManager;
 use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
 use App\Services\Organization\OrganizationManager;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 
 
@@ -152,10 +150,9 @@ class ImportController extends Controller
         $file = $request->file('activity');
 
         if ($this->importManager->storeCsv($file)) {
-            $this->importManager->startImport()
-                                ->rememberFilename($file->getClientOriginalName());
-
-            Event::fire(new ActivityCsvWasUploaded($file->getClientOriginalName()));
+            $filename = $file->getClientOriginalName();
+            $this->importManager->startImport($filename)
+                                ->fireCsvUploadEvent($filename);
 
             return redirect()->route('activity.import-status');
         }
@@ -175,9 +172,7 @@ class ImportController extends Controller
         $activities = $request->get('activities');
 
         if ($activities) {
-            $contents = json_decode(file_get_contents($this->importManager->getFilePath(true)), true);
-
-            $this->importManager->createActivity($activities, $contents);
+            $this->importManager->create($activities);
             $this->importManager->endImport();
 
             return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'Activities successfully imported.']]]);
@@ -202,22 +197,14 @@ class ImportController extends Controller
     public function checkStatus()
     {
         if ($this->importManager->caughtExceptions()) {
-            $this->importManager->deleteFile('header_mismatch.json');
-            $this->importManager->reportHeaderMismatch();
+            $this->importManager->deleteFile('header_mismatch.json')
+                                ->reportHeaderMismatch();
 
             return response()->json(json_encode(['status' => 'Error', 'message' => 'The headers in the uploaded Csv file do not match with the provided template.']));
         }
 
-        $filePath = $this->importManager->getTemporaryFilepath('status.json');
-
-        if (file_exists($filePath)) {
-            $contents = json_decode(file_get_contents($filePath), true);
-
-            if ($contents['status'] == 'Complete') {
-                $this->importManager->setProcessCompleteSession();
-            }
-
-            return response()->json(file_get_contents($filePath));
+        if ($result = $this->importManager->importIsComplete()) {
+            return response()->json($result);
         }
 
         return response()->json(json_encode(['status' => 'Incomplete']));
@@ -240,7 +227,6 @@ class ImportController extends Controller
                 $diff  = array_diff_key($activities, $old);
                 $total = array_merge($diff, $old);
 
-//                $this->fixStagingPermission($tempPath);
                 File::put($tempPath, json_encode($total));
 
                 $activities = $diff;
@@ -249,7 +235,6 @@ class ImportController extends Controller
 
                 return response()->json($response);
             } else {
-//                $this->fixStagingPermission($tempPath);
                 File::put($tempPath, json_encode($activities));
             }
 
@@ -278,7 +263,6 @@ class ImportController extends Controller
                 $diff  = array_diff_key($activities, $old);
                 $total = array_merge($diff, $old);
 
-//                $this->fixStagingPermission($tempPath);
                 File::put($tempPath, json_encode($total));
 
                 $activities = $diff;
@@ -287,7 +271,6 @@ class ImportController extends Controller
 
                 return response()->json($response);
             } else {
-//                $this->fixStagingPermission($tempPath);
                 File::put($tempPath, json_encode($activities));
             }
 
