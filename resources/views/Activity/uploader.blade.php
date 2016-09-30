@@ -39,6 +39,8 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="{{route('activity.download-template',['type'=>'basic'])}}">Activity Basics</a></li>
                                         <li><a href="{{route('activity.download-template',['type'=>'transaction'])}}">Activity with Transactions</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'others'])}}">Activity with Other Fields</a></li>
+                                        <li><a href="{{route('activity.download-template',['type'=>'others-transaction'])}}">Activity with Transactions and Other Fields</a></li>
                                     </ul>
                                 </div>
                                 <div>

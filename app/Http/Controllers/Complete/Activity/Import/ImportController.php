@@ -58,6 +58,16 @@ class ImportController extends Controller
     const TRANSACTION_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/transaction.csv';
 
     /**
+     * Activity with Other Fields file path.
+     */
+    const OTHER_FIELDS_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/others.csv';
+
+    /**
+     * Activity with Other Fields and Transaction file path.
+     */
+    const OTHERS_FIELDS_TRANSACTION_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/others_transaction.csv';
+
+    /**
      * Current User's id.
      * @var
      */
@@ -85,7 +95,23 @@ class ImportController extends Controller
      */
     public function downloadActivityTemplate(Request $request)
     {
-        $path = ($request->get('type') == 'basic') ? self::BASIC_ACTIVITY_TEMPLATE_PATH : self::TRANSACTION_ACTIVITY_TEMPLATE_PATH;
+        $type = $request->get('type');
+
+        if ($type == 'basic') {
+            $path = self::BASIC_ACTIVITY_TEMPLATE_PATH;
+        }
+
+        if ($type == 'transaction') {
+            $path = self::TRANSACTION_ACTIVITY_TEMPLATE_PATH;
+        }
+
+        if ($type == 'others') {
+            $path = self::OTHER_FIELDS_ACTIVITY_TEMPLATE_PATH;
+        }
+
+        if ($type == 'others-transaction') {
+            $path = self::OTHERS_FIELDS_TRANSACTION_ACTIVITY_TEMPLATE_PATH;
+        }
 
         return response()->download(app_path(sprintf($path, session('version'))));
     }
