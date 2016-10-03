@@ -21,22 +21,22 @@ class ActivityRow extends Row
     /**
      * Number of headers for the Activity Csv.
      */
-    const ACTIVITY_HEADER_COUNT = 22;
+    const ACTIVITY_HEADER_COUNT = 25;
 
     /**
      * Number of headers for the Activity Csv with Transactions.
      */
-    const TRANSACTION_HEADER_COUNT = 40;
+    const TRANSACTION_HEADER_COUNT = 43;
 
     /**
      * Number of headers for the Activity Csv with Transactions and Other Fields.
      */
-    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 50;
+    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 53;
 
     /**
      * Number of headers for the Activity Csv with Other Fields.
      */
-    const ACTIVITY_OTHERS_HEADER_COUNT = 32;
+    const ACTIVITY_OTHERS_HEADER_COUNT = 35;
 
     /**
      * Directory where the validated Csv data is written before import.
@@ -60,6 +60,7 @@ class ActivityRow extends Row
     protected $activityElements = [
         'identifier',
         'title',
+        'defaultFieldValues',
         'description',
         'activityStatus',
         'activityDate',
@@ -118,6 +119,11 @@ class ActivityRow extends Row
      * @var
      */
     protected $identifier;
+
+    /**
+     * @var
+     */
+    protected $defaultFieldValues;
 
     /**
      * @var

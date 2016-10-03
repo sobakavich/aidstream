@@ -33,22 +33,22 @@ class CsvProcessor
     /**
      * Total no. of header present in basic csv.
      */
-    const BASIC_CSV_HEADERS_COUNT = 22;
+    const BASIC_CSV_HEADERS_COUNT = 25;
 
     /**
      * Total no. of header present in basic with transaction csv.
      */
-    const TRANSACTION_CSV_HEADERS_COUNT = 40;
+    const TRANSACTION_CSV_HEADERS_COUNT = 43;
 
     /**
      * Number of headers for the Activity Csv with Transactions and Other Fields.
      */
-    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 50;
+    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 53;
 
     /**
      * Number of headers for the Activity Csv with Other Fields.
      */
-    const ACTIVITY_OTHERS_HEADER_COUNT = 32;
+    const ACTIVITY_OTHERS_HEADER_COUNT = 35;
 
 
     /**
@@ -82,7 +82,7 @@ class CsvProcessor
                     mkdir($filepath, 0777, true);
                 }
 
-                file_put_contents($filepath . '/'. $filename, json_encode(['mismatch' => true]));
+                file_put_contents($filepath . '/' . $filename, json_encode(['mismatch' => true]));
 //                $this->fixStagingPermission($filepath . '/'. $filename);
             }
         } catch (Exception $exception) {
@@ -198,7 +198,7 @@ class CsvProcessor
         }
 
         if (count($csvHeaders) == self::ACTIVITY_OTHERS_HEADER_COUNT) {
-            $templateHeaders = $this->loadCsv('V201', 'other_headers');
+            $templateHeaders = $this->loadCsv('V201', 'other_fields_headers');
             $templateHeaders = array_keys($templateHeaders[0]);
             $diffHeaders     = array_diff($csvHeaders, $templateHeaders);
 
@@ -206,7 +206,7 @@ class CsvProcessor
         }
 
         if (count($csvHeaders) == self::ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT) {
-            $templateHeaders = $this->loadCsv('V201', 'other_transaction_headers');
+            $templateHeaders = $this->loadCsv('V201', 'other_fields_transaction_headers');
             $templateHeaders = array_keys($templateHeaders[0]);
             $diffHeaders     = array_diff($csvHeaders, $templateHeaders);
 
