@@ -25,14 +25,40 @@
                 <div class="col-xs-12 col-md-12 col-lg-12 element-content-wrapper profile-content-wrapper">
                     <div class="panel panel-default panel-profile">
                         <div class="panel-body">
-                            <div class="profile-img">
-                                @if(Auth::user()->profile_url)
-                                    <img src="{{Auth::user()->profile_url}}" width="200" height="200"
-                                         alt="{{Auth::user()->name}}">
-                                @else
-                                    <img src="{{url('images/avatar-full.png')}}" width="200" height="200"
-                                         alt="{{Auth::user()->name}}">
-                                @endif
+                            <div class="profile-top-wrapper">
+                                <div class="profile-img">
+                                    @if(Auth::user()->profile_url)
+                                        <img src="{{Auth::user()->profile_url}}" width="180" height="180"
+                                             alt="{{Auth::user()->name}}">
+                                    @else
+                                        <img src="{{url('images/avatar-full.png')}}" width="180" height="180"
+                                             alt="{{Auth::user()->name}}">
+                                    @endif
+                                </div>
+                                <div class="pull-left">
+                                    <div class="profile-info-block">
+                                        <div class="profile-basic-info">
+                                            <div class="auth-name">{{Auth::user()->name}}</div>
+                                            <span class="profile-username">{{Auth::user()->username}}</span>
+                                            <a href="{{route('user.edit-profile', Auth::user()->id)}}" class="edit-profile">Edit
+                                                Profile</a>
+                                            <a href="{{route('user.reset-user-password', Auth::user()->id)}}"
+                                               class="change-password">Change
+                                                Password</a>
+                                            <span class="profile-user-email"><a
+                                                        href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></span>
+                                        </div>
+                                    </div>
+                                    @if((Auth::user()->isAdmin()) && $organization->secondary_contact)
+                                        <div class="secondary-contact-block">
+                                            <span>Secondary Contact</span>
+                                            <div>
+                                                <span class="profile-name">{{ getVal((array)$organization->secondary_contact,['first_name']) }} {{getVal((array)$organization->secondary_contact,['last_name'])}}</span>
+                                                <a href="mailto:{{ getVal((array)$organization->secondary_contact,['email']) }}"> {{getVal((array)$organization->secondary_contact,['email'])}} </a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="profile-info-block">
                                 <div class="profile-basic-info">
@@ -95,11 +121,11 @@
                                             </div>
                                         @endif
                                         @if($organization['reporting_org'][0]['reporting_organization_type'])
-                                            <div class="view-organization"><label>Organisation Type</label>
+                                            <li class="org-type col-xs-6 col-md-4 col-lg-3"><label>Organisation Type</label>
                                                 <span>
-                                                {{substr($getCode->getOrganizationCodeName('OrganizationType',$organization['reporting_org'][0]['reporting_organization_type']),0,-4)}}
-                                            </span>
-                                            </div>
+                                                    {{substr($getCode->getOrganizationCodeName('OrganizationType',$organization['reporting_org'][0]['reporting_organization_type']),0,-4)}}
+                                                </span>
+                                            </li>
                                         @endif
                                     </div>
                                     @if($organization->telephone)
