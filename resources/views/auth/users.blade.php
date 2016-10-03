@@ -21,7 +21,6 @@
             {!! AsForm::email(['name' => 'users[secondary_contact]', 'class' => 'secondary_contact', 'label' => 'Secondary Contact at Organisation', 'required' => true, 'parent' => 'col-xs-12 col-sm-6 col-md-6', 'html' => '<p class="help-block">Example: example@email.com</p>']) !!}
         </div>
     </div>
-
     <div class="user-blocks">
         {{--*/ $users = getVal($regInfo, ['users', 'user'], []); /*--}}
         @foreach($users as $userIndex => $user)

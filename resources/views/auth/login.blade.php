@@ -143,6 +143,7 @@
     <script type="text/javascript" src="{{url('/js/jquery.cookie.js')}}"></script>
 @else
     <script type="text/javascript" src="{{url('/js/main.min.js')}}"></script>
+    <<<<<<< HEAD
 @endif
 <!-- Google Analytics -->
 <script type="text/javascript" src="{{url('/js/ga.js')}}"></script>
@@ -159,7 +160,6 @@
         hamburgerMenu();
     });
 </script>
-
 
 @if(session('verification_message'))
     <div class="modal fade verification-modal" tabindex="-1" role="dialog" style="display: block;">
