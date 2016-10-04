@@ -222,8 +222,11 @@ class DefaultFieldValues extends Element
             $this->data['default_field_values'][$index]['humanitarian'] = '';
         }
         if ($key == $this->_csvHeaders[2]) {
-            $value = ($value != 'Yes') ?: 1;
-            $value = ($value != 'No') ?: 0;
+            if ($value == 'Yes') {
+                $value = '1';
+            } else if ($value == 'No') {
+                $value = '0';
+            }
 
             $this->data['default_field_values'][$index]['humanitarian'] = $value;
         }
