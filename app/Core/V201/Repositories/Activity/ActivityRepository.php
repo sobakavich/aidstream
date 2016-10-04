@@ -348,7 +348,7 @@ class ActivityRepository
             ? getVal($settingsDefaultFieldValues, [0, 'default_currency']) : $currency;
         $settingsDefaultFieldValues[0]['default_language'] = (($language = getVal($csvDefaultFieldValues, [0, 'default_language'])) == '')
             ? getVal($settingsDefaultFieldValues, [0, 'default_language']) : $language;
-        $settingsDefaultFieldValues[0]['humanitarian']     = (($humanitarian = getVal($csvDefaultFieldValues, [0, 'humanitarian'])) == '')
+        $settingsDefaultFieldValues[0]['humanitarian']     = (($humanitarian = $csvDefaultFieldValues[0]['humanitarian']) == '')
             ? getVal($settingsDefaultFieldValues, [0, 'humanitarian']) : $humanitarian;
 
         return $settingsDefaultFieldValues;
