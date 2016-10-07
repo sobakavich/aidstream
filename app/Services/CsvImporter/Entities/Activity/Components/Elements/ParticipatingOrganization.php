@@ -191,7 +191,7 @@ class ParticipatingOrganization extends Element
     public function rules()
     {
         return [
-            'participating_organization'                     => 'required|required_only_one_among:identifier,narrative',
+            'participating_organization'                     => 'required|required_only_one_among:identifier,narrative|funding_implementing_required',
             'participating_organization.*.organization_role' => sprintf('required|in:%s', $this->validOrganizationRoles()),
             'participating_organization.*.organization_type' => sprintf('required|in:%s', $this->validOrganizationTypes()),
         ];
@@ -204,12 +204,13 @@ class ParticipatingOrganization extends Element
     public function messages()
     {
         return [
-            'participating_organization.required'                     => 'Participating Organisation is required.',
-            'participating_organization.*.organization_role.required' => 'Participating Organisation role is required.',
-            'participating_organization.required_only_one_among'      => 'Either Participating Organisation Identifier or Participating Organisation Name is required.',
-            'participating_organization.*.organization_role.in'       => 'Only valid Organisation Roles are allowed.',
-            'participating_organization.*.organization_type.in'       => 'Only valid Organisation Types are allowed.',
-            'participating_organization.*.organization_type.required' => 'Participating Organisation Type is required.'
+            'participating_organization.required'                      => 'Participating Organisation is required.',
+            'participating_organization.funding_implementing_required' => ' There should be at least one participating organization with the role "Funding"(id:1) or "Implementing"(id:4).',
+            'participating_organization.*.organization_role.required'  => 'Participating Organisation role is required.',
+            'participating_organization.required_only_one_among'       => 'Either Participating Organisation Identifier or Participating Organisation Name is required.',
+            'participating_organization.*.organization_role.in'        => 'Only valid Organisation Roles are allowed.',
+            'participating_organization.*.organization_type.in'        => 'Only valid Organisation Types are allowed.',
+            'participating_organization.*.organization_type.required'  => 'Participating Organisation Type is required.'
         ];
     }
 
