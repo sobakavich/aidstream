@@ -21,7 +21,7 @@
                             <div class="status-show-block">
                                 <label>Show</label>
                                 <select class="tab-select">
-                                    <option data-select="all">All</option>
+                                    {{--<option data-select="all">All</option>--}}
                                     <option data-select="valid">Valid</option>
                                     <option data-select="invalid">Invalid</option>
                                 </select>
@@ -32,9 +32,9 @@
                             </form>
 
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane" id="all">
-                                    <div class="all-data"></div>
-                                </div>
+                                {{--<div role="tabpanel" class="tab-pane" id="all">--}}
+                                    {{--<div class="all-data"></div>--}}
+                                {{--</div>--}}
 
                                 <div role="tabpanel" class="tab-pane active checkall-wrap" id="valid">
                                     <div id="checkAll" class="hidden">
