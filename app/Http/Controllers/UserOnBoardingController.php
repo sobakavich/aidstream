@@ -39,12 +39,13 @@ class UserOnBoardingController extends Controller
     public function welcome()
     {
         $firstname = Auth::user()->first_name;
+        $lastname = Auth::user()->last_name;
 
         if (Auth::user()->userOnBoarding->has_completed_steps) {
             return redirect()->to('/activity');
         }
 
-        return view('onBoarding.welcome', compact('firstname'));
+        return view('onBoarding.welcome', compact('firstname','lastname'));
     }
 
     /**
