@@ -331,5 +331,21 @@ class Validation extends Factory
                 }
             }
         );
+
+        $this->extend(
+            'funding_implementing_required',
+            function ($attribute, $values, $parameters, $validator) {
+                $org_role = [];
+                foreach ($values as $value) {
+                    $org_role[] = getVal($value, ['organization_role']);
+                }
+
+                if (array_intersect([1, 4], $org_role)) {
+                    return true;
+                }
+
+                return false;
+            }
+        );
     }
 }
