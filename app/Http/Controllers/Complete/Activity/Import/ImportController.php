@@ -58,12 +58,12 @@ class ImportController extends Controller
     /**
      * Activity with Other Fields file path.
      */
-    const OTHER_FIELDS_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/others.csv';
+    const OTHER_FIELDS_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/other_fields.csv';
 
     /**
      * Activity with Other Fields and Transaction file path.
      */
-    const OTHERS_FIELDS_TRANSACTION_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/others_transaction.csv';
+    const OTHERS_FIELDS_TRANSACTION_ACTIVITY_TEMPLATE_PATH = '/Services/CsvImporter/Templates/Activity/%s/other_fields_transaction.csv';
 
     /**
      * Current User's id.
@@ -153,6 +153,8 @@ class ImportController extends Controller
             $filename = $file->getClientOriginalName();
             $this->importManager->startImport($filename)
                                 ->fireCsvUploadEvent($filename);
+
+            $this->fixStagingPermission(storage_path('csvImporter/tmp'));
 
             return redirect()->route('activity.import-status');
         }
