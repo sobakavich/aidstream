@@ -344,12 +344,12 @@ class ActivityRepository
     {
         $settings                                          = $this->settings->where('organization_id', session('org_id'))->first();
         $settingsDefaultFieldValues                        = $settings->default_field_values;
-        $settingsDefaultFieldValues[0]['default_currency'] = (($currency = getVal($csvDefaultFieldValues, [0, 'default_currency'])) == '')
-            ? getVal($settingsDefaultFieldValues, [0, 'default_currency']) : $currency;
-        $settingsDefaultFieldValues[0]['default_language'] = (($language = getVal($csvDefaultFieldValues, [0, 'default_language'])) == '')
-            ? getVal($settingsDefaultFieldValues, [0, 'default_language']) : $language;
-        $settingsDefaultFieldValues[0]['humanitarian']     = (($humanitarian = $csvDefaultFieldValues[0]['humanitarian']) == '')
-            ? getVal($settingsDefaultFieldValues, [0, 'humanitarian']) : $humanitarian;
+        $settingsDefaultFieldValues[0]['default_currency'] = (($currency = getVal((array) $csvDefaultFieldValues, [0, 'default_currency'])) == '')
+            ? getVal((array) $settingsDefaultFieldValues, [0, 'default_currency']) : $currency;
+        $settingsDefaultFieldValues[0]['default_language'] = (($language = getVal((array) $csvDefaultFieldValues, [0, 'default_language'])) == '')
+            ? getVal((array) $settingsDefaultFieldValues, [0, 'default_language']) : $language;
+        $settingsDefaultFieldValues[0]['humanitarian']     = (($humanitarian = getVal((array) $csvDefaultFieldValues, [0, 'humanitarian'])) == '')
+            ? getVal((array) $settingsDefaultFieldValues, [0, 'humanitarian']) : $humanitarian;
 
         return $settingsDefaultFieldValues;
     }
