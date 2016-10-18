@@ -384,9 +384,8 @@ class ActivityRow extends Row
      */
     protected function removeEmptyTransactionData()
     {
-        $totalNull = 0;
-
         foreach ($this->transactionRows as $index => $transactionRow) {
+            $totalNull = 0;
             foreach ($transactionRow as $value) {
                 if (!$value) {
                     $totalNull ++;

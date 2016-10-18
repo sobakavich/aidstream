@@ -80,7 +80,7 @@ class ActivityScope extends Element
      */
     public function rules()
     {
-        $rules[$this->csvHeader()] = (is_array($this->data[$this->csvHeader()])) ? 'size:1' : sprintf('in:%s', $this->validActivityScope());
+        $rules[$this->csvHeader()] = (is_array(getVal($this->data, [$this->csvHeader()]))) ? 'size:1' : sprintf('in:%s', $this->validActivityScope());
 
         return $rules;
     }
