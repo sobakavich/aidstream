@@ -1,19 +1,19 @@
 <?php namespace App\Services\CsvImporter;
 
-use App\Core\V201\Repositories\Activity\ActivityRepository;
-use App\Core\V201\Repositories\Activity\Transaction;
-use App\Core\V201\Repositories\Organization\OrganizationRepository;
-use App\Services\CsvImporter\Events\ActivityCsvWasUploaded;
 use Exception;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Session\SessionManager;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\File as FileFacade;
 use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Session\SessionManager;
+use App\Services\CsvImporter\Queue\Processor;
 use Symfony\Component\HttpFoundation\File\File;
+use Illuminate\Support\Facades\File as FileFacade;
+use App\Core\V201\Repositories\Activity\Transaction;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Services\CsvImporter\Queue\Contracts\ProcessorInterface;
+use App\Core\V201\Repositories\Activity\ActivityRepository;
+use App\Services\CsvImporter\Events\ActivityCsvWasUploaded;
+use App\Core\V201\Repositories\Organization\OrganizationRepository;
 
 /**
  * Class ImportManager
@@ -47,7 +47,7 @@ class ImportManager
     protected $excel;
 
     /**
-     * @var ProcessorInterface
+     * @var Processor
      */
     protected $processor;
 
@@ -60,14 +60,17 @@ class ImportManager
      * @var SessionManager
      */
     protected $sessionManager;
+
     /**
      * @var ActivityRepository
      */
     protected $activityRepo;
+
     /**
      * @var OrganizationRepository
      */
     protected $organizationRepo;
+
     /**
      * @var Transaction
      */
@@ -93,7 +96,7 @@ class ImportManager
     /**
      * ImportManager constructor.
      * @param Excel                  $excel
-     * @param ProcessorInterface     $processor
+     * @param Processor              $processor
      * @param LoggerInterface        $logger
      * @param SessionManager         $sessionManager
      * @param ActivityRepository     $activityRepo
@@ -103,7 +106,7 @@ class ImportManager
      */
     public function __construct(
         Excel $excel,
-        ProcessorInterface $processor,
+        Processor $processor,
         LoggerInterface $logger,
         SessionManager $sessionManager,
         ActivityRepository $activityRepo,
@@ -231,9 +234,8 @@ class ImportManager
      */
     public function removeImportDirectory()
     {
-        $dir = storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
-        $this->filesystem->deleteDirectory($dir);
-
+        $directoryPath = storage_path(sprintf('%s/%s/%s', self::CSV_DATA_STORAGE_PATH, session('org_id'), $this->userId));
+        $this->filesystem->deleteDirectory($directoryPath);
     }
 
     /**
@@ -243,8 +245,7 @@ class ImportManager
      */
     public function startImport($filename)
     {
-        $this->sessionManager->put(['import-status' => 'Processing']);
-        $this->sessionManager->put(['filename' => $filename]);
+        $this->sessionManager->put(['import-status' => 'Processing', 'filename' => $filename]);
 
         return $this;
     }
@@ -332,7 +333,7 @@ class ImportManager
     /**
      * Set import-status key when the processing is complete.
      */
-    public function setProcessCompleteToSession()
+    protected function completeImport()
     {
         $this->sessionManager->put(['import-status' => 'Complete']);
     }
@@ -541,7 +542,7 @@ class ImportManager
             $contents     = json_decode($jsonContents, true);
 
             if ($contents['status'] == 'Complete') {
-                $this->setProcessCompleteToSession();
+                $this->completeImport();
             }
 
             return $jsonContents;

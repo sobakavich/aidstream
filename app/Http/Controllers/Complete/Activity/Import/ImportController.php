@@ -1,12 +1,12 @@
 <?php namespace App\Http\Controllers\Complete\Activity\Import;
 
-use App\Core\V201\Requests\Activity\ImportActivity;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
-use App\Services\CsvImporter\ImportManager;
-use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
-use App\Services\Organization\OrganizationManager;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use App\Services\CsvImporter\ImportManager;
+use App\Services\Organization\OrganizationManager;
+use App\Core\V201\Requests\Activity\ImportActivity;
+use App\Services\FormCreator\Activity\ImportActivity as ImportActivityForm;
 
 
 /**
@@ -15,21 +15,6 @@ use Illuminate\Support\Facades\File;
  */
 class ImportController extends Controller
 {
-    /**
-     * Directory where the validated Csv data is written before import.
-     */
-    const CSV_DATA_STORAGE_PATH = 'csvImporter/tmp';
-
-    /**
-     * File in which the valida Csv data is written before import.
-     */
-    const VALID_CSV_FILE = 'valid.json';
-
-    /**
-     * File in which the invalid Csv data is written before import.
-     */
-    const INVALID_CSV_FILE = 'invalid.json';
-
     /**
      * @var ImportActivityForm
      */

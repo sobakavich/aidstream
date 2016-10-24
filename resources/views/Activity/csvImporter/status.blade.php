@@ -19,6 +19,12 @@
                     <div class="panel panel-default panel-upload">
                         <div class="panel-body">
                             <div class="status-show-block">
+                                <div id="checkAll" class="hidden">
+                                    <label>
+                                        <input type="checkbox" class="check-btn">
+                                        <span></span>
+                                    </label>
+                                </div>
                                 <label>Show</label>
                                 <select class="tab-select">
                                     <option data-select="all">All</option>
@@ -32,13 +38,13 @@
                             </form>
 
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active checkall-wrap" id="all">
-                                    <div id="checkAll" class="hidden">
-                                        <label>
-                                            <input type="checkbox" id="check-all">
-                                            <span></span>
-                                        </label>
-                                    </div>
+                                <div role="tabpanel" class="tab-pane active" id="all">
+                                    {{--<div id="checkAll" class="hidden">--}}
+                                        {{--<label>--}}
+                                            {{--<input type="checkbox" class="check-btn">--}}
+                                            {{--<span></span>--}}
+                                        {{--</label>--}}
+                                    {{--</div>--}}
                                     <form action="{{ route('activity.import-validated-activities') }}" method="POST">
                                         {{ csrf_field() }}
                                         <div class="all-data"></div>
@@ -47,13 +53,13 @@
                                 </div>
 
 
-                                <div role="tabpanel" class="tab-pane checkall-wrap" id="valid">
-                                    <div id="checkAll" class="hidden">
-                                        <label>
-                                            <input type="checkbox" id="check-all">
-                                            <span></span>
-                                        </label>
-                                    </div>
+                                <div role="tabpanel" class="tab-pane" id="valid">
+                                    {{--<div id="checkAll" class="hidden">--}}
+                                        {{--<label>--}}
+                                            {{--<input type="checkbox" class="check-btn">--}}
+                                            {{--<span></span>--}}
+                                        {{--</label>--}}
+                                    {{--</div>--}}
                                     <form action="{{ route('activity.import-validated-activities') }}" method="POST">
                                         {{ csrf_field() }}
                                         <div class="valid-data"></div>

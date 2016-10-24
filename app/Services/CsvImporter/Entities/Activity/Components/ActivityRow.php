@@ -109,6 +109,7 @@ class ActivityRow extends Row
      * @var array
      */
     protected $otherElements = ['activityScope', 'budget', 'policyMarker'];
+
     /**
      * All Elements for an Activity Row.
      * @var
@@ -222,6 +223,7 @@ class ActivityRow extends Row
     public function init()
     {
         $method = $this->getMethodNameByType();
+
         if (method_exists($this, $method)) {
             $this->$method();
         }
@@ -349,7 +351,7 @@ class ActivityRow extends Row
     }
 
     /**
-     *
+     * Instantiate the Other Elements classes.
      */
     protected function makeOtherFieldsElements()
     {
