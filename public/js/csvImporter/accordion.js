@@ -4,6 +4,6 @@ var accordionInit = function () {
     });
 };
 
-$('#check-all').on('change', function () {
-    $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+$('.check-btn').on('change', function () {
+    $("input[type=checkbox]:not(:disabled)").prop('checked', $(this).prop('checked'));
 });

@@ -35,7 +35,7 @@
                                 <div role="tabpanel" class="tab-pane active checkall-wrap" id="all">
                                     <div id="checkAll" class="hidden">
                                         <label>
-                                            <input type="checkbox" id="check-all">
+                                            <input type="checkbox" class="check-btn">
                                             <span></span>
                                         </label>
                                     </div>
@@ -50,7 +50,7 @@
                                 <div role="tabpanel" class="tab-pane checkall-wrap" id="valid">
                                     <div id="checkAll" class="hidden">
                                         <label>
-                                            <input type="checkbox" id="check-all">
+                                            <input type="checkbox" class="check-btn">
                                             <span></span>
                                         </label>
                                     </div>
