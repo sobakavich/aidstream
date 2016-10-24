@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
  * return All field and data;
  * @param string $table_name
  * @param int    $id
- * @return json data
+ * @return json $data
  */
 class JsonController extends Controller
 {
@@ -18,7 +18,6 @@ class JsonController extends Controller
 
     public function index($table)
     {
-
         $result = DB::select(
             "select * FROM information_schema.columns 
               WHERE table_schema = 'public' 
@@ -28,6 +27,17 @@ class JsonController extends Controller
 
         foreach ($result as $item) {
             $json [$item->column_name] = $item->data_type;
+        }
+
+        return $json;
+    }
+
+    public function showData($table, $id)
+    {
+        $data = DB::table($table)->where('id', $id)->first();
+
+        foreach ($data as $item => $value){
+            $json [$item] = $value;
         }
 
         return $json;

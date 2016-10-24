@@ -13,6 +13,7 @@ $router->get(
 );
 
 $router->get('/generate/json/{table}', 'Generator\JsonController@index');
+$router->get('/generate/json/{table}/{id}', 'Generator\JsonController@showData');
 
 $router->get('/', 'HomeController@index');
 $router->get('home', 'HomeController@index');
