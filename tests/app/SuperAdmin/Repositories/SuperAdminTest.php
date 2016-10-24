@@ -73,6 +73,7 @@ class SuperAdminTest extends AidStreamTestCase
         $this->user->shouldReceive('getAttribute')->once()->with('id')->andReturn(1);
         $this->user->shouldReceive('firstOrNew')->once()->with(['org_id' => 1])->andReturnSelf();
         $this->user->shouldReceive('fill->save')->andReturn(true);
+        $this->user->shouldReceive('firstOrNew')->andReturnSelf();
         $this->settings->shouldReceive('firstOrNew')->once()->with(['organization_id' => 1])->andReturnSelf();
         $this->settings->shouldReceive('fill->save')->andReturn(true);
         $this->loggerInterface->shouldReceive('info')->once()->with('Organization information Updated');
