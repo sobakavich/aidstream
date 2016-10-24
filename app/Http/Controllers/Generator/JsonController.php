@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Generator;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use App\Services\Generator\Json;
 
 /**
  * return All field and data;
@@ -16,30 +16,19 @@ class JsonController extends Controller
 
     protected $json;
 
+    public function __construct(Json $json)
+    {
+        $this->json = $json;
+    }
+
     public function index($table)
     {
-        $result = DB::select(
-            "select * FROM information_schema.columns 
-              WHERE table_schema = 'public' 
-              AND table_name = :table",
-            ['table' => $table]
-        );
+        return $this->json->generatefield($table);
 
-        foreach ($result as $item) {
-            $json [$item->column_name] = $item->data_type;
-        }
-
-        return $json;
     }
 
     public function showData($table, $id)
     {
-        $data = DB::table($table)->where('id', $id)->first();
-
-        foreach ($data as $item => $value){
-            $json [$item] = $value;
-        }
-
-        return $json;
+        return $this->json->generateData($table, $id);
     }
 }
