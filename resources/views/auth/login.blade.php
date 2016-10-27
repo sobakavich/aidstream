@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary btn-submit">@lang('trans.login')</button>
+                                <button type="submit" id="loginbtn" class="btn btn-primary btn-submit">@lang('trans.login')</button>
                             </div>
                         </form>
                     </div>
