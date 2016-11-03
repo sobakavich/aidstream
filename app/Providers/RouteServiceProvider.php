@@ -50,6 +50,7 @@ class RouteServiceProvider extends ServiceProvider
                 require app_path('Http/routes/Superadmin/publishedFilesCorrection.php');
                 require app_path('Http/routes/settings.php');
                 require app_path('Http/routes/userOnBoarding.php');
+                require app_path('Http/routes/xmlImport.php');
             }
         );
     }
