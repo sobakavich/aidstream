@@ -87,8 +87,4 @@
     <script src="{{ asset('js/csvImporter/accordion.js') }}"></script>
     <script src="{{ asset('js/csvImporter/csvImportStatus.js') }}"></script>
     <script src="{{ asset('js/csvImporter/selectTabs.js') }}"></script>
-    <script>
-        var checkSessionRoute = '{{ route('activity.check-session-status')}}';
-    </script>
-    <script src=" {{ asset('js/csvImporter/checkSessionStatus.js') }}"></script>
 @stop

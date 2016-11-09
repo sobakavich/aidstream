@@ -36,14 +36,16 @@ var CsvImportStatusManager = {
 
                 transferComplete = null;
             }
+            var placeHolder = $('div#import-status-placeholder');
 
             if (r.status == 'Complete') {
                 transferComplete = true;
+                placeHolder.empty().append("<a href='/import-activity/import-status'>" + "Csv File Processing " + r.status + "</a>");
                 cancelButton.fadeIn('slow').removeClass('hidden');
                 checkAll.fadeIn('slow').removeClass('hidden');
+            } else if (r.status == 'Incomplete' || r.status == 'Processing') {
+                placeHolder.empty().append("<a href='/import-activity/import-status'>" + "Csv File Processing" + "</a>");
             }
-        }).error(function (error) {
-            // TODO: handle error
         });
     },
     getRemainingInvalidData: function () {

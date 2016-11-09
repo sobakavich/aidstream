@@ -144,7 +144,7 @@ class ImportManager
                 ]
             );
 
-            return $exception->getMessage();
+            return null;
         }
     }
 
@@ -254,8 +254,8 @@ class ImportManager
      */
     public function endImport()
     {
-        $this->sessionManager->forget('import-status');
-        $this->sessionManager->forget('filename');
+        session()->forget('import-status');
+        session()->forget('filename');
     }
 
     /**
@@ -334,7 +334,7 @@ class ImportManager
      */
     protected function completeImport()
     {
-        $this->sessionManager->put(['import-status' => 'Complete']);
+        session()->put(['import-status' => 'Complete']);
     }
 
     /**
@@ -537,6 +537,8 @@ class ImportManager
         $filePath = $this->getTemporaryFilepath('status.json');
 
         if (file_exists($filePath)) {
+            $this->fixStagingPermission($filePath);
+
             $jsonContents = file_get_contents($filePath);
             $contents     = json_decode($jsonContents, true);
 
@@ -548,5 +550,31 @@ class ImportManager
         }
 
         return false;
+    }
+
+    /**
+     * Check if an old import is on going.
+     *
+     * @return bool
+     */
+    protected function hasOldData()
+    {
+        if ($this->sessionManager->has('import-status') || $this->sessionManager->has('filename')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Clear old import data before another.
+     */
+    public function clearOldImport()
+    {
+        $this->removeImportDirectory();
+
+        if ($this->hasOldData()) {
+            $this->clearSession(['import-status', 'filename']);
+        }
     }
 }

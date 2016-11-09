@@ -68,7 +68,7 @@ class ImportController extends Controller
         $this->organizationManager = $organizationManager;
         $this->importManager       = $importManager;
         $this->middleware('auth');
-        $this->userId              = auth()->user()->id;
+        $this->userId              = $this->getUserId();
     }
 
     /**
@@ -134,6 +134,8 @@ class ImportController extends Controller
     {
         $file = $request->file('activity');
 
+        $this->importManager->clearOldImport();
+
         if ($this->importManager->storeCsv($file)) {
             $filename = $file->getClientOriginalName();
             $this->importManager->startImport($filename)
@@ -194,7 +196,7 @@ class ImportController extends Controller
             return response()->json($result);
         }
 
-        return response()->json(json_encode(['status' => 'Incomplete']));
+        return response()->json(json_encode(['status' => 'Processing']));
     }
 
     /**
@@ -204,6 +206,8 @@ class ImportController extends Controller
     public function getRemainingInvalidData()
     {
         $filepath = $this->importManager->getFilePath(false);
+
+        $this->fixStagingPermission($this->importManager->getTemporaryFilepath());
 
         if (file_exists($filepath)) {
             $activities = json_decode(file_get_contents($filepath), true);
@@ -297,7 +301,7 @@ class ImportController extends Controller
     public function cancel()
     {
         $this->importManager->removeImportDirectory();
-        $this->importManager->endImport();
+        $this->importManager->clearSession(['import-status', 'filename']);
 
         return redirect()->route('activity.upload-csv');
     }
@@ -347,5 +351,14 @@ class ImportController extends Controller
     {
         // TODO: Remove this.
         shell_exec(sprintf('chmod 777 -R %s', $path));
+    }
+
+    protected function getUserId()
+    {
+        if (auth()->check()) {
+            return auth()->user()->id;
+        }
+
+        return null;
     }
 }
