@@ -1,22 +1,22 @@
 <?php namespace App\Services\CsvImporter\Queue;
 
+use App\Services\CsvImporter\CsvResultProcessor;
 use Maatwebsite\Excel\Excel;
-use App\Services\CsvImporter\CsvProcessor;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use App\Services\CsvImporter\Queue\Jobs\ImportActivity;
+use App\Services\CsvImporter\Queue\Jobs\ImportResult;
 
 /**
  * Class Processor
  * @package App\Services\CsvImporter\Queue
  */
-class Processor
+class ResultProcessor
 {
     use DispatchesJobs;
 
     /**
-     * @var ImportActivity
+     * @var ImportResult
      */
-    protected $importActivity;
+    protected $importResult;
 
     /**
      * @var Excel
@@ -26,12 +26,7 @@ class Processor
     /**
      * Total no. of header present in basic csv.
      */
-    const BASIC_CSV_HEADERS_COUNT = 22;
-
-    /**
-     * Total no. of header present in basic with transaction csv.
-     */
-    const TRANSACTION_CSV_HEADERS_COUNT = 40;
+    const CSV_HEADERS_COUNT = 33;
 
     /**
      * Processor constructor.
@@ -50,16 +45,13 @@ class Processor
     public function pushIntoQueue($file, $filename)
     {
         $csv = $this->csvReader->load($file)->toArray();
-// TODO: remove this
 
-        $a = new CsvProcessor($csv);
+//        $a = new CsvResultProcessor($csv);
+//
+//        $a->handle(session('org_id'), auth()->user()->id);
 
-        $a->handle(session('org_id'), auth()->user()->id);
-
-// TODO: remove that
-
-//        $this->dispatch(
-//            new ImportActivity(new CsvProcessor($csv), $filename)
-//        );
+        $this->dispatch(
+            new ImportResult(new CsvResultProcessor($csv), $filename)
+        );
     }
 }

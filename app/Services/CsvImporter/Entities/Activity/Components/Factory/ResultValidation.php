@@ -8,7 +8,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * Class Validation
  * @package App\Services\CsvImporter\Entities\Activity\Components\Validators
  */
-class Validation extends Factory
+class ResultValidation extends Factory
 {
     /**
      * @var array
@@ -69,10 +69,6 @@ class Validation extends Factory
      */
     public function getValidatorInstance()
     {
-        if (!$this->data) {
-            $this->data = [];
-        }
-
         return $this->make($this->data, $this->rules, $this->messages);
     }
 
@@ -84,30 +80,26 @@ class Validation extends Factory
         $this->extend(
             'start_end_date',
             function ($attribute, $dates, $parameters, $validator) {
-                if ($dates && is_array($dates)) {
-                    $actual_start_date  = getVal($dates, ['actual_start_date', 0, 'date']);
-                    $actual_end_date    = getVal($dates, ['actual_end_date', 0, 'date']);
-                    $planned_start_date = getVal($dates, ['planned_start_date', 0, 'date']);
-                    $planned_end_date   = getVal($dates, ['planned_end_date', 0, 'date']);
+                $actual_start_date  = getVal($dates, ['actual_start_date', 0, 'date']);
+                $actual_end_date    = getVal($dates, ['actual_end_date', 0, 'date']);
+                $planned_start_date = getVal($dates, ['planned_start_date', 0, 'date']);
+                $planned_end_date   = getVal($dates, ['planned_end_date', 0, 'date']);
 
-                    if (($actual_start_date > $actual_end_date) && ($actual_start_date != "" && $actual_end_date != "")) {
-                        return false;
-                    } elseif (($planned_start_date > $planned_end_date) && ($planned_start_date != "" && $planned_end_date != "")) {
-                        return false;
-                    } elseif (($actual_start_date > $planned_end_date) && ($actual_start_date != "" && $planned_end_date != "")
-                        && ($actual_end_date == "" && $planned_start_date == "")
-                    ) {
-                        return false;
-                    } elseif (($planned_start_date > $actual_end_date) && ($planned_start_date != "" && $actual_end_date != "")
-                        && ($planned_end_date == "" && $actual_start_date == "")
-                    ) {
-                        return false;
-                    }
-
-                    return true;
+                if (($actual_start_date > $actual_end_date) && ($actual_start_date != "" && $actual_end_date != "")) {
+                    return false;
+                } elseif (($planned_start_date > $planned_end_date) && ($planned_start_date != "" && $planned_end_date != "")) {
+                    return false;
+                } elseif (($actual_start_date > $planned_end_date) && ($actual_start_date != "" && $planned_end_date != "")
+                    && ($actual_end_date == "" && $planned_start_date == "")
+                ) {
+                    return false;
+                } elseif (($planned_start_date > $actual_end_date) && ($planned_start_date != "" && $actual_end_date != "")
+                    && ($planned_end_date == "" && $actual_start_date == "")
+                ) {
+                    return false;
                 }
 
-                return false;
+                return true;
             }
         );
 
@@ -130,29 +122,23 @@ class Validation extends Factory
         $this->extend(
             'multiple_activity_date',
             function ($attribute, $dates, $parameters, $validator) {
-                if ($dates && is_array($dates)) {
-                    foreach ($dates as $activityDate) {
-                        if (count($activityDate) > 1) {
-                            return false;
-                        }
+                foreach ($dates as $activityDate) {
+                    if (count($activityDate) > 1) {
+                        return false;
                     }
-
-                    return true;
                 }
 
-                return false;
+                return true;
             }
         );
 
         $this->extend(
             'start_date_required',
             function ($attribute, $dates, $parameters, $validator) {
-                if (is_array($dates)) {
-                    if (array_key_exists('actual_start_date', $dates) || array_key_exists('planned_start_date', $dates)) {
-                        return true;
-                    }
-
-                    return false;
+                if (array_key_exists('actual_start_date', $dates)
+                    || array_key_exists('planned_start_date', $dates)
+                ) {
+                    return true;
                 }
 
                 return false;
@@ -163,9 +149,9 @@ class Validation extends Factory
             'sector_percentage_sum',
             function ($attribute, $value, $parameters, $validator) {
                 $totalPercentage = [];
-
-                if ($value && is_array($value)) {
-                    array_walk($value, function ($element) use (&$totalPercentage) {
+                array_walk(
+                    $value,
+                    function ($element) use (&$totalPercentage) {
                         $sectorVocabulary = (integer) $element['sector_vocabulary'];
                         $sectorPercentage = $element['percentage'];
 
@@ -174,18 +160,15 @@ class Validation extends Factory
                         } else {
                             $totalPercentage[$sectorVocabulary] = $sectorPercentage;
                         }
-                    });
-
-                    foreach ($totalPercentage as $key => $percentage) {
-                        if ($percentage != "" && $percentage != 100) {
-                            return false;
-                        }
                     }
-
-                    return true;
+                );
+                foreach ($totalPercentage as $key => $percentage) {
+                    if ($percentage != "" && $percentage != 100) {
+                        return false;
+                    }
                 }
 
-                return false;
+                return true;
             }
         );
 
@@ -193,23 +176,19 @@ class Validation extends Factory
             'percentage_sum',
             function ($attribute, $values, $parameters, $validator) {
                 $totalPercentage = 0;
-                if ($values) {
-                    foreach ($values as $value) {
-                        $percentage = $value['percentage'];
-                        $totalPercentage += $percentage;
-                    }
-                    if (count($values) == 1 && $totalPercentage == 0) {
-                        return true;
-                    }
-
-                    if ($totalPercentage != 100) {
-                        return false;
-                    }
-
+                foreach ($values as $value) {
+                    $percentage = $value['percentage'];
+                    $totalPercentage += $percentage;
+                }
+                if (count($values) == 1 && $totalPercentage == 0) {
                     return true;
                 }
 
-                return false;
+                if ($totalPercentage != 100) {
+                    return false;
+                }
+
+                return true;
             }
         );
 
@@ -229,19 +208,16 @@ class Validation extends Factory
             function ($attribute, $values, $parameters, $validator) {
                 list($identifierIndex, $narrativeIndex) = $parameters;
                 $isValid = false;
+                foreach ($values as $key => $value) {
+                    list($identifier, $narratives) = [getVal($value, [$identifierIndex], ''), getVal($value, [$narrativeIndex], [])];
 
-                if ($values) {
-                    foreach ($values as $key => $value) {
-                        list($identifier, $narratives) = [getVal($value, [$identifierIndex], ''), getVal($value, [$narrativeIndex], [])];
+                    foreach ($narratives as $index => $narrative) {
+                        $narrativeValue = getVal($narrative, ['narrative']);
 
-                        foreach ($narratives as $index => $narrative) {
-                            $narrativeValue = getVal($narrative, ['narrative']);
-
-                            if (!$identifier && !$narrativeValue) {
-                                return false;
-                            } else {
-                                $isValid = true;
-                            }
+                        if (!$identifier && !$narrativeValue) {
+                            return false;
+                        } else {
+                            $isValid = true;
                         }
                     }
                 }
@@ -371,7 +347,6 @@ class Validation extends Factory
                 return false;
             }
         );
-
         $this->extendImplicit(
             'only_one_among',
             function ($attribute, $values, $parameters, $validator) {
