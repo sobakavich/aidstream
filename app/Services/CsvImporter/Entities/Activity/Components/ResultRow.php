@@ -9,7 +9,6 @@ use App\Services\CsvImporter\Entities\Row;
  */
 class ResultRow extends Row
 {
-
     /**
      * Directory where the validated Csv data is written before import.
      */
@@ -25,7 +24,11 @@ class ResultRow extends Row
      */
     const INVALID_CSV_FILE = 'invalid.json';
 
+    /**
+     * Template file for the Result element.
+     */
     const RESULT_TEMPLATE_FILE = '/Services/CsvImporter/Entities/Activity/Components/Elements/Foundation/Template/Result.json';
+
     /**
      * @var array
      */
@@ -173,18 +176,37 @@ class ResultRow extends Row
     protected $userId;
 
     /**
+     * @var
+     */
+    protected $rowTracker = [];
+
+    /**
+     * @var
+     */
+    protected $index;
+
+    /**
+     * @var int
+     */
+    protected $resultRowCount = 0;
+
+    /**
      * ResultRow constructor.
      * @param            $fields
      * @param            $organizationId
      * @param            $userId
+     * @param            $rowTracker
+     * @param            $index
      * @param Validation $factory
      */
-    public function __construct($fields, $organizationId, $userId, Validation $factory)
+    public function __construct($fields, $organizationId, $userId, $rowTracker, $index, Validation $factory)
     {
-        $this->fields          = $fields;
-        $this->organizationId  = $organizationId;
-        $this->userId          = $userId;
-        $this->factory         = $factory;
+        $this->fields         = $fields;
+        $this->organizationId = $organizationId;
+        $this->userId         = $userId;
+        $this->factory        = $factory;
+        $this->rowTracker     = $rowTracker;
+        $this->index          = $index;
     }
 
     /**
@@ -192,14 +214,26 @@ class ResultRow extends Row
      */
     protected function groupValues()
     {
-        $index = - 1;
-        foreach ($this->fields['measure'] as $i => $row) {
+        $index              = - 1;
+        $indicatorFrequency = 0;
 
+        foreach ($this->fields['measure'] as $i => $row) {
+            $this->rowTracker['total_row_count'] ++;
+            $this->resultRowCount ++;
             if (!$this->isSameEntity($i)) {
                 $index ++;
+                if ($index > 0) {
+                    $this->rowTracker['result'][$this->index]['indicator_frequency'][] = $indicatorFrequency;
+                    $indicatorFrequency                                                = 0;
+                }
             }
+            $indicatorFrequency ++;
             $this->setValue($index, $i);
         }
+
+        $this->rowTracker['result'][$this->index]['result_rows']           = $this->resultRowCount;
+        $this->rowTracker['result'][$this->index]['indicator_frequency'][] = $indicatorFrequency;
+        $this->rowTracker['result'][$this->index]['indicator_count']       = $index + 1;
     }
 
     /**
@@ -223,8 +257,8 @@ class ResultRow extends Row
      */
     protected function isSameEntity($i)
     {
-        if ((is_null($this->fields[$this->resultFields['indicator'][0]][$i]) || $this->fields[$this->resultFields['indicator'][0]][$i] == '')
-            && (is_null($this->fields[$this->resultFields['indicator'][1]][$i]) || $this->fields[$this->resultFields['indicator'][1]][$i] == '')
+        if ((is_null($this->fields['measure'][$i]) || $this->fields['measure'][$i] == '')
+            && (is_null($this->fields['ascending'][$i]) || $this->fields['ascending'][$i] == '')
         ) {
             return true;
         }
@@ -232,9 +266,12 @@ class ResultRow extends Row
         return false;
     }
 
+    /**
+     *
+     */
     protected function loadTemplate()
     {
-        $path = app_path(self::RESULT_TEMPLATE_FILE);
+        $path       = app_path(self::RESULT_TEMPLATE_FILE);
         $this->data = json_decode(file_get_contents($path), true);
     }
 
@@ -260,7 +297,6 @@ class ResultRow extends Row
              ->setTitle()
              ->setDescription()
              ->setIndicator();
-//        dd($this->data);
     }
 
     /**
@@ -366,8 +402,7 @@ class ResultRow extends Row
         $ascending = getVal($this->indicators[$index], ['ascending'], []);
         foreach ($ascending as $values) {
             if (!is_null($values)) {
-                $value = $this->isBoolean($values);
-//                dd($ascending, $value);
+                $value                                        = $this->isBoolean($values);
                 $this->data['indicator'][$index]['ascending'] = $value;
             }
         }
@@ -528,8 +563,11 @@ class ResultRow extends Row
     protected function groupPeriods()
     {
         foreach ($this->indicators as $indicatorIndex => $values) {
-            $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
-            $this->indicators[$indicatorIndex]['period'] = $grouping;
+            $grouping                                                                                   = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields]);
+            $periods                                                                                    = $grouping->groupValues();
+            $this->indicators[$indicatorIndex]['period']                                                = $periods;
+            $this->rowTracker['result'][$this->index]['indicator'][$indicatorIndex]['period_count']     = $grouping->periodCount();
+            $this->rowTracker['result'][$this->index]['indicator'][$indicatorIndex]['period_frequency'] = $grouping->periodFrequency();
         }
     }
 
@@ -825,12 +863,8 @@ class ResultRow extends Row
         $this->validator = $this->factory->sign($this->data())->with($this->rules(), $this->messages())->getValidatorInstance();
 
         $this->setValidity();
-
+        $this->trackRow();
         $this->recordErrors();
-
-//        dd($this);
-
-//        dd($this->validator);
 
         return $this;
     }
@@ -842,6 +876,8 @@ class ResultRow extends Row
     {
         $this->makeDirectoryIfNonExistent()
              ->writeCsvDataAsJson($this->getCsvFilepath());
+
+        return $this->rowTracker;
     }
 
 
@@ -867,31 +903,29 @@ class ResultRow extends Row
             }
         }
 
-        $rules['type']                                                   = sprintf('required|in:%s', $this->resultTypeCodeList());
-        $rules['aggregation_status']                                     = 'boolean';
-        $rules['title.*.narrative.0.narrative']                          = 'required';
-        $rules['title.*.narrative.0.language']                           = sprintf('in:%s', $this->languageCodeList());
-        $rules['description.*.narrative.0.language']                     = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.measure']                                    = sprintf('required|in:%s', $this->indicatorMeasureCodeList());
-        $rules['indicator.*.ascending']                                  = 'boolean';
-        $rules['indicator.*.title.*.narrative.0.narrative']              = 'required';
-        $rules['indicator.*.title.*.narrative.0.language']               = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.description.*.narrative.0.language']         = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.reference.*.vocabulary']                     = sprintf('required|in:%s', $this->indicatorVocabularyCodeList());
-        $rules['indicator.*.reference.*.code']                           = 'required';
-        $rules['indicator.*.reference.*.indicator_uri']                  = 'url';
-        $rules['indicator.*.baseline.0.year']                            = 'required|integer';
-        $rules['indicator.*.baseline.0.value']                           = 'required';
-        $rules['indicator.*.baseline.0.comment.*.narrative.0.narrative'] = 'required';
-        $rules['indicator.*.baseline.0.comment.*.narrative.0.language']  = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.period.*.period_start.0.date']               = 'required|date_format:Y-m-d';
-//        $rules['indicator.*.period.*.period_end.0.date']                       = 'required|date_format:Y-m-d|after:period_start';
+        $rules['type']                                                         = sprintf('required|in:%s', $this->resultTypeCodeList());
+        $rules['aggregation_status']                                           = 'boolean';
+        $rules['title.*.narrative.0.narrative']                                = 'required';
+        $rules['title.*.narrative.0.language']                                 = sprintf('in:%s', $this->languageCodeList());
+        $rules['description.*.narrative.0.language']                           = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.measure']                                          = sprintf('required|in:%s', $this->indicatorMeasureCodeList());
+        $rules['indicator.*.ascending']                                        = 'boolean';
+        $rules['indicator.*.title.*.narrative.0.narrative']                    = 'required';
+        $rules['indicator.*.title.*.narrative.0.language']                     = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.description.*.narrative.0.language']               = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.reference.*.vocabulary']                           = sprintf('required|in:%s', $this->indicatorVocabularyCodeList());
+        $rules['indicator.*.reference.*.code']                                 = 'required';
+        $rules['indicator.*.reference.*.indicator_uri']                        = 'url';
+        $rules['indicator.*.baseline.0.year']                                  = 'required|integer';
+        $rules['indicator.*.baseline.0.value']                                 = 'required';
+        $rules['indicator.*.baseline.0.comment.*.narrative.0.narrative']       = 'required';
+        $rules['indicator.*.baseline.0.comment.*.narrative.0.language']        = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.period.*.period_start.0.date']                     = 'required|date_format:Y-m-d';
         $rules['indicator.*.period.*.target.0.value']                          = 'required';
         $rules['indicator.*.period.*.target.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
         $rules['indicator.*.period.*.actual.0.value']                          = 'required';
         $rules['indicator.*.period.*.actual.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
 
-//        dd($rules);
         return $rules;
     }
 
@@ -900,35 +934,35 @@ class ResultRow extends Row
      */
     protected function messages()
     {
-        $this->messages['type.required']                                                   = 'Result type is required.';
-        $this->messages['type.in']                                                         = 'Invalid result type.';
-        $this->messages['title.*.narrative.0.narrative.required']                          = 'Title is required.';
-        $this->messages['title.*.narrative.0.language.in']                                 = 'Title language should be in the LanguageCodeList.';
-        $this->messages['description.*.narrative.0.language.in']                           = 'Description language should be in the LanguageCodeList.';
-        $this->messages['indicator.*.measure.required']                                    = 'Indicator measure is required.';
-        $this->messages['indicator.*.measure.in']                                          = 'Indicator measure should be from Indicator Measure CodeList.';
-        $this->messages['indicator.*.ascending.boolean']                                   = 'Indicator ascending should be true or false.';
-        $this->messages['indicator.*.title.*.narrative.0.narrative.required']              = 'Indicator title is required.';
-        $this->messages['indicator.*.title.*.narrative.0.language.in']                     = 'Indicator title language should be in the LanguageCodeList.';
-        $this->messages['indicator.*.description.*.narrative.0.language.in']               = 'Indicator description language should be in the LanguageCodeList.';
-        $this->messages['indicator.*.reference.*.vocabulary.required']                     = 'Reference vocabulary is required.';
-        $this->messages['indicator.*.reference.*.vocabulary.in']                           = 'Reference vocabulary should be in the Indicator Vocabulary CodeList.';
-        $this->messages['indicator.*.reference.*.code.required']                           = 'Reference code is required.';
-        $this->messages['indicator.*.reference.*.indicator_uri.url']                       = 'Invalid reference url.';
-        $this->messages['indicator.*.baseline.0.year.required']                            = 'Indicator baseline year is required.';
-        $this->messages['indicator.*.baseline.0.year.integer']                             = 'Indicator baseline year should be integer.';
-        $this->messages['indicator.*.baseline.0.value.required']                           = 'Indicator baseline value is required.';
-        $this->messages['indicator.*.baseline.0.comment.*.narrative.0.narrative.required'] = 'Baseline comment narrative is required.';
-        $this->messages['indicator.*.baseline.0.comment.*.narrative.0.language.in']        = 'Baseline comment language is invalid.';
-        $this->messages['indicator.*.period.*.period_start.0.date.required']               = 'Period start date is required.';
-        $this->messages['indicator.*.period.*.period_start.0.date.date_format']            = 'Invalid period start date, correct format Y-m-d.';
-        $this->messages['indicator.*.period.*.period_end.0.date.required']                 = 'The period_end date is required.';
-        $this->messages['indicator.*.period.*.period_end.0.date.date_format']              = 'Invalid period end date, correct format Y-m-d.';
-        $this->messages['indicator.*.period.*.period_end.0.date.after']                    = sprintf('Period end date should be after the period start date.');
-        $this->messages['indicator.*.period.*.target.0.value.required']                    = 'Target value is required.';
-        $this->messages['indicator.*.period.*.target.0.comment.*.narrative.0.language.in'] = 'Target comment language should be in the LanguageCodeList.';
-        $this->messages['indicator.*.period.*.actual.0.value.required']                    = 'Actual value is required.';
-        $this->messages['indicator.*.period.*.actual.0.comment.*.narrative.0.language.in'] = 'Actual comment language should be in the LanguageCodeList.';
+        $this->messages['type.required']                                                   = 'Result type is required';
+        $this->messages['type.in']                                                         = 'Invalid result type';
+        $this->messages['aggregation_status.boolean']                                      = 'Aggregation status type should be true or false';
+        $this->messages['title.*.narrative.0.narrative.required']                          = 'Title is required';
+        $this->messages['title.*.narrative.0.language.in']                                 = 'Title language should be in the language code list';
+        $this->messages['description.*.narrative.0.language.in']                           = 'Description language should be in the language code list';
+        $this->messages['indicator.*.measure.required']                                    = 'Indicator measure is required';
+        $this->messages['indicator.*.measure.in']                                          = 'Indicator measure should be from indicator measure code list';
+        $this->messages['indicator.*.ascending.boolean']                                   = 'Indicator ascending should be true or false';
+        $this->messages['indicator.*.title.*.narrative.0.narrative.required']              = 'Indicator title is required';
+        $this->messages['indicator.*.title.*.narrative.0.language.in']                     = 'Indicator title language should be in the language code list';
+        $this->messages['indicator.*.description.*.narrative.0.language.in']               = 'Indicator description language should be in the language code list';
+        $this->messages['indicator.*.reference.*.vocabulary.required']                     = 'Reference vocabulary is required';
+        $this->messages['indicator.*.reference.*.vocabulary.in']                           = 'Reference vocabulary should be in the indicator vocabulary code list';
+        $this->messages['indicator.*.reference.*.code.required']                           = 'Reference code is required';
+        $this->messages['indicator.*.reference.*.indicator_uri.url']                       = 'Invalid reference url';
+        $this->messages['indicator.*.baseline.0.year.required']                            = 'Indicator baseline year is required';
+        $this->messages['indicator.*.baseline.0.year.integer']                             = 'Indicator baseline year should be integer';
+        $this->messages['indicator.*.baseline.0.value.required']                           = 'Indicator baseline value is required';
+        $this->messages['indicator.*.baseline.0.comment.*.narrative.0.narrative.required'] = 'Baseline comment narrative is required';
+        $this->messages['indicator.*.baseline.0.comment.*.narrative.0.language.in']        = 'Baseline comment language is invalid';
+        $this->messages['indicator.*.period.*.period_start.0.date.required']               = 'Period start date is required';
+        $this->messages['indicator.*.period.*.period_start.0.date.date_format']            = 'Invalid period start date, correct format Y-m-d';
+        $this->messages['indicator.*.period.*.period_end.0.date.required']                 = 'The period_end date is required';
+        $this->messages['indicator.*.period.*.period_end.0.date.date_format']              = 'Invalid period end date, correct format Y-m-d';
+        $this->messages['indicator.*.period.*.target.0.value.required']                    = 'Target value is required';
+        $this->messages['indicator.*.period.*.target.0.comment.*.narrative.0.language.in'] = 'Target comment language should be in the language code list';
+        $this->messages['indicator.*.period.*.actual.0.value.required']                    = 'Actual value is required';
+        $this->messages['indicator.*.period.*.actual.0.comment.*.narrative.0.language.in'] = 'Actual comment language should be in the language code list';
 
         return $this->messages;
 
@@ -1072,12 +1106,15 @@ class ResultRow extends Row
     protected function recordErrors()
     {
         foreach ($this->validator->errors()->getMessages() as $errors) {
-            foreach ($errors as $error) {
+            foreach ($errors as $index => $error) {
                 $this->errors[] = $error;
             }
         }
-
         $this->errors = array_unique($this->errors);
+
+        foreach ($this->errors() as $index => $error) {
+            $this->errors[$index] = $error . ' on row ' . $this->rowTracker['error_rows'][$this->index][$index] . '.';
+        }
 
         return $this;
     }
@@ -1139,13 +1176,98 @@ class ResultRow extends Row
      */
     private function isBoolean($values)
     {
-        if (((int) $values === 1) || ($values === true) || ($values === TRUE) || ($values === "true") || ($values === "TRUE")) {
-            return 1;
-        } else if (((int) $values === 0) || ($values === false) || ($values === FALSE) || ($values === "false") || ($values === "FALSE")) {
-            return 0;
+        if (((int) $values === 1) || ($values === true) || ($values === true) || ($values === "true") || ($values === "TRUE") || ($values === "yes") || ($values === "YES")) {
+            return true;
+        }
+
+        if ((preg_match('/^0$/', $values)) || ($values === false) || ($values === false) || ($values === "false") || ($values === "FALSE") || ($values === "no") || ($values === "NO")) {
+            return false;
         }
 
         return $values;
     }
 
+    /**
+     * Track the current row.
+     */
+    protected function trackRow()
+    {
+        $failedRules = $this->validator->failed();
+        foreach ($failedRules as $index => $failedRule) {
+            $combined = [];
+
+            $array = explode('.', $index);
+
+            $indexes = array_values(
+                array_where(
+                    $array,
+                    function ($key, $value) {
+                        return $this->is_odd($key, true);
+                    }
+                )
+            );
+
+            $columns = array_values(
+                array_where(
+                    $array,
+                    function ($key, $value) {
+                        return $this->is_odd($key, false);
+                    }
+                )
+            );
+
+            foreach ($columns as $k => $v) {
+                if (array_key_exists($k, $indexes)) {
+                    $combined[$v] = $indexes[$k];
+                } else {
+                    $combined[$v] = 0;
+                }
+            }
+
+            $errorRow = $this->rowTracker['total_row_count'] - $this->rowTracker['result'][$this->index]['result_rows'] + 1;
+
+            foreach ($combined as $key => $value) {
+
+                if ($key == 'indicator') {
+                    if ($value > 0) {
+                        while ($value > 0) {
+                            $errorRow += $this->rowTracker['result'][$this->index]['indicator_frequency'][$value - 1];
+                            $value --;
+                        }
+                    }
+                } else {
+                    if ($key == 'period') {
+                        if ($value > 0) {
+                            while ($value > 0) {
+                                $errorRow += $this->rowTracker['result'][$this->index]['indicator'][$combined['indicator']]['period_frequency'][$value - 1];
+                            }
+                        }
+                    } else {
+                        $errorRow += $value;
+                    }
+                }
+
+
+            }
+
+            $this->rowTracker['error_rows'][$this->index][] = $errorRow;
+        }
+
+    }
+
+    /**
+     * Check if the provided key is odd.
+     *
+     * @param $key
+     * @param $bool
+     * @return bool
+     */
+    public function is_odd($key, $bool)
+    {
+        if ($bool) {
+            return ($key % 2 == 0) ? false : true;
+        }
+
+        return ($key % 2 == 0) ? true : false;
+    }
 }

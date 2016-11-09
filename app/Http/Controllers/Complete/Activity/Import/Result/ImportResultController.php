@@ -102,7 +102,6 @@ class ImportResultController extends Controller
 
         if ($this->importManager->storeCsv($file)) {
             $filename = $file->getClientOriginalName();
-//            $this->importManager->process($filename);
             $this->importManager->startImport($filename)
                                 ->fireCsvUploadEvent($filename);
 
@@ -142,8 +141,6 @@ class ImportResultController extends Controller
      */
     public function status($activityId)
     {
-//        $validData   = $this->readValidData(); // read valid.json
-//        $invalidData = $this->readInvalidData(); // read invalid.json
         return view('Activity.csvImporter.result.status', compact('activityId'));
     }
 
@@ -176,8 +173,8 @@ class ImportResultController extends Controller
         $filepath = $this->importManager->getFilePath(false);
 
         if (file_exists($filepath)) {
-            $results = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->importManager->getTemporaryFilepath('invalid-temp.json');
+            $results  = json_decode(file_get_contents($filepath), true);
+            $tempPath = $this->importManager->getTemporaryFilepath('invalid-temp.json');
 
             if (file_exists($tempPath)) {
                 $old   = json_decode(file_get_contents($tempPath), true);
@@ -186,8 +183,7 @@ class ImportResultController extends Controller
 
                 File::put($tempPath, json_encode($total));
 
-                $results = $diff;
-
+                $results  = $diff;
                 $response = ['render' => view('Activity.csvImporter.result.invalid', compact('results'))->render()];
 
                 return response()->json($response);
@@ -212,8 +208,8 @@ class ImportResultController extends Controller
         $filepath = $this->importManager->getFilePath(true);
 
         if (file_exists($filepath)) {
-            $results = json_decode(file_get_contents($filepath), true);
-            $tempPath   = $this->importManager->getTemporaryFilepath('valid-temp.json');
+            $results  = json_decode(file_get_contents($filepath), true);
+            $tempPath = $this->importManager->getTemporaryFilepath('valid-temp.json');
 
             if (file_exists($tempPath)) {
                 $old   = json_decode(file_get_contents($tempPath), true);

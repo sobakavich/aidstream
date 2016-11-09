@@ -33,12 +33,6 @@
 
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="all">
-                                    {{--<div id="checkAll" class="hidden">--}}
-                                        {{--<label>--}}
-                                            {{--<input type="checkbox" class="check-btn">--}}
-                                            {{--<span></span>--}}
-                                        {{--</label>--}}
-                                    {{--</div>--}}
                                     <form action="{{ route('activity.result.import-validated-results', $activityId) }}" method="POST">
                                         {{ csrf_field() }}
                                         <div class="all-data"></div>
@@ -47,12 +41,6 @@
                                 </div>
 
                                 <div role="tabpanel" class="tab-pane" id="valid">
-                                    {{--<div id="checkAll" class="hidden">--}}
-                                        {{--<label>--}}
-                                            {{--<input type="checkbox" class="check-btn">--}}
-                                            {{--<span></span>--}}
-                                        {{--</label>--}}
-                                    {{--</div>--}}
                                     <form action="{{ route('activity.result.import-validated-results', $activityId) }}" method="POST">
                                         {{ csrf_field() }}
                                         <div class="valid-data"></div>

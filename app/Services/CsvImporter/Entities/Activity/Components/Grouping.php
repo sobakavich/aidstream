@@ -1,18 +1,45 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components;
 
+/**
+ * Class Grouping
+ * @package App\Services\CsvImporter\Entities\Activity\Components
+ */
 class Grouping
 {
-
+    /**
+     * @var array
+     */
     protected $grouped = [];
+
+    /**
+     * @var array
+     */
     protected $fields;
+
+    /**
+     * @var array
+     */
     protected $keys;
 
+    /**
+     * @var int
+     */
+    protected $periodCount = 1;
+
+    /**
+     * @var array
+     */
+    protected $periodFrequency = [];
+
+    /**
+     * Grouping constructor.
+     * @param array $fields
+     * @param array $keys
+     */
     public function __construct(array $fields, array $keys)
     {
         $this->fields = $fields;
         $this->keys   = $keys;
-//        dd($fields, $keys);
-
     }
 
     /**
@@ -21,18 +48,28 @@ class Grouping
     public function groupValues()
     {
         $index = - 1;
+        $periodFrequency = 0;
         foreach ($this->fields[$this->keys[0]] as $i => $row) {
 
             if (!$this->isSameEntity($i)) {
                 $index ++;
+                if($index > 0){
+                    $this->periodFrequency[] = $periodFrequency;
+                    $periodFrequency = 0;
+                }
             }
             $this->setValue($index, $i);
+            $periodFrequency++;
         }
+        $this->periodFrequency[] = $periodFrequency;
+        $this->periodCount += $index;
+
         return $this->grouped;
     }
 
     /**
      * Check if the next row is new row or not.
+     * @param $i
      * @return bool
      */
     protected function isSameEntity($i)
@@ -57,5 +94,21 @@ class Grouping
                 $this->grouped[$index][$row][] = $value[$i];
             }
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function periodCount()
+    {
+        return $this->periodCount;
+    }
+
+    /**
+     * @return array
+     */
+    public function periodFrequency()
+    {
+        return $this->periodFrequency;
     }
 }
