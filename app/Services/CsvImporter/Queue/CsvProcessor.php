@@ -1,4 +1,4 @@
-<?php namespace App\Services\CsvImporter;
+<?php namespace App\Services\CsvImporter\Queue;
 
 use App\Services\CsvImporter\Entities\Activity\Activity;
 use App\Services\CsvImporter\Traits\ChecksCsvHeaders;
@@ -83,16 +83,6 @@ class CsvProcessor
 
             file_put_contents($filepath . '/' . $filename, json_encode(['mismatch' => true]));
         }
-    }
-
-    /**
-     * Fix file permission while on staging environment
-     * @param $path
-     */
-    protected function fixStagingPermission($path)
-    {
-        // TODO: Remove this.
-        shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 
     /**

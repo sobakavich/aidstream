@@ -1,7 +1,7 @@
-<?php namespace App\Services\CsvImporter\Queue;
+<?php namespace App\Services\CsvImporter;
 
 use Maatwebsite\Excel\Excel;
-use App\Services\CsvImporter\CsvProcessor;
+use App\Services\CsvImporter\Queue\CsvProcessor;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Services\CsvImporter\Queue\Jobs\ImportActivity;
 

@@ -1,7 +1,7 @@
 <?php namespace App\Services\CsvImporter\Queue\Jobs;
 
 use App\Jobs\Job;
-use App\Services\CsvImporter\CsvProcessor;
+use App\Services\CsvImporter\Queue\CsvProcessor;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
@@ -63,7 +63,6 @@ class ImportActivity extends Job implements ShouldQueue
         $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId, 'status.json'));
         file_put_contents($path, json_encode(['status' => 'Complete']));
 
-        $this->fixStagingPermission($path);
         $uploadedFilepath = $this->getStoredCsvFilePath($this->filename);
 
         if (file_exists($uploadedFilepath)) {
@@ -71,16 +70,6 @@ class ImportActivity extends Job implements ShouldQueue
         }
 
         $this->delete();
-    }
-
-    /**
-     * Fix file permission while on staging environment
-     * @param $path
-     */
-    protected function fixStagingPermission($path)
-    {
-        // TODO: Remove this.
-        shell_exec(sprintf('chmod 777 -R %s', $path));
     }
 
     /**

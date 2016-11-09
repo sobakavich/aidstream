@@ -6,7 +6,6 @@ use Psr\Log\LoggerInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Session\SessionManager;
-use App\Services\CsvImporter\Queue\Processor;
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Support\Facades\File as FileFacade;
 use App\Core\V201\Repositories\Activity\Transaction;

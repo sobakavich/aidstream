@@ -67,8 +67,8 @@ class ImportController extends Controller
         $this->form                = $form;
         $this->organizationManager = $organizationManager;
         $this->importManager       = $importManager;
-        $this->userId              = auth()->user()->id;
         $this->middleware('auth');
+        $this->userId              = auth()->user()->id;
     }
 
     /**
