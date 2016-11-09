@@ -50,9 +50,14 @@ class Processor
     public function pushIntoQueue($file, $filename)
     {
         $csv = $this->csvReader->load($file)->toArray();
+// TODO: remove this
+
         $a = new CsvProcessor($csv);
 
         $a->handle(session('org_id'), auth()->user()->id);
+
+// TODO: remove that
+
 //        $this->dispatch(
 //            new ImportActivity(new CsvProcessor($csv), $filename)
 //        );

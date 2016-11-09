@@ -92,6 +92,7 @@ class ImportResultController extends Controller
 
     /**
      * Import Activities into the database.
+     * @param              $activityId
      * @param ImportResult $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

@@ -1,7 +1,7 @@
 <?php namespace App\Services\CsvImporter\Queue\Jobs;
 
 use App\Jobs\Job;
-use App\Services\CsvImporter\CsvProcessor;
+use App\Services\CsvImporter\CsvResultProcessor;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
@@ -11,9 +11,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class ImportResult extends Job implements ShouldQueue
 {
     /**
-     * @var CsvProcessor
+     * @var CsvResultProcessor
      */
-    protected $csvProcessor;
+    protected $csvResultProcessor;
 
     /**
      * Current Organization's Id.
@@ -40,12 +40,12 @@ class ImportResult extends Job implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param CsvProcessor $csvProcessor
+     * @param CsvResultProcessor $csvResultProcessor
      * @param              $filename
      */
-    public function __construct(CsvProcessor $csvProcessor, $filename)
+    public function __construct(CsvResultProcessor $csvResultProcessor, $filename)
     {
-        $this->csvProcessor   = $csvProcessor;
+        $this->csvResultProcessor   = $csvResultProcessor;
         $this->organizationId = session('org_id');
         $this->userId         = $this->getUserId();
         $this->filename       = $filename;
@@ -58,9 +58,9 @@ class ImportResult extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $this->csvProcessor->handle($this->organizationId, $this->userId);
+        $this->csvResultProcessor->handle($this->organizationId, $this->userId);
 
-        $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/', $this->organizationId, $this->userId, 'status.json'));
+        $path = storage_path(sprintf('%s/%s/%s/%s', 'csvImporter/tmp/result/', $this->organizationId, $this->userId, 'status.json'));
         file_put_contents($path, json_encode(['status' => 'Complete']));
 
         $this->fixStagingPermission($path);

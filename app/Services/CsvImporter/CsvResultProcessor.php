@@ -1,8 +1,7 @@
 <?php namespace App\Services\CsvImporter;
 
-use App\Services\CsvImporter\Queue\Exceptions\HeaderMismatchException;
-use Exception;
-use Maatwebsite\Excel\Excel;
+use App\Services\CsvImporter\Entities\Activity\Result;
+use App\Services\CsvImporter\Traits\ChecksCsvHeaders;
 
 /**
  * Class CsvProcessor
@@ -10,6 +9,8 @@ use Maatwebsite\Excel\Excel;
  */
 class CsvResultProcessor
 {
+    use ChecksCsvHeaders;
+
     /**
      * @var
      */
@@ -23,7 +24,7 @@ class CsvResultProcessor
     /**
      * @var
      */
-    public $model;
+    public $activity;
 
     /**
      * @var string
@@ -51,26 +52,21 @@ class CsvResultProcessor
      */
     public function handle($organizationId, $userId)
     {
-        try {
-            if ($this->isCorrectCsv()) {
-                $this->groupValues();
+        if ($this->isCorrectCsv()) {
+            $this->groupValues();
 
-                $this->make('App\Services\CsvImporter\Entities\Activity\Activity', ['organization_id' => $organizationId, 'user_id' => $userId]);
+            $this->initActivity(['organization_id' => $organizationId, 'user_id' => $userId]);
 
-                $this->model->process();
-            } else {
-                $filepath = storage_path('csvImporter/tmp/result/' . $organizationId . '/' . $userId);
-                $filename = 'header_mismatch.json';
+            $this->activity->process();
+        } else {
+            $filepath = storage_path('csvImporter/tmp/result/' . $organizationId . '/' . $userId);
+            $filename = 'header_mismatch.json';
 
-                if (!file_exists($filepath)) {
-                    mkdir($filepath, 0777, true);
-                }
-
-                file_put_contents($filepath . '/' . $filename, json_encode(['mismatch' => true]));
-//                $this->fixStagingPermission($filepath . '/'. $filename);
+            if (!file_exists($filepath)) {
+                mkdir($filepath, 0777, true);
             }
-        } catch (Exception $exception) {
-            dd($exception->getMessage());
+
+            file_put_contents($filepath . '/' . $filename, json_encode(['mismatch' => true]));
         }
     }
 
@@ -85,18 +81,14 @@ class CsvResultProcessor
     }
 
     /**
-     * Make objects for the provided class.
-     * @param       $class
+     * Initialize an object for the Activity class with the provided options.
+     *
      * @param array $options
      */
-    protected function make($class, array $options = [])
+    protected function initActivity(array $options = [])
     {
-        try {
-            if (class_exists($class)) {
-                $this->model = app()->make($class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id'])]);
-            }
-        } catch (Exception $exception) {
-            dd($exception->getMessage());
+        if (class_exists(Result::class)) {
+            $this->activity = app()->make(Result::class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id'])]);
         }
     }
 
@@ -156,7 +148,6 @@ class CsvResultProcessor
     /**
      * Check if the headers are correct according to the provided template.
      * @return bool
-     * @throws HeaderMismatchException
      */
     protected function isCorrectCsv()
     {
@@ -164,44 +155,6 @@ class CsvResultProcessor
             return false;
         }
 
-        $csvHeaders = array_keys($this->csv[0]);
-        if (count($csvHeaders) == self::CSV_HEADERS_COUNT) {
-            $templateHeaders = $this->loadCsv('V201', 'result');
-            $templateHeaders = array_keys($templateHeaders[0]);
-            $diffHeaders     = array_diff($csvHeaders, $templateHeaders);
-
-            return $this->isSameCsvHeader($diffHeaders);
-        }
-
-        return false;
-    }
-
-    /**
-     * Load Csv template
-     * @param $version
-     * @param $filename
-     * @return array
-     */
-    protected function loadCsv($version, $filename)
-    {
-        $excel = app()->make(Excel::class);
-
-        $file = $excel->load(app_path(sprintf('Services/CsvImporter/Templates/Activity/%s/%s.csv', $version, $filename)));
-
-        return $file->toArray();
-    }
-
-    /**
-     * Check if the difference of the csv headers is empty.
-     * @param array $diffHeaders
-     * @return bool
-     */
-    protected function isSameCsvHeader(array $diffHeaders)
-    {
-        if (empty($diffHeaders)) {
-            return true;
-        }
-
-        return false;
+        return $this->hasCorrectHeaders();
     }
 }

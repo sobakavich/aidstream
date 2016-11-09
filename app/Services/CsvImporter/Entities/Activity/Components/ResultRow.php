@@ -11,7 +11,7 @@ class ResultRow extends Row
     /**
      * Base Namespace for the Activity Element classes.
      */
-    const BASE_NAMESPACE = 'App\Services\CsvImporter\Entities\Activity\Components\Elements\Results';
+    const BASE_NAMESPACE = 'App\Services\CsvImporter\Entities\Activity\Components\Elements';
 
     /**
      * Number of headers for the Activity Csv.
@@ -34,43 +34,11 @@ class ResultRow extends Row
     const INVALID_CSV_FILE = 'invalid.json';
 
     /**
-     * Activity Elements for an Activity Row.
+     * Result Elements for an Result Row.
      * @var array
      */
     protected $activityElements = [
-        'type',
-        'aggregationStatus',
-        'title',
-        'titleDescription',
-        'description',
-        'descriptionLanguage',
-        'measure',
-        'ascending',
-        'indicatorTitle',
-        'indicatorTitleLanguage',
-        'indicatorDescription',
-        'indicatorDescriptionLanguage',
-        'referenceVocabulary',
-        'referenceCode',
-        'referenceURI',
-        'baselineYear',
-        'baselineValue',
-        'baselineComment',
-        'baselineCommentLanguage',
-        'periodStart',
-        'periodEnd',
-        'targetValue',
-        'targetLocationRef',
-        'targetDimensionName',
-        'targetDimensionValue',
-        'targetComment',
-        'targetCommentLanguage',
-        'actualValue',
-        'actualLocationRef',
-        'actualDimensionName',
-        'actualDimensionValue',
-        'actualComment',
-        'actualCommentLanguage'
+        'result',
 
     ];
 

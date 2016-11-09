@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Excel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Services\CsvImporter\Queue\Contracts\ProcessorInterface;
+use App\Services\CsvImporter\Queue\ResultProcessor;
 
 /**
  * Class ImportResultManager
@@ -47,7 +47,7 @@ class ImportResultManager
     protected $excel;
 
     /**
-     * @var ProcessorInterface
+     * @var ResultProcessor
      */
     protected $processor;
 
@@ -93,7 +93,7 @@ class ImportResultManager
     /**
      * ImportManager constructor.
      * @param Excel                  $excel
-     * @param ProcessorInterface     $processor
+     * @param ResultProcessor     $processor
      * @param LoggerInterface        $logger
      * @param SessionManager         $sessionManager
      * @param ActivityRepository     $activityRepo
@@ -103,7 +103,7 @@ class ImportResultManager
      */
     public function __construct(
         Excel $excel,
-        ProcessorInterface $processor,
+        ResultProcessor $processor,
         LoggerInterface $logger,
         SessionManager $sessionManager,
         ActivityRepository $activityRepo,
