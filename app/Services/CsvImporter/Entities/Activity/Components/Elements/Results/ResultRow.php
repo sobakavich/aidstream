@@ -6,42 +6,22 @@ use App\Services\CsvImporter\Entities\Row;
  * Class ActivityRow
  * @package App\Services\CsvImporter\Entities\Activity\Components
  */
-class ActivityRow extends Row
+class ResultRow extends Row
 {
     /**
      * Base Namespace for the Activity Element classes.
      */
-    const BASE_NAMESPACE = 'App\Services\CsvImporter\Entities\Activity\Components\Elements';
-
-    /**
-     * Namespace for the Transaction Element classes.
-     */
-    const TRANSACTION_NAMESPACE = 'App\Services\CsvImporter\Entities\Activity\Components\Elements\Transaction';
+    const BASE_NAMESPACE = 'App\Services\CsvImporter\Entities\Activity\Components\Elements\Results';
 
     /**
      * Number of headers for the Activity Csv.
      */
-    const ACTIVITY_HEADER_COUNT = 25;
-
-    /**
-     * Number of headers for the Activity Csv with Transactions.
-     */
-    const TRANSACTION_HEADER_COUNT = 43;
-
-    /**a
-     * Number of headers for the Activity Csv with Transactions and Other Fields.
-     */
-    const ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT = 53;
-
-    /**
-     * Number of headers for the Activity Csv with Other Fields.
-     */
-    const ACTIVITY_OTHERS_HEADER_COUNT = 35;
+    const RESULT_HEADER_COUNT = 33;
 
     /**
      * Directory where the validated Csv data is written before import.
      */
-    const CSV_DATA_STORAGE_PATH = 'csvImporter/tmp';
+    const CSV_DATA_STORAGE_PATH = 'csvImporter/tmp/result';
 
     /**
      * File in which the valida Csv data is written before import.
@@ -58,60 +38,48 @@ class ActivityRow extends Row
      * @var array
      */
     protected $activityElements = [
-        'identifier',
+        'type',
+        'aggregationStatus',
         'title',
-        'defaultFieldValues',
+        'titleDescription',
         'description',
-        'activityStatus',
-        'activityDate',
-        'participatingOrganization',
-        'recipientCountry',
-        'recipientRegion',
-        'sector'
-    ];
+        'descriptionLanguage',
+        'measure',
+        'ascending',
+        'indicatorTitle',
+        'indicatorTitleLanguage',
+        'indicatorDescription',
+        'indicatorDescriptionLanguage',
+        'referenceVocabulary',
+        'referenceCode',
+        'referenceURI',
+        'baselineYear',
+        'baselineValue',
+        'baselineComment',
+        'baselineCommentLanguage',
+        'periodStart',
+        'periodEnd',
+        'targetValue',
+        'targetLocationRef',
+        'targetDimensionName',
+        'targetDimensionValue',
+        'targetComment',
+        'targetCommentLanguage',
+        'actualValue',
+        'actualLocationRef',
+        'actualDimensionName',
+        'actualDimensionValue',
+        'actualComment',
+        'actualCommentLanguage'
 
-    /**
-     * Transaction Elements for an Activity Row.
-     * @var string
-     */
-    protected $transactionElement = 'transaction';
-
-    /**
-     * @var array
-     */
-    protected $transactionRows = [];
-
-    /**
-     * @var array
-     */
-    protected $transactionCSVHeaders = [
-        'transaction_internal_reference',
-        'transaction_type',
-        'transaction_date',
-        'transaction_value',
-        'transaction_value_date',
-        'transaction_description',
-        'transaction_provider_organisation_identifier',
-        'transaction_provider_organisation_type',
-        'transaction_provider_organisation_activity_identifier',
-        'transaction_provider_organisation_description',
-        'transaction_receiver_organisation_identifier',
-        'transaction_receiver_organisation_type',
-        'transaction_receiver_organisation_activity_identifier',
-        'transaction_receiver_organisation_description',
-        'transaction_sector_vocabulary',
-        'transaction_sector_code',
-        'transaction_recipient_country_code',
-        'transaction_recipient_region_code'
     ];
 
     /**
      * @var array
      */
     protected $otherElements = ['activityScope', 'budget', 'policyMarker'];
-
     /**
-     * All Elements for an Activity Row.
+     * All Elements for an Result Row.
      * @var
      */
     protected $elements;
@@ -119,12 +87,12 @@ class ActivityRow extends Row
     /**
      * @var
      */
-    protected $identifier;
+    protected $type;
 
     /**
      * @var
      */
-    protected $defaultFieldValues;
+    protected $aggregationStatus;
 
     /**
      * @var
@@ -134,42 +102,92 @@ class ActivityRow extends Row
     /**
      * @var
      */
+    public $titleDescription;
+
+    /**
+     * @var
+     */
     protected $description;
 
     /**
      * @var
      */
-    protected $activityStatus;
+    protected $descriptionLanguage;
 
     /**
      * @var
      */
-    protected $activityDate;
+    protected $measure;
 
     /**
      * @var
      */
-    protected $participatingOrganization;
+    protected $ascending;
 
     /**
      * @var
      */
-    public $recipientCountry;
+    protected $indicatorTitle;
 
     /**
      * @var
      */
-    public $recipientRegion;
+    protected $indicatorTitleLanguage;
 
     /**
      * @var
      */
-    public $sector;
+    protected $indicatorDescription;
+
+    /**
+     * @var
+     */
+    protected $indicatorDescriptionLanguage;
+
+    /**
+     * @var
+     */
+    public $referenceVocabulary;
+
+    /**
+     * @var
+     */
+    public $referenceCode;
+
+    /**
+     * @var
+     */
+    public $referenceURI;
+
+    /**
+     * @var
+     */
+    public $baselineYear;
+
+    /**
+     * @var
+     */
+    public $baselineValue;
+
+    /**
+     * @var
+     */
+    public $baselineComment;
+
+    /**
+     * @var
+     */
+    public $baselineCommentLanguage;
+
+    /**
+     * @var
+     */
+    public $periodStart;
 
     /**
      * @var array
      */
-    protected $transaction = [];
+    protected $periodEnd;
 
     /**
      * @var
@@ -223,12 +241,9 @@ class ActivityRow extends Row
     public function init()
     {
         $method = $this->getMethodNameByType();
-
         if (method_exists($this, $method)) {
             $this->$method();
         }
-
-        dd($this);
     }
 
     /**
@@ -353,7 +368,7 @@ class ActivityRow extends Row
     }
 
     /**
-     * Instantiate the Other Elements classes.
+     *
      */
     protected function makeOtherFieldsElements()
     {
