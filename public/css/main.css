@@ -7950,6 +7950,10 @@ body > .skiptranslate iframe {
            -o-transition: all .2s;
               transition: all .2s; }
 
+.status-wrapper input[disabled] + span:before {
+  background: #d8d8d8 !important;
+  border-color: #d8d8d8 !important; }
+
 .status-wrapper .invalid-data h3 input[type=checkbox] + span:before {
   background: #eee; }
 

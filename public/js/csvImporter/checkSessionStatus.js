@@ -1,23 +1,29 @@
 $(document).ready(function () {
     var status;
 
-    var timer = setInterval(function () {
-        $.ajax({
-            url: checkSessionRoute,
-            method: 'GET'
-        }).success(function (response) {
-            var placeHolder = $('div#import-status-placeholder');
+    if (!importing) {
+        var timer = setInterval(function () {
+            $.ajax({
+                url: checkSessionRoute,
+                method: 'GET'
+            }).success(function (response) {
+                var placeHolder = $('div#import-status-placeholder');
 
-            if (response.status == 'Complete') {
-                placeHolder.empty().append("<a href='/import-activity/import-status'>" + "Csv File Processing " + response.status + "</a>");
-                status = 'Complete';
-            } else if (response.status == 'Processing') {
-                placeHolder.empty().append("<a href='/import-activity/import-status'>" + "Csv File " + response.status + "</a>");
+                if (response.status == 'Complete') {
+                    placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing " + response.status + " <small>(Please click here to view the processed Activities.)</small>" + "</a>");
+                    status = 'Complete';
+                } else if (response.status == 'Processing') {
+                    placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File " + response.status + " <small>(Please click here to view the processed Activities.)</small>" + "</a>");
+                }
+            });
+
+            if (status == 'Complete') {
+                clearInterval(timer);
             }
-        });
+        }, 1000);
+    } else {
+        var placeHolder = $('div#import-status-placeholder');
 
-        if (status == 'Complete') {
-            clearInterval(timer);
-        }
-    }, 3000);
+        placeHolder.empty().append("<a href='/import-activity/import-status'>" + "CSV File Processing Complete.  " + "<small>(Please click here to view the processed Activities.)</small>" + "</a>");
+    }
 });

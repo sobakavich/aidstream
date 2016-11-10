@@ -324,6 +324,11 @@ class ActivityRow extends Row
         foreach ($this->activityElements() as $element) {
             if (class_exists($namespace = $this->getNamespace($element, self::BASE_NAMESPACE))) {
                 $this->$element   = $this->make($namespace, $this->fields());
+
+                if ($element === 'identifier') {
+                    $this->$element->setOrganization($this->organizationId);
+                }
+
                 $this->elements[] = $element;
             }
         }

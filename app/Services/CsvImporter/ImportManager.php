@@ -343,6 +343,14 @@ class ImportManager
      */
     public function getSessionStatus()
     {
+        if ($this->checkStatusFile()) {
+            $status = file_get_contents($this->getTemporaryFilepath('status.json'));
+
+            if (json_decode($status, true)['status'] == 'Complete') {
+                return 'Complete';
+            }
+        }
+
         if ($this->sessionManager->has('import-status')) {
             return $this->sessionManager->get('import-status');
         }

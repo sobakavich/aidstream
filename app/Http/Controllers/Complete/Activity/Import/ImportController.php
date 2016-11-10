@@ -120,9 +120,13 @@ class ImportController extends Controller
             return redirect('/settings')->withResponse($response);
         }
 
+        if (session()->has('import-status') && session()->get('import-status') == 'Complete') {
+            $importing = true;
+        }
+
         $form = $this->form->createForm();
 
-        return view('Activity.uploader', compact('form'));
+        return view('Activity.uploader', compact('form', 'importing'));
     }
 
     /**
@@ -176,7 +180,13 @@ class ImportController extends Controller
      */
     public function status()
     {
-        return view('Activity.csvImporter.status');
+        if (session()->has('import-status') && session()->get('import-status') == 'Complete') {
+            $data = $this->importManager->getData();
+        } elseif (!session()->has('import-status')) {
+            return redirect()->route('activity.upload-csv')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'No on going processes.']]]);
+        }
+
+        return view('Activity.csvImporter.status', compact('data'));
     }
 
     /**

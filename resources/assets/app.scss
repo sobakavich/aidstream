@@ -6025,6 +6025,10 @@ body > .skiptranslate iframe {
       }
     }
   }
+  input[disabled] + span:before {
+    background: #d8d8d8 !important;
+    border-color: #d8d8d8 !important;
+  }
 }
 
 .status-wrapper .invalid-data h3 input[type=checkbox] + span:before {
