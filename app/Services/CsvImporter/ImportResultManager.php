@@ -142,7 +142,7 @@ class ImportResultManager
                 ]
             );
 
-            return $exception->getMessage();
+            dd($exception);
         }
     }
 

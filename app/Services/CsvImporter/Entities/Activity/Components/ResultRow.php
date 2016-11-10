@@ -1,5 +1,6 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components;
 
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Result;
 use App\Services\CsvImporter\Entities\Row;
 
 /**
@@ -39,7 +40,6 @@ class ResultRow extends Row
      */
     protected $activityElements = [
         'result',
-
     ];
 
     /**
@@ -189,6 +189,8 @@ class ResultRow extends Row
      */
     protected $userId;
 
+    protected $result;
+
     /**
      * ActivityRow constructor.
      * @param $fields
@@ -200,7 +202,8 @@ class ResultRow extends Row
         $this->fields         = $fields;
         $this->organizationId = $organizationId;
         $this->userId         = $userId;
-        $this->init();
+//        dd($this->fields());
+//        $this->init();
     }
 
     /**
@@ -208,6 +211,7 @@ class ResultRow extends Row
      */
     public function init()
     {
+        dd($this->fields);
         $method = $this->getMethodNameByType();
         if (method_exists($this, $method)) {
             $this->$method();
@@ -252,6 +256,10 @@ class ResultRow extends Row
      */
     public function process()
     {
+//        dd($this->fields());
+        $this->result = app()->make(Result::class, [$this->fields]);
+        dd($this->result);
+
         return $this;
     }
 

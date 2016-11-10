@@ -1,7 +1,7 @@
 <?php namespace App\Services\CsvImporter;
 
-use App\Services\CsvImporter\Entities\Activity\Result;
-use App\Services\CsvImporter\Traits\ChecksCsvHeaders;
+use App\Services\CsvImporter\Entities\Activity\Result\Result;
+use Maatwebsite\Excel\Excel;
 
 /**
  * Class CsvProcessor
@@ -9,8 +9,6 @@ use App\Services\CsvImporter\Traits\ChecksCsvHeaders;
  */
 class CsvResultProcessor
 {
-    use ChecksCsvHeaders;
-
     /**
      * @var
      */
@@ -56,7 +54,7 @@ class CsvResultProcessor
             $this->groupValues();
 
             $this->initActivity(['organization_id' => $organizationId, 'user_id' => $userId]);
-
+//            dd($this->data);
             $this->activity->process();
         } else {
             $filepath = storage_path('csvImporter/tmp/result/' . $organizationId . '/' . $userId);
@@ -156,5 +154,80 @@ class CsvResultProcessor
         }
 
         return $this->hasCorrectHeaders();
+    }
+
+    //ChecksCsvHeaders
+    /**
+     * Load Csv template
+     * @param $version
+     * @param $filename
+     * @return array
+     */
+    protected function loadTemplate($version, $filename)
+    {
+        $excel = app()->make(Excel::class);
+
+        $file = $excel->load(app_path(sprintf('Services/CsvImporter/Templates/Activity/%s/%s.csv', $version, $filename)));
+
+        return $file->toArray();
+    }
+
+    /**
+     * Check if the difference of the csv headers is empty.
+     * @param array $diffHeaders
+     * @return bool
+     */
+    protected function isSameCsvHeader(array $diffHeaders)
+    {
+        if (empty($diffHeaders)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the headers are correct for the uploaded Csv File.
+     * @param        $csvHeaders
+     * @param        $templateFileName
+     * @param string $version
+     * @return bool
+     */
+    protected function checkHeadersFor($csvHeaders, $templateFileName, $version = 'V201')
+    {
+        $templateHeaders = $this->loadTemplate($version, $templateFileName);
+//        dd($templateHeaders);
+        $templateHeaders = array_keys($templateHeaders[0]);
+        $diffHeaders     = array_diff($csvHeaders, $templateHeaders);
+
+        return $this->isSameCsvHeader($diffHeaders);
+    }
+
+    /**
+     * Check if the headers for the uploaded Csv file matches with the provided header count.
+     *
+     * @param $actualHeaders
+     * @param $providedHeaderCount
+     * @return bool
+     */
+    protected function headerCountMatches(array $actualHeaders, $providedHeaderCount)
+    {
+        return (count($actualHeaders) == $providedHeaderCount);
+    }
+
+    /**
+     * Check if the uploaded Csv file has correct headers.
+     *
+     * @return bool
+     */
+    protected function hasCorrectHeaders()
+    {
+        $csvHeaders = array_keys($this->csv[0]);
+
+        if ($this->headerCountMatches($csvHeaders, self::CSV_HEADERS_COUNT)) {
+            return $this->checkHeadersFor($csvHeaders, 'result', 'V201');
+        }
+
+        return false;
     }
 }

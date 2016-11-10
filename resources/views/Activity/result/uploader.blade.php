@@ -52,5 +52,5 @@
     <script>
         var checkSessionRoute = '{{ route('activity.result.check-session-status')}}';
     </script>
-    <script src=" {{ asset('js/cssvImporter/checkSessionStatus.js') }}"></script>
+    <script src=" {{ asset('js/csvImporter/checkSessionStatus.js') }}"></script>
 @stop
