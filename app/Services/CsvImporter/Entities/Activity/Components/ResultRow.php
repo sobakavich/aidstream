@@ -255,7 +255,7 @@ class ResultRow extends Row
              ->setAggregationStatus()
              ->setTitle()
              ->setDescription()
-             ->setIndicator();
+            /*->setIndicator()*/;
 
         dd($this->fields, $this->data);
 
@@ -283,40 +283,14 @@ class ResultRow extends Row
 
     protected function setTitle()
     {
-        $narrative = getVal($this->fields, [$this->resultFields[2]], []);
-        $language = getVal($this->fields, [$this->resultFields[3]], []);
-
-        foreach ($narrative as $index => $values) {
-            if (!is_null($values)) {
-                $this->setNarrative($this->resultFields[2], $index, $values, 'narrative');
-            }
-        }
-
-        foreach ($language as $index => $values) {
-            if (!is_null($values)) {
-                $this->setNarrative($this->resultFields[2], $index, $values, 'language');
-            }
-        }
+        $this->setNarrative('title', $this->resultFields[2], $this->resultFields[3]);
 
         return $this;
     }
 
     protected function setDescription()
     {
-        $narrative = getVal($this->fields, [$this->resultFields[4]], []);
-        $language = getVal($this->fields, [$this->resultFields[5]], []);
-
-        foreach ($narrative as $index => $values) {
-            if (!is_null($values)) {
-                $this->setNarrative($this->resultFields[4], $index, $values, 'narrative');
-            }
-        }
-
-        foreach ($language as $index => $values) {
-            if (!is_null($values)) {
-                $this->setNarrative($this->resultFields[4], $index, $values, 'language');
-            }
-        }
+        $this->setNarrative('description', $this->resultFields[4], $this->resultFields[5]);
 
         return $this;
     }
@@ -373,7 +347,7 @@ class ResultRow extends Row
 
     protected function setIndicatorDescription()
     {
-        
+
     }
 
     protected function setIndicatorBaseline()
@@ -436,9 +410,24 @@ class ResultRow extends Row
 
     }
 
-    protected function setNarrative($key, $index, $value, $narrative)
+    protected function setNarrative($key, $narrativeKey, $languageKey)
     {
-        $this->data[$key][$index]['narrative'][0][$narrative] = $value;
+
+        $narrative = getVal($this->fields, [$narrativeKey], []);
+        $language = getVal($this->fields, [$languageKey], []);
+
+        foreach ($narrative as $index => $value) {
+            if (!is_null($value)) {
+                $this->data[$key][$index]['narrative'][0]['narrative'] = $value;
+            }
+        }
+
+        foreach ($language as $index => $value) {
+            if (!is_null($value)) {
+                $this->data[$key][$index]['narrative'][0]['language'] = $value;
+            }
+        }
+
     }
 
     /**
