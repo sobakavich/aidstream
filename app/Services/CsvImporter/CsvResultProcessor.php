@@ -27,7 +27,7 @@ class CsvResultProcessor
     /**
      * @var string
      */
-    protected $csvIdentifier = 'type';
+    protected $csvIdentifier = ['type', 'aggregation_status'];
 
     /**
      * Total no. of header present in basic csv.
@@ -136,8 +136,11 @@ class CsvResultProcessor
      */
     protected function isSameEntity($row)
     {
-        if (is_null($row[$this->csvIdentifier]) || $row[$this->csvIdentifier] == '') {
-            return true;
+
+        if (is_null($row[$this->csvIdentifier[0]]) || $row[$this->csvIdentifier[0]] == '') {
+            if (is_null($row[$this->csvIdentifier[1]]) || $row[$this->csvIdentifier[1]] == '') {
+                return true;
+            }
         }
 
         return false;

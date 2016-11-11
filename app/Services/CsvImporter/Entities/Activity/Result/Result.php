@@ -31,7 +31,7 @@ class Result extends ResultCsv
     {
         foreach ($this->rows() as $row) {
             $this->initialize($row)
-                 ->process()
+                 ->mapResultRow()
                  ->validate()
                  ->validateUnique($this->csvRows)
                  ->keep();

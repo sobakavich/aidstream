@@ -5,6 +5,44 @@ use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 
 class Result extends Element
 {
+
+    protected $resultFields = [
+        'type',
+        'aggregationStatus',
+        'title',
+        'titleLanguage',
+        'description',
+        'descriptionLanguage',
+        'measure',
+        'ascending',
+        'indicatorTitle',
+        'indicatorTitleLanguage',
+        'indicatorDescription',
+        'indicatorDescriptionLanguage',
+        'referenceVocabulary',
+        'referenceCode',
+        'referenceURI',
+        'baselineYear',
+        'baselineValue',
+        'baselineComment',
+        'baselineCommentLanguage',
+        'periodStart',
+        'periodEnd',
+        'targetValue',
+        'targetLocationRef',
+        'targetDimensionName',
+        'targetDimensionValue',
+        'targetComment',
+        'targetCommentLanguage',
+        'actualValue',
+        'actualLocationRef',
+        'actualDimensionName',
+        'actualDimensionValue',
+        'actualComment',
+        'actualCommentLanguage'
+
+    ];
+
     /**
      * @var array
      */
@@ -69,6 +107,6 @@ class Result extends Element
 
     protected function loadTemplate()
     {
-        dd(json_decode(file_get_contents(app_path('Services/CsvImporter/Entities/Activity/Components/Elements/Foundation/Template/Result.json')), true));
+        return json_decode(file_get_contents(app_path('Services/CsvImporter/Entities/Activity/Components/Elements/Foundation/Template/Result.json')), true);
     }
 }

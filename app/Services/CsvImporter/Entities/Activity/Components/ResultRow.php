@@ -1,14 +1,13 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components;
 
-use App\Services\CsvImporter\Entities\Activity\Components\Elements\Result;
 use App\Services\CsvImporter\Entities\Row;
-
 /**
  * Class ActivityRow
  * @package App\Services\CsvImporter\Entities\Activity\Components
  */
 class ResultRow extends Row
 {
+
     /**
      * Base Namespace for the Activity Element classes.
      */
@@ -33,14 +32,6 @@ class ResultRow extends Row
      * File in which the invalid Csv data is written before import.
      */
     const INVALID_CSV_FILE = 'invalid.json';
-
-    /**
-     * Result Elements for an Result Row.
-     * @var array
-     */
-    protected $activityElements = [
-        'result',
-    ];
 
     /**
      * @var array
@@ -191,6 +182,43 @@ class ResultRow extends Row
 
     protected $result;
 
+    protected $resultFields = [
+        'type',
+        'aggregation_status',
+        'title',
+        'title_language',
+        'description',
+        'description_language',
+        'measure',
+        'ascending',
+        'indicator_title',
+        'indicator_title_language',
+        'indicator_description',
+        'indicator_description_language',
+        'reference_vocabulary',
+        'reference_code',
+        'reference_uri',
+        'baseline_year',
+        'baseline_value',
+        'baseline_comment',
+        'baseline_comment_language',
+        'period_start',
+        'period_end',
+        'target_value',
+        'target_location_ref',
+        'target_dimension_name',
+        'target_dimension_value',
+        'target_comment',
+        'target_comment_language',
+        'actual_value',
+        'actual_location_ref',
+        'actual_dimension_name',
+        'actual_dimension_value',
+        'actual_comment',
+        'actual_comment_language'
+
+    ];
+
     /**
      * ActivityRow constructor.
      * @param $fields
@@ -202,52 +230,215 @@ class ResultRow extends Row
         $this->fields         = $fields;
         $this->organizationId = $organizationId;
         $this->userId         = $userId;
-//        dd($this->fields());
-//        $this->init();
     }
 
     /**
-     * Initialize the Row object.
+     * @return $this
+     * @internal param $fields
      */
-    public function init()
+    public function mapResultRow()
     {
-        dd($this->fields);
-        $method = $this->getMethodNameByType();
-        if (method_exists($this, $method)) {
-            $this->$method();
+        $this->data = $this->loadTemplate();
+        $this->beginMapping();
+
+        return $this;
+    }
+
+    protected function loadTemplate()
+    {
+//        return json_decode(file_get_contents(app_path('Services/CsvImporter/Entities/Activity/Components/Elements/Foundation/Template/Result.json')), true);
+    }
+
+    protected function beginMapping()
+    {
+        $this->setType()
+             ->setAggregationStatus()
+             ->setTitle()
+             ->setDescription()
+             ->setIndicator();
+
+        dd($this->fields, $this->data);
+
+    }
+
+    protected function setType()
+    {
+        $value = getVal($this->fields, [$this->resultFields[0]]);
+        if (!is_null($value)) {
+            $this->data[$this->resultFields[0]] = $value[0];
         }
+
+        return $this;
     }
 
-    /**
-     * Initiate the ActivityRow elements for Activity Csv.
-     */
-    public function activity()
+    protected function setAggregationStatus()
     {
-        $this->makeActivityElements();
+        $value = getVal($this->fields, [$this->resultFields[1]], []);
+        if (!is_null($value)) {
+            $this->data[$this->resultFields[1]] = $value[0];
+        }
+
+        return $this;
     }
 
-    /**
-     * Initiate the ActivityRow elements with Activity with Transactions Csv.
-     */
-    public function transaction()
+    protected function setTitle()
     {
-        $this->makeActivityElements()->makeTransactionElements();
+        $narrative = getVal($this->fields, [$this->resultFields[2]], []);
+        $language = getVal($this->fields, [$this->resultFields[3]], []);
+
+        foreach ($narrative as $index => $values) {
+            if (!is_null($values)) {
+                $this->setNarrative($this->resultFields[2], $index, $values, 'narrative');
+            }
+        }
+
+        foreach ($language as $index => $values) {
+            if (!is_null($values)) {
+                $this->setNarrative($this->resultFields[2], $index, $values, 'language');
+            }
+        }
+
+        return $this;
     }
 
-    /**
-     * Initiate the ActivityRow elements with Activity and Other Fields.
-     */
-    public function otherFields()
+    protected function setDescription()
     {
-        $this->makeActivityElements()->makeOtherFieldsElements();
+        $narrative = getVal($this->fields, [$this->resultFields[4]], []);
+        $language = getVal($this->fields, [$this->resultFields[5]], []);
+
+        foreach ($narrative as $index => $values) {
+            if (!is_null($values)) {
+                $this->setNarrative($this->resultFields[4], $index, $values, 'narrative');
+            }
+        }
+
+        foreach ($language as $index => $values) {
+            if (!is_null($values)) {
+                $this->setNarrative($this->resultFields[4], $index, $values, 'language');
+            }
+        }
+
+        return $this;
     }
 
-    /**
-     * Initiate the ActivityRow elements with Activity, Transaction and Other Fields.
-     */
-    public function otherFieldsWithTransaction()
+    protected function setIndicator()
     {
-        $this->makeActivityElements()->makeTransactionElements()->makeOtherFieldsElements();
+        $this->setIndicatorMeasure()
+             ->setIndicatorAscending()
+             ->setIndicatorTitle();
+        return $this;
+    }
+
+    protected function setIndicatorMeasure()
+    {
+        $measure = getVal($this->fields, [$this->resultFields[6]], []);
+        foreach ($measure as $index => $values) {
+            if (!is_null($values)) {
+                $this->data[$this->resultFields[6]][$index] = $values;
+            }
+        }
+        return $this;
+    }
+
+    protected function setIndicatorAscending()
+    {
+        $ascending = getVal($this->fields, [$this->resultFields[7]], []);
+        foreach ($ascending as $index => $values) {
+            if (!is_null($values)) {
+                $this->data[$this->resultFields[7]][$index] = $values;
+            }
+        }
+    return $this;
+    }
+
+    protected function setIndicatorTitle()
+    {
+        $narrative = getVal($this->fields, [$this->resultFields[4]], []);
+        $language = getVal($this->fields, [$this->resultFields[5]], []);
+
+        foreach ($narrative as $index => $values) {
+            if (!is_null($values)) {
+                $this->setNarrative($this->resultFields[4], $index, $values, 'narrative');
+            }
+        }
+
+        foreach ($language as $index => $values) {
+            if (!is_null($values)) {
+                $this->setNarrative($this->resultFields[4], $index, $values, 'language');
+            }
+        }
+
+        return $this;
+    }
+
+    protected function setIndicatorDescription()
+    {
+        
+    }
+
+    protected function setIndicatorBaseline()
+    {
+
+    }
+
+    protected function setIndicatorBaselineYear()
+    {
+
+    }
+
+    protected function setIndicatorBaselineValue()
+    {
+
+    }
+
+    protected function setIndicatorBaselineComment()
+    {
+
+    }
+
+    protected function setIndicatorPeriod()
+    {
+
+    }
+
+    protected function setIndicatorPeriodStart()
+    {
+
+    }
+
+    protected function setIndicatorPeriodEnd()
+    {
+
+    }
+
+    protected function setIndicatorPeriodTarget()
+    {
+
+    }
+
+    protected function setIndicatorPeriodTargetValue()
+    {
+
+    }
+
+    protected function setIndicatorPeriodTargetComment()
+    {
+
+    }
+
+    protected function setIndicatorPeriodActualValue()
+    {
+
+    }
+
+    protected function setIndicatorPeriodActualComment()
+    {
+
+    }
+
+    protected function setNarrative($key, $index, $value, $narrative)
+    {
+        $this->data[$key][$index]['narrative'][0][$narrative] = $value;
     }
 
     /**
@@ -257,10 +448,8 @@ class ResultRow extends Row
     public function process()
     {
 //        dd($this->fields());
-        $this->result = app()->make(Result::class, [$this->fields]);
-        dd($this->result);
+//        dd($this->result);
 
-        return $this;
     }
 
     /**
@@ -283,79 +472,13 @@ class ResultRow extends Row
              ->writeCsvDataAsJson($this->getCsvFilepath());
     }
 
-    /**
-     * Get the name of a method according to the type of uploaded Csv.
-     * @return null|string
-     */
-    protected function getMethodNameByType()
-    {
-        if (count($this->fields()) == self::ACTIVITY_HEADER_COUNT) {
-            return 'activity';
-        }
-
-        if (count($this->fields()) == self::TRANSACTION_HEADER_COUNT) {
-            return 'transaction';
-        }
-
-        if (count($this->fields()) == self::ACTIVITY_OTHERS_HEADER_COUNT) {
-            return 'otherFields';
-        }
-
-        if (count($this->fields()) == self::ACTIVITY_TRANSACTION_OTHERS_HEADER_COUNT) {
-            return 'otherFieldsWithTransaction';
-        }
-
-        return null;
-    }
 
     /**
-     * Instantiate the Activity Element classes.
-     * @return $this
+     * @return array
      */
-    protected function makeActivityElements()
+    protected function data()
     {
-        foreach ($this->activityElements() as $element) {
-            if (class_exists($namespace = $this->getNamespace($element, self::BASE_NAMESPACE))) {
-                $this->$element   = $this->make($namespace, $this->fields());
-                $this->elements[] = $element;
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Instantiate the Transaction Element classes.
-     * @return $this
-     */
-    protected function makeTransactionElements()
-    {
-        $this->mapTransactionData();
-
-        foreach ($this->transactionRows as $transactionRow) {
-            if (class_exists($namespace = $this->getNamespace($this->transactionElement(), self::BASE_NAMESPACE))) {
-                $this->transaction[] = $this->make($namespace, $transactionRow, $this);
-            }
-        }
-
-        $this->elements[] = $this->transactionElement();
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function makeOtherFieldsElements()
-    {
-        foreach ($this->otherElements() as $element) {
-            if (class_exists($namespace = $this->getNamespace($element, self::BASE_NAMESPACE))) {
-                $this->$element   = $this->make($namespace, $this->fields());
-                $this->elements[] = $element;
-            }
-        }
-
-        return $this;
+        return $this->data;
     }
 
     /**
@@ -486,29 +609,6 @@ class ResultRow extends Row
         }
 
         return storage_path(sprintf('%s/%s/%s/%s', self::CSV_DATA_STORAGE_PATH, $this->organizationId, $this->userId, self::INVALID_CSV_FILE));
-    }
-
-    /**
-     * Get the data in the current ActivityRow.
-     * @return array
-     */
-    protected function data()
-    {
-        $this->data = [];
-
-        foreach ($this->elements() as $element) {
-            if ($element == 'transaction') {
-                foreach ($this->$element as $transaction) {
-                    $this->data[$element][] = $transaction->data($transaction->pluckIndex());
-                }
-            } else {
-                $this->data[snake_case($element)] = ($element === 'identifier')
-                    ? $this->$element->data()
-                    : $this->$element->data(snake_case($this->$element->pluckIndex()));
-            }
-        }
-
-        return $this->data;
     }
 
     /**
@@ -648,5 +748,14 @@ class ResultRow extends Row
     protected function containsDuplicateActivities($commonIdentifierCount)
     {
         return ($commonIdentifierCount > 1);
+    }
+
+    /**
+     * Initialize the Row object.
+     * @return mixed
+     */
+    public function init()
+    {
+        // TODO: Implement init() method.
     }
 }
