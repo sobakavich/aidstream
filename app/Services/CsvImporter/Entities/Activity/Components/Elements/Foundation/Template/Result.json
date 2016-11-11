@@ -45,6 +45,13 @@
           ]
         }
       ],
+      "reference": [
+        {
+          "vocabulary": "",
+          "code": "",
+          "indicator_uri": ""
+        }
+      ],
       "baseline": [
         {
           "year": "",
