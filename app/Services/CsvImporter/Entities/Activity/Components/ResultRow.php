@@ -1,6 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components;
 
 use App\Services\CsvImporter\Entities\Row;
+use App\Services\CsvImporter\Entities\Activity\Components\Grouping;
 
 /**
  * Class ActivityRow
@@ -46,6 +47,7 @@ class ResultRow extends Row
 
     protected $indicators = [];
 
+    protected $periods = [];
     /**
      * @var
      */
@@ -355,7 +357,7 @@ class ResultRow extends Row
                  ->setReferenceCode($index)
                  ->setReferenceURI($index)
                  ->setIndicatorBaseline($index)
-            ;
+                 ->setIndicatorPeriod($index);
         }
 
         return $this;
@@ -484,49 +486,104 @@ class ResultRow extends Row
         return $this;
     }
 
-    protected function setIndicatorPeriod()
+    protected function setIndicatorPeriod($index)
     {
+        $this->periods = app()->make(Grouping::class, [$this->indicators, $this->resultFields['indicator']]);
+        $measure = getVal($this->indicators[$index], [$this->resultFields['indicator'][0]], []);
+        foreach ($measure as $i => $value) {
+            $this->setIndicatorPeriodStart($index, $i)
+                 ->setIndicatorPeriodEnd($index, $i)
+                 ->setIndicatorPeriodTarget($index, $i)
+                 ->setIndicatorPeriodActual($index, $i);
+        }
+
+        return $this;
+    }
+
+    protected function setIndicatorPeriodStart($index, $i)
+    {
+        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][13]])[$i];
+        if (!is_null($value)) {
+            $this->data['indicator'][$index]['period'][0]['period_start']['date'] = $value;
+        }
+
+        return $this;
+    }
+
+    protected function setIndicatorPeriodEnd($index, $i)
+    {
+        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][14]])[$i];
+        if (!is_null($value)) {
+            $this->data['indicator'][$index]['period'][0]['period_end']['date'] = $value;
+        }
+
+        return $this;
+    }
+
+    protected function setIndicatorPeriodTarget($index, $i)
+    {
+        $this->setIndicatorPeriodTargetValue($index, $i)
+//             ->setIndicatorPeriodTargetLocation()
+//             ->setIndicatorPeriodTargetDimension()
+             ->setIndicatorPeriodTargetComment($index, $i);
+
+        return $this;
 
     }
 
-    protected function setIndicatorPeriodStart()
+    protected function setIndicatorPeriodTargetValue($index, $i)
     {
+        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][15]])[$i];
+        if (!is_null($value)) {
+            $this->data['indicator'][$index]['period'][0]['target']['value'] = $value;
+        }
+
+        return $this;
 
     }
 
-    protected function setIndicatorPeriodEnd()
+    protected function setIndicatorPeriodTargetComment($index, $i)
     {
+        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][19]])[$i];
+        if (!is_null($value)) {
+            $this->setNarrative(['indicator', $index, 'period', $i, 'target', 0, 'comment'], $this->resultFields['indicator'][19], $this->resultFields['indicator'][20], $this->indicators[$index]);
+        }
+
+        return $this;
+    }
+
+    protected function setIndicatorPeriodActual($index, $i)
+    {
+        $this->setIndicatorPeriodTargetValue($index, $i)
+             ->setIndicatorPeriodTargetComment($index, $i);
+
+        return $this;
 
     }
 
-    protected function setIndicatorPeriodTarget()
+    protected function setIndicatorPeriodActualValue($index, $i)
     {
+        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][21]])[$i];
+        if (!is_null($value)) {
+            $this->data['indicator'][$index]['period'][0]['actual']['value'] = $value;
+        }
 
+        return $this;
     }
 
-    protected function setIndicatorPeriodTargetValue()
+    protected function setIndicatorPeriodActualComment($index, $i)
     {
+        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][25]])[$i];
+        if (!is_null($value)) {
+            $this->setNarrative(['indicator', $index, 'period', $i, 'actual', 0, 'comment'], $this->resultFields['indicator'][25], $this->resultFields['indicator'][26], $this->indicators[$index]);
+        }
 
-    }
-
-    protected function setIndicatorPeriodTargetComment()
-    {
-
-    }
-
-    protected function setIndicatorPeriodActualValue()
-    {
-
-    }
-
-    protected function setIndicatorPeriodActualComment()
-    {
-
+        return $this;
     }
 
     protected function setNarrative(array $key, $narrativeKey, $languageKey, $fields = null)
     {
-        if(is_null($fields)) {
+        if (is_null($fields)) {
             $data = $this->fields();
         } else {
             $data = $fields;
