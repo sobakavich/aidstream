@@ -1,5 +1,7 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components;
 
+use App\Services\CsvImporter\Entities\Activity\Components\Elements\Foundation\Iati\Element;
+use App\Services\CsvImporter\Entities\Activity\Components\Factory\Validation;
 use App\Services\CsvImporter\Entities\Row;
 use App\Services\CsvImporter\Entities\Activity\Components\Grouping;
 
@@ -7,7 +9,7 @@ use App\Services\CsvImporter\Entities\Activity\Components\Grouping;
  * Class ActivityRow
  * @package App\Services\CsvImporter\Entities\Activity\Components
  */
-class ResultRow extends Row
+class ResultRow
 {
 
     /**
@@ -39,6 +41,10 @@ class ResultRow extends Row
      * @var array
      */
     protected $otherElements = ['activityScope', 'budget', 'policyMarker'];
+
+    protected $data = [];
+
+    protected $fields;
     /**
      * All Elements for an Result Row.
      * @var
@@ -85,21 +91,23 @@ class ResultRow extends Row
     ];
 
     protected $periodFields = [
-            'period_start',
-            'period_end',
-            'target_value',
-            'target_location_ref',
-            'target_dimension_name',
-            'target_dimension_value',
-            'target_comment',
-            'target_comment_language',
-            'actual_value',
-            'actual_location_ref',
-            'actual_dimension_name',
-            'actual_dimension_value',
-            'actual_comment',
-            'actual_comment_language'
+        'period_start',
+        'period_end',
+        'target_value',
+        'target_location_ref',
+        'target_dimension_name',
+        'target_dimension_value',
+        'target_comment',
+        'target_comment_language',
+        'actual_value',
+        'actual_location_ref',
+        'actual_dimension_name',
+        'actual_dimension_value',
+        'actual_comment',
+        'actual_comment_language'
     ];
+
+    protected $validator;
 
     /**
      * ActivityRow constructor.
@@ -107,11 +115,12 @@ class ResultRow extends Row
      * @param $organizationId
      * @param $userId
      */
-    public function __construct($fields, $organizationId, $userId)
+    public function __construct($fields, $organizationId, $userId, Validation $validator)
     {
         $this->fields         = $fields;
         $this->organizationId = $organizationId;
         $this->userId         = $userId;
+        $this->validator      = $validator;
     }
 
     /**
@@ -177,7 +186,7 @@ class ResultRow extends Row
              ->setTitle()
              ->setDescription()
              ->setIndicator();
-        dd($this->data);
+//        dd($this->data);
     }
 
     protected function setType()
@@ -282,7 +291,7 @@ class ResultRow extends Row
         $array = getVal($this->indicators[$index], [$this->resultFields['indicator'][6]], []);
         foreach ($array as $i => $values) {
             if (!is_null($values)) {
-                $this->data['indicator'][$index]['reference'][$i][$this->resultFields['indicator'][6]] = $values;
+                $this->data['indicator'][$index]['reference'][$i]['vocabulary'] = $values;
             }
         }
 
@@ -294,7 +303,7 @@ class ResultRow extends Row
         $array = getVal($this->indicators[$index], [$this->resultFields['indicator'][7]], []);
         foreach ($array as $i => $values) {
             if (!is_null($values)) {
-                $this->data['indicator'][$index]['reference'][$i][$this->resultFields['indicator'][7]] = $values;
+                $this->data['indicator'][$index]['reference'][$i]['code'] = $values;
             }
         }
 
@@ -306,7 +315,7 @@ class ResultRow extends Row
         $array = getVal($this->indicators[$index], [$this->resultFields['indicator'][8]], []);
         foreach ($array as $i => $values) {
             if (!is_null($values)) {
-                $this->data['indicator'][$index]['reference'][$i][$this->resultFields['indicator'][8]] = $values;
+                $this->data['indicator'][$index]['reference'][$i]['indicator-uri'] = $values;
             }
         }
 
@@ -361,18 +370,19 @@ class ResultRow extends Row
         $this->groupPeriods();
 //        dd($this->indicators[$index]['period']);
         foreach ($this->indicators[$index]['period'] as $i => $value) {
-                $this->setIndicatorPeriodStart($index, $i)
-                     ->setIndicatorPeriodEnd($index, $i)
-                     ->setIndicatorPeriodTarget($index, $i)
-                     ->setIndicatorPeriodActual($index, $i);
-            }
+            $this->setIndicatorPeriodStart($index, $i)
+                 ->setIndicatorPeriodEnd($index, $i)
+                 ->setIndicatorPeriodTarget($index, $i)
+                 ->setIndicatorPeriodActual($index, $i);
+        }
+
         return $this;
     }
 
     protected function groupPeriods()
     {
         foreach ($this->indicators as $indicatorIndex => $values) {
-            $grouping = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
+            $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
             $this->indicators[$indicatorIndex]['period'] = $grouping;
         }
     }
@@ -381,7 +391,7 @@ class ResultRow extends Row
     {
         $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][13]])[$i];
         if (!is_null($value)) {
-            $this->data['indicator'][$index]['period'][$i]['period_start']['date'] = $value;
+            $this->data['indicator'][$index]['period'][$i]['period-start']['date'] = $value;
         }
 
         return $this;
@@ -391,7 +401,7 @@ class ResultRow extends Row
     {
         $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][14]])[$i];
         if (!is_null($value)) {
-            $this->data['indicator'][$index]['period'][$i]['period_end']['date'] = $value;
+            $this->data['indicator'][$index]['period'][$i]['period-end']['date'] = $value;
         }
 
         return $this;
@@ -423,11 +433,12 @@ class ResultRow extends Row
     protected function setIndicatorPeriodTargetLocationRef($index, $i)
     {
         $values = getVal($this->indicators[$index]['period'][$i], [$this->resultFields['indicator'][16]]);
-        foreach ($values as $locationIndex => $value){
-        if (!is_null($value)) {
-            $this->data['indicator'][$index]['period'][$i]['target']['location_ref'][$locationIndex] = $value;
+        foreach ($values as $locationIndex => $value) {
+            if (!is_null($value)) {
+                $this->data['indicator'][$index]['period'][$i]['target']['location_ref'][$locationIndex] = $value;
+            }
         }
-        }
+
         return $this;
 
     }
@@ -440,6 +451,7 @@ class ResultRow extends Row
                 $this->data['indicator'][$index]['period'][$i]['target']['dimension_name'][$dIndex] = $value;
             }
         }
+
         return $this;
 
     }
@@ -460,12 +472,17 @@ class ResultRow extends Row
     protected function setIndicatorPeriodTargetComment($index, $i)
     {
         $values = getVal($this->indicators[$index]['period'][$i], [$this->resultFields['indicator'][19]]);
-        foreach($values as $cIndex => $value){
-        if (!is_null($value)) {
-            $this->setNarrative(['indicator', $index, 'period', $i, 'target', 'comment'], $this->resultFields['indicator'][19], $this->resultFields['indicator'][20],
-                                $this->indicators[$index]['period'][$i]);
+        foreach ($values as $cIndex => $value) {
+            if (!is_null($value)) {
+                $this->setNarrative(
+                    ['indicator', $index, 'period', $i, 'target', 'comment'],
+                    $this->resultFields['indicator'][19],
+                    $this->resultFields['indicator'][20],
+                    $this->indicators[$index]['period'][$i]
+                );
+            }
         }
-        }
+
         return $this;
     }
 
@@ -495,11 +512,12 @@ class ResultRow extends Row
     protected function setIndicatorPeriodActualLocationRef($index, $i)
     {
         $values = getVal($this->indicators[$index], [$this->resultFields['indicator'][22]]);
-        foreach ($values as $locationIndex => $value){
+        foreach ($values as $locationIndex => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['period'][$i]['actual']['location_ref'][$locationIndex] = $value;
             }
         }
+
         return $this;
 
     }
@@ -512,6 +530,7 @@ class ResultRow extends Row
                 $this->data['indicator'][$index]['period'][$i]['actual']['dimension_name'][$dIndex] = $value;
             }
         }
+
         return $this;
 
     }
@@ -532,11 +551,12 @@ class ResultRow extends Row
     protected function setIndicatorPeriodActualComment($index, $i)
     {
         $values = getVal($this->indicators[$index], [$this->resultFields['indicator'][25]]);
-        foreach($values as $cIndex => $value){
+        foreach ($values as $cIndex => $value) {
             if (!is_null($value)) {
                 $this->setNarrative(['indicator', $index, 'period', $i, 'actual', 'comment'], $this->resultFields['indicator'][25], $this->resultFields['indicator'][26], $this->indicators[$index]);
             }
         }
+
         return $this;
     }
 
@@ -606,6 +626,7 @@ class ResultRow extends Row
      */
     protected function validateElements()
     {
+        $this->validator->sign($this->data())->with($this->rules(), $this->messages())->getValidatorInstance();
         foreach ($this->elements() as $element) {
             if ($element == 'transaction') {
                 foreach ($this->$element as $transaction) {
@@ -625,6 +646,59 @@ class ResultRow extends Row
         return $this;
     }
 
+    public function rules()
+    {
+
+        $rules = [];
+
+        $rules['type']                                = sprintf('required|in:%s', $this->resultTypeCodeList());
+        $rules['aggregation_status']                  = 'boolean';
+        $rules['title.*.narrative']                   = 'required';
+        $rules['title.*.narrative.0.narrative']       = 'required|string';
+        $rules['title.*.narrative.0.language']        = sprintf('in:%s', $this->languageCodeList());
+        $rules['description.*.narrative.0.narrative'] = 'string';
+        $rules['description.*.narrative.0.language']  = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.measure']                 = sprintf('required|string|in:%s', $this->indicatorMeasureCodeList());
+        $rules['indicator.*.ascending'] = 'boolean';
+        $rules['indicator.*.title.*.narrative.0.narrative']       = 'required|string';
+        $rules['indicator.*.title.*.narrative.0.language']        = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.description.*.narrative.0.narrative']       = 'string';
+        $rules['indicator.*.description.*.narrative.0.language']        = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.reference.*.vocabulary'] = sprintf('required|string|in:%s', $this->indicatorVocabularyCodeList());
+        $rules['indicator.*.reference.*.code'] = 'require|string';
+        $rules['indicator.*.reference.*.indicator-uri'] = 'url';
+        $rules['indicator.*.baseline.0.year.*'] = 'required|integer';
+        $rules['indicator.*.baseline.0.value.*'] = 'required|string';
+        $rules['indicator.*.baseline.0.comment.*.narrative.0.narrative'] = 'required|string';
+        $rules['indicator.*.baseline.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
+        $period_start = $rules['indicator.*.period.*.period-start.0.date'] = 'required|date';
+        $rules['indicator.*.period.*.period-end.0.date'] = sprintf('required|date|after:%s', $period_start);
+        $rules['indicator.*.period.*.target.value'] = 'required|string';
+        $rules['indicator.*.period.*.target.location_ref'] = 'string';
+        $rules['indicator.*.period.*.target.dimension_name'] = 'string';
+        $rules['indicator.*.period.*.target.dimension_value'] = 'string';
+        $rules['indicator.*.period.*.target.comment.0.narrative.0.narrative'] = 'string';
+        $rules['indicator.*.period.*.target.comment.0.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.period.*.actual.value'] = 'required|string';
+        $rules['indicator.*.period.*.actual.location_ref'] = 'string';
+        $rules['indicator.*.period.*.actual.dimension_name'] = 'string';
+        $rules['indicator.*.period.*.actual.dimension_value'] = 'string';
+        $rules['indicator.*.period.*.actual.comment.0.narrative.0.narrative'] = 'string';
+        $rules['indicator.*.period.*.actual.comment.0.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
+
+        dd($rules);
+    }
+
+    protected function messages()
+    {
+        $messages = [];
+
+        $messages['type.required'] = 'Result type is required';
+        $messages['type.in']       = 'Entered result type is invalid.';
+
+
+    }
+
     /**
      * Set the validity for the whole ActivityRow.
      * @return $this
@@ -638,6 +712,35 @@ class ResultRow extends Row
         }
 
         return $this;
+    }
+
+    protected function resultTypeCodeList()
+    {
+        $resultTypes = $this->loadCodeList('ResultType', 'V201');
+        $codes       = [];
+        foreach ($resultTypes['ResultType'] as $type) {
+            $codes[] = $type['code'];
+        }
+
+        return implode(',', $codes);
+    }
+
+    private function languageCodeList()
+    {
+        $languageList = $this->loadCodeList('Language', 'V201');
+
+        $codes = [];
+        foreach ($languageList['Language'] as $code) {
+            $codes[] = $code['code'];
+        }
+
+        return implode(',', $codes);
+
+    }
+
+    protected function loadCodeList($codeList, $version, $directory = "Activity")
+    {
+        return json_decode(file_get_contents(app_path(sprintf('Core/%s/Codelist/en/%s/%s.json', $version, $directory, $codeList))), true);
     }
 
     /**
@@ -808,13 +911,36 @@ class ResultRow extends Row
         return ($commonIdentifierCount > 1);
     }
 
-    /**
-     * Initialize the Row object.
-     * @return mixed
-     */
-    public function init()
+    private function fields()
     {
-        // TODO: Implement init() method.
+        return $this->fields;
     }
+
+    private function indicatorMeasureCodeList()
+    {
+        $list = $this->loadCodeList('IndicatorMeasure', 'V201');
+
+        $codes = [];
+        foreach ($list['IndicatorMeasure'] as $code) {
+            $codes[] = $code['code'];
+        }
+
+        return implode(',', $codes);
+
+    }
+
+    private function indicatorVocabularyCodeList()
+    {
+        $list = $this->loadCodeList('IndicatorVocabulary', 'V201');
+
+        $codes = [];
+        foreach ($list['data'] as $code) {
+            $codes[] = $code['code'];
+        }
+
+        return implode(',', $codes);
+
+    }
+
 
 }
