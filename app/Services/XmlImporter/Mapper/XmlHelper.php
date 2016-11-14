@@ -66,6 +66,9 @@ trait XmlHelper
         foreach ($values as $value) {
             if ($this->name($value['name']) == $key) {
                 foreach ($value['attributes'] as $attributeKey => $attribute) {
+                    if ($attributeKey == 'indicator-uri') {
+                        $attributeKey = 'indicator_uri';
+                    }
                     $data[$index][$attributeKey] = $attribute;
                 }
                 $index ++;
@@ -80,8 +83,10 @@ trait XmlHelper
      * @param array $template
      * @return array
      */
-    protected function templateToArray(array $template)
-    {
+    protected
+    function templateToArray(
+        array $template
+    ) {
         if (is_array($template)) {
             $data = [array_flip($template)];
             foreach ($data as $index => $values) {
@@ -105,8 +110,11 @@ trait XmlHelper
      * @param null  $key
      * @return array|mixed|string
      */
-    protected function value(array $fields, $key = null)
-    {
+    public
+    function value(
+        array $fields,
+        $key = null
+    ) {
         if (!$key) {
             return getVal($fields, ['value'], '');
         }
@@ -129,13 +137,15 @@ trait XmlHelper
      * @return mixed
      * @internal param $field
      */
-    protected function narrative($subElement)
-    {
+    protected
+    function narrative(
+        $subElement
+    ) {
         $field = [['narrative' => '', 'language' => '']];
         if (is_array(getVal((array) $subElement, ['value'], []))) {
             foreach (getVal((array) $subElement, ['value'], []) as $index => $value) {
                 $field[$index] = [
-                    'narrative' => getVal($value, ['value'], ''),
+                    'narrative' => trim(getVal($value, ['value'], '')),
                     'language'  => $this->attributes($value, 'language')
                 ];
             }
@@ -143,7 +153,7 @@ trait XmlHelper
             return $field;
         } else {
             $field = [
-                'narrative' => getVal($subElement, ['value'], ''),
+                'narrative' => trim(getVal($subElement, ['value'], '')),
                 'language'  => $this->attributes($subElement, 'language')
             ];
 
@@ -156,8 +166,11 @@ trait XmlHelper
      * @param bool $snakeCase
      * @return string
      */
-    protected function name($element, $snakeCase = false)
-    {
+    protected
+    function name(
+        $element,
+        $snakeCase = false
+    ) {
         if (is_array($element)) {
             $camelCaseString = camel_case(str_replace('{}', '', $element['name']));
 
@@ -178,8 +191,12 @@ trait XmlHelper
      * @param null  $fieldName
      * @return mixed|string
      */
-    protected function attributes(array $element, $key = null, $fieldName = null)
-    {
+    public
+    function attributes(
+        array $element,
+        $key = null,
+        $fieldName = null
+    ) {
         if (!$key) {
             return getVal($element, ['attributes'], []);
         }

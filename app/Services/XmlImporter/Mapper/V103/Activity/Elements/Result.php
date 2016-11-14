@@ -57,7 +57,7 @@ class Result
             $indicatorData[$index]['title'][0]['narrative']       = $this->value($indicator, 'title');
             $indicatorData[$index]['description'][0]['narrative'] = $this->value($indicator, 'description');
             $indicatorData[$index]['reference']                   = $this->reference($indicator, $indicatorTemplate);
-            $indicatorData[$index]['baseline'][0]                 = $this->baseline($indicator, $indicatorTemplate);
+            $indicatorData[$index]['baseline']                    = $this->baseline($indicator, $indicatorTemplate);
             $indicatorData[$index]['period']                      = $this->period($indicator, $indicatorTemplate);
         }
 
@@ -66,7 +66,7 @@ class Result
 
     protected function reference($indicator, $indicatorTemplate)
     {
-        $references    = $this->filterAttributes($indicator, 'reference', ['vocabulary', 'code', 'indicator-uri']);
+        $references    = $this->filterAttributes($indicator, 'reference', ['vocabulary', 'code', 'indicator_uri']);
         $referenceData = getVal($indicatorTemplate, [0, 'reference']);
         foreach ($references as $referenceIndex => $reference) {
             $referenceData[$referenceIndex] = $reference;
@@ -77,12 +77,12 @@ class Result
 
     protected function baseline($indicator, $indicatorTemplate)
     {
-        $baseline            = getVal($indicatorTemplate, [0, 'baseline']);
-        $baselineAttributes  = $this->filterAttributes($indicator, 'baseline', ['year', 'value']);
-        $baseline['year']    = getVal($baselineAttributes, [0, 'year'], '');
-        $baseline['value']   = getVal($baselineAttributes, [0, 'value'], '');
-        $baselineValues      = getVal($this->filterValues($indicator, 'baseline'), [0, 'baseline', 0]);
-        $baseline['comment'] = $this->narrative($baselineValues);
+        $baseline                               = getVal($indicatorTemplate, [0, 'baseline']);
+        $baselineAttributes                     = $this->filterAttributes($indicator, 'baseline', ['year', 'value']);
+        $baseline[0]['year']                    = getVal($baselineAttributes, [0, 'year'], '');
+        $baseline[0]['value']                   = getVal($baselineAttributes, [0, 'value'], '');
+        $baselineValues                         = getVal($this->filterValues($indicator, 'baseline'), [0, 'baseline', 0]);
+        $baseline[0]['comment'][0]['narrative'] = $this->narrative($baselineValues);
 
         return $baseline;
     }

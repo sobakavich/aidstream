@@ -26,6 +26,8 @@ class Transaction
         foreach ($transactions as $index => $transaction) {
             $this->transaction[$index] = $template['transaction'];
             $this->reference($transaction, $index);
+            $this->humanitarian($transaction, $index);
+
             foreach ($this->getValue($transaction) as $subElement) {
                 $fieldName = $this->name($subElement['name']);
                 $this->$fieldName($subElement, $index);
@@ -42,6 +44,11 @@ class Transaction
     protected function reference($element, $index)
     {
         $this->transaction[$index]['reference'] = $this->attributes($element, 'ref');
+    }
+
+    protected function humanitarian($element, $index)
+    {
+        $this->transaction[$index]['humanitarian'] = $this->attributes($element, 'humanitarian');
     }
 
     /**
@@ -159,7 +166,7 @@ class Transaction
      */
     protected function flowType($subElement, $index)
     {
-        $this->transaction[$index]['flow_type'][0]['flow_type'] = $this->attributes($subElement['attributes'], 'code');
+        $this->transaction[$index]['flow_type'][0]['flow_type'] = $this->attributes($subElement, 'code');
     }
 
     /**
