@@ -81,6 +81,7 @@
                             @if(!isSuperAdminRoute())
                                 <li><a href="{{url('user/profile')}}">@lang('trans.my_profile')</a></li>
                             @endif
+                            <li class="dashboard-tour"><span>Dashboard tour</span><a href="#" class="pull-right display Yes"></a></li>
                             <li><a href="{{ url('/auth/logout') }}">@lang('trans.logout')</a></li>
 
                             @include('unwanted')
