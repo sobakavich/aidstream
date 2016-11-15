@@ -167,7 +167,6 @@ class ActivityController extends Controller
                 $messages[$activity->id]               = $message;
             }
         }
-        (!session('first_login')) ?: session()->forget('first_login');
 
         return view('Activity.index', compact('activities', 'filenames', 'activityPublishedStats', 'messages'));
     }

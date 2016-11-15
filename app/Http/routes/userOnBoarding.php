@@ -51,32 +51,39 @@ $router->post(
         'uses' => 'UserOnBoardingController@storeDefaultValues'
     ]
 );
-$router->get(
-    'exploreLater',
-    [
-        'as'   => 'exploreLater',
-        'uses' => 'UserOnBoardingController@exploreLater'
-    ]
-);
+//$router->get(
+//    'exploreLater',
+//    [
+//        'as'   => 'exploreLater',
+//        'uses' => 'UserOnBoardingController@exploreLater'
+//    ]
+//);
+//$router->post(
+//    'completeOnBoarding',
+//    [
+//        'as'   => 'completeOnBoarding',
+//        'uses' => 'UserOnBoardingController@completeOnBoarding'
+//    ]
+//);
+//
+//$router->get(
+//    'continueExploring',
+//    [
+//        'as'   => 'continueExploring',
+//        'uses' => 'UserOnBoardingController@continueExploring'
+//    ]
+//);
 $router->post(
-    'completeOnBoarding',
+    'hintStatus',
     [
-        'as'   => 'completeOnBoarding',
-        'uses' => 'UserOnBoardingController@completeOnBoarding'
+        'as'   => 'hintStatus',
+        'uses' => 'UserOnBoardingController@storeHintStatus'
     ]
 );
-
 $router->get(
-    'continueExploring',
+    'incompleteStep',
     [
-        'as'   => 'continueExploring',
-        'uses' => 'UserOnBoardingController@continueExploring'
-    ]
-);
-$router->post(
-    'storeDashboardSteps',
-    [
-        'as'   => 'storeDashboardSteps',
-        'uses' => 'UserOnBoardingController@storeDashboardSteps'
+        'as'   => 'incompleteStep',
+        'uses' => 'UserOnBoardingController@firstIncompleteStep'
     ]
 );

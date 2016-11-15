@@ -94,8 +94,11 @@ class UserOnBoardingController extends Controller
         $default_field_groups = $request->get('default_field_groups');
 
         $this->userOnBoardingService->storeActivityElementsChecklist($default_field_groups, $organization);
+        $completedSteps = (array) auth()->user()->userOnBoarding->settings_completed_steps;
 
-        return redirect()->to('/default-values#5');
+        $redirectPath = (in_array(5, $completedSteps)) ? '/activity' : '/default-values#5';
+
+        return redirect()->to($redirectPath);
     }
 
     /**
@@ -109,55 +112,54 @@ class UserOnBoardingController extends Controller
         $this->userOnBoardingService->storeDefaultValues($request, $organization);
         $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
         $status         = $this->userOnBoardingService->isAllStepsCompleted();
-        $redirectView   = ($status) ? 'continueExploring' : 'exploreLater';
 
-        return redirect()->to($redirectView)->with('completedSteps', $completedSteps);
+        return redirect()->to('/activity')->with('completedSteps', $completedSteps);
     }
 
     /**
      * Return explore later view.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function exploreLater()
-    {
-        if (!Auth::user()->userOnBoarding) {
-            return redirect()->to('/activity');
-        }
+//    public function exploreLater()
+//    {
+//        if (!Auth::user()->userOnBoarding) {
+//            return redirect()->to('/activity');
+//        }
+//
+//        if (Auth::user()->userOnBoarding->completed_tour) {
+//            return redirect()->back();
+//        }
+//        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
+//        $status         = $this->userOnBoardingService->isAllStepsCompleted();
+//        Session::put('first_login', true);
+//
+//        return view('onBoarding.exploreLater', compact('completedSteps', 'status'));
+//    }
 
-        if (Auth::user()->userOnBoarding->completed_tour) {
-            return redirect()->back();
-        }
-        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
-        $status         = $this->userOnBoardingService->isAllStepsCompleted();
-        Session::put('first_login', true);
+//    /**
+//     * returns continue exploring view.
+//     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+//     */
+//    public function continueExploring()
+//    {
+//        if (!Auth::user()->userOnBoarding) {
+//            return redirect()->to('/activity');
+//        }
 
-        return view('onBoarding.exploreLater', compact('completedSteps', 'status'));
-    }
-
-    /**
-     * returns continue exploring view.
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function continueExploring()
-    {
-        if (!Auth::user()->userOnBoarding) {
-            return redirect()->to('/activity');
-        }
-
-        $firstname      = Auth::user()->first_name;
-        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
-        $status         = $this->userOnBoardingService->isAllStepsCompleted();
-
-        return view(sprintf('onBoarding.continueExploring'), compact('firstname', 'completedSteps', 'status'));
-    }
+//        $firstname      = Auth::user()->first_name;
+//        $completedSteps = $this->userOnBoardingService->getCompletedSettingsSteps();
+//        $status         = $this->userOnBoardingService->isAllStepsCompleted();
+//        return
+//        return view(sprintf('onBoarding.continueExploring'), compact('firstname', 'completedSteps', 'status'));
+//    }
 
     /**
      *  Complete user on boarding process
      */
-    public function completeOnBoarding()
-    {
-        $this->userOnBoardingService->completeTour();
-    }
+//    public function completeOnBoarding()
+//    {
+//        $this->userOnBoardingService->completeTour();
+//    }
 
     /**
      * Returns organization currently in session.
@@ -181,14 +183,38 @@ class UserOnBoardingController extends Controller
     }
 
     /**
-     * Store closed dashboard hints
+     * Store dashboard hints status
      * @return int
      */
-    public function storeDashboardSteps()
+    public function storeHintStatus()
     {
-        $step = (int) Input::get('step');
-        $this->userOnBoardingService->storeDashboardSteps($step);
+        $step        = (int) Input::get('status');
+        $hintsStatus = ($step === 1) ? true : false;
+        $status      = $this->userOnBoardingService->storeHintStatus($hintsStatus);
 
-        return $step;
+        return ($status) ? 'success' : 'failed';
+    }
+
+    public function firstIncompleteStep()
+    {
+        $completedSteps = (array) auth()->user()->userOnBoarding->settings_completed_steps;
+        $redirectPath   = '/publishing-settings#1';
+
+        $paths = [
+            1 => '/publishing-settings#1',
+            2 => '/publishing-settings#2',
+            3 => '/publishing-settings#3',
+            4 => '/activity-elements-checklist#4',
+            5 => '/default-values#5'
+        ];
+
+        foreach ($completedSteps as $step) {
+            if (array_key_exists($step, $paths)) {
+                unset($paths[$step]);
+            }
+        }
+        $redirectPath = (count($paths) < 0) ? $redirectPath : array_shift($paths);
+
+        return redirect()->to($redirectPath);
     }
 }

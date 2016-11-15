@@ -13,10 +13,21 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('app' , function($view){
-            $view->with('currentUser' , auth()->user());
-            $view->with('loggedInUser' , auth()->user());
-        });
+        view()->composer(
+            [
+                'app',
+                'Activity.index',
+                'settings.publishingSettings',
+                'settings.defaultValues',
+                'settings.activityElementsChecklist',
+                'Organization.show'
+            ],
+            function ($view) {
+                $view->with('currentUser', auth()->user());
+                $view->with('loggedInUser', auth()->user());
+                $view->with('completedSteps', auth()->user()->userOnBoarding->settings_completed_steps);
+            }
+        );
     }
 
     /**
