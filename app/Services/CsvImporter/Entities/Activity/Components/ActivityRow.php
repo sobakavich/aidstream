@@ -227,8 +227,6 @@ class ActivityRow extends Row
         if (method_exists($this, $method)) {
             $this->$method();
         }
-
-        dd($this);
     }
 
     /**

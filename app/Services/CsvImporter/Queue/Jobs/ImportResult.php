@@ -30,7 +30,7 @@ class ImportResult extends Job implements ShouldQueue
     /**
      * Directory where the uploaded Csv file is stored temporarily before import.
      */
-    const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/file';
+    const UPLOADED_CSV_STORAGE_PATH = 'csvImporter/tmp/result/file';
 
     /**
      * @var
@@ -41,14 +41,14 @@ class ImportResult extends Job implements ShouldQueue
      * Create a new job instance.
      *
      * @param CsvResultProcessor $csvResultProcessor
-     * @param              $filename
+     * @param                    $filename
      */
     public function __construct(CsvResultProcessor $csvResultProcessor, $filename)
     {
-        $this->csvResultProcessor   = $csvResultProcessor;
-        $this->organizationId = session('org_id');
-        $this->userId         = $this->getUserId();
-        $this->filename       = $filename;
+        $this->csvResultProcessor = $csvResultProcessor;
+        $this->organizationId     = session('org_id');
+        $this->userId             = $this->getUserId();
+        $this->filename           = $filename;
     }
 
     /**

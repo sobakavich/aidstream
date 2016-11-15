@@ -22,7 +22,7 @@ class CsvResultProcessor
     /**
      * @var
      */
-    public $activity;
+    public $result;
 
     /**
      * @var string
@@ -53,9 +53,9 @@ class CsvResultProcessor
         if ($this->isCorrectCsv()) {
             $this->groupValues();
 
-            $this->initActivity(['organization_id' => $organizationId, 'user_id' => $userId]);
+            $this->initResult(['organization_id' => $organizationId, 'user_id' => $userId]);
 //            dd($this->data);
-            $this->activity->process();
+            $this->result->process();
         } else {
             $filepath = storage_path('csvImporter/tmp/result/' . $organizationId . '/' . $userId);
             $filename = 'header_mismatch.json';
@@ -79,19 +79,19 @@ class CsvResultProcessor
     }
 
     /**
-     * Initialize an object for the Activity class with the provided options.
+     * Initialize an object for the Result class with the provided options.
      *
      * @param array $options
      */
-    protected function initActivity(array $options = [])
+    protected function initResult(array $options = [])
     {
         if (class_exists(Result::class)) {
-            $this->activity = app()->make(Result::class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id'])]);
+            $this->result = app()->make(Result::class, [$this->data, getVal($options, ['organization_id']), getVal($options, ['user_id'])]);
         }
     }
 
     /**
-     * Group rows into single Activities.
+     * Group rows into single Results.
      */
     protected function groupValues()
     {

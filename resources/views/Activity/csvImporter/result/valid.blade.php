@@ -1,14 +1,15 @@
 <div class="panel panel-default">
-    @if ($activities)
-        @foreach ($activities as $index => $activity)
+    @if ($results)
+        @foreach ($results as $index => $result)
             <div class="panel-heading">
                 <label>
                     <span class="panel-content-heading">
                         <h3>
-                            <input type="checkbox" value="{{ $index }}" name="activities[]"/>
+                            <input type="checkbox" value="{{ $index }}" name="results[]"/>
                             <span></span>
                             <span class="panel-title">
-                                {{ getVal($activity, ['data', 'identifier', 'activity_identifier'], '') }} - {{ getVal($activity, ['data', 'title', 0, 'narrative']) }}
+                                {{ getVal($result, ['data', 'title', 0, 'narrative', 0, 'narrative'], '') }}
+                                - {{ getVal($result, ['data', 'description', 0, 'narrative', 0, 'narrative']) }}
                             </span>
                         </h3>
                     </span>

@@ -3,13 +3,13 @@
 use App\Services\CsvImporter\Entities\ResultCsv;
 
 /**
- * Class Activity
+ * Class Result
  * @package App\Services\CsvImporter\Entities\Activity
  */
 class Result extends ResultCsv
 {
     /**
-     * Activity constructor.
+     * Result constructor.
      * @param $rows
      * @param $organizationId
      * @param $userId
@@ -23,7 +23,7 @@ class Result extends ResultCsv
     }
 
     /**
-     * Process the Activity Csv.
+     * Process the Result Csv.
      *
      * @return $this
      */
@@ -33,7 +33,6 @@ class Result extends ResultCsv
             $this->initialize($row)
                  ->mapResultRow()
                  ->validate()
-                 ->validateUnique($this->csvRows)
                  ->keep();
         }
 

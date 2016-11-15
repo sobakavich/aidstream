@@ -1,7 +1,6 @@
 <?php namespace App\Services\CsvImporter;
 
-use App\Core\V201\Repositories\Activity\ActivityRepository;
-use App\Core\V201\Repositories\Activity\Transaction;
+use App\Core\V201\Repositories\Activity\Result as ResultRepository;
 use App\Core\V201\Repositories\Organization\OrganizationRepository;
 use App\Services\CsvImporter\Events\ResultCsvWasUploaded;
 use Exception;
@@ -61,9 +60,9 @@ class ImportResultManager
      */
     protected $sessionManager;
     /**
-     * @var ActivityRepository
+     * @var ResultRepository
      */
-    protected $activityRepo;
+    protected $resultRepo;
     /**
      * @var OrganizationRepository
      */
@@ -85,20 +84,19 @@ class ImportResultManager
     protected $filesystem;
 
     /**
-     * File names for the invalid activities.
+     * File names for the invalid results.
      * @var array
      */
-    protected $invalidActivityFileNames = ['invalid.json', 'invalid-temp.json'];
+    protected $invalidResultFileNames = ['invalid.json', 'invalid-temp.json'];
 
     /**
      * ImportManager constructor.
      * @param Excel                  $excel
-     * @param ResultProcessor     $processor
+     * @param ResultProcessor        $processor
      * @param LoggerInterface        $logger
      * @param SessionManager         $sessionManager
-     * @param ActivityRepository     $activityRepo
+     * @param ResultRepository       $resultRepo
      * @param OrganizationRepository $organizationRepo
-     * @param Transaction            $transactionRepo
      * @param Filesystem             $filesystem
      */
     public function __construct(
@@ -106,18 +104,16 @@ class ImportResultManager
         ResultProcessor $processor,
         LoggerInterface $logger,
         SessionManager $sessionManager,
-        ActivityRepository $activityRepo,
+        ResultRepository $resultRepo,
         OrganizationRepository $organizationRepo,
-        Transaction $transactionRepo,
         Filesystem $filesystem
     ) {
         $this->excel            = $excel;
         $this->processor        = $processor;
         $this->logger           = $logger;
         $this->sessionManager   = $sessionManager;
-        $this->activityRepo     = $activityRepo;
+        $this->resultRepo       = $resultRepo;
         $this->organizationRepo = $organizationRepo;
-        $this->transactionRepo  = $transactionRepo;
         $this->userId           = $this->getUserId();
         $this->filesystem       = $filesystem;
     }
@@ -132,7 +128,11 @@ class ImportResultManager
         try {
             $file = new File($this->getStoredCsvPath($filename));
 
-            $this->processor->pushIntoQueue($file, $filename);
+            if ($this->processor->pushIntoQueue($file, $filename)) {
+                return true;
+            }
+
+            return false;
         } catch (Exception $exception) {
             $this->logger->error(
                 $exception->getMessage(),
@@ -147,55 +147,38 @@ class ImportResultManager
     }
 
     /**
-     * Create Valid activities.
-     * @param $activities
+     * Create Valid results.
+     * @param $results
      */
-    public function create($activities)
+    public function create($results)
     {
         $contents               = json_decode(file_get_contents($this->getFilePath(true)), true);
         $organizationId         = $this->sessionManager->get('org_id');
-        $importedActivities     = [];
+        $importedResults        = [];
         $organizationIdentifier = getVal(
             $this->organizationRepo->getOrganization($organizationId)->toArray(),
             ['reporting_org', 0, 'reporting_organization_identifier']
         );
 
-        foreach ($activities as $key => $activity) {
-            $activity                                               = $contents[$activity];
-            $activity['data']['organization_id']                    = $organizationId;
-            $importedActivities[$key]                               = $activity['data'];
-            $iati_identifier_text                                   = $organizationIdentifier . '-' . $activity['data']['identifier']['activity_identifier'];
-            $activity['data']['identifier']['iati_identifier_text'] = $iati_identifier_text;
+        foreach ($results as $key => $result) {
+            $resultData                          = $contents[$result];
+            $resultData['data']['organization_id'] = $organizationId;
+            $importedResults[$key]             = $result['data'];
 
-            $createdActivity = $this->activityRepo->createActivity($activity['data']);
+            $createdResult = $this->resultRepo->update($resultData['data']);
 
-            if (array_key_exists('transaction', $activity['data'])) {
-                $this->createTransaction(getVal($activity['data'], ['transaction'], []), $createdActivity->id);
-            }
         }
-        $this->activityImportStatus($activities);
+        $this->resultImportStatus($results);
     }
 
     /**
-     * Create Transaction of Valid Activities
-     * @param $transactions
-     * @param $activityId
+     * Check the status of the csv results being imported.
+     * @param $results
      */
-    public function createTransaction($transactions, $activityId)
-    {
-        foreach ($transactions as $transaction) {
-            $this->transactionRepo->createTransaction($transaction, $activityId);
-        }
-    }
-
-    /**
-     * Check the status of the csv activities being imported.
-     * @param $activities
-     */
-    protected function activityImportStatus($activities)
+    protected function resultImportStatus($results)
     {
         if (session('importing') && $this->checkStatusFile()) {
-            $this->removeImportedActivity($activities);
+            $this->removeImportedResult($results);
         }
 
         if ($this->checkStatusFile() && is_null(session('importing'))) {
@@ -204,17 +187,17 @@ class ImportResultManager
     }
 
     /**
-     * Remove the imported activity if the csv is still being processed.
-     * @param $checkedActivities
+     * Remove the imported result if the csv is still being processed.
+     * @param $checkedResults
      */
-    protected function removeImportedActivity($checkedActivities)
+    protected function removeImportedResult($checkedResults)
     {
-        $validActivities = json_decode(file_get_contents($this->getFilePath(true)), true);
-        foreach ($checkedActivities as $key => $activity) {
-            unset($validActivities[$key]);
+        $validResults = json_decode(file_get_contents($this->getFilePath(true)), true);
+        foreach ($checkedResults as $key => $result) {
+            unset($validResults[$key]);
         }
 
-        FileFacade::put($this->getFilePath(true), $validActivities);
+        FileFacade::put($this->getFilePath(true), $validResults);
     }
 
     /**
@@ -284,10 +267,10 @@ class ImportResultManager
     }
 
     /**
-     * Clear all invalid activities.
+     * Clear all invalid results.
      * @return bool|null
      */
-    public function clearInvalidActivities()
+    public function clearInvalidResults()
     {
         try {
             list($file, $temporaryFile) = [$this->getFilePath(false), $this->getTemporaryFilepath('invalid-temp.json')];
@@ -303,7 +286,7 @@ class ImportResultManager
             return true;
         } catch (Exception $exception) {
             $this->logger->error(
-                sprintf('Error clearing invalid Activities due to [%s]', $exception->getMessage()),
+                sprintf('Error clearing invalid Results due to [%s]', $exception->getMessage()),
                 [
                     'trace'           => $exception->getTraceAsString(),
                     'user_id'         => $this->userId,
@@ -359,14 +342,14 @@ class ImportResultManager
      */
     protected function getDataFrom($filePath, $temporaryFileName, $view)
     {
-        $activities = json_decode(file_get_contents($filePath), true);
-        $path       = $this->getTemporaryFilepath($temporaryFileName);
+        $results = json_decode(file_get_contents($filePath), true);
+        $path    = $this->getTemporaryFilepath($temporaryFileName);
 
         $this->fixStagingPermission($this->getTemporaryFilepath());
 
-        FileFacade::put($path, json_encode($activities));
+        FileFacade::put($path, json_encode($results));
 
-        return view(sprintf('Activity.csvImporter.%s', $view), compact('activities'))->render();
+        return view(sprintf('Activity.csvImporter.result.%s', $view), compact('results'))->render();
     }
 
     /**
@@ -416,7 +399,7 @@ class ImportResultManager
             return true;
         } catch (Exception $exception) {
             $this->logger->error(
-                sprintf('Error uploading Activity CSV file due to [%s]', $exception->getMessage()),
+                sprintf('Error uploading Result CSV file due to [%s]', $exception->getMessage()),
                 [
                     'trace'   => $exception->getTraceAsString(),
                     'user_id' => $this->userId

@@ -35,7 +35,7 @@ abstract class ResultCsv
     protected $csvRows = [];
 
     /**
-     * Initialize an ActivityRow object.
+     * Initialize an ResultRow object.
      *
      * @param $row
      * @return ResultRow
