@@ -145,6 +145,7 @@
     </div>
 </nav>
 
+
 @yield('content')
 <div class="scroll-top">
     <a href="#" class="scrollup" title="Scroll to top">icon</a>

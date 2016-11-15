@@ -16,6 +16,7 @@
             <div class="col-xs-9 col-lg-9 content-wrapper activity-wrapper">
                 @include('includes.response')
                 @include('includes.breadcrumb')
+                @include('includes.steps')
                 <div class="panel panel-default">
                     <div class="panel-content-heading">
                         <div>Activities</div>

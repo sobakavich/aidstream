@@ -78,6 +78,7 @@ $url_20: url(../../images/ic-side-arrow.svg);
 $url_21: url(../../images/ic-left-arrow.svg);
 $url_22: url(../../images/ic-camera.svg);
 $url_23: url(../../images/ic-org-sprite.svg);
+$url_24: url(../../images/ic-warning.svg);
 
 html, body {
   height: 100%;
@@ -941,6 +942,9 @@ label {
   width: 100%;
   border-radius: 0;
   z-index: 100000000;
+  &+div {
+    padding-top: 63px!important;
+  }
 }
 
 .navbar-default + .container {
@@ -1058,6 +1062,9 @@ label {
     &:hover {
       background-color: $color_white!important;
       background-position: -500px -661px!important;
+    }
+    &.No:hover {
+      background-position: -550px -661px!important;
     }
   }
 }
@@ -1479,7 +1486,7 @@ $full-sidebar-wrapper-width: 210px;
   padding: 0;
   position: relative;
   transition: left 0.4s;
-  padding-top: 63px !important;
+  //padding-top: 63px !important;
   .row {
     margin: 0;
     height: 100%;
@@ -5711,7 +5718,7 @@ body > .skiptranslate iframe {
 }
 
 .introjs-tooltip {
-  min-width: 270px !important;
+  min-width: 310px !important;
   max-width: 450px !important;
   padding: 30px !important;
   background: #fff !important;
@@ -5729,16 +5736,17 @@ body > .skiptranslate iframe {
   }
 }
 
-.close-hints {
-  background: #9b9b9b;
-  @include size(14px 14px);
-  border-radius: 50%;
-  float: right;
-  font-size: 10px;
-  color: $color_white !important;
-  text-decoration: none !important;
-  margin: -18px -18px 0 0;
-}
+//.close-hints {
+//  background: #9b9b9b;
+//  @include size(14px 14px);
+//  border-radius: 50%;
+//  float: right;
+//  font-size: 10px;
+//  color: $color_white !important;
+//  text-decoration: none !important;
+//  margin: -18px -18px 0 0;
+//  text-align: center;
+//}
 
 .nextBtn {
   position: relative;
@@ -5754,12 +5762,19 @@ body > .skiptranslate iframe {
   }
 }
 
+.skip-tour {
+  font-size: 12px;
+}
+
 .introjs-arrow.left {
   left: -18px !important;
 }
 
 .introjs-tooltiptext {
   float: right;
+  > p {
+    margin: 0;
+  }
   > a {
     display: inherit;
   }
@@ -5768,10 +5783,6 @@ body > .skiptranslate iframe {
 .introjs-overlay {
   background: #000 !important;
   opacity: 0.6 !important;
-}
-
-.introjs-tooltiptext {
-  text-align: center;
 }
 
 .setup-later, .setup-later:hover, .setup-later:focus {
@@ -5945,6 +5956,23 @@ body > .skiptranslate iframe {
 
 .introjs-hint:active .introjs-hint-pulse {
   opacity: 1;
+}
+
+.steps-wrapper {
+  background: #FFF8E9;
+  padding: 14px 36px;
+  p {
+    color: #99897A;
+    position: relative;
+    &:before {
+      @include position(absolute, 0 auto auto 0);
+      content: "";
+      background: $url_24 no-repeat 0 0;
+    }
+  }
+  ul > li {
+    float: left;
+  }
 }
 
 @media all and (max-width: 1030px) {
