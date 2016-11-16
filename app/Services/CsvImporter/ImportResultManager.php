@@ -148,26 +148,19 @@ class ImportResultManager
 
     /**
      * Create Valid results.
+     * @param $activityId
      * @param $results
      */
-    public function create($results)
+    public function create($activityId, $results)
     {
-        $contents               = json_decode(file_get_contents($this->getFilePath(true)), true);
-        $organizationId         = $this->sessionManager->get('org_id');
-        $importedResults        = [];
-        $organizationIdentifier = getVal(
-            $this->organizationRepo->getOrganization($organizationId)->toArray(),
-            ['reporting_org', 0, 'reporting_organization_identifier']
-        );
+        $contents        = json_decode(file_get_contents($this->getFilePath(true)), true);
 
         foreach ($results as $key => $result) {
-            $resultData                          = $contents[$result];
-            $resultData['data']['organization_id'] = $organizationId;
-            $importedResults[$key]             = $result['data'];
-
-            $createdResult = $this->resultRepo->update($resultData['data']);
-
+            $resultData      = $contents[$result];
+            $importedResults = ['result' => $resultData['data'], 'activity_id' => $activityId];
+            $this->resultRepo->create($importedResults);
         }
+
         $this->resultImportStatus($results);
     }
 

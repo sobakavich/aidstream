@@ -102,7 +102,6 @@ class ImportResultController extends Controller
 
         if ($this->importManager->storeCsv($file)) {
             $filename = $file->getClientOriginalName();
-
 //            $this->importManager->process($filename);
             $this->importManager->startImport($filename)
                                 ->fireCsvUploadEvent($filename);
@@ -122,12 +121,12 @@ class ImportResultController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function importValidatedResults(Request $request)
+    public function importValidatedResults($activityId, Request $request)
     {
         $results = $request->get('results');
 
         if ($results) {
-            $this->importManager->create($results);
+            $this->importManager->create($activityId, $results);
             $this->importManager->endImport();
 
             return redirect()->route('activity.index')->withResponse(['type' => 'success', 'code' => ['message', ['message' => 'Activities successfully imported.']]]);

@@ -347,6 +347,7 @@ class Validation extends Factory
                 return false;
             }
         );
+
         $this->extendImplicit(
             'only_one_among',
             function ($attribute, $values, $parameters, $validator) {
