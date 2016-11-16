@@ -83,6 +83,15 @@
           "target": [
             {
               "value": "",
+              "location_ref": [
+                ""
+              ],
+              "dimension_name": [
+                ""
+              ],
+              "dimension_value": [
+                ""
+              ],
               "comment": [
                 {
                   "narrative": [
@@ -98,6 +107,15 @@
           "actual": [
             {
               "value": "",
+              "location_ref": [
+                ""
+              ],
+              "dimension_name": [
+                ""
+              ],
+              "dimension_value": [
+                ""
+              ],
               "comment": [
                 {
                   "narrative": [

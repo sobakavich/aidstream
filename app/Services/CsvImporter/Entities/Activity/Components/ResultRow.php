@@ -25,6 +25,7 @@ class ResultRow extends Row
      */
     const INVALID_CSV_FILE = 'invalid.json';
 
+    const RESULT_TEMPLATE_FILE = '/Services/CsvImporter/Entities/Activity/Components/Elements/Foundation/Template/Result.json';
     /**
      * @var array
      */
@@ -238,6 +239,12 @@ class ResultRow extends Row
         return false;
     }
 
+    protected function loadTemplate()
+    {
+        $path = app_path(self::RESULT_TEMPLATE_FILE);
+        $this->data = json_decode(file_get_contents($path), true);
+    }
+
     /**
      * @return $this
      * @internal param $fields
@@ -245,6 +252,7 @@ class ResultRow extends Row
     public function mapResultRow()
     {
         $this->resultRowNumber ++;
+        $this->loadTemplate();
         $this->beginMapping();
 
         return $this;
@@ -910,13 +918,13 @@ class ResultRow extends Row
         $this->messages['title.*.narrative.0.language.in']                                 = 'Title language should be in the LanguageCodeList.';
         $this->messages['description.*.narrative.0.language.in']                           = 'Description language should be in the LanguageCodeList.';
         $this->messages['indicator.*.measure.required']                                    = 'Indicator measure is required.';
-        $this->messages['indicator.*.measure.in']                                          = 'Invalid indicator measure code.';
+        $this->messages['indicator.*.measure.in']                                          = 'Indicator measure should be from Indicator Measure CodeList.';
         $this->messages['indicator.*.ascending.boolean']                                   = 'Indicator ascending should be true or false.';
         $this->messages['indicator.*.title.*.narrative.0.narrative.required']              = 'Indicator title is required.';
         $this->messages['indicator.*.title.*.narrative.0.language.in']                     = 'Indicator title language should be in the LanguageCodeList.';
         $this->messages['indicator.*.description.*.narrative.0.language.in']               = 'Indicator description language should be in the LanguageCodeList.';
         $this->messages['indicator.*.reference.*.vocabulary.required']                     = 'Reference vocabulary is required.';
-        $this->messages['indicator.*.reference.*.vocabulary.in']                           = 'Reference vocabulary is invalid.';
+        $this->messages['indicator.*.reference.*.vocabulary.in']                           = 'Reference vocabulary should be in the Indicator Vocabulary CodeList.';
         $this->messages['indicator.*.reference.*.code.required']                           = 'Reference code is required.';
         $this->messages['indicator.*.reference.*.indicator_uri.url']                       = 'Invalid reference url.';
         $this->messages['indicator.*.baseline.0.year.required']                            = 'Indicator baseline year is required.';
@@ -1164,4 +1172,5 @@ class ResultRow extends Row
 
 //        dd($failedRules, $this->fields());
     }
+
 }
