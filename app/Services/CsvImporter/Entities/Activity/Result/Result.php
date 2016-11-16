@@ -22,6 +22,7 @@ class Result extends ResultCsv
         $this->rows           = $rows;
     }
 
+    protected $resultRowNumber = 0;
     /**
      * Process the Result Csv.
      *
@@ -30,7 +31,7 @@ class Result extends ResultCsv
     public function process()
     {
         foreach ($this->rows() as $row) {
-            $this->initialize($row)
+            $this->resultRowNumber = $this->initialize($row, $this->resultRowNumber)
                  ->mapResultRow()
                  ->validate()
                  ->keep();

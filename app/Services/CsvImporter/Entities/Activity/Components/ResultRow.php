@@ -146,6 +146,9 @@ class ResultRow extends Row
      */
     protected $validator;
 
+    /**
+     * @var array
+     */
     protected $messages = [];
 
     /**
@@ -169,18 +172,25 @@ class ResultRow extends Row
     protected $userId;
 
     /**
+     * @var
+     */
+    protected $resultRowNumber;
+
+    /**
      * ResultRow constructor.
      * @param            $fields
      * @param            $organizationId
      * @param            $userId
+     * @param            $resultRowNumber
      * @param Validation $factory
      */
-    public function __construct($fields, $organizationId, $userId, Validation $factory)
+    public function __construct($fields, $organizationId, $userId, $resultRowNumber, Validation $factory)
     {
-        $this->fields         = $fields;
-        $this->organizationId = $organizationId;
-        $this->userId         = $userId;
-        $this->factory        = $factory;
+        $this->fields          = $fields;
+        $this->organizationId  = $organizationId;
+        $this->userId          = $userId;
+        $this->factory         = $factory;
+        $this->resultRowNumber = $resultRowNumber;
     }
 
     /**
@@ -234,6 +244,7 @@ class ResultRow extends Row
      */
     public function mapResultRow()
     {
+        $this->resultRowNumber ++;
         $this->beginMapping();
 
         return $this;
@@ -257,9 +268,9 @@ class ResultRow extends Row
      */
     protected function setType()
     {
-        $value = getVal($this->fields, [$this->resultFields[0]]);
+        $value = getVal($this->fields, ['type']);
         if (!is_null($value)) {
-            $this->data[$this->resultFields[0]] = $value[0];
+            $this->data['type'] = $value[0];
         }
 
         return $this;
@@ -270,10 +281,10 @@ class ResultRow extends Row
      */
     protected function setAggregationStatus()
     {
-        $values = getVal($this->fields, [$this->resultFields[1]], []);
+        $values = getVal($this->fields, ['aggregation_status'], []);
         if (!is_null($values[0])) {
-            $value                              = $this->isBoolean($values[0]);
-            $this->data[$this->resultFields[1]] = $value;
+            $value                            = $this->isBoolean($values[0]);
+            $this->data['aggregation_status'] = $value;
         }
 
         return $this;
@@ -284,7 +295,7 @@ class ResultRow extends Row
      */
     protected function setTitle()
     {
-        $this->setNarrative(['title'], $this->resultFields[2], $this->resultFields[3]);
+        $this->setNarrative(['title'], 'title', 'title_language');
 
         return $this;
     }
@@ -294,7 +305,7 @@ class ResultRow extends Row
      */
     protected function setDescription()
     {
-        $this->setNarrative(['description'], $this->resultFields[4], $this->resultFields[5]);
+        $this->setNarrative(['description'], 'description', 'description_language');
 
         return $this;
     }
@@ -336,10 +347,10 @@ class ResultRow extends Row
      */
     protected function setIndicatorMeasure($index)
     {
-        $measure = getVal($this->indicators[$index], [$this->resultFields['indicator'][0]], []);
+        $measure = getVal($this->indicators[$index], ['measure'], []);
         foreach ($measure as $value) {
             if (!is_null($value)) {
-                $this->data['indicator'][$index][$this->resultFields['indicator'][0]] = $value;
+                $this->data['indicator'][$index]['measure'] = $value;
             }
         }
 
@@ -352,12 +363,12 @@ class ResultRow extends Row
      */
     protected function setIndicatorAscending($index)
     {
-        $ascending = getVal($this->indicators[$index], [$this->resultFields['indicator'][1]], []);
+        $ascending = getVal($this->indicators[$index], ['ascending'], []);
         foreach ($ascending as $values) {
             if (!is_null($values)) {
                 $value = $this->isBoolean($values);
 //                dd($ascending, $value);
-                $this->data['indicator'][$index][$this->resultFields['indicator'][1]] = $value;
+                $this->data['indicator'][$index]['ascending'] = $value;
             }
         }
 
@@ -370,7 +381,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorTitle($index)
     {
-        $this->setNarrative(['indicator', $index, 'title'], $this->resultFields['indicator'][2], $this->resultFields['indicator'][3], $this->indicators[$index]);
+        $this->setNarrative(['indicator', $index, 'title'], 'indicator_title', 'indicator_title_language', $this->indicators[$index]);
 
         return $this;
     }
@@ -381,7 +392,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorDescription($index)
     {
-        $this->setNarrative(['indicator', $index, 'description'], $this->resultFields['indicator'][4], $this->resultFields['indicator'][5], $this->indicators[$index]);
+        $this->setNarrative(['indicator', $index, 'description'], 'indicator_description', 'indicator_description_language', $this->indicators[$index]);
 
         return $this;
     }
@@ -392,7 +403,7 @@ class ResultRow extends Row
      */
     protected function setReferenceVocabulary($index)
     {
-        $array = getVal($this->indicators[$index], [$this->resultFields['indicator'][6]], []);
+        $array = getVal($this->indicators[$index], ['reference_vocabulary'], []);
         foreach ($array as $i => $values) {
             if (!is_null($values)) {
                 $this->data['indicator'][$index]['reference'][$i]['vocabulary'] = $values;
@@ -408,7 +419,7 @@ class ResultRow extends Row
      */
     protected function setReferenceCode($index)
     {
-        $array = getVal($this->indicators[$index], [$this->resultFields['indicator'][7]], []);
+        $array = getVal($this->indicators[$index], ['reference_code'], []);
         foreach ($array as $i => $values) {
             if (!is_null($values)) {
                 $this->data['indicator'][$index]['reference'][$i]['code'] = $values;
@@ -424,7 +435,7 @@ class ResultRow extends Row
      */
     protected function setReferenceURI($index)
     {
-        $array = getVal($this->indicators[$index], [$this->resultFields['indicator'][8]], []);
+        $array = getVal($this->indicators[$index], ['reference_uri'], []);
         foreach ($array as $i => $values) {
             if (!is_null($values)) {
                 $this->data['indicator'][$index]['reference'][$i]['indicator_uri'] = $values;
@@ -453,7 +464,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorBaselineYear($index)
     {
-        $values = getVal($this->indicators[$index], [$this->resultFields['indicator'][9]]);
+        $values = getVal($this->indicators[$index], ['baseline_year']);
         foreach ($values as $i => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['baseline'][0]['year'] = $value;
@@ -469,7 +480,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorBaselineValue($index)
     {
-        $values = getVal($this->indicators[$index], [$this->resultFields['indicator'][10]]);
+        $values = getVal($this->indicators[$index], ['baseline_value']);
         foreach ($values as $i => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['baseline'][0]['value'] = $value;
@@ -485,9 +496,9 @@ class ResultRow extends Row
      */
     protected function setIndicatorBaselineComment($index)
     {
-        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][11]]);
+        $value = getVal($this->indicators[$index], ['baseline_comment']);
         if (!is_null($value)) {
-            $this->setNarrative(['indicator', $index, 'baseline', 0, 'comment'], $this->resultFields['indicator'][11], $this->resultFields['indicator'][12], $this->indicators[$index]);
+            $this->setNarrative(['indicator', $index, 'baseline', 0, 'comment'], 'baseline_comment', 'baseline_comment_language', $this->indicators[$index]);
         }
 
         return $this;
@@ -529,7 +540,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodStart($index, $i)
     {
-        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][13]])[$i];
+        $value = getVal($this->indicators[$index], ['period_start'])[$i];
         if (!is_null($value)) {
             $this->data['indicator'][$index]['period'][$i]['period_start'][0]['date'] = $value;
         }
@@ -544,7 +555,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodEnd($index, $i)
     {
-        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][14]])[$i];
+        $value = getVal($this->indicators[$index], ['period_end'])[$i];
         if (!is_null($value)) {
             $this->data['indicator'][$index]['period'][$i]['period_end'][0]['date'] = $value;
         }
@@ -576,7 +587,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodTargetValue($index, $i)
     {
-        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][15]])[$i];
+        $value = getVal($this->indicators[$index], ['target_value'])[$i];
         if (!is_null($value)) {
             $this->data['indicator'][$index]['period'][$i]['target'][0]['value'] = $value;
         }
@@ -592,7 +603,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodTargetLocationRef($index, $i)
     {
-        $values = getVal($this->indicators[$index]['period'][$i], [$this->resultFields['indicator'][16]]);
+        $values = getVal($this->indicators[$index]['period'][$i], ['target_location_ref']);
         foreach ($values as $locationIndex => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['period'][$i]['target'][0]['location_ref'][$locationIndex] = $value;
@@ -610,7 +621,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodTargetDimensionName($index, $i)
     {
-        $values = getVal($this->indicators[$index]['period'][$i], [$this->resultFields['indicator'][17]]);
+        $values = getVal($this->indicators[$index]['period'][$i], ['target_dimension_name']);
         foreach ($values as $dIndex => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['period'][$i]['target'][0]['dimension_name'][$dIndex] = $value;
@@ -628,7 +639,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodTargetDimensionValue($index, $i)
     {
-        $values = getVal($this->indicators[$index]['period'][$i], [$this->resultFields['indicator'][18]]);
+        $values = getVal($this->indicators[$index]['period'][$i], ['target_dimension_value']);
         foreach ($values as $dIndex => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['period'][$i]['target'][0]['dimension_value'][$dIndex] = $value;
@@ -646,13 +657,13 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodTargetComment($index, $i)
     {
-        $values = getVal($this->indicators[$index]['period'][$i], [$this->resultFields['indicator'][19]]);
+        $values = getVal($this->indicators[$index]['period'][$i], ['target_comment']);
         foreach ($values as $cIndex => $value) {
             if (!is_null($value)) {
                 $this->setNarrative(
                     ['indicator', $index, 'period', $i, 'target', 0, 'comment'],
-                    $this->resultFields['indicator'][19],
-                    $this->resultFields['indicator'][20],
+                    'target_comment',
+                    'target_comment_language',
                     $this->indicators[$index]['period'][$i]
                 );
             }
@@ -685,7 +696,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodActualValue($index, $i)
     {
-        $value = getVal($this->indicators[$index], [$this->resultFields['indicator'][21]])[$i];
+        $value = getVal($this->indicators[$index], ['actual_value'])[$i];
         if (!is_null($value)) {
             $this->data['indicator'][$index]['period'][$i]['actual'][0]['value'] = $value;
         }
@@ -701,7 +712,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodActualLocationRef($index, $i)
     {
-        $values = getVal($this->indicators[$index], [$this->resultFields['indicator'][22]]);
+        $values = getVal($this->indicators[$index], ['actual_location_ref']);
         foreach ($values as $locationIndex => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['period'][$i]['actual'][0]['location_ref'][$locationIndex] = $value;
@@ -719,7 +730,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodActualDimensionName($index, $i)
     {
-        $values = getVal($this->indicators[$index], [$this->resultFields['indicator'][23]]);
+        $values = getVal($this->indicators[$index], ['actual_dimension_name']);
         foreach ($values as $dIndex => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['period'][$i]['actual'][0]['dimension_name'][$dIndex] = $value;
@@ -737,7 +748,7 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodActualDimensionValue($index, $i)
     {
-        $values = getVal($this->indicators[$index], [$this->resultFields['indicator'][24]]);
+        $values = getVal($this->indicators[$index], ['actual_dimension_value']);
         foreach ($values as $dIndex => $value) {
             if (!is_null($value)) {
                 $this->data['indicator'][$index]['period'][$i]['actual'][0]['dimension_value'][$dIndex] = $value;
@@ -755,10 +766,10 @@ class ResultRow extends Row
      */
     protected function setIndicatorPeriodActualComment($index, $i)
     {
-        $values = getVal($this->indicators[$index], [$this->resultFields['indicator'][25]]);
+        $values = getVal($this->indicators[$index], ['actual_comment']);
         foreach ($values as $cIndex => $value) {
             if (!is_null($value)) {
-                $this->setNarrative(['indicator', $index, 'period', $i, 'actual', 0, 'comment'], $this->resultFields['indicator'][25], $this->resultFields['indicator'][26], $this->indicators[$index]);
+                $this->setNarrative(['indicator', $index, 'period', $i, 'actual', 0, 'comment'], 'actual_comment', 'actual_comment_language', $this->indicators[$index]);
             }
         }
 
@@ -778,8 +789,10 @@ class ResultRow extends Row
         } else {
             $data = $fields;
         }
+
         $narrative = getVal($data, [$narrativeKey], []);
         $language  = getVal($data, [$languageKey], []);
+
         foreach ($narrative as $index => $value) {
             if (!is_null($value)) {
                 array_set($this->data, implode('.', [implode('.', $key), $index, 'narrative', 0, 'narrative']), $value);
@@ -817,6 +830,7 @@ class ResultRow extends Row
 
         $this->recordErrors();
 
+//        dd($this);
 
 //        dd($this->validator);
 
@@ -830,6 +844,8 @@ class ResultRow extends Row
     {
         $this->makeDirectoryIfNonExistent()
              ->writeCsvDataAsJson($this->getCsvFilepath());
+
+        return $this->resultRowNumber;
     }
 
 
@@ -850,14 +866,13 @@ class ResultRow extends Row
 
         foreach ($this->data['indicator'] as $indicatorIndex => $indicators) {
             foreach ($indicators['period'] as $periodIndex => $periods) {
-                $period                                                                                                 = $periods['period_start'][0]['date'];
+                $period                                                                                   = $periods['period_start'][0]['date'];
                 $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.period_end.0.date'] = sprintf('required|date_format:Y-m-d|after:%s', $period);
             }
         }
 
         $rules['type']                                                   = sprintf('required|in:%s', $this->resultTypeCodeList());
         $rules['aggregation_status']                                     = 'boolean';
-        $rules['title.*.narrative']                                      = 'required';
         $rules['title.*.narrative.0.narrative']                          = 'required';
         $rules['title.*.narrative.0.language']                           = sprintf('in:%s', $this->languageCodeList());
         $rules['description.*.narrative.0.language']                     = sprintf('in:%s', $this->languageCodeList());
@@ -1139,10 +1154,14 @@ class ResultRow extends Row
         return $values;
     }
 
+    /**
+     *
+     */
     protected function improviseErrorMessages()
     {
         $failedRules = $this->validator->failed();
 
-//        dd($failedRules);
+
+//        dd($failedRules, $this->fields());
     }
 }
