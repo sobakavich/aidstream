@@ -372,11 +372,12 @@ class UserOnBoardingService
     /**
      * Create a new On boarding for newly created user.
      * @param $userId
+     * @param $completed_steps
      * @return UserOnBoarding
      */
-    public function create($userId)
+    public function create($userId, $completed_steps)
     {
-        return $this->userOnBoarding->create(['has_logged_in_once' => false, 'user_id' => $userId]);
+        return $this->userOnBoarding->create(['has_logged_in_once' => false, 'settings_completed_steps' => $completed_steps, 'user_id' => $userId]);
     }
 
     /**

@@ -25,6 +25,14 @@
             <span class="show-less">Show Less</span>
         </div>
     </div>
+@elseif(count($completedSteps) < 5 && (!auth()->user()->isAdmin()))
+    <div class="steps-wrapper">
+        <p>
+            Your organisation's account has not been set up. Please contact your <strong>Administrator</strong> to finish setting up the account.
+        </p>
+    </div>
 @elseif((count($completedSteps) == 5) && (session('first_login')))
-    <div>Congratulations you have successfully configured your account. You can now publish your data to the IATI Registry.</div>
+    <div class="complete-message">
+        <p>Congratulations you have successfully configured your account. You can now publish your data to the IATI Registry.</p>
+    </div>
 @endif

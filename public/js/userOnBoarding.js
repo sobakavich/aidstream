@@ -3,42 +3,42 @@ var UserOnBoarding = {
         $("[data-step='2']").attr({
             'data-hint': "<p>Click here to view the list of Activities you have added</p>" +
             "<a href='#' class='pull-left skip-tour' onclick='skip(2)'>Skip Dashboard Tour</a>" +
-            "<button class='nextBtn' onclick='goNext(3)'>Next</button>",
+            "<button class='pull-right nextBtn' onclick='goNext(3)'>Next</button>",
             'data-position': 'right'
         });
 
         $("[data-step='0']").attr({
             'data-hint': "<p>Hover over here to get options to add an activity</p>" +
             "<a href='#' class='pull-left skip-tour' onclick='skip(0)'>Skip Dashboard Tour</a>" +
-            "<button class='nextBtn' onclick='goNext(1)'>Next</button>",
+            "<button class='pull-right nextBtn' onclick='goNext(1)'>Next</button>",
             'data-position': 'top-left'
         });
 
         $("[data-step='3']").attr({
-            'data-hint': "<p>Click here to view your organisation's which you can publish/update to the IATI Registry</p>" +
+            'data-hint': "<p>Click here to view your organisation's data which you can publish/update to the IATI Registry</p>" +
             "<a href='#' class='pull-left skip-tour' onclick='skip(3)'>Skip Dashboard Tour</a>" +
-            "<button class='nextBtn' onclick='goNext(4)'>Next</button>",
+            "<button class='pull-right nextBtn' onclick='goNext(4)'>Next</button>",
             'data-position': 'right'
         });
 
         $("[data-step='4']").attr({
             'data-hint': "<p>Click here to view your published activity and organisation data files.</p>" +
             "<a href='#' class='pull-left skip-tour' onclick='skip(4)'>Skip Dashboard Tour</a>" +
-            "<button class='nextBtn' onclick='goNext(5)'>Next</button>",
+            "<button class='pull-right nextBtn' onclick='goNext(5)'>Next</button>",
             'data-position': 'right'
         });
 
         $("[data-step='5']").attr({
-            'data-hint': "<p>Click here to view all the documents you have added under document link in the activities data</p>" +
+            'data-hint': "<p>Click here to view all the documents you have uploaded from document link in the activities</p>" +
             "<a href='#' class='pull-left skip-tour' onclick='skip(5)'>Skip Dashboard Tour</a>" +
-            "<button class='nextBtn' onclick='goNext(6)'>Next</button>",
+            "<button class='pull-right nextBtn' onclick='goNext(6)'>Next</button>",
             'data-position': 'right'
         });
 
         $("[data-step='6']").attr({
             'data-hint': "<p>Click here to get download options for your data on AidStream</p>" +
             "<a href='#' class='pull-left skip-tour' onclick='skip(6)'>Skip Dashboard Tour</a>" +
-            "<button class='nextBtn' onclick='goNext(7)'>Next</button>",
+            "<button class='pull-right nextBtn' onclick='goNext(7)'>Next</button>",
             'data-position': 'right'
         });
 
@@ -46,7 +46,7 @@ var UserOnBoarding = {
         $("[data-step='7']").attr({
             'data-hint': "<p>Click here to view the settings of your organisation. Only the users with Administrator level permission can edit settings</p>" +
             "<a href='#' class='pull-left skip-tour' onclick='skip(7)'>Skip Dashboard Tour</a>" +
-            "<button class='nextBtn' onclick='goNext(" + nextStep + ")'>Next</button>",
+            "<button class='pull-right nextBtn' onclick='goNext(" + nextStep + ")'>Next</button>",
             'data-position': 'right'
         });
 
@@ -54,15 +54,15 @@ var UserOnBoarding = {
             $("[data-step='8']").attr({
                 'data-hint': "<p>Click here to view the changes made by users</p>" +
                 "<a href='#' class='pull-left skip-tour' onclick='skip(8)'>Skip Dashboard Tour</a>" +
-                "<button class='nextBtn' onclick='goNext(0)'>Next</button>",
+                "<button class='pull-right nextBtn' onclick='goNext(0)'>Next</button>",
                 'data-position': 'right'
             });
         }
 
         $("[data-step='1']").attr({
             'data-hint': "<p>Hover over here and click on “My Profile” to go your profile page</p>" +
-            "<button class='nextBtn' onclick='goNext(9)'>Complete tour</button>",
-            'data-position': 'bottom-left'
+            "<button class='pull-left nextBtn closeBtn' onclick='skip()'>Complete tour</button>",
+            'data-position': 'bottom-right'
         });
     },
     storeHintStatus: function (status) {
@@ -83,6 +83,28 @@ var UserOnBoarding = {
             hintPosition: 'top-left'
         });
         intro.addHints();
+    },
+    finalHints: function () {
+        var intro = introJs();
+        intro.setOptions({
+            steps: [
+                {
+                    element: '#admin-dropdown',
+                    intro: "<div>" +
+                    "<p>You can always start the Dashboard tour again by turning this toggle on</p>" +
+                    "<button class='pull-left nextBtn closeBtn' onclick='endTour()'>Close</button> </div>",
+                    position: 'left'
+                }
+            ],
+            exitOnOverlayClick: false,
+            showStepNumbers: false,
+            showButtons: false,
+            showBullets: false,
+            exitOnEsc: false,
+            keyboardNavigation: false
+        });
+
+        intro.start();
     },
     settingsTour: function (completedSteps) {
         var intro = introJs();
@@ -278,8 +300,7 @@ var UserOnBoarding = {
 
         $('#default_currency', form).rules('add', {required: true, messages: {required: 'Default Currency is required.'}});
         $('#default_language', form).rules('add', {required: true, messages: {required: 'Default Language is required.'}});
-    }
-    ,
+    },
     validatePublishingInfo: function () {
         var form = $('form');
         var validation = form.validate({

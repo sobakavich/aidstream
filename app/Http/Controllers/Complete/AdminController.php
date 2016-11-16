@@ -135,6 +135,11 @@ class AdminController extends Controller
             return redirect()->route('settings')->withResponse($this->getNoPrivilegesMessage());
         }
 
+        $completed_steps = null;
+        if (isset(auth()->user()->userOnBoarding)) {
+            $completed_steps = auth()->user()->userOnBoarding->completed_steps;
+        }
+
         $organization           = $this->organizationManager->getOrganization(session('org_id'));
         $organizationIdentifier = $organization->user_identifier;
 
@@ -149,7 +154,7 @@ class AdminController extends Controller
 
         $response = ($this->user->save()) ? ['type' => 'success', 'code' => ['user_created', ['name' => $this->user->username]]] : ['type' => 'danger', 'code' => ['save_failed', ['name' => 'User']]];
 
-        $this->userOnBoardingManager->create($this->user->id);
+        $this->userOnBoardingManager->create($this->user->id, $completed_steps);
         $this->dbLogger->activity("admin.user_created", ['orgId' => $this->org_id, 'userId' => $this->user->id]);
 
         return redirect()->route('admin.list-users')->withResponse($response);

@@ -62,7 +62,7 @@
                             <span><a href="{{ route('admin.switch-back') }}" class="pull-left">Switch Back</a></span>
                         @endif
                     </li>
-                    <li class="dropdown" data-step="1">
+                    <li class="dropdown" data-step="1" id="admin-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false"><span class="avatar-img">
                                 @if(Auth::user()->profile_url)
@@ -117,11 +117,6 @@
             </ul>
         </div>
         <div class="navbar-right version-wrap">
-            {{--@if(isset(auth()->user()->userOnBoarding->completed_tour) && session('role_id') != 3)--}}
-            {{--@if(!auth()->user()->userOnBoarding->completed_tour)--}}
-            {{--<a href="{{url('exploreLater')}}" class="btn btn-primary">Continue exploring AidStream</a>--}}
-            {{--@endif--}}
-            {{--@endif--}}
             @if(auth()->user() && !isSuperAdminRoute())
                 <div class="version pull-right {{ (session('version') == 'V201') ? 'old' : 'new' }}">
                     @if (session('next_version'))
@@ -198,37 +193,18 @@
         var className = (hintStatus == 1) ? 'pull-right display Yes' : 'pull-right display No';
 
         $('#logout').before(
-                "<li class='dashboard-tour' title='You can always start the Dashboard tour again by turning this toggle on'>" +
-                "<span>Dashboard tour</span><a href='#' class='" + className + "' id='hints'></a></li>" +
-                "");
-        $('.dashboard-tour').tooltip({
-            position: {my: "left-370", at: "centre"},
-            disabled: true,
-            open: function (event, ui) {
-                setTimeout(function () {
-                    $(ui.tooltip).hide('explode');
-                    $("[data-step='1']").removeClass('open');
-                }, 2000);
-            },
-            close: function (event, ui) {
-                $(this).tooltip('disable');
-            }
-        })
-        ;
-        $(".dashboard-tour").on('focus', function (evt) {
-            $(evt.currentTarget).tooltip("close");
-        });
+                "<li class='dashboard-tour'>" +
+                "<span>Dashboard tour</span><a href='#' class='" + className + "' id='hints'></a></li>");
+
+        var endTour = function () {
+            introJs().exit();
+            $('.introjs-tooltip').hide();
+            $("[data-step='1']").removeClass('open');
+            $(document).on('click');
+        };
+
         var goNext = function (step) {
-            if (step === 9) {
-                $(".introjs-tooltip").hide();
-                $('#hints').trigger('click');
-                if (completedTour == 0) {
-                    $("[data-step='1']").addClass('open');
-                    $('.dashboard-tour').tooltip('open');
-                }
-            } else {
-                $("a[data-step=" + step + "]").trigger('click');
-            }
+            $("a[data-step=" + step + "]").trigger('click');
         };
 
         var skip = function (step) {
@@ -236,7 +212,11 @@
             $('#hints').trigger('click');
             if (completedTour == 0) {
                 $("[data-step='1']").addClass('open');
-                $('.dashboard-tour').tooltip('enable').tooltip('open');
+                UserOnBoarding.finalHints();
+                $(document).off('click');
+                $('.introjs-tooltip').css({'right': '270px', 'top': '87px'});
+                $('.introjs-arrow').css({'right': '-18px', 'top': '50px'});
+
             }
         };
 

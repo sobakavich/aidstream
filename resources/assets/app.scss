@@ -79,6 +79,7 @@ $url_21: url(../../images/ic-left-arrow.svg);
 $url_22: url(../../images/ic-camera.svg);
 $url_23: url(../../images/ic-org-sprite.svg);
 $url_24: url(../../images/ic-warning.svg);
+$url_25: url(../../images/ic-verified.svg);
 
 html, body {
   height: 100%;
@@ -5142,6 +5143,10 @@ body > .skiptranslate iframe {
   z-index: 100000000;
 }
 
+.introjs-fixedhint[data-step="0"] {
+  top: 43px !important;
+}
+
 .introjs-button {
   display: none !important;
 }
@@ -5720,7 +5725,7 @@ body > .skiptranslate iframe {
 .introjs-tooltip {
   min-width: 310px !important;
   max-width: 450px !important;
-  padding: 30px !important;
+  padding: 25px 30px !important;
   background: #fff !important;
 }
 
@@ -5733,6 +5738,9 @@ body > .skiptranslate iframe {
   &.bottom {
     bottom: -17px !important;
     border-top-color: #fff !important;
+  }
+  &.top {
+    top: -17px !important;
   }
 }
 
@@ -5750,20 +5758,28 @@ body > .skiptranslate iframe {
 
 .nextBtn {
   position: relative;
-  width: 130px;
-  line-height: 42px;
-  padding: 0 0 0 14px;
+  line-height: 29px;
+  padding: 0 28px 0 10px;
   text-align: left;
+  font-size: 12px;
   &:after {
     content: "";
-    @include position(absolute, 11px 14px auto auto);
-    background: $url_3 no-repeat -641px -585px;
+    @include position(absolute, 7px 8px auto auto);
+    background: $url_3 no-repeat -637px -585px;
     @include size(20px 20px);
+  }
+}
+
+.closeBtn {
+  padding: 0 10px;
+  &:after {
+   display: none;
   }
 }
 
 .skip-tour {
   font-size: 12px;
+  margin-top: 7px;
 }
 
 .introjs-arrow.left {
@@ -5774,6 +5790,10 @@ body > .skiptranslate iframe {
   float: right;
   > p {
     margin: 0;
+    p {
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
   }
   > a {
     display: inherit;
@@ -5946,6 +5966,26 @@ body > .skiptranslate iframe {
   opacity: 1;
 }
 
+.complete-message {
+  background: #EBFFF3;
+  padding: 13px 12px;
+  overflow: hidden;
+  border-bottom: 1px solid $color_gallery;
+  p {
+    color: #74B88E;
+    margin: 0;
+    position: relative;
+    padding: 2px 12px 2px 48px;
+    &:before {
+      @include position(absolute, 0 auto auto 16px);
+      content: "";
+      background: $url_25 no-repeat center/24px;
+      @include size(24px 24px);
+      transition: all 0.4s ease-in-out;
+    }
+  }
+}
+
 .steps-wrapper {
   background: #FFF8E9;
   padding: 13px 12px;
@@ -5954,11 +5994,11 @@ body > .skiptranslate iframe {
   p {
     color: #99897A;
     position: relative;
-    padding: 2px 12px 2px 36px;
+    padding: 2px 12px 2px 48px;
     margin: 0;
     transition: all 0.5s ease-in-out;
     &:before {
-      @include position(absolute, 0 auto auto 0);
+      @include position(absolute, 0 auto auto 16px);
       content: "";
       background: $url_24 no-repeat center/28px;
       @include size(28px 23px);
@@ -5998,8 +6038,7 @@ body > .skiptranslate iframe {
   }
 }
 
-
-.steps-wrapper.is-open,.steps-wrapper.has-opened {
+.steps-wrapper.is-open, .steps-wrapper.has-opened {
   padding: 20px 12px 13px 36px;
   display: block;
   > .pull-left {

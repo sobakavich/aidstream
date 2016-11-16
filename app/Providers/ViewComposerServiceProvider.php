@@ -16,6 +16,14 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer(
             [
                 'app',
+            ],
+            function ($view) {
+                $view->with('currentUser', auth()->user());
+                $view->with('loggedInUser', auth()->user());
+            }
+        );
+        view()->composer(
+            [
                 'Activity.index',
                 'settings.publishingSettings',
                 'settings.defaultValues',
@@ -23,9 +31,11 @@ class ViewComposerServiceProvider extends ServiceProvider
                 'Organization.show'
             ],
             function ($view) {
-                $view->with('currentUser', auth()->user());
-                $view->with('loggedInUser', auth()->user());
-                $view->with('completedSteps', auth()->user()->userOnBoarding->settings_completed_steps);
+                if (auth()->user()->isAdmin()) {
+                    $view->with('currentUser', auth()->user());
+                    $view->with('loggedInUser', auth()->user());
+                    $view->with('completedSteps', auth()->user()->userOnBoarding->settings_completed_steps);
+                }
             }
         );
     }
