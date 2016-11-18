@@ -109,7 +109,6 @@ class XmlMapper
     public function map(array $activities, $template)
     {
         $mappedData = [];
-
         foreach ($activities as $index => $activity) {
             $mappedData[$index]                         = $this->activity->map($this->filter($activity, 'iatiActivity'), $template);
             $mappedData[$index]['default_field_values'] = $this->defaultFieldValues($activity, $template);
