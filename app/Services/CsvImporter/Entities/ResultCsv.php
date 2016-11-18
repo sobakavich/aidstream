@@ -38,12 +38,13 @@ abstract class ResultCsv
      * Initialize an ResultRow object.
      *
      * @param $row
-     * @param $resultRowNumber
+     * @param $rowTracker
+     * @param $index
      * @return ResultRow
      */
-    protected function initialize($row, $resultRowNumber)
+    protected function initialize($row, $rowTracker, $index)
     {
-        return app()->make(ResultRow::class, [$row, $this->organizationId, $this->userId, $resultRowNumber]);
+        return app()->make(ResultRow::class, [$row, $this->organizationId, $this->userId, $rowTracker, $index]);
     }
 
     /**

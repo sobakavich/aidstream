@@ -102,9 +102,9 @@ class ImportResultController extends Controller
 
         if ($this->importManager->storeCsv($file)) {
             $filename = $file->getClientOriginalName();
-//            $this->importManager->process($filename);
-            $this->importManager->startImport($filename)
-                                ->fireCsvUploadEvent($filename);
+            $this->importManager->process($filename);
+//            $this->importManager->startImport($filename)
+//                                ->fireCsvUploadEvent($filename);
 
             $this->fixStagingPermission(storage_path('csvImporter/tmp'));
 

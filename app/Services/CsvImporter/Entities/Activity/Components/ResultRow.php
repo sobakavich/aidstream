@@ -26,20 +26,6 @@ class ResultRow extends Row
     const INVALID_CSV_FILE = 'invalid.json';
 
     const RESULT_TEMPLATE_FILE = '/Services/CsvImporter/Entities/Activity/Components/Elements/Foundation/Template/Result.json';
-    /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
-     * @var
-     */
-    protected $fields;
-
-    /**
-     * @var array
-     */
-    protected $indicators = [];
 
     /**
      * @var array
@@ -143,6 +129,21 @@ class ResultRow extends Row
     ];
 
     /**
+     * @var array
+     */
+    protected $data = [];
+
+    /**
+     * @var
+     */
+    protected $fields;
+
+    /**
+     * @var array
+     */
+    protected $indicators = [];
+
+    /**
      * @var
      */
     protected $validator;
@@ -175,23 +176,29 @@ class ResultRow extends Row
     /**
      * @var
      */
-    protected $resultRowNumber;
+    protected $rowTracker = [];
+
+    protected $index;
+
+    protected $resultRowCount = 0;
 
     /**
      * ResultRow constructor.
      * @param            $fields
      * @param            $organizationId
      * @param            $userId
-     * @param            $resultRowNumber
+     * @param            $rowTracker
+     * @param            $index
      * @param Validation $factory
      */
-    public function __construct($fields, $organizationId, $userId, $resultRowNumber, Validation $factory)
+    public function __construct($fields, $organizationId, $userId, $rowTracker, $index, Validation $factory)
     {
         $this->fields          = $fields;
         $this->organizationId  = $organizationId;
         $this->userId          = $userId;
         $this->factory         = $factory;
-        $this->resultRowNumber = $resultRowNumber;
+        $this->rowTracker      = $rowTracker;
+        $this->index = $index;
     }
 
     /**
@@ -199,14 +206,24 @@ class ResultRow extends Row
      */
     protected function groupValues()
     {
-        $index = - 1;
+        $index          = - 1;
+        $indicatorFrequency = 0;
         foreach ($this->fields['measure'] as $i => $row) {
-
+            $this->rowTracker['total_row_count'] ++;
+            $this->resultRowCount++;
             if (!$this->isSameEntity($i)) {
                 $index ++;
+                if($index > 0){
+                $this->rowTracker['result'][$this->index]['indicator_frequency'][] = $indicatorFrequency;
+                $indicatorFrequency = 0;
             }
+            }
+            $indicatorFrequency ++;
             $this->setValue($index, $i);
         }
+        $this->rowTracker['result'][$this->index]['result_count'] = $this->resultRowCount;
+        $this->rowTracker['result'][$this->index]['indicator_frequency'][] = $indicatorFrequency;
+        $this->rowTracker['result'][$this->index]['indicator_count'] = $index+1;
     }
 
     /**
@@ -230,8 +247,8 @@ class ResultRow extends Row
      */
     protected function isSameEntity($i)
     {
-        if ((is_null($this->fields[$this->resultFields['indicator'][0]][$i]) || $this->fields[$this->resultFields['indicator'][0]][$i] == '')
-            && (is_null($this->fields[$this->resultFields['indicator'][1]][$i]) || $this->fields[$this->resultFields['indicator'][1]][$i] == '')
+        if ((is_null($this->fields['measure'][$i]) || $this->fields['measure'][$i] == '')
+            && (is_null($this->fields['ascending'][$i]) || $this->fields['ascending'][$i] == '')
         ) {
             return true;
         }
@@ -241,7 +258,7 @@ class ResultRow extends Row
 
     protected function loadTemplate()
     {
-        $path = app_path(self::RESULT_TEMPLATE_FILE);
+        $path       = app_path(self::RESULT_TEMPLATE_FILE);
         $this->data = json_decode(file_get_contents($path), true);
     }
 
@@ -251,7 +268,6 @@ class ResultRow extends Row
      */
     public function mapResultRow()
     {
-        $this->resultRowNumber ++;
         $this->loadTemplate();
         $this->beginMapping();
 
@@ -536,9 +552,13 @@ class ResultRow extends Row
     protected function groupPeriods()
     {
         foreach ($this->indicators as $indicatorIndex => $values) {
-            $grouping                                    = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields])->groupValues();
-            $this->indicators[$indicatorIndex]['period'] = $grouping;
+            $grouping = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields]);
+            $periods = $grouping->groupValues();
+            $this->indicators[$indicatorIndex]['period'] = $periods;
+            $this->rowTracker['result'][$this->index]['indicator'][$indicatorIndex]['period_count'] = $grouping->periodCount();
+            $this->rowTracker['result'][$this->index]['indicator'][$indicatorIndex]['period_frequency'] = $grouping->periodFrequency();
         }
+
     }
 
     /**
@@ -853,7 +873,7 @@ class ResultRow extends Row
         $this->makeDirectoryIfNonExistent()
              ->writeCsvDataAsJson($this->getCsvFilepath());
 
-        return $this->resultRowNumber;
+        return $this->rowTracker;
     }
 
 
@@ -876,6 +896,7 @@ class ResultRow extends Row
             foreach ($indicators['period'] as $periodIndex => $periods) {
                 $period                                                                                   = $periods['period_start'][0]['date'];
                 $rules['indicator.' . $indicatorIndex . '.period.' . $periodIndex . '.period_end.0.date'] = sprintf('required|date_format:Y-m-d|after:%s', $period);
+
             }
         }
 
@@ -1169,8 +1190,14 @@ class ResultRow extends Row
     {
         $failedRules = $this->validator->failed();
 
-
-//        dd($failedRules, $this->fields());
+//        dump('ResultRowNumber', $this->resultRowNumber,
+//           'RowCount',  $this->rowCount,
+//            'Indicator Count', $this->indicatorCount,
+//           'Indicator Frequency', $this->indicatorFrequency,
+//           'Period Count', $this->periodCount);
+        foreach ($failedRules as $index => $failedRule) {
+            $this->messages[$index] = $failedRule;
+        }
     }
 
 }

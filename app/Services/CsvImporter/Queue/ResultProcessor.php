@@ -46,12 +46,12 @@ class ResultProcessor
     {
         $csv = $this->csvReader->load($file)->toArray();
 
-//        $a = new CsvResultProcessor($csv);
-//
-//        $a->handle(session('org_id'), auth()->user()->id);
+        $a = new CsvResultProcessor($csv);
 
-        $this->dispatch(
-            new ImportResult(new CsvResultProcessor($csv), $filename)
-        );
+        $a->handle(session('org_id'), auth()->user()->id);
+
+//        $this->dispatch(
+//            new ImportResult(new CsvResultProcessor($csv), $filename)
+//        );
     }
 }

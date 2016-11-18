@@ -8,6 +8,9 @@ use App\Services\CsvImporter\Entities\ResultCsv;
  */
 class Result extends ResultCsv
 {
+
+    protected $rowTracker = [];
+
     /**
      * Result constructor.
      * @param $rows
@@ -20,9 +23,14 @@ class Result extends ResultCsv
         $this->organizationId = $organizationId;
         $this->userId         = $userId;
         $this->rows           = $rows;
+        $this->rowTracker = $this->loadRowTracker();
     }
 
-    protected $resultRowNumber = 0;
+    protected function loadRowTracker()
+    {
+        return json_decode(file_get_contents(app_path('Services/CsvImporter/Entities/Activity/Components/Counter/CsvRowTracker.json')),true);
+    }
+
     /**
      * Process the Result Csv.
      *
@@ -30,12 +38,13 @@ class Result extends ResultCsv
      */
     public function process()
     {
-        foreach ($this->rows() as $row) {
-            $this->resultRowNumber = $this->initialize($row, $this->resultRowNumber)
-                 ->mapResultRow()
-                 ->validate()
-                 ->keep();
+        foreach ($this->rows() as $index => $row) {
+            $this->rowTracker = $this->initialize($row, $this->rowTracker, $index)
+                                          ->mapResultRow()
+                                          ->validate()
+                                          ->keep();
         }
+        dd($this->rowTracker);
 
         return $this;
     }
