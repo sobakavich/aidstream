@@ -920,9 +920,9 @@ class ResultRow extends Row
         $rules['indicator.*.period.*.period_start.0.date']               = 'required|date_format:Y-m-d';
 //        $rules['indicator.*.period.*.period_end.0.date']                       = 'required|date_format:Y-m-d|after:period_start';
         $rules['indicator.*.period.*.target.0.value']                          = 'required';
-        $rules['indicator.*.period.*.target.0.comment.0.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.period.*.target.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
         $rules['indicator.*.period.*.actual.0.value']                          = 'required';
-        $rules['indicator.*.period.*.actual.0.comment.0.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.period.*.actual.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
 
 //        dd($rules);
         return $rules;
@@ -959,9 +959,9 @@ class ResultRow extends Row
         $this->messages['indicator.*.period.*.period_end.0.date.date_format']              = 'Invalid period end date, correct format Y-m-d.';
         $this->messages['indicator.*.period.*.period_end.0.date.after']                    = sprintf('Period end date should be after the period start date.');
         $this->messages['indicator.*.period.*.target.0.value.required']                    = 'Target value is required.';
-        $this->messages['indicator.*.period.*.target.0.comment.0.narrative.0.language.in'] = 'Target comment language should be in the LanguageCodeList.';
+        $this->messages['indicator.*.period.*.target.0.comment.*.narrative.0.language.in'] = 'Target comment language should be in the LanguageCodeList.';
         $this->messages['indicator.*.period.*.actual.0.value.required']                    = 'Actual value is required.';
-        $this->messages['indicator.*.period.*.actual.0.comment.0.narrative.0.language.in'] = 'Actual comment language should be in the LanguageCodeList.';
+        $this->messages['indicator.*.period.*.actual.0.comment.*.narrative.0.language.in'] = 'Actual comment language should be in the LanguageCodeList.';
 
         return $this->messages;
 
