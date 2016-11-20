@@ -221,7 +221,7 @@ class ResultRow extends Row
             $indicatorFrequency ++;
             $this->setValue($index, $i);
         }
-        $this->rowTracker['result'][$this->index]['result_count']          = $this->resultRowCount;
+        $this->rowTracker['result'][$this->index]['result_rows']           = $this->resultRowCount;
         $this->rowTracker['result'][$this->index]['indicator_frequency'][] = $indicatorFrequency;
         $this->rowTracker['result'][$this->index]['indicator_count']       = $index + 1;
     }
@@ -858,10 +858,6 @@ class ResultRow extends Row
 
         $this->recordErrors();
 
-//        dd($this);
-
-//        dd($this->validator);
-
         return $this;
     }
 
@@ -935,6 +931,7 @@ class ResultRow extends Row
     {
         $this->messages['type.required']                                                   = 'Result type is required.';
         $this->messages['type.in']                                                         = 'Invalid result type.';
+        $this->messages['aggregation_status.boolean']                                      = 'Aggregation status type should be true or false or 1 or 0';
         $this->messages['title.*.narrative.0.narrative.required']                          = 'Title is required.';
         $this->messages['title.*.narrative.0.language.in']                                 = 'Title language should be in the LanguageCodeList.';
         $this->messages['description.*.narrative.0.language.in']                           = 'Description language should be in the LanguageCodeList.';
@@ -1109,7 +1106,6 @@ class ResultRow extends Row
                 $this->errors[] = $error;
             }
         }
-
         $this->errors = array_unique($this->errors);
 
         return $this;
@@ -1172,12 +1168,13 @@ class ResultRow extends Row
      */
     private function isBoolean($values)
     {
+
         if (((int) $values === 1) || ($values === true) || ($values === true) || ($values === "true") || ($values === "TRUE")) {
             return true;
-        } else {
-            if ((int) ($values === 0) || ($values === false) || ($values === false) || ($values === "false") || ($values === "FALSE")) {
-                return true;
-            }
+        }
+
+        if (((int) $values === 0) || ($values === false) || ($values === false) || ($values === "false") || ($values === "FALSE")) {
+            return false;
         }
 
         return $values;
@@ -1189,55 +1186,76 @@ class ResultRow extends Row
     protected function rowTracker()
     {
         $failedRules = $this->validator->failed();
-        $combined = [];
         foreach ($failedRules as $index => $failedRule) {
-            $array    = explode('.', $index);
-            $indexes  = array_values(array_where($array, function ($key, $value) {
-                    return $this->is_odd($key, true);
-                }
-            ));
-            $columns  = array_values(array_where($array, function ($key, $value) {
-                    return $this->is_odd($key, false);
-                }
-            ));
+            $combined = [];
 
-            foreach($columns as $k=>$v)
-            {
-                if(array_key_exists($k, $indexes))
-                {
+            $array = explode('.', $index);
+
+            $indexes = array_values(
+                array_where(
+                    $array,
+                    function ($key, $value) {
+                        return $this->is_odd($key, true);
+                    }
+                )
+            );
+
+            $columns = array_values(
+                array_where(
+                    $array,
+                    function ($key, $value) {
+                        return $this->is_odd($key, false);
+                    }
+                )
+            );
+
+            foreach ($columns as $k => $v) {
+                if (array_key_exists($k, $indexes)) {
                     $combined[$v] = $indexes[$k];
+                } else {
+                    $combined[$v] = 0;
                 }
             }
 
-//            $this->messages[$index] = $failedRule;
+            $errorRow = $this->rowTracker['total_row_count'] - $this->rowTracker['result'][$this->index]['result_rows'] + 1;
 
-            $errorRow = $this->rowTracker['total_row_count'] - $this->rowTracker['result'][$this->index]['result_count']+1;
+            foreach ($combined as $key => $value) {
 
-            foreach($combined as $key => $value)
-            {
-                if($key == 'indicator') {
-                    if($value > 0)
-                    $errorRow += $this->rowTracker['result'][$this->index]['indicator_frequency'][$value-1];
-                }
+                    if ($key == 'indicator') {
+                        if ($value > 0) {
+                            while ($value > 0) {
+                            $errorRow += $this->rowTracker['result'][$this->index]['indicator_frequency'][$value - 1];
+                                $value --;
+                            }
+                        }
+                    } else {
+                        if ($key == 'period') {
+                            if ($value > 0) {
+                                while ($value > 0) {
+                                    $errorRow += $this->rowTracker['result'][$this->index]['indicator'][$combined['indicator']]['period_frequency'][$value - 1];
+                                }
+                            }
+                        } else {
+                            $errorRow += $value;
+                        }
+                    }
+
 
             }
-            dd($this->rowTracker, $combined, $errorRow, $failedRules);
+            dump($combined);
 
-            dd('asdf');
-            foreach($indexes as $rows){
-                $errorRow += $rows;
-            }
-            $this->rowTracker['error_rows'][] = $errorRow + 1;
-            dump($indexes, $array);
+            $this->rowTracker['error_rows'][] = $errorRow;
         }
-        dd($this->rowTracker, $failedRules);
+
     }
 
     public function is_odd($key, $bool)
     {
-        if($bool)
-        return ($key % 2 == 0)? false : true;
-        return ($key % 2 == 0)? true : false;
+        if ($bool) {
+            return ($key % 2 == 0) ? false : true;
+        }
+
+        return ($key % 2 == 0) ? true : false;
     }
 
 }
