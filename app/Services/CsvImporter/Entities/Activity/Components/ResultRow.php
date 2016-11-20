@@ -193,12 +193,12 @@ class ResultRow extends Row
      */
     public function __construct($fields, $organizationId, $userId, $rowTracker, $index, Validation $factory)
     {
-        $this->fields          = $fields;
-        $this->organizationId  = $organizationId;
-        $this->userId          = $userId;
-        $this->factory         = $factory;
-        $this->rowTracker      = $rowTracker;
-        $this->index = $index;
+        $this->fields         = $fields;
+        $this->organizationId = $organizationId;
+        $this->userId         = $userId;
+        $this->factory        = $factory;
+        $this->rowTracker     = $rowTracker;
+        $this->index          = $index;
     }
 
     /**
@@ -206,24 +206,24 @@ class ResultRow extends Row
      */
     protected function groupValues()
     {
-        $index          = - 1;
+        $index              = - 1;
         $indicatorFrequency = 0;
         foreach ($this->fields['measure'] as $i => $row) {
             $this->rowTracker['total_row_count'] ++;
-            $this->resultRowCount++;
+            $this->resultRowCount ++;
             if (!$this->isSameEntity($i)) {
                 $index ++;
-                if($index > 0){
-                $this->rowTracker['result'][$this->index]['indicator_frequency'][] = $indicatorFrequency;
-                $indicatorFrequency = 0;
-            }
+                if ($index > 0) {
+                    $this->rowTracker['result'][$this->index]['indicator_frequency'][] = $indicatorFrequency;
+                    $indicatorFrequency                                                = 0;
+                }
             }
             $indicatorFrequency ++;
             $this->setValue($index, $i);
         }
-        $this->rowTracker['result'][$this->index]['result_count'] = $this->resultRowCount;
+        $this->rowTracker['result'][$this->index]['result_count']          = $this->resultRowCount;
         $this->rowTracker['result'][$this->index]['indicator_frequency'][] = $indicatorFrequency;
-        $this->rowTracker['result'][$this->index]['indicator_count'] = $index+1;
+        $this->rowTracker['result'][$this->index]['indicator_count']       = $index + 1;
     }
 
     /**
@@ -552,10 +552,10 @@ class ResultRow extends Row
     protected function groupPeriods()
     {
         foreach ($this->indicators as $indicatorIndex => $values) {
-            $grouping = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields]);
-            $periods = $grouping->groupValues();
-            $this->indicators[$indicatorIndex]['period'] = $periods;
-            $this->rowTracker['result'][$this->index]['indicator'][$indicatorIndex]['period_count'] = $grouping->periodCount();
+            $grouping                                                                                   = app()->make(Grouping::class, [$this->indicators[$indicatorIndex], $this->periodFields]);
+            $periods                                                                                    = $grouping->groupValues();
+            $this->indicators[$indicatorIndex]['period']                                                = $periods;
+            $this->rowTracker['result'][$this->index]['indicator'][$indicatorIndex]['period_count']     = $grouping->periodCount();
             $this->rowTracker['result'][$this->index]['indicator'][$indicatorIndex]['period_frequency'] = $grouping->periodFrequency();
         }
 
@@ -854,7 +854,7 @@ class ResultRow extends Row
 
         $this->setValidity();
 
-        $this->improviseErrorMessages();
+        $this->rowTracker();
 
         $this->recordErrors();
 
@@ -1186,18 +1186,58 @@ class ResultRow extends Row
     /**
      *
      */
-    protected function improviseErrorMessages()
+    protected function rowTracker()
     {
         $failedRules = $this->validator->failed();
-
-//        dump('ResultRowNumber', $this->resultRowNumber,
-//           'RowCount',  $this->rowCount,
-//            'Indicator Count', $this->indicatorCount,
-//           'Indicator Frequency', $this->indicatorFrequency,
-//           'Period Count', $this->periodCount);
+        $combined = [];
         foreach ($failedRules as $index => $failedRule) {
-            $this->messages[$index] = $failedRule;
+            $array    = explode('.', $index);
+            $indexes  = array_values(array_where($array, function ($key, $value) {
+                    return $this->is_odd($key, true);
+                }
+            ));
+            $columns  = array_values(array_where($array, function ($key, $value) {
+                    return $this->is_odd($key, false);
+                }
+            ));
+
+            foreach($columns as $k=>$v)
+            {
+                if(array_key_exists($k, $indexes))
+                {
+                    $combined[$v] = $indexes[$k];
+                }
+            }
+
+//            $this->messages[$index] = $failedRule;
+
+            $errorRow = $this->rowTracker['total_row_count'] - $this->rowTracker['result'][$this->index]['result_count']+1;
+
+            foreach($combined as $key => $value)
+            {
+                if($key == 'indicator') {
+                    if($value > 0)
+                    $errorRow += $this->rowTracker['result'][$this->index]['indicator_frequency'][$value-1];
+                }
+
+            }
+            dd($this->rowTracker, $combined, $errorRow, $failedRules);
+
+            dd('asdf');
+            foreach($indexes as $rows){
+                $errorRow += $rows;
+            }
+            $this->rowTracker['error_rows'][] = $errorRow + 1;
+            dump($indexes, $array);
         }
+        dd($this->rowTracker, $failedRules);
+    }
+
+    public function is_odd($key, $bool)
+    {
+        if($bool)
+        return ($key % 2 == 0)? false : true;
+        return ($key % 2 == 0)? true : false;
     }
 
 }
