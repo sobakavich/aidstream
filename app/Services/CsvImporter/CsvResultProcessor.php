@@ -54,7 +54,6 @@ class CsvResultProcessor
             $this->groupValues();
 
             $this->initResult(['organization_id' => $organizationId, 'user_id' => $userId]);
-//            dd($this->data);
             $this->result->process();
         } else {
             $filepath = storage_path('csvImporter/tmp/result/' . $organizationId . '/' . $userId);

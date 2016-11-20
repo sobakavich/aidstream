@@ -44,8 +44,7 @@ class Result extends ResultCsv
                                           ->validate()
                                           ->keep();
         }
-        dd($this->rowTracker);
-
+//        dd($this->rowTracker);
         return $this;
     }
 }
