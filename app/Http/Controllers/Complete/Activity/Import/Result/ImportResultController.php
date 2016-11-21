@@ -185,7 +185,6 @@ class ImportResultController extends Controller
                 $total = array_merge($diff, $old);
 
                 File::put($tempPath, json_encode($total));
-                dd($results);
 
                 $results = $diff;
 
@@ -311,32 +310,14 @@ class ImportResultController extends Controller
 
         return view('Activity.uploader', compact('form', 'mismatch'));
     }
-//
-//    /**
-//     * Fix file permission while on staging environment
-//     * @param $path
-//     */
+
+    /**
+     * Fix file permission while on staging environment
+     * @param $path
+     */
     protected function fixStagingPermission($path)
     {
         // TODO: Remove this.
         shell_exec(sprintf('chmod 777 -R %s', $path));
-    }
-
-    private function readValidData()
-    {
-        $filepath = $this->importManager->getFilePath(true);
-        if (file_exists($filepath)) {
-            return $results = json_decode(file_get_contents($filepath), true);
-        }
-        return false;
-    }
-
-    private function readInvalidData()
-    {
-        $filepath = $this->importManager->getFilePath(false);
-        if (file_exists($filepath)) {
-            return $results = json_decode(file_get_contents($filepath), true);
-        }
-        return false;
     }
 }

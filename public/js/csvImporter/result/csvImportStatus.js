@@ -47,12 +47,12 @@ var CsvImportStatusManager = {
         });
     },
     getRemainingInvalidData: function () {
-        CsvImportStatusManager.callAsync('/activity/' + activityId + '/import-activity/remaining-invalid-data', 'GET').success(function (response) {
+        CsvImportStatusManager.callAsync('/activity/' + activityId + '/import-result/remaining-invalid-data', 'GET').success(function (response) {
             CsvImportStatusManager.invalidData(response);
         });
     },
     getRemainingValidData: function () {
-        CsvImportStatusManager.callAsync('/activity/' + activityId + '/import-activity/remaining-valid-data', 'GET').success(function (response) {
+        CsvImportStatusManager.callAsync('/activity/' + activityId + '/import-result/remaining-valid-data', 'GET').success(function (response) {
             CsvImportStatusManager.validData(response);
         });
     },
