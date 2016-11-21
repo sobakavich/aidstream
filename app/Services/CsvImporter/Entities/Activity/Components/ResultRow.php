@@ -929,7 +929,7 @@ class ResultRow extends Row
     {
         $this->messages['type.required']                                                   = 'Result type is required';
         $this->messages['type.in']                                                         = 'Invalid result type';
-        $this->messages['aggregation_status.boolean']                                      = 'Aggregation status type should be true or false or 1 or 0';
+        $this->messages['aggregation_status.boolean']                                      = 'Aggregation status type should be true or false';
         $this->messages['title.*.narrative.0.narrative.required']                          = 'Title is required';
         $this->messages['title.*.narrative.0.language.in']                                 = 'Title language should be in the language code list';
         $this->messages['description.*.narrative.0.language.in']                           = 'Description language should be in the language code list';
@@ -1172,11 +1172,12 @@ class ResultRow extends Row
     private function isBoolean($values)
     {
 
-        if (((int) $values === 1) || ($values === true) || ($values === true) || ($values === "true") || ($values === "TRUE")) {
+
+        if (((int) $values === 1) || ($values === true) || ($values === true) || ($values === "true") || ($values === "TRUE") || ($values === "yes") || ($values === "YES")) {
             return true;
         }
 
-        if (((int) $values === 0) || ($values === false) || ($values === false) || ($values === "false") || ($values === "FALSE")) {
+        if ((preg_match('/^0$/', $values)) || ($values === false) || ($values === false) || ($values === "false") || ($values === "FALSE") || ($values === "no") || ($values === "NO")) {
             return false;
         }
 
