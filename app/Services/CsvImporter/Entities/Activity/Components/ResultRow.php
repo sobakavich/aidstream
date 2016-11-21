@@ -1110,7 +1110,7 @@ class ResultRow extends Row
             $this->errors[$index] = $error.' on row '.$this->rowTracker['error_rows'][$this->index][$index].'.';
         }
 
-        dd($this->errors);
+//        dump($this->errors);
         return $this;
     }
 
@@ -1245,7 +1245,7 @@ class ResultRow extends Row
 
 
             }
-            dump($combined);
+//            dump($combined);
 
             $this->rowTracker['error_rows'][$this->index][] = $errorRow;
         }
