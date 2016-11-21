@@ -1140,9 +1140,9 @@ class ResultRow extends Row
     private function isBoolean($values)
     {
         if (((int) $values === 1) || ($values === true) || ($values === TRUE) || ($values === "true") || ($values === "TRUE")) {
-            return true;
+            return 1;
         } else if (((int) $values === 0) || ($values === false) || ($values === FALSE) || ($values === "false") || ($values === "FALSE")) {
-            return false;
+            return 0;
         }
 
         return $values;
