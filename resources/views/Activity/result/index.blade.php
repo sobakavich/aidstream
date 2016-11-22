@@ -60,9 +60,9 @@
                             </table>
                         @else
                             <div class="text-center no-data no-result-data">
-                                You haven’t added any result yet.
+                                <p>You haven’t added any result yet.</p>
                                 <a href="{{ route('activity.result.create', $id) }}" class="btn btn-primary">Add New Result</a>
-                                <a href="{{ route('activity.result.upload-csv', $id) }}" class="btn btn-primary">Import New Result</a>
+                                <a href="{{ route('activity.result.upload-csv', $id) }}" class="btn btn-primary btn-upload">Upload New Result</a>
                             </div>
                         @endif
                     </div>
