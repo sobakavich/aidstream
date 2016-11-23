@@ -1,5 +1,7 @@
 <?php namespace App\Providers;
 
+use App\Services\XmlImporter\Events\XmlWasUploaded;
+use App\Services\XmlImporter\Listeners\XmlUpload;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -14,6 +16,9 @@ class EventServiceProvider extends ServiceProvider {
 		'App\Services\CsvImporter\Events\ActivityCsvWasUploaded' => [
 			'App\Services\CsvImporter\Listeners\ActivityCsvUpload',
 		],
+        XmlWasUploaded::class => [
+            XmlUpload::class
+        ]
 	];
 
 	/**
