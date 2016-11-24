@@ -25,6 +25,9 @@ class ResultRow extends Row
      */
     const INVALID_CSV_FILE = 'invalid.json';
 
+    /**
+     *
+     */
     const RESULT_TEMPLATE_FILE = '/Services/CsvImporter/Entities/Activity/Components/Elements/Foundation/Template/Result.json';
     /**
      * @var array
@@ -232,6 +235,9 @@ class ResultRow extends Row
         return false;
     }
 
+    /**
+     * Load Result Template
+     */
     protected function loadTemplate()
     {
         $path       = app_path(self::RESULT_TEMPLATE_FILE);
@@ -239,6 +245,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps entire Row
      * @return $this
      * @internal param $fields
      */
@@ -251,7 +258,7 @@ class ResultRow extends Row
     }
 
     /**
-     *
+     * Begins mapping
      */
     protected function beginMapping()
     {
@@ -263,6 +270,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Type
      * @return $this
      */
     protected function setType()
@@ -276,6 +284,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Aggregation Status
      * @return $this
      */
     protected function setAggregationStatus()
@@ -290,6 +299,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Title
      * @return $this
      */
     protected function setTitle()
@@ -300,6 +310,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Description
      * @return $this
      */
     protected function setDescription()
@@ -310,6 +321,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicators
      * @return $this
      */
     protected function setIndicator()
@@ -333,7 +345,7 @@ class ResultRow extends Row
 
 
     /**
-     * Grouping of Indicator
+     * Grouping of Result Indicators
      */
     protected function groupIndicator()
     {
@@ -341,6 +353,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Measure
      * @param $index
      * @return $this
      */
@@ -357,6 +370,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Ascending
      * @param $index
      * @return $this
      */
@@ -374,6 +388,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Title
      * @param $index
      * @return $this
      */
@@ -385,6 +400,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Description
      * @param $index
      * @return $this
      */
@@ -396,6 +412,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Reference Vocabulary
      * @param $index
      * @return $this
      */
@@ -412,6 +429,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Reference Code
      * @param $index
      * @return $this
      */
@@ -428,6 +446,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Reference URI
      * @param $index
      * @return $this
      */
@@ -444,6 +463,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Baseline
      * @param $index
      * @return $this
      */
@@ -457,6 +477,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Baseline Year
      * @param $index
      * @return $this
      */
@@ -473,6 +494,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Baseline Value
      * @param $index
      * @return $this
      */
@@ -489,6 +511,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Baseline Comment
      * @param $index
      * @return $this
      */
@@ -503,6 +526,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period
      * @param $index
      * @return $this
      */
@@ -521,7 +545,7 @@ class ResultRow extends Row
     }
 
     /**
-     *
+     * Grouping of Result Indicator Periods
      */
     protected function groupPeriods()
     {
@@ -532,6 +556,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Start
      * @param $index
      * @param $i
      * @return $this
@@ -547,6 +572,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period End
      * @param $index
      * @param $i
      * @return $this
@@ -562,6 +588,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Target
      * @param $index
      * @param $i
      * @return $this
@@ -578,6 +605,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Target Value
      * @param $index
      * @param $i
      * @return $this
@@ -593,6 +621,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Target Location Reference
      * @param $index
      * @param $i
      * @return $this
@@ -610,6 +639,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Target Dimension Name
      * @param $index
      * @param $i
      * @return $this
@@ -627,6 +657,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Target Dimension Value
      * @param $index
      * @param $i
      * @return $this
@@ -644,6 +675,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Target Comment
      * @param $index
      * @param $i
      * @return $this
@@ -666,6 +698,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Actual
      * @param $index
      * @param $i
      * @return $this
@@ -682,6 +715,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Actual Value
      * @param $index
      * @param $i
      * @return $this
@@ -697,6 +731,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Actual Location Reference
      * @param $index
      * @param $i
      * @return $this
@@ -714,6 +749,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Actual Dimension Name
      * @param $index
      * @param $i
      * @return $this
@@ -731,6 +767,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Actual Dimension Value
      * @param $index
      * @param $i
      * @return $this
@@ -748,6 +785,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps Result Indicator Period Actual Comment
      * @param $index
      * @param $i
      * @return $this
@@ -765,6 +803,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Maps the data with narrative and language
      * @param array $key
      * @param       $narrativeKey
      * @param       $languageKey
@@ -937,7 +976,7 @@ class ResultRow extends Row
     }
 
     /**
-     * @return string
+     * @return string ResultType Code list
      */
     protected function resultTypeCodeList()
     {
@@ -951,7 +990,7 @@ class ResultRow extends Row
     }
 
     /**
-     * @return string
+     * @return string Language Code list
      */
     private function languageCodeList()
     {
@@ -966,6 +1005,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Loads Code list
      * @param        $codeList
      * @param        $version
      * @param string $directory
@@ -1069,9 +1109,9 @@ class ResultRow extends Row
     }
 
     /**
-     * @return string
+     * @return string Indicator Measure Code list
      */
-    private function indicatorMeasureCodeList()
+    protected function indicatorMeasureCodeList()
     {
         $list = $this->loadCodeList('IndicatorMeasure', 'V201');
 
@@ -1084,9 +1124,9 @@ class ResultRow extends Row
     }
 
     /**
-     * @return string
+     * @return string Indicator VocabularyCodeList
      */
-    private function indicatorVocabularyCodeList()
+    protected function indicatorVocabularyCodeList()
     {
         $list = $this->loadCodeList('IndicatorVocabulary', 'V201');
 
@@ -1099,7 +1139,7 @@ class ResultRow extends Row
     }
 
     /**
-     *
+     * Sets isValid attribute if validator passes or fails
      */
     protected function setValidity()
     {
@@ -1120,14 +1160,16 @@ class ResultRow extends Row
      * @param $values
      * @return bool
      */
-    private function isBoolean($values)
+    protected function isBoolean($values)
     {
-        if (((int) $values === 1) || ($values === true) || ($values === true) || ($values === "true") || ($values === "TRUE")) {
-            return 1;
-        } else {
-            if (((int) $values === 0) || ($values === false) || ($values === false) || ($values === "false") || ($values === "FALSE")) {
-                return 0;
-            }
+        $values = strtolower($values);
+
+        if (((int) $values === 1) || ($values === true) || ($values === "true") || ($values === "yes")) {
+            return true;
+        }
+
+        if ((preg_match('/^0$/', $values)) || ($values === false) || ($values === "false") || ($values === "no")) {
+            return false;
         }
 
         return $values;
