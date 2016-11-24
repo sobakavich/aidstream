@@ -181,10 +181,10 @@ class ResultRow extends Row
      */
     public function __construct($fields, $organizationId, $userId, Validation $factory)
     {
-        $this->fields          = $fields;
-        $this->organizationId  = $organizationId;
-        $this->userId          = $userId;
-        $this->factory         = $factory;
+        $this->fields         = $fields;
+        $this->organizationId = $organizationId;
+        $this->userId         = $userId;
+        $this->factory        = $factory;
     }
 
     /**
@@ -234,7 +234,7 @@ class ResultRow extends Row
 
     protected function loadTemplate()
     {
-        $path = app_path(self::RESULT_TEMPLATE_FILE);
+        $path       = app_path(self::RESULT_TEMPLATE_FILE);
         $this->data = json_decode(file_get_contents($path), true);
     }
 
@@ -260,7 +260,6 @@ class ResultRow extends Row
              ->setTitle()
              ->setDescription()
              ->setIndicator();
-//        dd($this->data);
     }
 
     /**
@@ -334,7 +333,7 @@ class ResultRow extends Row
 
 
     /**
-     *
+     * Grouping of Indicator
      */
     protected function groupIndicator()
     {
@@ -366,8 +365,7 @@ class ResultRow extends Row
         $ascending = getVal($this->indicators[$index], ['ascending'], []);
         foreach ($ascending as $values) {
             if (!is_null($values)) {
-                $value = $this->isBoolean($values);
-//                dd($ascending, $value);
+                $value                                        = $this->isBoolean($values);
                 $this->data['indicator'][$index]['ascending'] = $value;
             }
         }
@@ -577,7 +575,6 @@ class ResultRow extends Row
              ->setIndicatorPeriodTargetComment($index, $i);
 
         return $this;
-
     }
 
     /**
@@ -593,7 +590,6 @@ class ResultRow extends Row
         }
 
         return $this;
-
     }
 
     /**
@@ -611,7 +607,6 @@ class ResultRow extends Row
         }
 
         return $this;
-
     }
 
     /**
@@ -629,7 +624,6 @@ class ResultRow extends Row
         }
 
         return $this;
-
     }
 
     /**
@@ -647,7 +641,6 @@ class ResultRow extends Row
         }
 
         return $this;
-
     }
 
     /**
@@ -686,7 +679,6 @@ class ResultRow extends Row
              ->setIndicatorPeriodActualComment($index, $i);
 
         return $this;
-
     }
 
     /**
@@ -702,7 +694,6 @@ class ResultRow extends Row
         }
 
         return $this;
-
     }
 
     /**
@@ -720,7 +711,6 @@ class ResultRow extends Row
         }
 
         return $this;
-
     }
 
     /**
@@ -738,7 +728,6 @@ class ResultRow extends Row
         }
 
         return $this;
-
     }
 
     /**
@@ -756,7 +745,6 @@ class ResultRow extends Row
         }
 
         return $this;
-
     }
 
     /**
@@ -804,7 +792,6 @@ class ResultRow extends Row
                 array_set($this->data, implode('.', [implode('.', $key), $index, 'narrative', 0, 'language']), $value);
             }
         }
-
     }
 
     /**
@@ -828,10 +815,6 @@ class ResultRow extends Row
 
         $this->recordErrors();
 
-//        dd($this);
-
-//        dd($this->validator);
-
         return $this;
     }
 
@@ -854,6 +837,7 @@ class ResultRow extends Row
     }
 
     /**
+     * Provides the rules for the IATI Element validation.
      * @return array
      */
     public function rules()
@@ -867,71 +851,74 @@ class ResultRow extends Row
             }
         }
 
-        $rules['type']                                                   = sprintf('required|in:%s', $this->resultTypeCodeList());
-        $rules['aggregation_status']                                     = 'boolean';
-        $rules['title.*.narrative.0.narrative']                          = 'required';
-        $rules['title.*.narrative.0.language']                           = sprintf('in:%s', $this->languageCodeList());
-        $rules['description.*.narrative.0.language']                     = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.measure']                                    = sprintf('required|in:%s', $this->indicatorMeasureCodeList());
-        $rules['indicator.*.ascending']                                  = 'boolean';
-        $rules['indicator.*.title.*.narrative.0.narrative']              = 'required';
-        $rules['indicator.*.title.*.narrative.0.language']               = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.description.*.narrative.0.language']         = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.reference.*.vocabulary']                     = sprintf('required|in:%s', $this->indicatorVocabularyCodeList());
-        $rules['indicator.*.reference.*.code']                           = 'required';
-        $rules['indicator.*.reference.*.indicator_uri']                  = 'url';
-        $rules['indicator.*.baseline.0.year']                            = 'required|integer';
-        $rules['indicator.*.baseline.0.value']                           = 'required';
-        $rules['indicator.*.baseline.0.comment.*.narrative.0.narrative'] = 'required';
-        $rules['indicator.*.baseline.0.comment.*.narrative.0.language']  = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.period.*.period_start.0.date']               = 'required|date_format:Y-m-d';
-//        $rules['indicator.*.period.*.period_end.0.date']                       = 'required|date_format:Y-m-d|after:period_start';
-        $rules['indicator.*.period.*.target.0.value']                          = 'required';
+        $rules['type']                                                         = sprintf('required|in:%s', $this->resultTypeCodeList());
+        $rules['aggregation_status']                                           = 'boolean';
+        $rules['title.*.narrative.0.narrative']                                = 'required';
+        $rules['title.*.narrative.0.language']                                 = sprintf('in:%s', $this->languageCodeList());
+        $rules['title']                                                        = 'unique_lang|unique_default_lang';
+        $rules['description.*.narrative.0.language']                           = sprintf('in:%s', $this->languageCodeList());
+        $rules['description']                                                  = 'unique_lang|unique_default_lang';
+        $rules['indicator.*.measure']                                          = sprintf('required|in:%s', $this->indicatorMeasureCodeList());
+        $rules['indicator.*.ascending']                                        = 'boolean';
+        $rules['indicator.*.title.*.narrative.0.narrative']                    = 'required';
+        $rules['indicator.*.title.*.narrative.0.language']                     = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.title']                                            = 'unique_lang|unique_default_lang';
+        $rules['indicator.*.description.*.narrative.0.language']               = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.description']                                      = 'unique_lang|unique_default_lang';
+        $rules['indicator.*.reference.*.vocabulary']                           = sprintf('required|in:%s', $this->indicatorVocabularyCodeList());
+        $rules['indicator.*.reference.*.indicator_uri']                        = 'url';
+        $rules['indicator.*.baseline.0.year']                                  = 'integer';
+        $rules['indicator.*.baseline.0.comment.*.narrative.0.language']        = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.baseline.0.comment']                               = 'unique_lang|unique_default_lang';
+        $rules['indicator.*.period.*.period_start.0.date']                     = 'required|date_format:Y-m-d';
         $rules['indicator.*.period.*.target.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
-        $rules['indicator.*.period.*.actual.0.value']                          = 'required';
+        $rules['indicator.*.period.*.target.0.comment']                        = 'unique_lang|unique_default_lang';
         $rules['indicator.*.period.*.actual.0.comment.*.narrative.0.language'] = sprintf('in:%s', $this->languageCodeList());
+        $rules['indicator.*.period.*.actual.0.comment']                        = 'unique_lang|unique_default_lang';
 
-//        dd($rules);
         return $rules;
     }
 
     /**
+     * Provides custom messages used for IATI Element Validation.
      * @return array
      */
-    protected function messages()
+    public function messages()
     {
-        $this->messages['type.required']                                                   = 'Result type is required.';
-        $this->messages['type.in']                                                         = 'Invalid result type.';
-        $this->messages['title.*.narrative.0.narrative.required']                          = 'Title is required.';
-        $this->messages['title.*.narrative.0.language.in']                                 = 'Title language should be in the LanguageCodeList.';
-        $this->messages['description.*.narrative.0.language.in']                           = 'Description language should be in the LanguageCodeList.';
-        $this->messages['indicator.*.measure.required']                                    = 'Indicator measure is required.';
-        $this->messages['indicator.*.measure.in']                                          = 'Indicator measure should be from Indicator Measure CodeList.';
-        $this->messages['indicator.*.ascending.boolean']                                   = 'Indicator ascending should be true or false.';
-        $this->messages['indicator.*.title.*.narrative.0.narrative.required']              = 'Indicator title is required.';
-        $this->messages['indicator.*.title.*.narrative.0.language.in']                     = 'Indicator title language should be in the LanguageCodeList.';
-        $this->messages['indicator.*.description.*.narrative.0.language.in']               = 'Indicator description language should be in the LanguageCodeList.';
-        $this->messages['indicator.*.reference.*.vocabulary.required']                     = 'Reference vocabulary is required.';
-        $this->messages['indicator.*.reference.*.vocabulary.in']                           = 'Reference vocabulary should be in the Indicator Vocabulary CodeList.';
-        $this->messages['indicator.*.reference.*.code.required']                           = 'Reference code is required.';
-        $this->messages['indicator.*.reference.*.indicator_uri.url']                       = 'Invalid reference url.';
-        $this->messages['indicator.*.baseline.0.year.required']                            = 'Indicator baseline year is required.';
-        $this->messages['indicator.*.baseline.0.year.integer']                             = 'Indicator baseline year should be integer.';
-        $this->messages['indicator.*.baseline.0.value.required']                           = 'Indicator baseline value is required.';
-        $this->messages['indicator.*.baseline.0.comment.*.narrative.0.narrative.required'] = 'Baseline comment narrative is required.';
-        $this->messages['indicator.*.baseline.0.comment.*.narrative.0.language.in']        = 'Baseline comment language is invalid.';
-        $this->messages['indicator.*.period.*.period_start.0.date.required']               = 'Period start date is required.';
-        $this->messages['indicator.*.period.*.period_start.0.date.date_format']            = 'Invalid period start date, correct format Y-m-d.';
-        $this->messages['indicator.*.period.*.period_end.0.date.required']                 = 'The period_end date is required.';
-        $this->messages['indicator.*.period.*.period_end.0.date.date_format']              = 'Invalid period end date, correct format Y-m-d.';
-        $this->messages['indicator.*.period.*.period_end.0.date.after']                    = sprintf('Period end date should be after the period start date.');
-        $this->messages['indicator.*.period.*.target.0.value.required']                    = 'Target value is required.';
-        $this->messages['indicator.*.period.*.target.0.comment.*.narrative.0.language.in'] = 'Target comment language should be in the LanguageCodeList.';
-        $this->messages['indicator.*.period.*.actual.0.value.required']                    = 'Actual value is required.';
-        $this->messages['indicator.*.period.*.actual.0.comment.*.narrative.0.language.in'] = 'Actual comment language should be in the LanguageCodeList.';
+        $messages = [];
 
-        return $this->messages;
+        $messages['type.required']                                                   = 'Result type is required';
+        $messages['type.in']                                                         = 'Invalid result type';
+        $messages['aggregation_status.boolean']                                      = 'Aggregation status type should be true or false';
+        $messages['title.*.narrative.0.narrative.required']                          = 'Title is required';
+        $messages['title.*.narrative.0.language.in']                                 = 'Title language should be in the language code list';
+        $messages['title.unique_lang']                                               = 'Repeated title in same language';
+        $messages['description.unique_lang']                                         = 'Repeated description in same language';
+        $messages['indicator.*.title.unique_lang']                                   = 'Repeated indicator title in same language';
+        $messages['indicator.*.description.unique_lang']                             = 'Repeated indicator description in same language';
+        $messages['indicator.*.baseline.0.comment.unique_lang']                      = 'Repeated baseline comment in same language';
+        $messages['indicator.*.period.*.target.0.comment.unique_lang']               = 'Repeated period target comment in same language';
+        $messages['indicator.*.period.*.actual.0.comment.unique_lang']               = 'Repeated period actual comment in same language';
+        $messages['description.*.narrative.0.language.in']                           = 'Description language should be in the language code list';
+        $messages['indicator.*.measure.required']                                    = 'Indicator measure is required';
+        $messages['indicator.*.measure.in']                                          = 'Indicator measure should be from indicator measure code list';
+        $messages['indicator.*.ascending.boolean']                                   = 'Indicator ascending should be true or false';
+        $messages['indicator.*.title.*.narrative.0.narrative.required']              = 'Indicator title is required';
+        $messages['indicator.*.title.*.narrative.0.language.in']                     = 'Indicator title language should be in the language code list';
+        $messages['indicator.*.description.*.narrative.0.language.in']               = 'Indicator description language should be in the language code list';
+        $messages['indicator.*.reference.*.vocabulary.in']                           = 'Reference vocabulary should be in the indicator vocabulary code list';
+        $messages['indicator.*.reference.*.indicator_uri.url']                       = 'Invalid reference url';
+        $messages['indicator.*.baseline.0.year.integer']                             = 'Indicator baseline year should be integer';
+        $messages['indicator.*.baseline.0.comment.*.narrative.0.narrative.required'] = 'Baseline comment narrative is required';
+        $messages['indicator.*.baseline.0.comment.*.narrative.0.language.in']        = 'Baseline comment language is invalid';
+        $messages['indicator.*.period.*.period_start.0.date.required']               = 'Period start date is required';
+        $messages['indicator.*.period.*.period_start.0.date.date_format']            = 'Invalid period start date, correct format Y-m-d';
+        $messages['indicator.*.period.*.period_end.0.date.required']                 = 'The period_end date is required';
+        $messages['indicator.*.period.*.period_end.0.date.date_format']              = 'Invalid period end date, correct format Y-m-d';
+        $messages['indicator.*.period.*.target.0.comment.*.narrative.0.language.in'] = 'Target comment language should be in the language code list';
+        $messages['indicator.*.period.*.actual.0.comment.*.narrative.0.language.in'] = 'Actual comment language should be in the language code list';
 
+        return $messages;
     }
 
     /**
@@ -976,7 +963,6 @@ class ResultRow extends Row
         }
 
         return implode(',', $codes);
-
     }
 
     /**
@@ -1095,7 +1081,6 @@ class ResultRow extends Row
         }
 
         return implode(',', $codes);
-
     }
 
     /**
@@ -1111,7 +1096,6 @@ class ResultRow extends Row
         }
 
         return implode(',', $codes);
-
     }
 
     /**
@@ -1121,7 +1105,6 @@ class ResultRow extends Row
     {
         $this->isValid = $this->validator->passes();
     }
-
 
     /**
      * Initialize the Row object.
@@ -1139,13 +1122,15 @@ class ResultRow extends Row
      */
     private function isBoolean($values)
     {
-        if (((int) $values === 1) || ($values === true) || ($values === TRUE) || ($values === "true") || ($values === "TRUE")) {
+        if (((int) $values === 1) || ($values === true) || ($values === true) || ($values === "true") || ($values === "TRUE")) {
             return 1;
-        } else if (((int) $values === 0) || ($values === false) || ($values === FALSE) || ($values === "false") || ($values === "FALSE")) {
-            return 0;
+        } else {
+            if (((int) $values === 0) || ($values === false) || ($values === false) || ($values === "false") || ($values === "FALSE")) {
+                return 0;
+            }
         }
 
         return $values;
     }
-
 }
+

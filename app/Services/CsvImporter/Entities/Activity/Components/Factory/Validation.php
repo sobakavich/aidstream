@@ -1,5 +1,6 @@
 <?php namespace App\Services\CsvImporter\Entities\Activity\Components\Factory;
 
+use App\Helpers\GetCodeName;
 use Carbon\Carbon;
 use Illuminate\Validation\Factory;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -387,6 +388,61 @@ class Validation extends Factory
 
                     return true;
                 }
+            }
+        );
+        
+        $this->extendImplicit(
+            'unique_lang',
+            function ($attribute, $value, $parameters, $validator) {
+                $languages = [];
+                if ($value && is_array($value)) {
+                    foreach ($value as $narrative) {
+                        $language = getVal($narrative, ['narrative', 0, 'language'], '');
+
+                        if (in_array($language, $languages)) {
+                            return false;
+                        }
+
+                        $languages[] = $language;
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+        );
+
+        $this->extendImplicit(
+            'unique_default_lang',
+            function ($attribute, $value, $parameters, $validator) {
+                $languages       = [];
+                $defaultLanguage = getDefaultLanguage();
+
+                $validator->addReplacer(
+                    'unique_default_lang',
+                    function ($message, $attribute, $rule, $parameters) use ($validator, $defaultLanguage) {
+                        return str_replace(':language', app(GetCodeName::class)->getActivityCodeName('Language', $defaultLanguage), $message);
+                    }
+                );
+
+                $check = true;
+                if ($value && is_array($value)) {
+
+                    foreach ($value as $narrative) {
+                        $languages[] = getVal($narrative, ['narrative', 0, 'language'], '');
+                    }
+
+                    if (count($languages) === count(array_unique($languages))) {
+                        if (in_array("", $languages) && in_array($defaultLanguage, $languages)) {
+                            $check = false;
+                        }
+                    }
+
+                    return $check;
+                }
+
+                return false;
             }
         );
     }
